@@ -288,8 +288,8 @@ const countFor = (id: string) =>
 
   .library__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
-    gap: 22px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
   }
 
   .library__item[hidden] {
@@ -302,6 +302,18 @@ const countFor = (id: string) =>
     border: 1px dashed var(--rule-2);
     border-radius: var(--radius);
     color: var(--ink-3);
+  }
+
+  @media (max-width: 1080px) {
+    .library__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .library__grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .library__empty-art {

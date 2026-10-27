@@ -37,6 +37,8 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
     <p class="palette__sub mono">{theme.palette.length} COLORS · 7 ROLES</p>
   </div>
 
+  <p class="palette__hint mono">点击色块复制色值</p>
+
   <ul class="palette__list">
     {
       theme.palette.map((color) => (
@@ -54,9 +56,8 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
           <div class="swatch__meta">
             <span class="swatch__name">{color.name}</span>
             <span class="swatch__hex mono">{color.hex}</span>
+            <span class="swatch__role mono">{roleLabels[color.role] ?? color.role}</span>
           </div>
-
-          <span class="swatch__role mono">{roleLabels[color.role] ?? color.role}</span>
 
           {color.note && <p class="swatch__note">{color.note}</p>}
         </li>
@@ -110,16 +111,23 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
     color: var(--ink-3);
   }
 
+  .palette__hint {
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    padding: 10px 0 2px;
+  }
+
   .palette__list {
     list-style: none;
   }
 
   .swatch {
     display: grid;
-    grid-template-columns: 56px minmax(0, 1fr) auto;
+    grid-template-columns: 56px minmax(0, 1fr);
     grid-template-areas:
-      'chip meta role'
-      'chip note note';
+      'chip meta'
+      'chip note';
     align-items: center;
     column-gap: 14px;
     row-gap: 2px;
@@ -163,8 +171,8 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
     justify-content: center;
     font-size: 0.62rem;
     letter-spacing: 0.12em;
-    background: rgb(0 0 0 / 0.62);
-    color: #fff;
+    background: rgb(255 255 255 / 0.92);
+    color: var(--ink);
     opacity: 0;
     transition: opacity 0.16s var(--ease);
   }
@@ -194,8 +202,7 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
   }
 
   .swatch__role {
-    grid-area: role;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     letter-spacing: 0.1em;
     color: var(--ink-3);
     border: 1px solid var(--rule);
@@ -238,8 +245,7 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
       grid-template-columns: 48px minmax(0, 1fr);
       grid-template-areas:
         'chip meta'
-        'chip role'
-        'note note';
+        'chip note';
     }
 
     .swatch__chip {

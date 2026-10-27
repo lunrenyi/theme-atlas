@@ -1,19 +1,22 @@
 ---
 import type { Theme } from '../data/types';
 import { getCollection } from '../data/collections';
+import { arrangementFor, arrangePalette } from '../lib/arrangement';
 import { withBase } from '../lib/url';
 import PaletteStrip from './PaletteStrip.astro';
 
 interface Props {
   theme: Theme;
   variant?: 'grid' | 'featured';
-  /** Hide the colour legend under the strip (featured rows already list it). */
-  showLegend?: boolean;
+  /** Show the long description instead of the short subtitle. */
+  showDescription?: boolean;
 }
 
-const { theme, variant = 'grid', showLegend = variant !== 'featured' } = Astro.props;
+const { theme, variant = 'grid', showDescription = variant === 'featured' } = Astro.props;
+
 const collection = getCollection(theme.collection);
-const href = withBase('/theme/' + theme.slug);
+const rule = arrangementFor(theme.collection);
+const palette = arrangePalette(theme);
 
 const statusMap = {
   verified: { label: '来源可核验', tone: 'ok' },
@@ -23,30 +26,54 @@ const statusMap = {
 const status = statusMap[theme.status];
 ---
 
-<article class:list={['card', 'card--' + variant]}>
-  <div class="card__head">
+<article class:list={['card', 'card--' + variant]} data-collection={theme.collection}>
+  <div class="card__meta">
     <a class="card__collection mono" href={withBase('/collections#' + collection.id)}>
       <span class="card__swatch" style={'--tone:' + collection.accent} aria-hidden="true"></span>
       {collection.title}
     </a>
-    <span class:list={['card__status', 'card__status--' + status.tone]}>{status.label}</span>
+    {
+      theme.status !== 'verified' && (
+        <span class:list={['card__status', 'card__status--' + status.tone]}>{status.label}</span>
+      )
+    }
   </div>
 
   <h3 class="card__title">
-    <a class="card__link" href={href}>{theme.title}</a>
+    <a class="card__link" href={withBase('/theme/' + theme.slug)}>{theme.title}</a>
   </h3>
 
-  <p class="card__desc">{theme.description}</p>
+  {
+    showDescription && (
+      <p class="card__desc">{theme.description}</p>
+    )
+  }
 
-  <PaletteStrip palette={theme.palette} variant={variant === 'featured' ? 'hero' : 'card'} labels={showLegend} />
+  <PaletteStrip palette={palette} variant={variant === 'featured' ? 'hero' : 'card'} />
 
-  <ul class="card__tags">
-    {
-      theme.tags.slice(0, 4).map((tag) => (
-        <li class="mono">{tag}</li>
-      ))
-    }
+  <ul class="card__names">
+    {palette.map((c) => <li class="mono">{c.name}</li>)}
   </ul>
+
+  {
+    !showDescription && (
+      <p class="card__caption">{theme.subtitle}</p>
+    )
+  }
+
+  <div class="card__foot">
+    <span class="card__rule mono">{rule.label}</span>
+    <span class="card__diagram" aria-hidden="true">
+      {
+        palette.map((c) => (
+          <i
+            class:list={{ 'is-accent': c.role === 'accent' }}
+            style={'--tone:' + c.hex}
+          />
+        ))
+      }
+    </span>
+  </div>
 </article>
 
 <style>
@@ -54,30 +81,31 @@ const status = statusMap[theme.status];
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 22px 22px 20px;
+    gap: 11px;
+    padding: 20px 20px 16px;
     border: 1px solid var(--rule);
     background: var(--paper-raised);
     border-radius: var(--radius);
-    transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+    transition: border-color 0.2s var(--ease);
   }
 
   .card:hover {
     border-color: var(--rule-strong);
   }
 
-  .card__head {
+  .card__meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    min-height: 20px;
   }
 
   .card__collection {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--ink-3);
@@ -89,15 +117,16 @@ const status = statusMap[theme.status];
   }
 
   .card__swatch {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--tone);
+    flex: none;
   }
 
   .card__status {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-3);
@@ -105,11 +134,6 @@ const status = statusMap[theme.status];
     border-radius: 2px;
     padding: 2px 6px;
     white-space: nowrap;
-  }
-
-  .card__status--ok {
-    border-color: color-mix(in srgb, var(--celadon) 45%, transparent);
-    color: var(--celadon);
   }
 
   .card__status--fan {
@@ -135,6 +159,7 @@ const status = statusMap[theme.status];
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 2;
   }
 
   .card__link:hover {
@@ -148,20 +173,63 @@ const status = statusMap[theme.status];
     max-width: 42ch;
   }
 
-  .card__tags {
+  .card__names {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 1px 8px;
     list-style: none;
-    font-size: 0.64rem;
-    letter-spacing: 0.06em;
+    font-size: 0.63rem;
+    letter-spacing: 0.03em;
     color: var(--ink-3);
   }
 
-  .card__tags li {
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    padding: 2px 7px;
+  .card__names li + li::before {
+    content: '·';
+    margin-right: 8px;
+    opacity: 0.5;
+  }
+
+  .card__caption {
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  .card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+  }
+
+  .card__rule {
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  /* a diagram of the rule: seven cells in the order this collection reads */
+  .card__diagram {
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .card__diagram i {
+    width: 13px;
+    height: 9px;
+    background: var(--tone);
+    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.12);
+  }
+
+  .card__diagram i.is-accent {
+    outline: 1px solid var(--ink);
+    outline-offset: 1px;
   }
 
   /* --- featured row variant ---------------------------------- */
@@ -172,14 +240,15 @@ const status = statusMap[theme.status];
       'head head'
       'title strip'
       'desc strip'
-      'tags strip';
+      'names strip'
+      'foot foot';
     column-gap: clamp(24px, 4vw, 64px);
     row-gap: 10px;
     align-items: start;
     padding: clamp(24px, 3vw, 38px);
   }
 
-  .card--featured .card__head {
+  .card--featured .card__meta {
     grid-area: head;
     padding-bottom: 14px;
     border-bottom: 1px solid var(--rule);
@@ -194,17 +263,22 @@ const status = statusMap[theme.status];
     grid-area: desc;
   }
 
-  .card--featured :global(.strip-wrap) {
-    grid-area: strip;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .card--featured .card__names {
+    grid-area: names;
   }
 
-  .card--featured .card__tags {
-    grid-area: tags;
-    margin-top: 4px;
+  .card--featured :global(.strip-wrap) {
+    grid-area: strip;
+    align-self: center;
+  }
+
+  .card--featured .card__foot {
+    grid-area: foot;
+  }
+
+  .card--featured .card__diagram i {
+    width: 18px;
+    height: 10px;
   }
 
   @media (max-width: 820px) {
@@ -215,7 +289,8 @@ const status = statusMap[theme.status];
         'title'
         'desc'
         'strip'
-        'tags';
+        'names'
+        'foot';
     }
   }
 </style>

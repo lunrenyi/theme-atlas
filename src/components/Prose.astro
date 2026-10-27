@@ -1,0 +1,55 @@
+---
+import type { PaletteColor } from '../data/types';
+import { splitColourMentions } from '../lib/prose';
+
+interface Props {
+  text: string;
+  palette: PaletteColor[];
+  class?: string;
+}
+
+const { text, palette, class: className = '' } = Astro.props;
+const segments = splitColourMentions(text, palette);
+---
+
+<p class={className}>
+  {
+    segments.map((segment) =>
+      segment.color ? (
+        <span
+          class="ink"
+          style={'--tone:' + segment.color.hex}
+          title={segment.color.name + ' ' + segment.color.hex}
+        >
+          {segment.text}
+        </span>
+      ) : (
+        segment.text
+      ),
+    )
+  }
+</p>
+
+<style>
+  .ink {
+    color: var(--ink);
+    white-space: nowrap;
+    border-bottom: 1px solid color-mix(in srgb, var(--tone) 55%, transparent);
+  }
+
+  .ink::before {
+    content: '';
+    display: inline-block;
+    width: 0.66em;
+    height: 0.66em;
+    margin-right: 0.42em;
+    background: var(--tone);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.22);
+    vertical-align: -0.03em;
+  }
+
+  .ink:hover {
+    border-bottom-color: var(--tone);
+  }
+</style>
+

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PalettePanel from '../../components/PalettePanel.astro';
 import PreviewPanel from '../../components/PreviewPanel.astro';
 import ContrastAudit from '../../components/ContrastAudit.astro';
+import Prose from '../../components/Prose.astro';
 import { getCollection } from '../../data/collections';
 import { themes, themeNeighbours } from '../../data/themes';
 import { withBase } from '../../lib/url';
@@ -54,6 +55,12 @@ const sourceTypeLabel: Record<string, string> = {
       <div class="detail__grid">
         <!-- ------------------------------ story ------------------------------ -->
         <div class="detail__story">
+          <!-- the palette runs alongside the story as a colour spine -->
+          <div class="detail__spine" aria-hidden="true">
+            {theme.palette.map((c) => <span style={'--tone:' + c.hex}></span>)}
+          </div>
+
+          <div class="detail__story-body">
           <header class="detail__header">
             <div class="detail__badges">
               <a class="badge badge--collection" href={withBase('/collections#' + collection.id)}>
@@ -76,21 +83,21 @@ const sourceTypeLabel: Record<string, string> = {
             <h2 id="story-heading" class="prose-block__heading">
               <span class="prose-block__index mono">01</span>故事背景
             </h2>
-            <p>{theme.story}</p>
+            <Prose text={theme.story} palette={theme.palette} />
           </section>
 
           <section class="prose-block" aria-labelledby="inspiration-heading">
             <h2 id="inspiration-heading" class="prose-block__heading">
               <span class="prose-block__index mono">02</span>配色灵感来源
             </h2>
-            <p>{theme.inspiration}</p>
+            <Prose text={theme.inspiration} palette={theme.palette} />
           </section>
 
           <section class="prose-block" aria-labelledby="rationale-heading">
             <h2 id="rationale-heading" class="prose-block__heading">
               <span class="prose-block__index mono">03</span>色彩设计思路
             </h2>
-            <p>{theme.designRationale}</p>
+            <Prose text={theme.designRationale} palette={theme.palette} />
           </section>
 
           <section class="prose-block" aria-labelledby="sources-heading">
@@ -153,13 +160,6 @@ const sourceTypeLabel: Record<string, string> = {
               )
             }
           </section>
-        </div>
-
-        <!-- ------------------------------ panel ------------------------------ -->
-        <aside class="detail__rail">
-          <PalettePanel theme={theme} />
-          <PreviewPanel theme={theme} />
-          <ContrastAudit theme={theme} />
 
           <nav class="switcher" aria-label="切换主题">
             <p class="switcher__label eyebrow">继续浏览</p>
@@ -167,8 +167,8 @@ const sourceTypeLabel: Record<string, string> = {
               {
                 prev && (
                   <a class="switcher__item" href={withBase('/theme/' + prev.slug)}>
-                    <span class="switcher__dots" aria-hidden="true">
-                      {prev.palette.slice(0, 3).map((c) => (
+                    <span class="switcher__band" aria-hidden="true">
+                      {prev.palette.map((c) => (
                         <i style={'--tone:' + c.hex} />
                       ))}
                     </span>
@@ -186,8 +186,8 @@ const sourceTypeLabel: Record<string, string> = {
                       <span class="switcher__dir">下一套 →</span>
                       <span class="switcher__name">{next.title}</span>
                     </span>
-                    <span class="switcher__dots" aria-hidden="true">
-                      {next.palette.slice(0, 3).map((c) => (
+                    <span class="switcher__band" aria-hidden="true">
+                      {next.palette.map((c) => (
                         <i style={'--tone:' + c.hex} />
                       ))}
                     </span>
@@ -197,6 +197,14 @@ const sourceTypeLabel: Record<string, string> = {
             </div>
             <a class="switcher__all" href={withBase('/#themes')}>回到全部主题</a>
           </nav>
+          </div>
+        </div>
+
+        <!-- ------------------------------ panel ------------------------------ -->
+        <aside class="detail__rail">
+          <PalettePanel theme={theme} />
+          <PreviewPanel theme={theme} />
+          <ContrastAudit theme={theme} />
         </aside>
       </div>
     </div>
@@ -251,6 +259,31 @@ const sourceTypeLabel: Record<string, string> = {
   }
 
   /* ---------------- story column ---------------- */
+  .detail__story {
+    display: grid;
+    grid-template-columns: 8px minmax(0, 1fr);
+    gap: clamp(18px, 2.2vw, 32px);
+    align-items: stretch;
+  }
+
+  /* the palette as a spine running the full height of the story */
+  .detail__spine {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .detail__spine span {
+    flex: 1 1 0;
+    min-height: 14px;
+    background: var(--tone);
+    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.12);
+  }
+
+  .detail__story-body {
+    min-width: 0;
+  }
+
   .detail__header {
     padding-bottom: 26px;
     border-bottom: 1px solid var(--rule);
@@ -484,10 +517,9 @@ const sourceTypeLabel: Record<string, string> = {
   }
 
   .switcher {
-    border: 1px solid var(--rule);
-    background: var(--paper-raised);
-    border-radius: var(--radius);
-    padding: 18px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
   }
 
   .switcher__label {
@@ -497,17 +529,18 @@ const sourceTypeLabel: Record<string, string> = {
   .switcher__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 16px;
   }
 
   .switcher__item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
-    padding: 10px;
+    padding: 12px 14px;
     border: 1px solid var(--rule);
     border-radius: 2px;
+    background: var(--paper-raised);
     transition: border-color 0.16s var(--ease);
   }
 
@@ -520,15 +553,20 @@ const sourceTypeLabel: Record<string, string> = {
     text-align: right;
   }
 
-  .switcher__dots {
+  .switcher__band {
     display: inline-flex;
     flex: none;
+    width: 62px;
+    height: 34px;
+    overflow: hidden;
+    border-radius: 2px;
   }
 
-  .switcher__dots i {
-    width: 10px;
-    height: 20px;
+  .switcher__band i {
+    flex: 1 1 0;
+    min-width: 0;
     background: var(--tone);
+    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.12);
   }
 
   .switcher__text {
@@ -577,6 +615,20 @@ const sourceTypeLabel: Record<string, string> = {
 
     .detail__rail {
       position: static;
+    }
+
+    .detail__story {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .detail__spine {
+      flex-direction: row;
+      height: 8px;
+    }
+
+    .detail__spine span {
+      min-height: 0;
     }
   }
 
