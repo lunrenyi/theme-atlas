@@ -25,25 +25,35 @@ const { variant, accent, accentAlt = accent, class: className = '' } = Astro.pro
       aria-label="青铜器回纹地纹与兽面装饰图形"
       fill="none"
     >
-      <g stroke={accent} stroke-width="1.4" fill="none" stroke-linecap="square" opacity="0.9">
-        <!-- 回纹地纹 band, mirrored around the centre -->
-        <path d="M12 112h28V88H18v14h14V96" />
-        <path d="M54 112h28V88H60v14h14V96" />
-        <path d="M96 112h28V88H102v14h14V96" />
-        <path d="M288 112h-28V88h22v14h-14V96" />
-        <path d="M246 112h-28V88h-22v14h-14V96" />
-        <path d="M204 112h-28V88h-22v14h-14V96" />
+      <!-- 回纹地纹：上缘的连续折带 -->
+      <g stroke={accent} stroke-width="1.3" fill="none" stroke-linecap="square" opacity="0.75">
+        <path d="M14 26h26V10H22v10h12" />
+        <path d="M48 26h26V10H56v10h12" />
+        <path d="M82 26h26V10H90v10h12" />
+        <path d="M116 26h26V10h-18v10h12" />
+        <path d="M286 26h-26V10h18v10h-12" />
+        <path d="M252 26h-26V10h18v10h-12" />
+        <path d="M218 26h-26V10h18v10h-12" />
+        <path d="M184 26h-26V10h18v10h-12" />
+      </g>
 
-        <!-- 兽面：中轴、眉脊与鼻梁 -->
-        <path d="M150 16V74" />
-        <path d="M112 44h26" />
-        <path d="M188 44h-26" />
-        <path d="M132 62c-6 4-10 10-10 16" />
-        <path d="M168 62c6 4 10 10 10 16" />
+      <!-- 兽面：中轴、双目、眉脊与鼻梁 -->
+      <g stroke={accent} stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.9">
+        <path d="M150 40v72" />
+        <path d="M104 56c10-8 24-9 34-2" />
+        <path d="M196 56c-10-8-24-9-34-2" />
+        <path d="M112 74c-4 10-4 18 2 26" />
+        <path d="M188 74c4 10 4 18-2 26" />
+        <path d="M138 96h24l-6 14h-12z" />
+        <path d="M150 96v18" />
+      </g>
+      <g fill={accent} opacity="0.92">
+        <ellipse cx="124" cy="68" rx="15" ry="8" />
+        <ellipse cx="176" cy="68" rx="15" ry="8" />
       </g>
       <g fill={accentAlt}>
-        <circle cx="138" cy="44" r="5" />
-        <circle cx="162" cy="44" r="5" />
+        <circle cx="124" cy="68" r="4" />
+        <circle cx="176" cy="68" r="4" />
       </g>
     </svg>
   )

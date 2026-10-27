@@ -1,0 +1,181 @@
+---
+/**
+ * The specimen plate of a theme: an original drawing, made only from the
+ * colours of the theme it belongs to. It sits in the story column so the
+ * narrative and the palette are visibly the same object.
+ *
+ * Nothing here is traced from any artwork — the three compositions are
+ * drawn for this site from simple geometric rules.
+ */
+import type { Theme } from '../data/types';
+import { getCollection } from '../data/collections';
+import { luminance, paletteMap } from '../lib/color';
+
+interface Props {
+  theme: Theme;
+  class?: string;
+}
+
+const { theme, class: className = '' } = Astro.props;
+const map = paletteMap(theme);
+const hex = (role: keyof typeof map) => map[role]?.hex ?? '#7a7a7a';
+
+const variant = getCollection(theme.collection).motif;
+
+/**
+ * Light-ground themes (paper, glaze) are drawn with their own tints; dark
+ * themes (deep space) with their own greys, so the plate always reads.
+ */
+const isDark = luminance(hex('bg')) < 0.2;
+const line = isDark ? hex('text') : hex('border');
+const soft = hex('muted');
+const accent = hex('accent');
+const bright = hex('onAccent');
+---
+
+<figure class:list={['plate', className]}>
+  <svg
+    viewBox="0 0 320 200"
+    role="img"
+    aria-label={theme.title + ' 的原创插图，使用本主题自身的颜色绘制'}
+    fill="none"
+  >
+    {
+      variant === 'ruyi' && (
+        <g>
+          {/* axis */}
+          <path d="M160 22v156" stroke={line} stroke-width="1" opacity="0.5" />
+          {/* horns */}
+          <path
+            d="M96 44c-14-14-30-14-40-4 12 2 20 8 26 18"
+            stroke={soft}
+            stroke-width="1.4"
+            opacity="0.8"
+          />
+          <path
+            d="M224 44c14-14 30-14 40-4-12 2-20 8-26 18"
+            stroke={soft}
+            stroke-width="1.4"
+            opacity="0.8"
+          />
+          {/* brows */}
+          <path d="M84 74c18-10 38-10 52 2" stroke={line} stroke-width="2" opacity="0.75" />
+          <path d="M236 74c-18-10-38-10-52 2" stroke={line} stroke-width="2" opacity="0.75" />
+          {/* eyes */}
+          <ellipse cx="120" cy="96" rx="30" ry="16" fill={accent} opacity="0.92" />
+          <ellipse cx="200" cy="96" rx="30" ry="16" fill={accent} opacity="0.92" />
+          <ellipse cx="120" cy="96" rx="11" ry="7" fill={bright} opacity="0.9" />
+          <ellipse cx="200" cy="96" rx="11" ry="7" fill={bright} opacity="0.9" />
+          {/* nose bridge */}
+          <path d="M160 112c-8 8-12 16-12 24h24c0-8-4-16-12-24z" stroke={line} stroke-width="1.2" opacity="0.7" />
+          {/* fangs */}
+          <path d="M126 138l8 20 8-20" stroke={line} stroke-width="1.2" opacity="0.6" />
+          <path d="M194 138l-8 20-8-20" stroke={line} stroke-width="1.2" opacity="0.6" />
+          {/* key-fret band */}
+          <g stroke={soft} stroke-width="1.3" opacity="0.75">
+            <path d="M20 176h26v-12h-18v8h10" />
+            <path d="M54 176h26v-12H62v8h10" />
+            <path d="M88 176h26v-12H96v8h10" />
+            <path d="M300 176h-26v-12h18v8h-10" />
+            <path d="M266 176h-26v-12h18v8h-10" />
+            <path d="M232 176h-26v-12h18v8h-10" />
+          </g>
+        </g>
+      )
+    }
+
+    {
+      variant === 'glaze' && (
+        <g>
+          {/* vessel */}
+          <path
+            d="M78 62c0 44 12 74 26 92h112c14-18 26-48 26-92"
+            stroke={line}
+            stroke-width="1.4"
+            opacity="0.8"
+          />
+          <ellipse cx="160" cy="62" rx="82" ry="17" stroke={line} stroke-width="1.4" opacity="0.85" />
+          <ellipse cx="160" cy="62" rx="68" ry="12" fill={accent} opacity="0.28" />
+          {/* glaze pool */}
+          <path
+            d="M104 128c14 10 38 16 56 16s42-6 56-16"
+            stroke={accent}
+            stroke-width="2"
+            opacity="0.75"
+          />
+          {/* crackle */}
+          <g stroke={soft} stroke-width="0.9" opacity="0.6">
+            <path d="M120 76l14 18-8 16 18 14" />
+            <path d="M196 74l-12 20 10 14-16 16" />
+            <path d="M148 96l10 12-6 14" />
+            <path d="M110 146l16 10 12-8 14 10 16-8 14 8" />
+          </g>
+          {/* highlight */}
+          <path d="M116 80c-2 26 2 46 8 62" stroke={bright} stroke-width="6" opacity="0.16" />
+          {/* foot */}
+          <path d="M132 154h56l-8 18h-40z" stroke={line} stroke-width="1.2" opacity="0.7" />
+          <path d="M60 182h200" stroke={soft} stroke-width="1" opacity="0.5" />
+        </g>
+      )
+    }
+
+    {
+      variant === 'orbit' && (
+        <g>
+          {/* orbits */}
+          <g stroke={line} stroke-width="1" opacity="0.55">
+            <ellipse cx="160" cy="100" rx="132" ry="46" transform="rotate(-16 160 100)" />
+            <ellipse cx="160" cy="100" rx="98" ry="34" transform="rotate(-16 160 100)" opacity="0.7" />
+            <ellipse cx="160" cy="100" rx="62" ry="22" transform="rotate(-16 160 100)" opacity="0.5" />
+          </g>
+          {/* stars */}
+          <g fill={soft}>
+            <circle cx="42" cy="46" r="1.6" opacity="0.8" />
+            <circle cx="72" cy="160" r="1.3" opacity="0.6" />
+            <circle cx="268" cy="52" r="1.8" opacity="0.7" />
+            <circle cx="286" cy="140" r="1.2" opacity="0.6" />
+            <circle cx="112" cy="30" r="1.1" opacity="0.5" />
+            <circle cx="210" cy="176" r="1.4" opacity="0.6" />
+          </g>
+          {/* core */}
+          <circle cx="160" cy="100" r="22" stroke={accent} stroke-width="1" opacity="0.5" />
+          <circle cx="160" cy="100" r="11" fill={accent} opacity="0.22" />
+          <circle cx="160" cy="100" r="4.5" fill={bright} />
+          {/* nodes */}
+          <circle cx="292" cy="66" r="5" fill={accent} />
+          <circle cx="292" cy="66" r="10" stroke={accent} stroke-width="0.8" opacity="0.45" />
+          <circle cx="42" cy="140" r="3.4" fill={accent} opacity="0.8" />
+          <circle cx="206" cy="42" r="2.6" fill={soft} />
+          {/* sight line */}
+          <path d="M160 100L292 66" stroke={accent} stroke-width="0.9" opacity="0.55" />
+        </g>
+      )
+    }
+  </svg>
+  <figcaption class="plate__caption mono">
+    PLATE · {theme.title}
+  </figcaption>
+</figure>
+
+<style>
+  .plate {
+    margin: 0;
+  }
+
+  .plate svg {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--orbit-faint);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--panel) 85%, transparent), transparent 70%),
+      var(--space);
+  }
+
+  .plate__caption {
+    margin-top: 8px;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    color: var(--text-3);
+  }
+</style>

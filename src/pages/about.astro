@@ -11,7 +11,7 @@ import { collections } from '../data/collections';
 >
   <section class="page-head">
     <div class="wrap wrap--wide">
-      <p class="eyebrow eyebrow--accent">About</p>
+      <p class="eyebrow eyebrow--gold">About · 关于</p>
       <h1 class="page-head__title">关于 Theme Atlas</h1>
       <p class="lede">
         {site.descriptionEn}
@@ -56,8 +56,8 @@ import { collections } from '../data/collections';
             </li>
             <li>
               <strong>克制的视觉。</strong>
-              纸色底、细线、大量留白，强调色只用在需要被看见的地方。
-              不堆渐变，不堆圆角卡片，不用装饰性动画。
+              深空底色、细线、大量留白，强调色只用在需要被看见的地方。
+              不堆渐变，不堆圆角卡片，不用装饰性动画；站内全部图形都是为本站绘制的原创 SVG。
             </li>
           </ul>
         </section>
@@ -134,7 +134,7 @@ import { collections } from '../data/collections';
 <style>
   .page-head {
     padding-block: clamp(48px, 7vw, 100px) clamp(16px, 2vw, 28px);
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--orbit-faint);
   }
 
   .page-head__title {
@@ -160,18 +160,18 @@ import { collections } from '../data/collections';
     gap: 12px;
     font-size: var(--step-2);
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--orbit-faint);
     margin-bottom: 18px;
   }
 
   .prose-block__index {
     font-size: 0.68rem;
     letter-spacing: 0.14em;
-    color: var(--cinnabar);
+    color: var(--gold);
   }
 
   .prose-block p {
-    color: var(--ink-2);
+    color: var(--text-2);
     line-height: 1.9;
   }
 
@@ -180,7 +180,7 @@ import { collections } from '../data/collections';
   }
 
   .prose-block strong {
-    color: var(--ink);
+    color: var(--text);
     font-weight: 600;
   }
 
@@ -192,7 +192,7 @@ import { collections } from '../data/collections';
     position: relative;
     padding-left: 22px;
     margin-bottom: 14px;
-    color: var(--ink-2);
+    color: var(--text-2);
     line-height: 1.85;
   }
 
@@ -203,7 +203,7 @@ import { collections } from '../data/collections';
     top: 0.78em;
     width: 12px;
     height: 1px;
-    background: var(--cinnabar);
+    background: var(--gold);
   }
 
   .notes {
@@ -215,7 +215,7 @@ import { collections } from '../data/collections';
     position: relative;
     padding-left: 22px;
     margin-bottom: 10px;
-    color: var(--ink-2);
+    color: var(--text-2);
     line-height: 1.8;
     font-size: 0.94rem;
   }
@@ -227,7 +227,7 @@ import { collections } from '../data/collections';
     top: 0.72em;
     width: 8px;
     height: 1px;
-    background: var(--rule-strong);
+    background: var(--orbit);
   }
 
   .about__side {
@@ -239,8 +239,8 @@ import { collections } from '../data/collections';
   }
 
   .fact {
-    border: 1px solid var(--rule);
-    background: var(--paper-raised);
+    border: 1px solid var(--orbit-faint);
+    background: var(--panel);
     border-radius: var(--radius);
     padding: 18px;
   }
@@ -257,12 +257,12 @@ import { collections } from '../data/collections';
   }
 
   .fact__value a:hover {
-    color: var(--cinnabar);
+    color: var(--gold);
   }
 
   .fact__note {
     font-size: 0.78rem;
-    color: var(--ink-3);
+    color: var(--text-3);
     line-height: 1.7;
   }
 
@@ -273,9 +273,9 @@ import { collections } from '../data/collections';
 
   .fact__list li {
     font-size: 0.86rem;
-    color: var(--ink-2);
+    color: var(--text-2);
     padding: 4px 0;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--orbit-faint);
   }
 
   .fact__list li:last-child {
@@ -287,7 +287,7 @@ import { collections } from '../data/collections';
     min-width: 46px;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
-    color: var(--cinnabar);
+    color: var(--glow);
   }
 
   @media (max-width: 900px) {

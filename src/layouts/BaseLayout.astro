@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import StarField from '../components/StarField.astro';
 import { site } from '../site.config';
 import { absoluteUrl, withBase } from '../lib/url';
 
@@ -25,7 +26,7 @@ const canonical = absoluteUrl(Astro.url.pathname);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
-    <meta name="theme-color" content="#f3f0e8" />
+    <meta name="theme-color" content="#080D1C" />
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content="website" />
@@ -35,10 +36,10 @@ const canonical = absoluteUrl(Astro.url.pathname);
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={absoluteUrl(ogImage)} />
     <meta name="twitter:card" content="summary_large_image" />
-
   </head>
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
+    <StarField />
     <SiteHeader />
     <main id="main">
       <slot />
@@ -46,4 +47,14 @@ const canonical = absoluteUrl(Astro.url.pathname);
     <SiteFooter />
   </body>
 </html>
+
+<style is:global>
+  /* the sky sits behind everything; page content stacks above it */
+  .site-header,
+  main,
+  .site-footer {
+    position: relative;
+    z-index: 1;
+  }
+</style>
 

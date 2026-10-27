@@ -1,0 +1,156 @@
+---
+import type { Collection } from '../data/types';
+import { themes } from '../data/themes';
+import { arrangementFor, arrangePalette } from '../lib/arrangement';
+import { withBase } from '../lib/url';
+import CollectionMotif from './CollectionMotif.astro';
+import PaletteStrip from './PaletteStrip.astro';
+
+interface Props {
+  collection: Collection;
+  index: number;
+}
+
+const { collection, index } = Astro.props;
+
+const list = themes.filter((t) => t.collection === collection.id);
+const rule = arrangementFor(collection.id);
+const representative = list[0] ? arrangePalette(list[0]) : [];
+const codes = ['MYTH', 'CELADON', 'ORBIT'];
+---
+
+<article class="series" id={collection.id} style={'--tone:' + collection.accent}>
+  <header class="series__head">
+    <span class="series__code mono">
+      SERIES {String(index + 1).padStart(2, '0')} / {codes[index % codes.length]}
+    </span>
+    <span class="series__count mono">{list.length} THEMES</span>
+  </header>
+
+  <CollectionMotif
+    variant={collection.motif}
+    accent={collection.accent}
+    accentAlt={collection.accentAlt}
+    class="series__motif"
+  />
+
+  <h3 class="series__title">{collection.title}</h3>
+  <p class="series__en mono">{collection.titleEn}</p>
+  <p class="series__tagline">{collection.tagline}</p>
+  <p class="series__desc">{collection.description}</p>
+
+  {
+    representative.length > 0 && (
+      <div class="series__palette">
+        <PaletteStrip palette={representative} variant="card" />
+        <p class="series__palette-meta mono">
+          <span>代表配色 / {list[0].title}</span>
+          <span>{rule.label}</span>
+        </p>
+      </div>
+    )
+  }
+
+  <a class="series__link" href={withBase('/collections#' + collection.id)}>
+    进入系列 <span aria-hidden="true">→</span>
+  </a>
+</article>
+
+<style>
+  .series {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 0 26px;
+    border-top: 1px solid var(--orbit-faint);
+    transition: border-top-color 0.2s var(--ease);
+  }
+
+  .series:hover {
+    border-top-color: var(--tone);
+  }
+
+  .series__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--text-3);
+  }
+
+  .series__code {
+    color: var(--tone);
+  }
+
+  .series__motif {
+    width: 100%;
+    height: 104px;
+    margin: 6px 0 4px;
+  }
+
+  .series__title {
+    font-size: var(--step-2);
+    color: var(--text);
+  }
+
+  .series__en {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .series__tagline {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    color: var(--text);
+    margin-top: 6px;
+  }
+
+  .series__desc {
+    color: var(--text-2);
+    font-size: 0.84rem;
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  /* the representative palette is the subject of the panel */
+  .series__palette {
+    margin-top: 14px;
+  }
+
+  .series__palette-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+  }
+
+  .series__link {
+    margin-top: 16px;
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-2);
+    border-bottom: 1px solid var(--orbit);
+    padding-bottom: 3px;
+    transition: color 0.18s var(--ease), border-color 0.18s var(--ease);
+  }
+
+  .series__link:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+</style>
+

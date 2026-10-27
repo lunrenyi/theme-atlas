@@ -1,0 +1,121 @@
+---
+/**
+ * The deep-space ground behind every page: a deterministic star field, a few
+ * constellation chains, and two wide orbital arcs. Drawn as one inline SVG so
+ * it costs a single paint and never shifts the layout.
+ *
+ * Everything is generated from a fixed seed, so the sky is identical on every
+ * build and needs no runtime JavaScript.
+ */
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const rand = mulberry32(20261028);
+
+const stars = Array.from({ length: 120 }, () => ({
+  x: rand() * 100,
+  y: rand() * 100,
+  r: 0.06 + rand() * 0.26,
+  o: 0.1 + rand() * 0.5,
+}));
+
+/** Three short constellation chains, each with a lit anchor node. */
+const chains = Array.from({ length: 3 }, (_, ci) => {
+  const cx = 14 + rand() * 72;
+  const cy = 12 + rand() * 74;
+  const count = 4 + Math.floor(rand() * 2);
+  const points = Array.from({ length: count }, (_, i) => ({
+    x: cx + (rand() - 0.5) * 13 * (i + 1),
+    y: cy + (rand() - 0.5) * 9 * (i + 1),
+    o: 0.2 + rand() * 0.35,
+    anchor: i === 0,
+  }));
+  return { points, o: 0.16 + ci * 0.05 };
+});
+---
+
+<div class="sky" aria-hidden="true">
+  <div class="sky__nebula"></div>
+  <svg class="sky__svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <g stroke="#344363" fill="none" stroke-width="0.06" opacity="0.5">
+      <ellipse cx="52" cy="48" rx="46" ry="17" transform="rotate(-24 52 48)"></ellipse>
+      <ellipse cx="52" cy="48" rx="38" ry="31" transform="rotate(38 52 48)"></ellipse>
+    </g>
+
+    {
+      chains.map((chain) => (
+        <g>
+          <polyline
+            points={chain.points.map((p) => p.x + ',' + p.y).join(' ')}
+            fill="none"
+            stroke="#344363"
+            stroke-width="0.05"
+            opacity={chain.o}
+          />
+          {chain.points.map((p) => (
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={p.anchor ? 0.24 : 0.14}
+              fill={p.anchor ? '#76d8df' : '#8391b5'}
+              opacity={p.anchor ? p.o + 0.3 : p.o}
+            />
+          ))}
+        </g>
+      ))
+    }
+
+    {
+      stars.map((s) => (
+        <circle cx={s.x} cy={s.y} r={s.r} fill="#eaf0ff" opacity={s.o} />
+      ))
+    }
+  </svg>
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* two very soft nebula washes; kept below 10% so text contrast is untouched */
+  .sky__nebula {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        58vw 46vw at 78% 8%,
+        color-mix(in srgb, var(--quantum) 14%, transparent),
+        transparent 68%
+      ),
+      radial-gradient(
+        52vw 40vw at 8% 82%,
+        color-mix(in srgb, var(--glow) 10%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        70vw 50vw at 50% 120%,
+        color-mix(in srgb, var(--gold) 8%, transparent),
+        transparent 72%
+      );
+  }
+
+  .sky__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+

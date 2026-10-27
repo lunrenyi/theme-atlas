@@ -1,34 +1,36 @@
 /* ============================================================
-   Theme Atlas — design system
-   Cultural archive × modern colour laboratory.
-   Paper ground, ink type, hairline rules, one accent at a time.
+   Theme Atlas — Stellar Atlas design system
+
+   A deep-space instrument panel: near-black blue ground, thin orbit
+   rules, and three accents (starlight gold, quantum violet, glow cyan)
+   used only where they carry meaning.
    ============================================================ */
 
 :root {
-  /* --- surfaces: warm paper, never pure white ------------------- */
-  --paper: #f3f0e8;
-  --paper-raised: #faf8f2;
-  --paper-sunken: #e9e4d8;
-  --paper-deep: #e1dbcb;
+  /* --- ground ---------------------------------------------------- */
+  --space: #080d1c;
+  --space-2: #0b1226;
+  --panel: #111b35;
+  --panel-2: #16223f;
+  --panel-3: #1c2a4a;
 
-  /* --- ink: warm blacks, never #000 --------------------------- */
-  --ink: #1b1815;
-  --ink-2: #57504a;
-  --ink-3: #8b8377;
-  --ink-invert: #f7f4ec;
+  /* --- structure ------------------------------------------------- */
+  --orbit: #344363;
+  --orbit-dim: #223052;
+  --orbit-faint: #1a2542;
 
-  /* --- rules: hairlines do the structural work ---------------- */
-  --rule: #ddd6c7;
-  --rule-2: #c9c0ad;
-  --rule-strong: #a9a08d;
+  /* --- accents: each means something ----------------------------- */
+  --gold: #dcc38b; /* starlight gold — brand, primary actions */
+  --quantum: #9885ff; /* quantum violet — focus, links, data */
+  --glow: #76d8df; /* glow cyan — live values, status */
+  --alert: #e8785f; /* signal red — failures and warnings only */
 
-  /* --- accents: used sparingly, one family at a time ----------- */
-  --cinnabar: #b03a2b;
-  --cinnabar-soft: #d8a99f;
-  --celadon: #4e7f70;
-  --gold: #a87f3c;
+  /* --- type ------------------------------------------------------ */
+  --text: #eaf0ff;
+  --text-2: #a6b4d6;
+  --text-3: #8391b5;
+  --text-invert: #080d1c;
 
-  /* --- typography ---------------------------------------------- */
   --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
     'Songti SC', 'Source Han Serif SC', 'Noto Serif CJK SC', serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
@@ -36,21 +38,23 @@
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
     'Liberation Mono', monospace;
 
-  /* --- metrics -------------------------------------------------- */
-  --container: 1220px;
+  /* --- metrics --------------------------------------------------- */
+  --container: 1240px;
   --gutter: clamp(20px, 4.5vw, 64px);
-  --section-gap: clamp(52px, 6.5vw, 104px);
-  --radius: 3px;
+  --section-gap: clamp(56px, 7vw, 112px);
+  --radius: 4px;
+  --radius-sm: 2px;
 
-  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
-  --step-0: clamp(0.95rem, 0.92rem + 0.14vw, 1.03rem);
-  --step-1: clamp(1.1rem, 1.04rem + 0.3vw, 1.25rem);
-  --step-2: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
-  --step-3: clamp(1.8rem, 1.5rem + 1.4vw, 2.7rem);
-  --step-4: clamp(2.4rem, 1.7rem + 3.2vw, 4.4rem);
-  --step-5: clamp(3rem, 1.6rem + 6vw, 7rem);
+  --step--1: clamp(0.75rem, 0.73rem + 0.1vw, 0.81rem);
+  --step-0: clamp(0.92rem, 0.9rem + 0.12vw, 1rem);
+  --step-1: clamp(1.08rem, 1.03rem + 0.26vw, 1.22rem);
+  --step-2: clamp(1.3rem, 1.17rem + 0.62vw, 1.7rem);
+  --step-3: clamp(1.7rem, 1.45rem + 1.2vw, 2.55rem);
+  --step-4: clamp(2.2rem, 1.6rem + 2.9vw, 4rem);
+  --step-5: clamp(2.9rem, 1.5rem + 5.6vw, 6.4rem);
 
   --ease: cubic-bezier(0.2, 0.6, 0.3, 1);
+  color-scheme: dark;
 }
 
 *,
@@ -62,19 +66,22 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  scroll-padding-top: 92px;
 }
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--space);
+  color: var(--text);
   font-family: var(--font-sans);
   font-size: var(--step-0);
   line-height: 1.75;
   font-feature-settings: 'kern' 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
 }
 
 h1,
@@ -83,7 +90,7 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.18;
+  line-height: 1.16;
   letter-spacing: -0.012em;
   margin: 0;
   text-wrap: balance;
@@ -101,15 +108,15 @@ ol {
 
 a {
   color: inherit;
-  text-decoration-color: var(--rule-2);
+  text-decoration-color: var(--orbit);
   text-underline-offset: 0.28em;
   text-decoration-thickness: 1px;
   transition: color 0.18s var(--ease), text-decoration-color 0.18s var(--ease);
 }
 
 a:hover {
-  color: var(--cinnabar);
-  text-decoration-color: var(--cinnabar);
+  color: var(--gold);
+  text-decoration-color: var(--gold);
 }
 
 img,
@@ -125,15 +132,19 @@ select {
   color: inherit;
 }
 
+code {
+  font-family: var(--font-mono);
+}
+
 ::selection {
-  background: var(--cinnabar);
-  color: var(--ink-invert);
+  background: var(--quantum);
+  color: var(--text-invert);
 }
 
 :focus-visible {
-  outline: 2px solid var(--cinnabar);
+  outline: 2px solid var(--quantum);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
 /* --- layout primitives ---------------------------------------- */
@@ -146,41 +157,89 @@ select {
 }
 
 .wrap--wide {
-  max-width: 1440px;
+  max-width: 1400px;
 }
 
 .section {
   padding-block: var(--section-gap);
+  position: relative;
 }
 
 .rule {
   border: 0;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--orbit-dim);
   margin: 0;
 }
 
-.rule--strong {
-  border-top-color: var(--rule-2);
+/* An instrument scale: a hairline with tick marks, used to separate
+   major sections without adding boxes. */
+.scale {
+  height: 10px;
+  border-bottom: 1px solid var(--orbit-dim);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--orbit-dim) 0 1px,
+    transparent 1px 72px
+  );
+  background-size: 100% 5px;
+  background-repeat: no-repeat;
+  background-position: left top;
 }
 
-/* --- typographic helpers -------------------------------------- */
+/* --- typographic helpers --------------------------------------- */
 
 .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--step--1);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--text-3);
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.eyebrow--accent {
-  color: var(--cinnabar);
+.eyebrow--gold {
+  color: var(--gold);
+}
+
+.eyebrow--quantum {
+  color: var(--quantum);
+}
+
+.eyebrow--glow {
+  color: var(--glow);
+}
+
+/* a small index chip: 01 / 03 */
+.index {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  border: 1px solid var(--orbit-dim);
+  border-radius: var(--radius-sm);
+  padding: 2px 7px;
+  white-space: nowrap;
 }
 
 .mono {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+}
+
+/* HEX value with the leading hash dimmed */
+.hex {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+
+.hex b {
+  font-weight: 400;
+  color: var(--text-3);
 }
 
 .display {
@@ -192,18 +251,18 @@ select {
 
 .lede {
   font-size: var(--step-1);
-  line-height: 1.7;
-  color: var(--ink-2);
+  line-height: 1.72;
+  color: var(--text-2);
   max-width: 46ch;
 }
 
 .prose {
-  color: var(--ink-2);
+  color: var(--text-2);
   line-height: 1.85;
 }
 
 .prose strong {
-  color: var(--ink);
+  color: var(--text);
   font-weight: 600;
 }
 
@@ -212,21 +271,21 @@ select {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 24px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: clamp(32px, 4vw, 56px);
+  padding-bottom: 18px;
+  margin-bottom: clamp(28px, 3.4vw, 48px);
 }
 
 .section-head__title {
   font-size: var(--step-3);
+  margin-top: 10px;
 }
 
 .section-head__meta {
   font-family: var(--font-mono);
   font-size: var(--step--1);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--text-3);
   padding-bottom: 6px;
 }
 
@@ -245,50 +304,53 @@ select {
   align-items: center;
   gap: 8px;
   padding: 11px 20px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--orbit);
   background: transparent;
-  color: var(--ink);
+  color: var(--text);
   font-size: var(--step--1);
   font-family: var(--font-mono);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   transition: background 0.18s var(--ease), color 0.18s var(--ease),
     border-color 0.18s var(--ease);
 }
 
 .btn:hover {
-  background: var(--ink);
-  color: var(--ink-invert);
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--text-invert);
 }
 
 .btn--solid {
-  background: var(--ink);
-  color: var(--ink-invert);
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--text-invert);
 }
 
 .btn--solid:hover {
-  background: var(--cinnabar);
-  border-color: var(--cinnabar);
-  color: #fff;
+  background: var(--text);
+  border-color: var(--text);
+  border-color: var(--text);
+  color: var(--text-invert);
 }
 
 .btn--ghost {
-  border-color: var(--rule-2);
-  color: var(--ink-2);
+  border-color: var(--orbit-dim);
+  color: var(--text-2);
 }
 
 .btn--ghost:hover {
-  border-color: var(--ink);
+  border-color: var(--gold);
   background: transparent;
-  color: var(--ink);
+  color: var(--gold);
 }
 
 .btn--sm {
-  padding: 7px 13px;
-  font-size: 0.7rem;
+  padding: 8px 14px;
+  font-size: 0.68rem;
 }
 
 /* --- form fields ------------------------------------------------ */
@@ -297,15 +359,15 @@ select {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--orbit-dim);
+  border-radius: var(--radius-sm);
   padding: 0 12px;
   transition: border-color 0.18s var(--ease);
 }
 
 .field:focus-within {
-  border-color: var(--ink);
+  border-color: var(--quantum);
 }
 
 .field input {
@@ -319,12 +381,52 @@ select {
 }
 
 .field input::placeholder {
-  color: var(--ink-3);
+  color: var(--text-3);
 }
 
 .field__icon {
   flex: none;
-  color: var(--ink-3);
+  color: var(--text-3);
+}
+
+/* --- status tags ------------------------------------------------ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border: 1px solid var(--orbit-dim);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.tag--ok {
+  color: var(--glow);
+  border-color: color-mix(in srgb, var(--glow) 42%, transparent);
+}
+
+.tag--fan {
+  color: var(--gold);
+  border-color: color-mix(in srgb, var(--gold) 46%, transparent);
+}
+
+.tag--warn {
+  color: var(--quantum);
+  border-color: color-mix(in srgb, var(--quantum) 48%, transparent);
+}
+
+.tag__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
 }
 
 /* --- misc -------------------------------------------------------- */
@@ -346,8 +448,8 @@ select {
   left: 12px;
   top: -60px;
   z-index: 100;
-  background: var(--ink);
-  color: var(--ink-invert);
+  background: var(--gold);
+  color: var(--text-invert);
   padding: 10px 16px;
   font-size: var(--step--1);
   text-decoration: none;

@@ -1,0 +1,337 @@
+---
+/**
+ * The hero star map: one core body, three orbits, one node per collection.
+ * Original geometry — the node positions are computed from the orbit
+ * equations at build time so each marker sits exactly on its ring.
+ */
+import type { Collection } from '../data/types';
+import { themes } from '../data/themes';
+import { withBase } from '../lib/url';
+
+interface Props {
+  collections: Collection[];
+}
+
+const { collections } = Astro.props;
+
+interface Orbit {
+  rx: number;
+  ry: number;
+  rot: number;
+}
+
+const ORBITS: Orbit[] = [
+  { rx: 35, ry: 13, rot: -20 },
+  { rx: 26, ry: 22, rot: 42 },
+  { rx: 42, ry: 16, rot: 68 },
+];
+
+/** Where a marker sits on an ellipse, in map percentages. */
+function pointOn(orbit: Orbit, angleDeg: number) {
+  const a = (angleDeg * Math.PI) / 180;
+  const r = (orbit.rot * Math.PI) / 180;
+  const x = orbit.rx * Math.cos(a);
+  const y = orbit.ry * Math.sin(a);
+  return {
+    x: 50 + x * Math.cos(r) - y * Math.sin(r),
+    y: 50 + y * Math.cos(r) + x * Math.sin(r),
+  };
+}
+
+const NODE_PLAN = [
+  { orbit: 1, angle: 150, place: 'left' },
+  { orbit: 0, angle: 20, place: 'below' },
+  { orbit: 2, angle: 150, place: 'right' },
+];
+
+const nodes = collections.map((collection, i) => {
+  const plan = NODE_PLAN[i % NODE_PLAN.length];
+  const point = pointOn(ORBITS[plan.orbit], plan.angle);
+  const theme = themes.find((t) => t.collection === collection.id);
+  const swatches = theme ? theme.palette.slice(0, 4) : [];
+  return {
+    collection,
+    plan,
+    point,
+    swatches,
+    count: themes.filter((t) => t.collection === collection.id).length,
+  };
+});
+
+/** A short code for each series, used as a technical label. */
+const codes = ['MYTH', 'CELADON', 'ORBIT'];
+---
+
+<div class="starmap">
+  <svg class="starmap__plot" viewBox="0 0 100 100" aria-hidden="true" fill="none">
+    <!-- faint polar grid -->
+    <g stroke="#344363" stroke-width="0.08" opacity="0.5">
+      <circle cx="50" cy="50" r="46"></circle>
+      <circle cx="50" cy="50" r="30"></circle>
+      <circle cx="50" cy="50" r="16"></circle>
+      <path d="M50 4v92M4 50h92"></path>
+    </g>
+
+    <!-- the orbits -->
+    {
+      ORBITS.map((orbit, i) => (
+        <ellipse
+          cx="50"
+          cy="50"
+          rx={orbit.rx}
+          ry={orbit.ry}
+          transform={'rotate(' + orbit.rot + ' 50 50)'}
+          stroke="#344363"
+          stroke-width="0.13"
+          opacity={0.7 - i * 0.13}
+        />
+      ))
+    }
+
+    <!-- orbit ticks -->
+    {
+      ORBITS.map((orbit) =>
+        [0, 60, 120, 180, 240, 300].map((deg) => {
+          const p = pointOn(orbit, deg);
+          return (
+            <circle cx={p.x} cy={p.y} r="0.17" fill="#344363" opacity="0.9" />
+          );
+        }),
+      )
+    }
+
+    <!-- the core body -->
+    <circle cx="50" cy="50" r="7.5" stroke="#DCC38B" stroke-width="0.09" opacity="0.45"></circle>
+    <circle cx="50" cy="50" r="3.4" fill="#DCC38B" opacity="0.16"></circle>
+    <circle cx="50" cy="50" r="1.5" fill="#DCC38B" opacity="0.85"></circle>
+  </svg>
+
+  <div class="starmap__nodes">
+    {
+      nodes.map((node, i) => (
+        <a
+          class:list={['starmap__node', 'starmap__node--' + node.plan.place]}
+          style={
+            '--x:' + node.point.x.toFixed(2) + '%;' +
+            '--y:' + node.point.y.toFixed(2) + '%;' +
+            '--tone:' + node.collection.accent
+          }
+          href={withBase('/collections#' + node.collection.id)}
+        >
+          <span class="starmap__marker" aria-hidden="true">
+            <i class="starmap__marker-ring"></i>
+            <i class="starmap__marker-core"></i>
+          </span>
+
+          <span class="starmap__label">
+            <span class="starmap__code mono">{codes[i % codes.length]} / {String(i + 1).padStart(2, '0')}</span>
+            <span class="starmap__name">{node.collection.short}</span>
+            <span class="starmap__strip" aria-hidden="true">
+              {node.swatches.map((c) => (
+                <i style={'--swatch:' + c.hex} />
+              ))}
+            </span>
+            <span class="sr-only">
+              {' ' + node.collection.title + '系列，' + node.count + ' 套主题'}
+            </span>
+          </span>
+        </a>
+      ))
+    }
+
+    <p class="starmap__core-label mono" aria-hidden="true">
+      <span>THEME ATLAS</span>
+      <span>CORE / 核心星体</span>
+    </p>
+  </div>
+</div>
+
+<style>
+  .starmap {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    margin-inline: auto;
+    aspect-ratio: 1;
+  }
+
+  .starmap__plot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .starmap__nodes {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ---- the core label sits under the centre body ---- */
+  .starmap__core-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 26px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.56rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    opacity: 0.72;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .starmap__core-label span:last-child {
+    color: var(--text-3);
+    letter-spacing: 0.12em;
+  }
+
+  /* ---- markers ---- */
+  .starmap__node {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-2);
+    z-index: 2;
+  }
+
+  .starmap__node--left {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+
+  .starmap__node--right,
+  .starmap__node--below {
+    text-align: left;
+  }
+
+  .starmap__node--below {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .starmap__marker {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex: none;
+    display: grid;
+    place-items: center;
+  }
+
+  .starmap__marker-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--tone);
+    border-radius: 50%;
+    opacity: 0.75;
+    transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+  }
+
+  .starmap__marker-core {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tone);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 18%, transparent);
+    transition: transform 0.25s var(--ease);
+  }
+
+  .starmap__node:hover .starmap__marker-ring,
+  .starmap__node:focus-visible .starmap__marker-ring {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+
+  .starmap__node:hover .starmap__marker-core,
+  .starmap__node:focus-visible .starmap__marker-core {
+    transform: scale(1.2);
+  }
+
+  .starmap__node:hover .starmap__name,
+  .starmap__node:focus-visible .starmap__name {
+    color: var(--text);
+  }
+
+  .starmap__node:focus-visible {
+    outline: 1px solid var(--quantum);
+    outline-offset: 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ---- labels ---- */
+  .starmap__label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .starmap__node--below .starmap__label {
+    align-items: center;
+  }
+
+  .starmap__code {
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  .starmap__name {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    line-height: 1.2;
+    color: var(--text-2);
+    white-space: nowrap;
+    transition: color 0.2s var(--ease);
+  }
+
+  .starmap__strip {
+    display: inline-flex;
+    gap: 2px;
+    height: 8px;
+  }
+
+  .starmap__strip i {
+    width: 16px;
+    background: var(--swatch);
+    box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.12);
+  }
+
+  @media (max-width: 900px) {
+    .starmap {
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .starmap {
+      max-width: 340px;
+    }
+
+    .starmap__name {
+      font-size: 0.86rem;
+    }
+
+    .starmap__code {
+      font-size: 0.52rem;
+      letter-spacing: 0.14em;
+    }
+
+    .starmap__strip i {
+      width: 12px;
+    }
+  }
+</style>
+

@@ -1,0 +1,282 @@
+---
+/**
+ * The pinned colour readout of a theme: the key colour as a solid block and a
+ * chart whose bars are as tall as the relative luminance of each colour.
+ *
+ * It is placed directly inside the scrolling console on the theme page, so it
+ * stays visible while the story is read — the colours never leave the screen.
+ */
+import type { Theme } from '../data/types';
+import { luminance } from '../lib/color';
+
+interface Props {
+  theme: Theme;
+}
+
+const { theme } = Astro.props;
+
+const accent = theme.palette.find((c) => c.role === 'accent') ?? theme.palette[0];
+const onAccent = theme.palette.find((c) => c.role === 'onAccent');
+
+const lums = theme.palette.map((c) => luminance(c.hex));
+const peak = Math.max(...lums, 0.0001);
+const bars = theme.palette.map((color, i) => ({
+  color,
+  height: 14 + (lums[i] / peak) * 86,
+}));
+---
+
+<div class="hud">
+  <div class="hud__head">
+    <h2 id="palette-heading" class="hud__heading">
+      配色 <span class="mono hud__heading-en">/ PALETTE</span>
+    </h2>
+    <p class="hud__sub mono">
+      HEX DATA · {String(theme.palette.length).padStart(2, '0')} COLORS · 7 ROLES
+    </p>
+  </div>
+
+  <div class="hud__body">
+    <div
+      class="hud__key"
+      style={'--swatch:' + accent.hex + ';--on:' + (onAccent?.hex ?? '#ffffff')}
+    >
+      <span class="hud__key-role mono">关键色 · ACCENT</span>
+      <span class="hud__key-name">{accent.name}</span>
+      <span class="hud__key-hex mono">{accent.hex}</span>
+    </div>
+
+    <div class="hud__chart">
+      <p class="hud__chart-label mono">相对明度 · LUMINANCE</p>
+      <div class="hud__bars">
+        {
+          bars.map((bar, i) => (
+            <button
+              type="button"
+              class="hud__bar"
+              style={'--swatch:' + bar.color.hex + ';--h:' + bar.height.toFixed(1) + '%'}
+              data-copy-color={bar.color.hex}
+              aria-label={'复制颜色 ' + bar.color.name + ' ' + bar.color.hex}
+            >
+              <span class="hud__bar-fill" aria-hidden="true"></span>
+              <span class="hud__bar-tip mono" aria-hidden="true">{bar.color.name}</span>
+              <span class="hud__bar-index mono" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </button>
+          ))
+        }
+      </div>
+      <p class="hud__chart-hint mono">点击色条复制色值</p>
+    </div>
+
+    <p class="hud__status mono" role="status" aria-live="polite" data-palette-status></p>
+  </div>
+</div>
+
+<style>
+  .hud {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: var(--panel);
+    padding: 16px 0 14px;
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .hud__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .hud__heading {
+    font-size: var(--step-1);
+    color: var(--text);
+  }
+
+  .hud__heading-en {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--text-3);
+  }
+
+  .hud__sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  .hud__body {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  /* the key colour, as a solid block big enough to read as a colour */
+  .hud__key {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2px;
+    min-height: 104px;
+    padding: 10px 12px;
+    background: var(--swatch);
+    color: var(--on);
+    border-radius: var(--radius-sm);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14);
+  }
+
+  .hud__key-role {
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+    opacity: 0.82;
+  }
+
+  .hud__key-name {
+    font-family: var(--font-display);
+    font-size: 1.16rem;
+    line-height: 1.1;
+  }
+
+  .hud__key-hex {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    opacity: 0.86;
+  }
+
+  /* the luminance chart */
+  .hud__chart {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .hud__chart-label {
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+
+  .hud__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 76px;
+    border-bottom: 1px solid var(--orbit-dim);
+  }
+
+  .hud__bar {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .hud__bar-fill {
+    display: block;
+    width: 100%;
+    height: var(--h);
+    background: var(--swatch);
+    box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.14);
+    transition: filter 0.18s var(--ease);
+  }
+
+  .hud__bar:hover .hud__bar-fill,
+  .hud__bar:focus-visible .hud__bar-fill {
+    filter: brightness(1.16);
+  }
+
+  .hud__bar:focus-visible {
+    outline: 1px solid var(--quantum);
+    outline-offset: 3px;
+  }
+
+  .hud__bar-index {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -17px;
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    text-align: center;
+    color: var(--text-3);
+  }
+
+  .hud__bar-tip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - 4px);
+    transform: translate(-50%, 4px);
+    padding: 3px 7px;
+    background: var(--panel-3);
+    border: 1px solid var(--orbit);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 0.6rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
+    z-index: 3;
+  }
+
+  .hud__bar:hover .hud__bar-tip,
+  .hud__bar:focus-visible .hud__bar-tip {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .hud__chart-hint {
+    margin-top: 20px;
+    font-size: 0.54rem;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+  }
+
+  .hud__status {
+    margin-top: 10px;
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    color: var(--glow);
+    min-height: 1.2em;
+  }
+
+  .hud__status:empty {
+    min-height: 0;
+  }
+
+  @media (max-width: 560px) {
+    .hud__body {
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .hud__key {
+      min-height: 92px;
+      padding: 8px 10px;
+    }
+
+    .hud__key-name {
+      font-size: 1rem;
+    }
+  }
+
+  /* on narrow screens the readout is not pinned any more */
+  @media (max-width: 1080px) {
+    .hud {
+      position: static;
+    }
+  }
+</style>

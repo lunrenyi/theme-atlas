@@ -9,6 +9,8 @@ import type { ToolAdapter } from './types';
  */
 export const adapters: ToolAdapter[] = [cssVariableAdapter, jsonAdapter];
 
+export { cssVariableAdapter, jsonAdapter };
+
 export function getAdapter(id: string): ToolAdapter | undefined {
   return adapters.find((a) => a.id === id);
 }

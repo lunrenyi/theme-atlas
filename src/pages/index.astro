@@ -1,15 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CollectionMotif from '../components/CollectionMotif.astro';
+import StarMap from '../components/StarMap.astro';
+import SeriesPanel from '../components/SeriesPanel.astro';
 import ThemeCard from '../components/ThemeCard.astro';
 import ThemeLibrary from '../components/ThemeLibrary.astro';
 import { collections } from '../data/collections';
 import { featuredThemes, themes } from '../data/themes';
-import { arrangementFor, arrangePalette } from '../lib/arrangement';
+import { cssVariableAdapter } from '../adapters';
 import { site } from '../site.config';
 import { withBase } from '../lib/url';
 
 const total = themes.length;
+const sample = themes[0];
+const sampleCss = cssVariableAdapter.render(sample);
 ---
 
 <BaseLayout title={site.name} description={site.description}>
@@ -17,122 +20,76 @@ const total = themes.length;
   <section class="hero">
     <div class="wrap wrap--wide">
       <div class="hero__kicker">
-        <span class="eyebrow">{site.edition}</span>
+        <span class="eyebrow eyebrow--gold">{site.edition}</span>
         <span class="eyebrow hero__kicker-mid">色谱档案 · 配色主题库</span>
         <span class="eyebrow hero__kicker-end">
-          {String(total).padStart(2, '0')} THEMES / {String(collections.length).padStart(2, '0')} COLLECTIONS
+          {String(collections.length).padStart(2, '0')} SERIES / {String(total).padStart(3, '0')} THEMES
         </span>
       </div>
 
       <div class="hero__grid">
         <div class="hero__lead">
-          <h1 class="display hero__title">Every color has a story.</h1>
+          <h1 class="display hero__title">
+            Every color<br />has a <em>story.</em>
+          </h1>
           <p class="lede hero__text">
-            从神话、瓷器与虚构世界里打捞颜色。每套主题先讲故事，再给出颜色——
+            从神话、瓷器与虚构世界打捞颜色。每套主题先讲故事，再给出颜色——
             名字、色值、语义角色与出处都写清楚，复制走就能用。
           </p>
           <div class="hero__actions">
             <a class="btn btn--solid" href={withBase('/#themes')}>浏览全部主题</a>
-            <a class="hero__more" href={withBase('/collections')}>按系列浏览 <span aria-hidden="true">→</span></a>
+            <a class="hero__more" href={withBase('/collections')}>
+              按系列浏览 <span aria-hidden="true">→</span>
+            </a>
           </div>
-        </div>
 
-        <aside class="hero__meta" aria-label="本站数据">
-          <p class="hero__meta-label eyebrow">档案内容 / Contents</p>
-          <dl class="hero__docket">
+          <dl class="hero__readout">
             <div>
-              <dt>系列</dt>
+              <dt class="eyebrow">系列</dt>
               <dd>{collections.length}</dd>
             </div>
             <div>
-              <dt>主题</dt>
+              <dt class="eyebrow">主题</dt>
               <dd>{total}</dd>
             </div>
             <div>
-              <dt>每套角色</dt>
+              <dt class="eyebrow">每套角色</dt>
               <dd>7</dd>
             </div>
             <div>
-              <dt>导出格式</dt>
-              <dd class="hero__docket-sm">CSS · JSON</dd>
+              <dt class="eyebrow">导出</dt>
+              <dd class="hero__readout-sm">CSS / JSON</dd>
             </div>
           </dl>
-          <p class="hero__meta-note">
-            第一版收录的示范主题可以整体替换。主题数据与输出格式分离，
-            以后接入终端或编辑器主题时不需要改写配色。
-          </p>
-        </aside>
-      </div>
-    </div>
+        </div>
 
-    <!-- contact sheet of the featured palettes -->
-    <div class="wrap wrap--wide">
-      <p class="contact-sheet__label eyebrow">精选配色 / Selected bands</p>
-      <ul class="contact-sheet">
-        {
-          featuredThemes.map((theme) => (
-            <li class="contact-sheet__cell">
-              <a class="contact-sheet__link" href={withBase('/theme/' + theme.slug)}>
-                <span class="contact-sheet__strip">
-                  {arrangePalette(theme).map((c) => (
-                    <i style={'--swatch:' + c.hex} title={c.name + ' ' + c.hex} />
-                  ))}
-                </span>
-                <span class="contact-sheet__caption">
-                  <span class="contact-sheet__name">{theme.title}</span>
-                  <span class="contact-sheet__meta mono">
-                    {arrangementFor(theme.collection).label} · {theme.palette.length} COLORS
-                  </span>
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+        <div class="hero__chart">
+          <StarMap collections={collections} />
+          <p class="hero__chart-note mono">
+            星图 / STAR CHART — 三个系列节点，悬停或聚焦查看代表配色
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ========================= collections ======================== -->
-  <section class="section collections" id="collections">
+  <div class="wrap wrap--wide"><div class="scale" aria-hidden="true"></div></div>
+
+  <!-- ======================== series nav ========================== -->
+  <section class="section series-section" id="series">
     <div class="wrap wrap--wide">
       <div class="section-head">
         <div>
-          <p class="eyebrow eyebrow--accent">01 — 主题系列</p>
-          <h2 class="section-head__title">三种来源，三种语气</h2>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">01</span> 系列导航 / SERIES
+          </p>
+          <h2 class="section-head__title">三条轨道，三个来源</h2>
         </div>
-        <p class="section-head__meta">Collections</p>
+        <p class="section-head__meta">Navigation</p>
       </div>
 
-      <div class="collections__grid">
-        {
-          collections.map((collection, index) => {
-            const count = themes.filter((t) => t.collection === collection.id).length;
-            return (
-              <article class="panel" id={collection.id}>
-                <div class="panel__head">
-                  <span class="panel__index mono">{String(index + 1).padStart(2, '0')}</span>
-                  <span class="panel__count mono">{count} 套主题</span>
-                </div>
-
-                <CollectionMotif
-                  variant={collection.motif}
-                  accent={collection.accent}
-                  accentAlt={collection.accentAlt}
-                  class="panel__motif"
-                />
-
-                <h3 class="panel__title">{collection.title}</h3>
-                <p class="panel__en mono">{collection.titleEn}</p>
-                <p class="panel__tagline">{collection.tagline}</p>
-                <p class="panel__desc">{collection.description}</p>
-
-                <a class="panel__link" href={withBase('/collections#' + collection.id)}>
-                  查看系列 <span aria-hidden="true">→</span>
-                </a>
-              </article>
-            );
-          })
-        }
+      <div class="series-grid">
+        {collections.map((collection, i) => <SeriesPanel collection={collection} index={i} />)}
       </div>
     </div>
   </section>
@@ -142,10 +99,12 @@ const total = themes.length;
     <div class="wrap wrap--wide">
       <div class="section-head">
         <div>
-          <p class="eyebrow eyebrow--accent">02 — 精选主题</p>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">02</span> 精选主题 / FEATURED
+          </p>
           <h2 class="section-head__title">先看这三个</h2>
         </div>
-        <p class="section-head__meta">Featured</p>
+        <p class="section-head__meta">Selected</p>
       </div>
 
       <div class="featured__list">
@@ -154,18 +113,72 @@ const total = themes.length;
     </div>
   </section>
 
-  <!-- =========================== library =========================== -->
+  <!-- =========================== library ========================== -->
   <section class="section library" id="themes">
     <div class="wrap wrap--wide">
       <div class="section-head">
         <div>
-          <p class="eyebrow eyebrow--accent">03 — 全部主题</p>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">03</span> 全部主题 / CATALOG
+          </p>
           <h2 class="section-head__title">按系列筛选，或直接搜索</h2>
         </div>
-        <p class="section-head__meta">{String(total).padStart(2, '0')} Themes</p>
+        <p class="section-head__meta">{String(total).padStart(3, '0')} Themes</p>
       </div>
 
       <ThemeLibrary themes={themes} />
+    </div>
+  </section>
+
+  <!-- =========================== export =========================== -->
+  <section class="section export">
+    <div class="wrap wrap--wide">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">04</span> 导出 / EXPORT
+          </p>
+          <h2 class="section-head__title">拿走就能用</h2>
+        </div>
+        <p class="section-head__meta">Adapters</p>
+      </div>
+
+      <div class="export__grid">
+        <div class="export__intro">
+          <p class="export__lede">
+            每套主题都带 7 个语义角色。导出时角色会变成变量名，
+            粘贴进任意样式表就能直接用；JSON 还带着出处、授权与配色说明。
+          </p>
+          <ul class="export__list">
+            <li>
+              <span class="export__tag mono">CSS</span>
+              <span class="export__name">CSS 变量</span>
+              <span class="export__desc">:root 变量，含角色注释</span>
+            </li>
+            <li>
+              <span class="export__tag mono">JSON</span>
+              <span class="export__name">结构化数据</span>
+              <span class="export__desc">色值、角色、来源与授权</span>
+            </li>
+            <li>
+              <span class="export__tag mono">＋</span>
+              <span class="export__name">可插拔适配器</span>
+              <span class="export__desc">终端 / 编辑器格式只需新增一个适配器</span>
+            </li>
+          </ul>
+          <p class="export__note mono">
+            HEX DATA · {String(sample.palette.length).padStart(2, '0')} COLORS · {sample.title}
+          </p>
+        </div>
+
+        <figure class="export__code">
+          <figcaption class="export__code-head mono">
+            <span>{sample.slug}.css</span>
+            <span>CSS VARIABLES</span>
+          </figcaption>
+          <pre class="export__pre"><code>{sampleCss}</code></pre>
+        </figure>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -173,8 +186,8 @@ const total = themes.length;
 <style>
   /* ---------------- hero ---------------- */
   .hero {
-    padding-top: clamp(28px, 4vw, 56px);
-    padding-bottom: clamp(40px, 5vw, 76px);
+    padding-top: clamp(26px, 3.6vw, 52px);
+    padding-bottom: clamp(36px, 5vw, 72px);
   }
 
   .hero__kicker {
@@ -182,8 +195,8 @@ const total = themes.length;
     align-items: center;
     gap: 18px;
     padding-bottom: 12px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: clamp(28px, 4vw, 52px);
+    border-bottom: 1px solid var(--orbit-faint);
+    margin-bottom: clamp(26px, 3.4vw, 46px);
   }
 
   .hero__kicker-end {
@@ -192,21 +205,24 @@ const total = themes.length;
 
   .hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 7.4fr) minmax(0, 2.6fr);
-    gap: clamp(32px, 5vw, 76px);
-    align-items: start;
-    margin-bottom: clamp(34px, 5vw, 62px);
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: clamp(28px, 4vw, 68px);
+    align-items: center;
   }
 
   .hero__title {
-    font-size: clamp(2.7rem, 5.6vw, 5.3rem);
-    line-height: 1.02;
-    letter-spacing: -0.028em;
-    max-width: 16ch;
+    font-size: clamp(2.6rem, 5.4vw, 5.1rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__title em {
+    font-style: italic;
+    color: var(--gold);
   }
 
   .hero__text {
-    margin-top: clamp(20px, 2.4vw, 30px);
+    margin-top: clamp(18px, 2.2vw, 26px);
     max-width: 34em;
     text-wrap: balance;
   }
@@ -216,82 +232,79 @@ const total = themes.length;
     align-items: center;
     flex-wrap: wrap;
     gap: 12px 22px;
-    margin-top: clamp(24px, 3vw, 34px);
+    margin-top: clamp(22px, 2.6vw, 30px);
   }
 
   .hero__more {
     font-family: var(--font-mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--ink-2);
-    border-bottom: 1px solid var(--rule-2);
+    color: var(--text-2);
+    border-bottom: 1px solid var(--orbit);
     padding-bottom: 3px;
   }
 
   .hero__more:hover {
-    color: var(--cinnabar);
-    border-bottom-color: var(--cinnabar);
+    color: var(--gold);
+    border-bottom-color: var(--gold);
   }
 
-  .hero__meta {
-    border-left: 1px solid var(--rule-2);
-    padding-left: clamp(18px, 2vw, 28px);
+  /* instrument read-out under the deck */
+  .hero__readout {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: clamp(26px, 3.4vw, 40px) 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--orbit-faint);
   }
 
-  .hero__meta-label {
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--rule);
+  .hero__readout dt {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
   }
 
-  .hero__docket {
-    margin: 0;
-  }
-
-  .hero__docket > div {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 9px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .hero__docket dt {
-    font-size: 0.76rem;
-    color: var(--ink-2);
-  }
-
-  .hero__docket dd {
-    margin: 0;
+  .hero__readout dd {
+    margin: 5px 0 0;
     font-family: var(--font-display);
-    font-size: var(--step-1);
+    font-size: var(--step-2);
     line-height: 1;
+    color: var(--text);
     font-variant-numeric: tabular-nums;
   }
 
-  .hero__docket .hero__docket-sm {
+  .hero__readout .hero__readout-sm {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     letter-spacing: 0.06em;
+    color: var(--glow);
+    padding-top: 4px;
   }
 
-  .hero__meta-note {
-    margin-top: 18px;
-    color: var(--ink-3);
-    font-size: 0.76rem;
-    line-height: 1.7;
+  .hero__chart {
+    position: relative;
   }
 
-  @media (max-width: 900px) {
+  .hero__chart-note {
+    margin-top: 10px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+    text-align: center;
+  }
+
+  @media (max-width: 980px) {
     .hero__grid {
       grid-template-columns: 1fr;
-      align-items: start;
     }
 
-    .hero__meta {
+    .hero__chart {
+      order: 2;
       max-width: 480px;
+      margin-inline: auto;
+      width: 100%;
     }
   }
 
@@ -299,181 +312,30 @@ const total = themes.length;
     .hero__kicker-mid {
       display: none;
     }
+
+    .hero__kicker {
+      gap: 12px;
+    }
+
+    .hero__kicker-end {
+      letter-spacing: 0.12em;
+    }
+
+    .hero__readout {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
   }
 
-  /* ---------------- contact sheet ---------------- */
-  .contact-sheet__label {
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 18px;
-  }
-
-  .contact-sheet {
+  /* ---------------- series nav ---------------- */
+  .series-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 22px;
-    list-style: none;
+    gap: clamp(20px, 2.6vw, 44px);
   }
 
-  .contact-sheet__link {
-    display: block;
-    text-decoration: none;
-  }
-
-  .contact-sheet__strip {
-    display: flex;
-    height: clamp(62px, 6.4vw, 92px);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .contact-sheet__strip i {
-    flex: 1 1 0;
-    min-width: 0;
-    background: var(--swatch);
-    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.14);
-    transition: transform 0.22s var(--ease);
-  }
-
-  .contact-sheet__strip {
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
-  }
-
-  .contact-sheet__link:hover .contact-sheet__strip i:nth-child(odd) {
-    transform: translateY(-5px);
-  }
-
-  .contact-sheet__caption {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-    padding-top: 11px;
-    border-bottom: 1px solid transparent;
-  }
-
-  .contact-sheet__name {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-  }
-
-  .contact-sheet__link:hover .contact-sheet__name {
-    color: var(--cinnabar);
-  }
-
-  .contact-sheet__meta {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    color: var(--ink-3);
-  }
-
-  @media (max-width: 720px) {
-    .contact-sheet {
-      grid-template-columns: 1fr;
-      gap: 22px;
-    }
-  }
-
-  /* ---------------- collection panels ---------------- */
-  .collections__grid {
-    display: grid;
-    grid-template-columns: 1.12fr 1fr 0.88fr;
-    gap: clamp(16px, 2vw, 28px);
-  }
-
-  .panel {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: clamp(20px, 2.4vw, 30px);
-    border: 1px solid var(--rule);
-    background: var(--paper-raised);
-    border-radius: var(--radius);
-    transition: border-color 0.2s var(--ease);
-  }
-
-  .panel:hover {
-    border-color: var(--rule-strong);
-  }
-
-  .panel__head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .panel__index {
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    color: var(--ink-3);
-  }
-
-  .panel__count {
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
-    color: var(--ink-3);
-  }
-
-  :global(.panel__motif) {
-    width: 100%;
-    height: 118px;
-    margin: 10px 0 6px;
-  }
-
-  .panel__title {
-    font-size: var(--step-2);
-  }
-
-  .panel__en {
-    font-size: 0.66rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-
-  .panel__tagline {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    line-height: 1.4;
-    color: var(--ink);
-    margin-top: 4px;
-  }
-
-  .panel__desc {
-    color: var(--ink-2);
-    font-size: 0.84rem;
-    line-height: 1.75;
-    flex: 1;
-  }
-
-  .panel__link {
-    margin-top: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ink);
-    border-bottom: 1px solid var(--rule-2);
-    padding-bottom: 3px;
-    align-self: flex-start;
-  }
-
-  .panel__link:hover {
-    color: var(--cinnabar);
-    border-bottom-color: var(--cinnabar);
-  }
-
-  @media (max-width: 980px) {
-    .collections__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 640px) {
-    .collections__grid {
+  @media (max-width: 900px) {
+    .series-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -482,7 +344,109 @@ const total = themes.length;
   .featured__list {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 0;
+  }
+
+  /* ---------------- export ---------------- */
+  .export__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+  }
+
+  .export__lede {
+    font-size: var(--step-1);
+    line-height: 1.72;
+    color: var(--text-2);
+    max-width: 44ch;
+  }
+
+  .export__list {
+    list-style: none;
+    margin-top: 24px;
+    border-top: 1px solid var(--orbit-faint);
+  }
+
+  .export__list li {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 4px 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .export__tag {
+    grid-row: span 2;
+    align-self: start;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--quantum);
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius-sm);
+    padding: 3px 0;
+    text-align: center;
+  }
+
+  .export__name {
+    color: var(--text);
+    font-size: var(--step-0);
+  }
+
+  .export__desc {
+    font-size: 0.78rem;
+    color: var(--text-3);
+  }
+
+  .export__note {
+    margin-top: 22px;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+  }
+
+  .export__code {
+    margin: 0;
+    border: 1px solid var(--orbit-faint);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--panel) 70%, transparent);
+    overflow: hidden;
+  }
+
+  .export__code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--orbit-faint);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+  }
+
+  .export__code-head span:last-child {
+    color: var(--glow);
+  }
+
+  .export__pre {
+    margin: 0;
+    padding: 18px 20px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    line-height: 1.85;
+    color: var(--text-2);
+  }
+
+  .export__pre code {
+    font-family: inherit;
+  }
+
+  @media (max-width: 900px) {
+    .export__grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 

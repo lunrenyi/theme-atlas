@@ -85,6 +85,8 @@ export interface Collection {
   id: CollectionId;
   title: string;
   titleEn: string;
+  /** Short label used where space is tight (star map, chips). */
+  short: string;
   /** Short line shown on the collection panel. */
   tagline: string;
   /** Longer paragraph on the collection page. */

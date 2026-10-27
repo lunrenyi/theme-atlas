@@ -12,49 +12,81 @@ const root = resolve(here, '..');
 
 const { themes } = await import(resolve(root, 'src/data/themes.ts'));
 
-const PAPER = '#f3f0e8';
-const INK = '#1b1815';
-const INK2 = '#57504a';
+const SPACE = '#080D1C';
+const ORBIT = '#344363';
+const GOLD = '#DCC38B';
+const TEXT = '#EAF0FF';
+const TEXT2 = '#A6B4D6';
+const TEXT3 = '#8391B5';
 
 const featured = themes.filter((t) => t.featured).slice(0, 3);
 
+/** A small, fixed star field so the card is identical on every build. */
+const stars = Array.from({ length: 46 }, (_, i) => {
+  const x = (i * 233 + 71) % 1200;
+  const y = (i * 397 + 113) % 630;
+  const r = 0.8 + ((i * 17) % 7) / 7;
+  const o = 0.12 + ((i * 13) % 9) / 18;
+  return '<circle cx="' + x + '" cy="' + y + '" r="' + r.toFixed(2) + '" fill="' + TEXT + '" opacity="' + o.toFixed(2) + '"/>';
+}).join('');
+
 const stripRows = featured
   .map((theme, index) => {
-    const y = 470 + index * 44;
-    const w = 1120 / theme.palette.length;
+    const y = 448 + index * 58;
+    const w = 1080 / theme.palette.length;
     const blocks = theme.palette
       .map((c, i) => {
         return (
-          '<rect x="' + (40 + i * w) + '" y="' + y + '" width="' + w + '" height="30" fill="' + c.hex + '"/>'
+          '<rect x="' + (60 + i * w) + '" y="' + y + '" width="' + w + '" height="26" fill="' + c.hex + '"/>'
         );
       })
       .join('');
     return (
-      blocks +
-      '<rect x="40" y="' + y + '" width="1120" height="30" fill="none" stroke="#c9c0ad" stroke-width="1"/>' +
-      '<text x="40" y="' + (y - 10) + '" font-family="Georgia, serif" font-size="17" fill="' + INK + '">' +
+      '<text x="60" y="' + (y - 12) + '" font-family="Georgia, serif" font-size="18" fill="' +
+      TEXT2 + '">' +
       theme.title +
-      '</text>'
+      '</text>' +
+      '<text x="1140" y="' + (y - 12) + '" text-anchor="end" font-family="monospace" font-size="13" letter-spacing="2" fill="' +
+      TEXT3 + '">' +
+      theme.slug.toUpperCase() +
+      '</text>' +
+      blocks +
+      '<rect x="60" y="' + y + '" width="1080" height="26" fill="none" stroke="' + ORBIT + '" stroke-width="1"/>'
     );
   })
   .join('');
 
 const svg = [
   '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">',
-  '<rect width="1200" height="630" fill="' + PAPER + '"/>',
-  '<rect x="40" y="40" width="28" height="28" fill="' + INK + '"/>',
-  '<rect x="74" y="40" width="28" height="28" fill="#b03a2b" opacity="0.85"/>',
-  '<rect x="40" y="74" width="28" height="28" fill="#4e7f70" opacity="0.85"/>',
-  '<rect x="74" y="74" width="28" height="28" fill="' + INK + '" opacity="0.35"/>',
-  '<text x="120" y="76" font-family="Georgia, serif" font-size="30" fill="' + INK + '">Theme Atlas</text>',
-  '<text x="40" y="200" font-family="Georgia, serif" font-size="92" fill="' + INK + '">Every color has</text>',
-  '<text x="40" y="300" font-family="Georgia, serif" font-size="92" fill="' + INK + '">a story.</text>',
-  '<text x="40" y="360" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="' + INK2 + '">' +
+  '<rect width="1200" height="630" fill="' + SPACE + '"/>',
+  stars,
+  '<g fill="none" stroke="' + ORBIT + '" stroke-width="1.2" opacity="0.55">',
+  '<ellipse cx="980" cy="250" rx="230" ry="80" transform="rotate(-18 980 250)"/>',
+  '<ellipse cx="980" cy="250" rx="160" ry="54" transform="rotate(-18 980 250)" opacity="0.7"/>',
+  '<ellipse cx="980" cy="250" rx="96" ry="32" transform="rotate(-18 980 250)" opacity="0.5"/>',
+  '</g>',
+  '<circle cx="980" cy="250" r="7" fill="' + GOLD + '" opacity="0.9"/>',
+  '<circle cx="1155" cy="190" r="4" fill="' + GOLD + '"/>',
+  '<circle cx="820" cy="316" r="3" fill="#9885FF"/>',
+  '<path d="M980 250L1155 190" stroke="' + GOLD + '" stroke-width="1" opacity="0.5"/>',
+  // brand mark
+  '<g fill="none" stroke="' + GOLD + '" stroke-width="1.6">',
+  '<ellipse cx="76" cy="62" rx="22" ry="8" opacity="0.85" transform="rotate(-24 76 62)"/>',
+  '<ellipse cx="76" cy="62" rx="22" ry="8" opacity="0.45" transform="rotate(52 76 62)"/>',
+  '</g>',
+  '<circle cx="76" cy="62" r="5" fill="' + GOLD + '"/>',
+  '<circle cx="95" cy="55" r="2.4" fill="#76D8DF"/>',
+  '<text x="118" y="72" font-family="Georgia, serif" font-size="32" fill="' + TEXT + '">Theme Atlas</text>',
+  '<text x="330" y="70" font-family="monospace" font-size="15" letter-spacing="4" fill="' + TEXT3 + '">色谱档案</text>',
+  '<text x="60" y="212" font-family="Georgia, serif" font-size="88" fill="' + TEXT + '">Every color has</text>',
+  '<text x="60" y="306" font-family="Georgia, serif" font-size="88" fill="' + GOLD + '">a story.</text>',
+  '<text x="60" y="362" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="' + TEXT2 + '">' +
     '中国神话 · 中国瓷器 · 虚构世界 —— 有故事的配色主题库',
   '</text>',
-  '<line x1="40" y1="400" x2="1160" y2="400" stroke="#ddd6c7" stroke-width="2"/>',
+  '<line x1="60" y1="398" x2="1140" y2="398" stroke="' + ORBIT + '" stroke-width="1"/>',
   stripRows,
-  '<text x="40" y="620" font-family="monospace" font-size="16" fill="' + INK2 + '" letter-spacing="3">EDITION 01 / THEME ATLAS</text>',
+  '<text x="60" y="608" font-family="monospace" font-size="15" letter-spacing="3" fill="' + TEXT3 + '">EDITION 01 / 03 SERIES / 009 THEMES</text>',
+  '<text x="1140" y="608" text-anchor="end" font-family="monospace" font-size="15" letter-spacing="3" fill="' + GOLD + '">lunrenyi.github.io/theme-atlas</text>',
   '</svg>',
 ].join('');
 
@@ -72,4 +104,3 @@ try {
   await writeFile(resolve(outDir, 'og-default.svg'), svg, 'utf8');
   console.log('已写出 public/og-default.svg 作为替代。');
 }
-

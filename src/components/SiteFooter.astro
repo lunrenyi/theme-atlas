@@ -10,14 +10,17 @@ const year = new Date().getFullYear();
   <div class="wrap wrap--wide">
     <div class="site-footer__top">
       <div class="site-footer__intro">
-        <p class="eyebrow">{site.edition} · {site.name}</p>
+        <p class="eyebrow eyebrow--gold">
+          <span class="site-footer__pulse" aria-hidden="true"></span>
+          {site.edition}
+        </p>
         <p class="site-footer__statement">{site.tagline}</p>
         <p class="site-footer__blurb">{site.description}</p>
       </div>
 
       <div class="site-footer__cols">
         <div class="site-footer__col">
-          <p class="eyebrow">系列</p>
+          <p class="eyebrow">系列 / Series</p>
           <ul>
             {
               collections.map((c) => (
@@ -30,7 +33,7 @@ const year = new Date().getFullYear();
           </ul>
         </div>
         <div class="site-footer__col">
-          <p class="eyebrow">项目</p>
+          <p class="eyebrow">项目 / Project</p>
           <ul>
             <li><a href={withBase('/about')}>关于本站</a></li>
             <li><a href={withBase(site.fanStatementPath)}>同人创作声明</a></li>
@@ -40,14 +43,18 @@ const year = new Date().getFullYear();
                 <span class="mono site-footer__ext" aria-hidden="true">↗</span>
               </a>
             </li>
-            <li><a href={site.repoUrl + '/issues'} rel="noopener noreferrer" target="_blank">问题反馈</a></li>
+            <li>
+              <a href={site.repoUrl + '/issues'} rel="noopener noreferrer" target="_blank">
+                问题反馈
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </div>
 
     <div class="site-footer__bottom">
-      <p class="mono">© {year} {site.name}. 配色数据以 CC BY 4.0 释出。</p>
+      <p class="mono">© {year} {site.name} · 配色数据以 CC BY 4.0 释出</p>
       <p class="mono site-footer__note">
         本站与任何游戏厂商无隶属或授权关系；同人主题均为非官方演绎。
       </p>
@@ -57,10 +64,12 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--rule);
-    background: var(--paper-sunken);
+    border-top: 1px solid var(--orbit-faint);
+    background: color-mix(in srgb, var(--space-2) 82%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding-block: clamp(48px, 6vw, 88px) 32px;
-    margin-top: clamp(64px, 8vw, 120px);
+    margin-top: clamp(56px, 7vw, 112px);
   }
 
   .site-footer__top {
@@ -69,15 +78,25 @@ const year = new Date().getFullYear();
     gap: clamp(32px, 5vw, 80px);
   }
 
+  .site-footer__pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--glow);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--glow) 20%, transparent);
+    flex: none;
+  }
+
   .site-footer__statement {
     font-family: var(--font-display);
     font-size: var(--step-3);
     line-height: 1.1;
-    margin: 14px 0 18px;
+    margin: 16px 0 18px;
+    color: var(--text);
   }
 
   .site-footer__blurb {
-    color: var(--ink-2);
+    color: var(--text-2);
     max-width: 44ch;
     font-size: var(--step-0);
   }
@@ -99,12 +118,12 @@ const year = new Date().getFullYear();
 
   .site-footer__col a {
     text-decoration: none;
-    color: var(--ink-2);
+    color: var(--text-2);
     font-size: var(--step--1);
   }
 
   .site-footer__col a:hover {
-    color: var(--cinnabar);
+    color: var(--gold);
   }
 
   .site-footer__ext {
@@ -119,9 +138,9 @@ const year = new Date().getFullYear();
     gap: 12px;
     margin-top: clamp(40px, 5vw, 72px);
     padding-top: 18px;
-    border-top: 1px solid var(--rule-2);
-    color: var(--ink-3);
-    font-size: 0.72rem;
+    border-top: 1px solid var(--orbit-faint);
+    color: var(--text-3);
+    font-size: 0.7rem;
     letter-spacing: 0.04em;
   }
 
