@@ -1,0 +1,335 @@
+---
+import type { Theme } from '../data/types';
+import { paletteMap } from '../lib/color';
+
+interface Props {
+  theme: Theme;
+}
+
+const { theme } = Astro.props;
+const map = paletteMap(theme);
+
+const usage: Array<{ role: string; label: string; where: string }> = [
+  { role: 'bg', label: '背景', where: '页面底色' },
+  { role: 'surface', label: '面板', where: '卡片与分区' },
+  { role: 'text', label: '正文', where: '标题与段落' },
+  { role: 'muted', label: '次要文字', where: '说明与注释' },
+  { role: 'border', label: '分割线', where: '描边与分隔' },
+  { role: 'accent', label: '强调', where: '按钮与焦点' },
+  { role: 'onAccent', label: '强调上文字', where: '按钮内文字' },
+];
+
+const vars = [
+  '--t-bg:' + map.bg?.hex,
+  '--t-surface:' + map.surface?.hex,
+  '--t-text:' + map.text?.hex,
+  '--t-muted:' + map.muted?.hex,
+  '--t-border:' + map.border?.hex,
+  '--t-accent:' + map.accent?.hex,
+  '--t-on-accent:' + map.onAccent?.hex,
+].join(';');
+---
+
+<section class="preview" aria-labelledby="preview-heading" style={vars}>
+  <div class="preview__head">
+    <h2 id="preview-heading" class="preview__heading">应用预览</h2>
+    <p class="preview__sub mono">Live preview</p>
+  </div>
+
+  <div class="preview__frame">
+    <div class="preview__bar">
+      <span class="preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="preview__bar-title mono">theme.preview</span>
+    </div>
+
+    <div class="preview__body">
+      <nav class="preview__side" aria-hidden="true">
+        <span class="preview__side-item is-active">概览</span>
+        <span class="preview__side-item">调色</span>
+        <span class="preview__side-item">导出</span>
+        <span class="preview__side-item">关于</span>
+      </nav>
+
+      <div class="preview__main">
+        <p class="preview__eyebrow mono">REPORT</p>
+        <p class="preview__title">{theme.title}</p>
+        <p class="preview__body-text">
+          正文使用 <code>{map.text?.name}</code>，落在背景
+          <code>{map.bg?.name}</code> 上；次要说明使用 <code>{map.muted?.name}</code>。
+        </p>
+
+        <div class="preview__actions">
+          <span class="preview__btn preview__btn--solid">主要操作</span>
+          <span class="preview__btn preview__btn--ghost">次要操作</span>
+        </div>
+
+        <div class="preview__field">
+          <span class="preview__field-placeholder">输入框 · 占位文字</span>
+          <span class="preview__focus-ring" aria-hidden="true"></span>
+        </div>
+
+        <div class="preview__rule" aria-hidden="true"></div>
+
+        <p class="preview__caption">
+          分割线使用 <code>{map.border?.name}</code>，强调元素使用 <code>{map.accent?.name}</code>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ul class="preview__legend">
+    {
+      usage.map((u) => {
+        const color = map[u.role as keyof typeof map];
+        return (
+          <li>
+            <span class="preview__legend-dot" style={'--tone:' + (color?.hex ?? '#000')} aria-hidden="true" />
+            <span class="preview__legend-label">{u.label}</span>
+            <span class="preview__legend-where">{u.where}</span>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
+
+<style>
+  .preview {
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    border-radius: var(--radius);
+    padding: clamp(18px, 2.2vw, 26px);
+  }
+
+  .preview__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 18px;
+  }
+
+  .preview__heading {
+    font-size: var(--step-2);
+  }
+
+  .preview__sub {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* the mock UI is painted entirely with the theme's own palette */
+  .preview__frame {
+    border: 1px solid var(--t-border);
+    border-radius: 2px;
+    background: var(--t-bg);
+    color: var(--t-text);
+    overflow: hidden;
+  }
+
+  .preview__bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--t-surface);
+    border-bottom: 1px solid var(--t-border);
+  }
+
+  .preview__dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  .preview__dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--t-muted);
+    opacity: 0.5;
+  }
+
+  .preview__bar-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--t-muted);
+  }
+
+  .preview__body {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    min-height: 236px;
+  }
+
+  .preview__side {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 14px 10px;
+    background: var(--t-surface);
+    border-right: 1px solid var(--t-border);
+  }
+
+  .preview__side-item {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+    color: var(--t-muted);
+    border-radius: 2px;
+  }
+
+  .preview__side-item.is-active {
+    background: var(--t-accent);
+    color: var(--t-on-accent);
+  }
+
+  .preview__main {
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .preview__eyebrow {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: var(--t-muted);
+  }
+
+  .preview__title {
+    font-family: var(--font-display);
+    font-size: 1.28rem;
+    line-height: 1.2;
+    color: var(--t-text);
+  }
+
+  .preview__body-text {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--t-muted);
+  }
+
+  .preview__body-text code,
+  .preview__caption code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--t-text);
+    background: var(--t-surface);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+  .preview__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .preview__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: 2px;
+    font-size: 0.74rem;
+    border: 1px solid transparent;
+  }
+
+  .preview__btn--solid {
+    background: var(--t-accent);
+    color: var(--t-on-accent);
+  }
+
+  .preview__btn--ghost {
+    border-color: var(--t-border);
+    color: var(--t-text);
+    background: transparent;
+  }
+
+  .preview__field {
+    position: relative;
+    margin-top: 4px;
+    border: 1px solid var(--t-border);
+    border-radius: 2px;
+    background: var(--t-bg);
+    padding: 8px 10px;
+  }
+
+  .preview__field-placeholder {
+    font-size: 0.74rem;
+    color: var(--t-muted);
+  }
+
+  .preview__focus-ring {
+    position: absolute;
+    inset: -1px;
+    border: 2px solid var(--t-accent);
+    border-radius: 3px;
+    opacity: 0.5;
+  }
+
+  .preview__rule {
+    height: 1px;
+    background: var(--t-border);
+    margin: 6px 0 2px;
+  }
+
+  .preview__caption {
+    font-size: 0.74rem;
+    line-height: 1.7;
+    color: var(--t-muted);
+  }
+
+  .preview__legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+    gap: 8px 16px;
+    list-style: none;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .preview__legend li {
+    display: grid;
+    grid-template-columns: 10px auto;
+    align-items: center;
+    gap: 4px 8px;
+    font-size: 0.72rem;
+  }
+
+  .preview__legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--tone);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.14);
+  }
+
+  .preview__legend-label {
+    color: var(--ink-2);
+  }
+
+  .preview__legend-where {
+    grid-column: 2;
+    font-size: 0.66rem;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 520px) {
+    .preview__body {
+      grid-template-columns: 1fr;
+    }
+
+    .preview__side {
+      flex-direction: row;
+      border-right: 0;
+      border-bottom: 1px solid var(--t-border);
+      overflow-x: auto;
+    }
+  }
+</style>
+

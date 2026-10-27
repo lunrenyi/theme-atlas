@@ -1,0 +1,145 @@
+---
+import type { PaletteColor } from '../data/types';
+
+interface Props {
+  palette: PaletteColor[];
+  /** Height / density of the strip. */
+  variant?: 'card' | 'hero' | 'detail';
+  /** Print the colour names and hex values under the strip. */
+  labels?: boolean;
+  class?: string;
+}
+
+const { palette, variant = 'card', labels = true, class: className = '' } = Astro.props;
+const summary = palette.map((c) => c.name + ' ' + c.hex).join('，');
+---
+
+<div class:list={['strip-wrap', className]}>
+  <div
+    class:list={['strip', 'strip--' + variant]}
+    role="img"
+    aria-label={'配色条：' + summary}
+  >
+    {
+      palette.map((c) => (
+        <span
+          class="strip__swatch"
+          style={'--swatch:' + c.hex}
+          data-label={c.name + ' · ' + c.hex}
+          data-role={c.role}
+        />
+      ))
+    }
+  </div>
+
+  {
+    labels && (
+      <ul class="strip__legend">
+        {palette.map((c) => (
+          <li>
+            <span class="strip__dot" style={'--swatch:' + c.hex} aria-hidden="true" />
+            <span class="strip__name">{c.name}</span>
+            <span class="strip__hex mono">{c.hex}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</div>
+
+<style>
+  .strip {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
+  .strip__swatch {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    background: var(--swatch);
+  }
+
+  .strip--card .strip__swatch {
+    height: 78px;
+  }
+
+  .strip--hero .strip__swatch {
+    height: clamp(88px, 11vw, 148px);
+  }
+
+  .strip--detail .strip__swatch {
+    height: 64px;
+  }
+
+  .strip__swatch::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translate(-50%, 4px);
+    padding: 5px 9px;
+    background: var(--ink);
+    color: var(--ink-invert);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
+    z-index: 3;
+  }
+
+  .strip__swatch:hover::after,
+  .strip__swatch:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .strip__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    list-style: none;
+    margin-top: 12px;
+  }
+
+  .strip__legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: var(--ink-3);
+  }
+
+  .strip__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--swatch);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+  }
+
+  .strip__name {
+    color: var(--ink-2);
+  }
+
+  .strip__hex {
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 560px) {
+    .strip__legend {
+      gap: 3px 14px;
+    }
+
+    .strip__legend li {
+      font-size: 0.66rem;
+    }
+  }
+</style>
+

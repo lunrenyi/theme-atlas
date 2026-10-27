@@ -1,0 +1,147 @@
+---
+import type { Theme } from '../data/types';
+import { auditContrast } from '../lib/color';
+
+interface Props {
+  theme: Theme;
+}
+
+const { theme } = Astro.props;
+const checks = auditContrast(theme);
+const failed = checks.filter((c) => !c.pass);
+---
+
+<section class="audit" aria-labelledby="audit-heading">
+  <div class="audit__head">
+    <h2 id="audit-heading" class="audit__heading">对比度校验</h2>
+    <p class="audit__sub mono">
+      {
+        failed.length === 0
+          ? 'PASS · WCAG AA'
+          : failed.length + ' 项未达标'
+      }
+    </p>
+  </div>
+
+  <table class="audit__table">
+    <caption class="sr-only">{theme.title} 的前景与背景对比度检查结果</caption>
+    <thead>
+      <tr>
+        <th scope="col">组合</th>
+        <th scope="col">比值</th>
+        <th scope="col">要求</th>
+        <th scope="col">结果</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        checks.map((check) => (
+          <tr>
+            <th scope="row">{check.label}</th>
+            <td class="mono">{check.ratio.toFixed(2)}:1</td>
+            <td class="mono">{check.threshold}:1</td>
+            <td>
+              <span class:list={['audit__badge', check.pass ? 'is-pass' : 'is-fail']}>
+                {check.pass ? '通过' : '未达标'}
+              </span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+
+  <p class="audit__note">
+    分割线一项的阈值仅为 1.2:1——它属于装饰性元素，不承载文字信息。
+    其余组合按 WCAG AA 的正文标准（4.5:1）核验。
+  </p>
+</section>
+
+<style>
+  .audit {
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    border-radius: var(--radius);
+    padding: clamp(18px, 2.2vw, 26px);
+  }
+
+  .audit__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 6px;
+  }
+
+  .audit__heading {
+    font-size: var(--step-2);
+  }
+
+  .audit__sub {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    color: var(--celadon);
+  }
+
+  .audit__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+
+  .audit__table th,
+  .audit__table td {
+    text-align: left;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 400;
+  }
+
+  .audit__table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 400;
+  }
+
+  .audit__table tbody th {
+    color: var(--ink-2);
+  }
+
+  .audit__table td.mono {
+    font-size: 0.74rem;
+    color: var(--ink-2);
+  }
+
+  .audit__badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    padding: 2px 7px;
+  }
+
+  .audit__badge.is-pass {
+    color: var(--celadon);
+    border-color: color-mix(in srgb, var(--celadon) 45%, transparent);
+  }
+
+  .audit__badge.is-fail {
+    color: var(--cinnabar);
+    border-color: color-mix(in srgb, var(--cinnabar) 45%, transparent);
+  }
+
+  .audit__note {
+    margin-top: 14px;
+    font-size: 0.74rem;
+    line-height: 1.7;
+    color: var(--ink-3);
+  }
+</style>
+

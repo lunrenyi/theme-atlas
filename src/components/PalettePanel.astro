@@ -1,0 +1,303 @@
+---
+import type { Theme } from '../data/types';
+import { adapters } from '../adapters';
+
+interface Props {
+  theme: Theme;
+}
+
+const { theme } = Astro.props;
+
+const roleLabels: Record<string, string> = {
+  bg: '背景',
+  surface: '面板',
+  text: '正文',
+  muted: '次要文字',
+  border: '分割线',
+  accent: '强调',
+  onAccent: '强调上文字',
+};
+
+const exports: Record<string, { text: string; mime: string; extension: string }> = {};
+for (const adapter of adapters) {
+  exports[adapter.id] = {
+    text: adapter.render(theme),
+    mime: adapter.mime,
+    extension: adapter.extension,
+  };
+}
+
+const payload = JSON.stringify(exports).replace(/</g, '\u003c');
+
+---
+
+<section class="palette" aria-labelledby="palette-heading">
+  <div class="palette__head">
+    <h2 id="palette-heading" class="palette__heading">配色</h2>
+    <p class="palette__sub mono">{theme.palette.length} COLORS · 7 ROLES</p>
+  </div>
+
+  <ul class="palette__list">
+    {
+      theme.palette.map((color) => (
+        <li class="swatch" style={'--swatch:' + color.hex}>
+          <button
+            type="button"
+            class="swatch__chip"
+            data-copy-color={color.hex}
+            aria-label={'复制颜色 ' + color.name + ' ' + color.hex}
+          >
+            <span class="swatch__fill" aria-hidden="true"></span>
+            <span class="swatch__cue mono">复制</span>
+          </button>
+
+          <div class="swatch__meta">
+            <span class="swatch__name">{color.name}</span>
+            <span class="swatch__hex mono">{color.hex}</span>
+          </div>
+
+          <span class="swatch__role mono">{roleLabels[color.role] ?? color.role}</span>
+
+          {color.note && <p class="swatch__note">{color.note}</p>}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="palette__actions">
+    <button type="button" class="btn btn--sm btn--solid" data-copy-all>
+      复制整套配色
+    </button>
+    {
+      adapters.map((adapter) => (
+        <button type="button" class="btn btn--sm btn--ghost" data-export={adapter.id}>
+          导出 {adapter.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <p class="palette__status" role="status" aria-live="polite" data-palette-status></p>
+
+  <script type="application/json" data-export-payload set:html={payload} />
+</section>
+
+<style>
+  .palette {
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    border-radius: var(--radius);
+    padding: clamp(18px, 2.2vw, 26px);
+  }
+
+  .palette__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 4px;
+  }
+
+  .palette__heading {
+    font-size: var(--step-2);
+  }
+
+  .palette__sub {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+  }
+
+  .palette__list {
+    list-style: none;
+  }
+
+  .swatch {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'chip meta role'
+      'chip note note';
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 2px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .swatch:last-child {
+    border-bottom: 0;
+  }
+
+  .swatch__chip {
+    grid-area: chip;
+    position: relative;
+    width: 56px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgb(0 0 0 / 0.16);
+    border-radius: 2px;
+    background: var(--swatch);
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.16s var(--ease), box-shadow 0.16s var(--ease);
+  }
+
+  .swatch__chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.12);
+  }
+
+  .swatch__chip:focus-visible {
+    outline: 2px solid var(--cinnabar);
+    outline-offset: 2px;
+  }
+
+  .swatch__cue {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    background: rgb(0 0 0 / 0.62);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.16s var(--ease);
+  }
+
+  .swatch__chip:hover .swatch__cue,
+  .swatch__chip:focus-visible .swatch__cue {
+    opacity: 1;
+  }
+
+  .swatch__meta {
+    grid-area: meta;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .swatch__name {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+  }
+
+  .swatch__hex {
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
+  }
+
+  .swatch__role {
+    grid-area: role;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+
+  .swatch__note {
+    grid-area: note;
+    font-size: 0.76rem;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+
+  .palette__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .palette__status {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--celadon);
+    min-height: 1.2em;
+  }
+
+  .palette__status:empty {
+    min-height: 0;
+  }
+
+  @media (max-width: 480px) {
+    .swatch {
+      grid-template-columns: 48px minmax(0, 1fr);
+      grid-template-areas:
+        'chip meta'
+        'chip role'
+        'note note';
+    }
+
+    .swatch__chip {
+      width: 48px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  import { copyText, downloadText } from '../lib/clipboard';
+
+  const payloadEl = document.querySelector<HTMLScriptElement>('[data-export-payload]');
+  const statusEl = document.querySelector<HTMLElement>('[data-palette-status]');
+
+  const exports: Record<string, { text: string; mime: string; extension: string }> = payloadEl
+    ? JSON.parse(payloadEl.textContent ?? '{}')
+    : {};
+
+  const slug = document.querySelector<HTMLElement>('[data-theme-slug]')?.dataset.themeSlug ?? 'theme';
+
+  function say(message: string) {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+    window.setTimeout(() => {
+      if (statusEl.textContent === message) statusEl.textContent = '';
+    }, 2600);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-color]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const hex = button.dataset.copyColor ?? '';
+      const ok = await copyText(hex);
+      say(ok ? '已复制 ' + hex : '复制失败，请手动选择 ' + hex);
+    });
+  });
+
+  document.querySelector<HTMLButtonElement>('[data-copy-all]')?.addEventListener('click', async () => {
+    const lines = Array.from(document.querySelectorAll<HTMLElement>('[data-copy-color]')).map(
+      (chip) => {
+        const hex = chip.dataset.copyColor ?? '';
+        const name = chip.closest('.swatch')?.querySelector('.swatch__name')?.textContent ?? '';
+        const role = chip.closest('.swatch')?.querySelector('.swatch__role')?.textContent ?? '';
+        return name + '  ' + hex + '  ' + role;
+      },
+    );
+    const ok = await copyText(lines.join('\n'));
+    say(ok ? '已复制整套配色（' + lines.length + ' 色）' : '复制失败，请手动选择');
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.export ?? '';
+      const entry = exports[id];
+      if (!entry) return;
+      downloadText(slug + '.' + entry.extension, entry.text, entry.mime);
+      say('已导出 ' + slug + '.' + entry.extension);
+    });
+  });
+</script>
+

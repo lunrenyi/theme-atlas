@@ -1,0 +1,222 @@
+---
+import type { Theme } from '../data/types';
+import { getCollection } from '../data/collections';
+import { withBase } from '../lib/url';
+import PaletteStrip from './PaletteStrip.astro';
+
+interface Props {
+  theme: Theme;
+  variant?: 'grid' | 'featured';
+  /** Hide the colour legend under the strip (featured rows already list it). */
+  showLegend?: boolean;
+}
+
+const { theme, variant = 'grid', showLegend = variant !== 'featured' } = Astro.props;
+const collection = getCollection(theme.collection);
+const href = withBase('/theme/' + theme.slug);
+
+const statusMap = {
+  verified: { label: '来源可核验', tone: 'ok' },
+  interpretation: { label: '同人演绎', tone: 'fan' },
+  draft: { label: '待补充', tone: 'warn' },
+} as const;
+const status = statusMap[theme.status];
+---
+
+<article class:list={['card', 'card--' + variant]}>
+  <div class="card__head">
+    <a class="card__collection mono" href={withBase('/collections#' + collection.id)}>
+      <span class="card__swatch" style={'--tone:' + collection.accent} aria-hidden="true"></span>
+      {collection.title}
+    </a>
+    <span class:list={['card__status', 'card__status--' + status.tone]}>{status.label}</span>
+  </div>
+
+  <h3 class="card__title">
+    <a class="card__link" href={href}>{theme.title}</a>
+  </h3>
+
+  <p class="card__desc">{theme.description}</p>
+
+  <PaletteStrip palette={theme.palette} variant={variant === 'featured' ? 'hero' : 'card'} labels={showLegend} />
+
+  <ul class="card__tags">
+    {
+      theme.tags.slice(0, 4).map((tag) => (
+        <li class="mono">{tag}</li>
+      ))
+    }
+  </ul>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 22px 20px;
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    border-radius: var(--radius);
+    transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+
+  .card:hover {
+    border-color: var(--rule-strong);
+  }
+
+  .card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card__collection {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-decoration: none;
+  }
+
+  .card__collection:hover {
+    color: var(--ink);
+  }
+
+  .card__swatch {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--tone);
+  }
+
+  .card__status {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+
+  .card__status--ok {
+    border-color: color-mix(in srgb, var(--celadon) 45%, transparent);
+    color: var(--celadon);
+  }
+
+  .card__status--fan {
+    border-color: color-mix(in srgb, var(--gold) 50%, transparent);
+    color: var(--gold);
+  }
+
+  .card__status--warn {
+    border-color: color-mix(in srgb, var(--cinnabar) 40%, transparent);
+    color: var(--cinnabar);
+  }
+
+  .card__title {
+    font-size: var(--step-2);
+    line-height: 1.2;
+  }
+
+  .card__link {
+    text-decoration: none;
+  }
+
+  .card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__link:hover {
+    color: var(--cinnabar);
+  }
+
+  .card__desc {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    line-height: 1.7;
+    max-width: 42ch;
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+
+  .card__tags li {
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 7px;
+  }
+
+  /* --- featured row variant ---------------------------------- */
+  .card--featured {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas:
+      'head head'
+      'title strip'
+      'desc strip'
+      'tags strip';
+    column-gap: clamp(24px, 4vw, 64px);
+    row-gap: 10px;
+    align-items: start;
+    padding: clamp(24px, 3vw, 38px);
+  }
+
+  .card--featured .card__head {
+    grid-area: head;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .card--featured .card__title {
+    grid-area: title;
+    font-size: var(--step-3);
+  }
+
+  .card--featured .card__desc {
+    grid-area: desc;
+  }
+
+  .card--featured :global(.strip-wrap) {
+    grid-area: strip;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card--featured .card__tags {
+    grid-area: tags;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 820px) {
+    .card--featured {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'head'
+        'title'
+        'desc'
+        'strip'
+        'tags';
+    }
+  }
+</style>
+

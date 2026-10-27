@@ -1,0 +1,99 @@
+---
+/**
+ * Original decorative motifs, one per collection. Every path is drawn for this
+ * site — no third-party artwork is used.
+ */
+interface Props {
+  variant: 'ruyi' | 'glaze' | 'orbit';
+  accent: string;
+  accentAlt?: string;
+  class?: string;
+}
+
+const { variant, accent, accentAlt = accent, class: className = '' } = Astro.props;
+---
+
+{
+  variant === 'ruyi' && (
+    <svg
+      class={className}
+      viewBox="0 0 300 120"
+      role="img"
+      aria-label="青铜器回纹地纹与兽面装饰图形"
+      fill="none"
+    >
+      <g stroke={accent} stroke-width="1.4" fill="none" stroke-linecap="square" opacity="0.9">
+        <!-- 回纹地纹 band, mirrored around the centre -->
+        <path d="M12 112h28V88H18v14h14V96" />
+        <path d="M54 112h28V88H60v14h14V96" />
+        <path d="M96 112h28V88H102v14h14V96" />
+        <path d="M288 112h-28V88h22v14h-14V96" />
+        <path d="M246 112h-28V88h-22v14h-14V96" />
+        <path d="M204 112h-28V88h-22v14h-14V96" />
+
+        <!-- 兽面：中轴、眉脊与鼻梁 -->
+        <path d="M150 16V74" />
+        <path d="M112 44h26" />
+        <path d="M188 44h-26" />
+        <path d="M132 62c-6 4-10 10-10 16" />
+        <path d="M168 62c6 4 10 10 10 16" />
+      </g>
+      <g fill={accentAlt}>
+        <circle cx="138" cy="44" r="5" />
+        <circle cx="162" cy="44" r="5" />
+      </g>
+    </svg>
+  )
+}
+
+{
+  variant === 'glaze' && (
+    <svg
+      class={className}
+      viewBox="0 0 300 120"
+      role="img"
+      aria-label="釉色开片装饰图形"
+      fill="none"
+    >
+      <g stroke={accent} opacity="0.75">
+        <circle cx="118" cy="60" r="46" stroke-width="1.4" />
+        <circle cx="118" cy="60" r="34" stroke-width="1.4" opacity="0.7" />
+        <circle cx="118" cy="60" r="22" stroke-width="1.4" opacity="0.5" />
+        <circle cx="196" cy="60" r="30" stroke-width="1.4" />
+        <circle cx="196" cy="60" r="19" stroke-width="1.4" opacity="0.6" />
+      </g>
+      <g stroke={accentAlt} stroke-width="1.2" opacity="0.8">
+        <path d="M72 60l14-11 13 9 15-13" />
+        <path d="M166 60l10 12 14-8 12 9 14-11" />
+      </g>
+      <circle cx="196" cy="60" r="3.5" fill={accentAlt} />
+    </svg>
+  )
+}
+
+{
+  variant === 'orbit' && (
+    <svg
+      class={className}
+      viewBox="0 0 300 120"
+      role="img"
+      aria-label="星轨轨道装饰图形"
+      fill="none"
+    >
+      <g stroke={accent} stroke-width="1.4" opacity="0.85">
+        <ellipse cx="150" cy="60" rx="104" ry="34" transform="rotate(-16 150 60)" />
+        <ellipse cx="150" cy="60" rx="70" ry="23" transform="rotate(-16 150 60)" opacity="0.6" />
+        <ellipse cx="150" cy="60" rx="40" ry="13" transform="rotate(-16 150 60)" opacity="0.45" />
+      </g>
+      <g fill={accentAlt}>
+        <circle cx="150" cy="60" r="5.5" />
+        <circle cx="246" cy="31" r="3" />
+        <circle cx="58" cy="88" r="2.4" opacity="0.8" />
+        <circle cx="204" cy="94" r="1.8" opacity="0.7" />
+        <circle cx="96" cy="24" r="1.6" opacity="0.6" />
+      </g>
+      <path d="M30 100 L110 22" stroke={accentAlt} stroke-width="1" opacity="0.45" />
+    </svg>
+  )
+}
+

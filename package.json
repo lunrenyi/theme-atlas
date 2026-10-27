@@ -1,0 +1,26 @@
+{
+  "name": "theme-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Theme Atlas — a story-driven colour theme library (mythology, porcelain, sci-fi).",
+  "type": "module",
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "start": "astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "verify": "npm run check && npm run build",
+    "contrast": "node scripts/check-contrast.mjs",
+    "og": "node scripts/generate-og.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.5",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3"
+  }
+}

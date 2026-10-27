@@ -1,0 +1,600 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PalettePanel from '../../components/PalettePanel.astro';
+import PreviewPanel from '../../components/PreviewPanel.astro';
+import ContrastAudit from '../../components/ContrastAudit.astro';
+import { getCollection } from '../../data/collections';
+import { themes, themeNeighbours } from '../../data/themes';
+import { withBase } from '../../lib/url';
+
+export function getStaticPaths() {
+  return themes.map((theme) => ({
+    params: { slug: theme.slug },
+    props: { theme },
+  }));
+}
+
+const { theme } = Astro.props;
+const collection = getCollection(theme.collection);
+const { prev, next } = themeNeighbours(theme.slug);
+
+const statusMap = {
+  verified: { label: '来源可核验', tone: 'ok' },
+  interpretation: { label: '同人演绎 · 非官方', tone: 'fan' },
+  draft: { label: '待补充', tone: 'warn' },
+} as const;
+const status = statusMap[theme.status];
+
+const sourceTypeLabel: Record<string, string> = {
+  book: '典籍',
+  article: '论文',
+  link: '链接',
+  pending: '待补充',
+};
+---
+
+<BaseLayout title={theme.title} description={theme.description}>
+  <article class="detail" data-theme-slug={theme.slug} data-palette-panel>
+    <!-- specimen band: the theme's own colours, full bleed -->
+    <div class="specimen" aria-hidden="true">
+      {
+        theme.palette.map((c) => (
+          <span class="specimen__chip" style={'--swatch:' + c.hex} title={c.name + ' ' + c.hex} />
+        ))
+      }
+    </div>
+
+    <div class="wrap wrap--wide">
+      <nav class="crumbs" aria-label="面包屑">
+        <a href={withBase('/#themes')}>← 返回浏览</a>
+        <span class="crumbs__sep" aria-hidden="true">/</span>
+        <a href={withBase('/collections#' + collection.id)}>{collection.title}</a>
+      </nav>
+
+      <div class="detail__grid">
+        <!-- ------------------------------ story ------------------------------ -->
+        <div class="detail__story">
+          <header class="detail__header">
+            <div class="detail__badges">
+              <a class="badge badge--collection" href={withBase('/collections#' + collection.id)}>
+                <span class="badge__dot" style={'--tone:' + collection.accent} aria-hidden="true"></span>
+                {collection.title}
+              </a>
+              <span class:list={['badge', 'badge--' + status.tone]}>{status.label}</span>
+            </div>
+
+            <h1 class="detail__title">{theme.title}</h1>
+            <p class="detail__subtitle">{theme.subtitle}</p>
+            <p class="detail__description">{theme.description}</p>
+
+            <ul class="detail__tags">
+              {theme.tags.map((tag) => <li class="mono">{tag}</li>)}
+            </ul>
+          </header>
+
+          <section class="prose-block" aria-labelledby="story-heading">
+            <h2 id="story-heading" class="prose-block__heading">
+              <span class="prose-block__index mono">01</span>故事背景
+            </h2>
+            <p>{theme.story}</p>
+          </section>
+
+          <section class="prose-block" aria-labelledby="inspiration-heading">
+            <h2 id="inspiration-heading" class="prose-block__heading">
+              <span class="prose-block__index mono">02</span>配色灵感来源
+            </h2>
+            <p>{theme.inspiration}</p>
+          </section>
+
+          <section class="prose-block" aria-labelledby="rationale-heading">
+            <h2 id="rationale-heading" class="prose-block__heading">
+              <span class="prose-block__index mono">03</span>色彩设计思路
+            </h2>
+            <p>{theme.designRationale}</p>
+          </section>
+
+          <section class="prose-block" aria-labelledby="sources-heading">
+            <h2 id="sources-heading" class="prose-block__heading">
+              <span class="prose-block__index mono">04</span>故事出处与参考
+            </h2>
+            <ul class="sources">
+              {
+                theme.sources.map((source) => (
+                  <li class="source">
+                    <span class:list={['source__type', 'source__type--' + source.type]}>
+                      {sourceTypeLabel[source.type] ?? source.type}
+                    </span>
+                    <span class="source__body">
+                      <span class="source__title">
+                        {source.url ? (
+                          <a href={source.url} rel="noopener noreferrer" target="_blank">
+                            {source.title}
+                            <span class="source__ext" aria-hidden="true">↗</span>
+                          </a>
+                        ) : (
+                          source.title
+                        )}
+                      </span>
+                      {source.detail && <span class="source__detail">{source.detail}</span>}
+                      {source.note && <span class="source__note">{source.note}</span>}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          <section class="prose-block" aria-labelledby="credits-heading">
+            <h2 id="credits-heading" class="prose-block__heading">
+              <span class="prose-block__index mono">05</span>创作说明与授权
+            </h2>
+            <dl class="credits">
+              {
+                [
+                  ['配色整理', theme.credits.palette],
+                  ['文本撰写', theme.credits.story],
+                  ['图形绘制', theme.credits.graphics],
+                  ['数据许可', theme.credits.license],
+                  ['插图授权', theme.credits.imageLicence],
+                  ['同人声明', theme.credits.disclaimer],
+                ]
+                  .filter((row) => row[1])
+                  .map(([label, value]) => (
+                    <div class="credits__row">
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))
+              }
+            </dl>
+            {
+              theme.credits.disclaimer && (
+                <p class="prose-block__aside">本页声明适用于该系列下的全部主题，详见关于页的同人创作声明。</p>
+              )
+            }
+          </section>
+        </div>
+
+        <!-- ------------------------------ panel ------------------------------ -->
+        <aside class="detail__rail">
+          <PalettePanel theme={theme} />
+          <PreviewPanel theme={theme} />
+          <ContrastAudit theme={theme} />
+
+          <nav class="switcher" aria-label="切换主题">
+            <p class="switcher__label eyebrow">继续浏览</p>
+            <div class="switcher__row">
+              {
+                prev && (
+                  <a class="switcher__item" href={withBase('/theme/' + prev.slug)}>
+                    <span class="switcher__dots" aria-hidden="true">
+                      {prev.palette.slice(0, 3).map((c) => (
+                        <i style={'--tone:' + c.hex} />
+                      ))}
+                    </span>
+                    <span class="switcher__text">
+                      <span class="switcher__dir">← 上一套</span>
+                      <span class="switcher__name">{prev.title}</span>
+                    </span>
+                  </a>
+                )
+              }
+              {
+                next && (
+                  <a class="switcher__item switcher__item--next" href={withBase('/theme/' + next.slug)}>
+                    <span class="switcher__text">
+                      <span class="switcher__dir">下一套 →</span>
+                      <span class="switcher__name">{next.title}</span>
+                    </span>
+                    <span class="switcher__dots" aria-hidden="true">
+                      {next.palette.slice(0, 3).map((c) => (
+                        <i style={'--tone:' + c.hex} />
+                      ))}
+                    </span>
+                  </a>
+                )
+              }
+            </div>
+            <a class="switcher__all" href={withBase('/#themes')}>回到全部主题</a>
+          </nav>
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .detail {
+    padding-top: 0;
+  }
+
+  .specimen {
+    display: flex;
+    height: clamp(56px, 7vw, 96px);
+  }
+
+  .specimen__chip {
+    flex: 1 1 0;
+    background: var(--swatch);
+  }
+
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .crumbs a {
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--cinnabar);
+  }
+
+  .crumbs__sep {
+    opacity: 0.5;
+  }
+
+  .detail__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 4vw, 72px);
+    align-items: start;
+    padding-bottom: clamp(48px, 6vw, 96px);
+  }
+
+  /* ---------------- story column ---------------- */
+  .detail__header {
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 30px;
+  }
+
+  .detail__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    padding: 3px 8px;
+    text-decoration: none;
+  }
+
+  .badge--collection:hover {
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+
+  .badge__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tone);
+  }
+
+  .badge--ok {
+    color: var(--celadon);
+    border-color: color-mix(in srgb, var(--celadon) 45%, transparent);
+  }
+
+  .badge--fan {
+    color: var(--gold);
+    border-color: color-mix(in srgb, var(--gold) 50%, transparent);
+  }
+
+  .badge--warn {
+    color: var(--cinnabar);
+    border-color: color-mix(in srgb, var(--cinnabar) 40%, transparent);
+  }
+
+  .detail__title {
+    font-size: var(--step-4);
+    line-height: 1.05;
+  }
+
+  .detail__subtitle {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--ink-2);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  .detail__description {
+    color: var(--ink-2);
+    font-size: var(--step-1);
+    line-height: 1.7;
+    margin-top: 18px;
+    max-width: 44ch;
+  }
+
+  .detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin-top: 20px;
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+
+  .detail__tags li {
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 8px;
+  }
+
+  .prose-block {
+    margin-bottom: 38px;
+  }
+
+  .prose-block__heading {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: var(--step-2);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+  }
+
+  .prose-block__index {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--cinnabar);
+  }
+
+  .prose-block p {
+    color: var(--ink-2);
+    line-height: 1.9;
+    font-size: var(--step-0);
+  }
+
+  .prose-block__aside {
+    margin-top: 14px;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+  }
+
+  /* ---------------- sources ---------------- */
+  .sources {
+    list-style: none;
+  }
+
+  .source {
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .source:last-child {
+    border-bottom: 0;
+  }
+
+  .source__type {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 0;
+    text-align: center;
+    height: fit-content;
+  }
+
+  .source__type--pending {
+    color: var(--cinnabar);
+    border-color: color-mix(in srgb, var(--cinnabar) 40%, transparent);
+  }
+
+  .source__type--link {
+    color: var(--celadon);
+    border-color: color-mix(in srgb, var(--celadon) 40%, transparent);
+  }
+
+  .source__body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .source__title {
+    font-size: var(--step-0);
+  }
+
+  .source__ext {
+    font-size: 0.8em;
+    margin-left: 3px;
+  }
+
+  .source__detail {
+    font-size: 0.78rem;
+    color: var(--ink-3);
+  }
+
+  .source__note {
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+
+  /* ---------------- credits ---------------- */
+  .credits {
+    margin: 0;
+  }
+
+  .credits__row {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .credits__row:last-child {
+    border-bottom: 0;
+  }
+
+  .credits dt {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    padding-top: 3px;
+  }
+
+  .credits dd {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+
+  /* ---------------- rail ---------------- */
+  .detail__rail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 88px;
+  }
+
+  .switcher {
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+
+  .switcher__label {
+    margin-bottom: 12px;
+  }
+
+  .switcher__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .switcher__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    transition: border-color 0.16s var(--ease);
+  }
+
+  .switcher__item:hover {
+    border-color: var(--ink-3);
+  }
+
+  .switcher__item--next {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .switcher__dots {
+    display: inline-flex;
+    flex: none;
+  }
+
+  .switcher__dots i {
+    width: 10px;
+    height: 20px;
+    background: var(--tone);
+  }
+
+  .switcher__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .switcher__dir {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+
+  .switcher__name {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .switcher__all {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--rule-2);
+    padding-bottom: 2px;
+  }
+
+  .switcher__all:hover {
+    color: var(--cinnabar);
+    border-bottom-color: var(--cinnabar);
+  }
+
+  @media (max-width: 980px) {
+    .detail__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .detail__rail {
+      position: static;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .switcher__row {
+      grid-template-columns: 1fr;
+    }
+
+    .switcher__item--next {
+      justify-content: flex-start;
+      text-align: left;
+      flex-direction: row-reverse;
+    }
+
+    .credits__row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>
+

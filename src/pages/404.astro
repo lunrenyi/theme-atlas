@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/url';
+---
+
+<BaseLayout title="页面不存在" description="这个页面不在档案里。">
+  <section class="notfound">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--accent">404</p>
+      <h1 class="notfound__title">这个页面不在档案里</h1>
+      <p class="lede">
+        也许它被重新归档了，或者链接里少了一段。回到档案首页，按名字或颜色找一找。
+      </p>
+      <div class="notfound__actions">
+        <a class="btn btn--solid" href={withBase('/')}>回到首页</a>
+        <a class="btn btn--ghost" href={withBase('/#themes')}>浏览全部主题</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block: clamp(72px, 12vw, 180px);
+    max-width: 640px;
+  }
+
+  .notfound__title {
+    font-size: var(--step-4);
+    margin: 16px 0 20px;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+</style>
+
