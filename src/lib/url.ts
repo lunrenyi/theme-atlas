@@ -14,7 +14,7 @@ export function withBase(path: string): string {
 
 /** Absolute URL against the configured site origin - used for canonical links. */
 export function absoluteUrl(path: string): string {
-  const origin = import.meta.env.SITE ?? 'https://liaoxuanbin.github.io';
+  const origin = import.meta.env.SITE ?? 'https://lunrenyi.github.io';
   return new URL(withBase(path), origin).toString();
 }
 

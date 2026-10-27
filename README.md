@@ -2,12 +2,55 @@
 
 > Every color has a story.
 
+[![Deploy to GitHub Pages](https://github.com/lunrenyi/theme/actions/workflows/deploy.yml/badge.svg)](https://github.com/lunrenyi/theme/actions/workflows/deploy.yml)
+[![Pages](https://github.com/lunrenyi/theme/actions/workflows/deploy.yml?query=branch%3Amain&badge=pages-deploy)](https://lunrenyi.github.io/theme/)
+
+**在线站点 / Live site → <https://lunrenyi.github.io/theme/>**
+
 一个有故事的配色主题库。每套主题先讲清楚灵感与出处，再给出可以直接复制、可以导出的颜色。
 
 当前版本收录 **9 套示范主题**，覆盖三个系列：中国神话、中国瓷器、崩坏：星穹铁道同人主题。
 主题数据与输出格式解耦，以后接入终端、编辑器等其它工具时只需要新增一个适配器。
 
 ---
+
+## 这是什么
+
+Theme Atlas 把每个主题当成一份档案来写：先交代故事从哪儿来，再交代颜色从哪儿来，
+最后才是可以直接复制的色值。
+
+- **故事**——主题的出处、传说、器物与工艺背景，附可核验的参考。
+- **颜色**——7 个色值，每个都有名字、HEX 和**语义角色**。
+- **用法**——应用预览、对比度校验、一键复制与导出。
+
+这是一份**配色作品集**，所以颜色本身是主角：卡片上的色条、详情页顶部的样带、
+应用预览里的界面，全部由同一份数据渲染。
+
+## 三个系列
+
+| 系列 | 配色纪律 | 排列规则 |
+| --- | --- | --- |
+| 中国神话 | 矿物颜料写下的神兽、祥云与昆仑 | **中心对称**——强调色落在轴心 |
+| 中国瓷器 | 窑火里长出来的釉色，温度与耐心 | **釉层分层**——由胎体到釉彩 |
+| 崩坏：星穹铁道 同人 | 在虚构的银河里调一次光 | **明度序列**——由暗到亮的光谱 |
+
+排列规则定义在 `src/lib/arrangement.ts`，色条、图例与卡片上的小图都来自同一处。
+
+## 语义角色
+
+每套配色固定提供 7 个角色，这是主题与使用方之间的唯一契约：
+
+| 角色 | 用途 |
+| --- | --- |
+| `bg` | 页面背景 |
+| `surface` | 面板与卡片 |
+| `text` | 正文 |
+| `muted` | 次要文字与注释 |
+| `border` | 分割线与描边 |
+| `accent` | 按钮、链接、焦点 |
+| `onAccent` | 强调色之上的文字 |
+
+角色与颜色分离，意味着新增一种输出格式（终端、编辑器配色）时**不需要改写任何配色数据**。
 
 ## 快速开始
 
@@ -17,8 +60,6 @@ npm run dev          # 本地开发，默认 http://localhost:4321
 npm run build        # 构建静态站点到 dist/
 npm run preview      # 本地预览构建产物
 ```
-
-其它命令：
 
 | 命令 | 说明 |
 | --- | --- |
@@ -40,7 +81,12 @@ src/
 │   ├── types.ts        ToolAdapter 接口
 │   ├── css-variables.ts
 │   └── json.ts
-├── lib/                颜色计算、剪贴板、URL 前缀等工具
+├── lib/
+│   ├── color.ts        WCAG 对比度计算
+│   ├── arrangement.ts  三个系列的配色排列规则
+│   ├── prose.ts        正文中的颜色名识别
+│   ├── clipboard.ts    复制与下载
+│   └── url.ts          GitHub Pages 子路径前缀
 ├── components/         页面组件
 ├── layouts/            基础布局
 ├── pages/              路由（index / collections / about / theme/[slug] / 404）
@@ -67,27 +113,10 @@ interface Theme {
   palette: Array<{ name: string; hex: string; role: PaletteRole; note?: string }>;
   tags: string[];
   sources: Source[];     // 可核验的出处；无法考证的标记为 pending
-  credits: Credits;       // 创作说明与授权
+  credits: Credits;      // 创作说明与授权
   status: 'verified' | 'interpretation' | 'draft';
 }
 ```
-
-每套配色固定提供 7 个语义角色：`bg`（背景）、`surface`（面板）、`text`（正文）、
-`muted`（次要文字）、`border`（分割线）、`accent`（强调）、`onAccent`（强调色上的文字）。
-角色是主题与使用方之间的唯一契约——页面、终端主题、编辑器配色都只需要认识角色。
-
-### 排列规则
-
-每个系列用不同的方式排列同一组颜色，色块顺序本身就是系列的签名：
-
-| 系列 | 规则 | 说明 |
-| --- | --- | --- |
-| 中国神话 | 中心对称 | 强调色落在轴心，两侧按与它的明度距离镜像排布 |
-| 中国瓷器 | 釉层分层 | 由胎体到釉彩逐层叠置，落在最后的是窑火定下的颜色 |
-| 同人主题 | 明度序列 | 按相对明度由暗到亮排列，读起来像一段光谱 |
-
-规则定义在 `src/lib/arrangement.ts`，卡片上的配色条、图例与「排列」小图都来自同一处，
-因此新增主题不需要再单独排一次色。
 
 ### 新增一个输出格式
 
@@ -120,7 +149,7 @@ export const terminalAdapter: ToolAdapter = {
 本地验证子路径构建：
 
 ```bash
-BASE_PATH=/theme SITE_URL=https://example.github.io npm run build
+BASE_PATH=/theme SITE_URL=https://lunrenyi.github.io npm run build
 npx serve dist
 ```
 
@@ -131,6 +160,12 @@ npx serve dist
 - **崩坏：星穹铁道** 系列为非官方同人演绎，与 HoYoverse 无隶属或授权关系；
   该系列不含任何官方立绘、Logo 或界面素材，站内图形均为原创 SVG。
 - 配色数据以 CC BY 4.0 释出，引用时请注明出处 Theme Atlas。
+
+## 参与
+
+- 发现引用错误、出处存疑或更好的版本 → [提 issue](https://github.com/lunrenyi/theme/issues)。
+- 想加一套主题 → 在 `src/data/themes.ts` 里补一个对象即可，页面、导出与对比度校验会自动跟上。
+- 想加一种输出格式 → 见上面「新增一个输出格式」。
 
 ## 许可
 

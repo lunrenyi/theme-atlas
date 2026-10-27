@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config';
 // injected by the deploy workflow (see .github/workflows/deploy.yml) and can be
 // overridden locally with `BASE_PATH=/theme npm run build`.
 const base = process.env.BASE_PATH ?? '/';
-const site = process.env.SITE_URL ?? 'https://liaoxuanbin.github.io';
+const site = process.env.SITE_URL ?? 'https://lunrenyi.github.io';
 
 export default defineConfig({
   site,

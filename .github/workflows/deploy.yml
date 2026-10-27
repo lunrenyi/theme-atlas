@@ -16,6 +16,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +39,9 @@ jobs:
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # turn the Pages site on if it is not yet (useful for forks)
+          enablement: true
 
       - name: Resolve base path
         id: base
@@ -52,7 +58,9 @@ jobs:
         run: npm run build
         env:
           BASE_PATH: ${{ steps.base.outputs.path }}
-          SITE_URL: ${{ steps.pages.outputs.base_url }}
+          # origin only - the repository sub-path is handled by BASE_PATH,
+          # so using the pages base_url here would repeat the path segment
+          SITE_URL: https://${{ github.repository_owner }}.github.io
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
