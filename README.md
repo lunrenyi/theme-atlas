@@ -45,6 +45,11 @@ src/
 ├── layouts/            基础布局
 ├── pages/              路由（index / collections / about / theme/[slug] / 404）
 └── styles/global.css   设计系统（色彩、字体、栅格、基础组件）
+
+scripts/
+├── check-contrast.mjs   对比度审计（npm run contrast）
+├── generate-og.mjs      重新生成社交预览图（npm run og）
+└── postbuild.mjs        构建后写入 dist/.nojekyll
 ```
 
 ### 主题数据结构
