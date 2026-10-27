@@ -15,6 +15,9 @@ export function withBase(path: string): string {
 /** Absolute URL against the configured site origin - used for canonical links. */
 export function absoluteUrl(path: string): string {
   const origin = import.meta.env.SITE ?? 'https://lunrenyi.github.io';
-  return new URL(withBase(path), origin).toString();
+  // Astro.url.pathname already carries the base during a static build, so
+  // strip it before re-applying it - otherwise the path segment repeats.
+  const clean = base && path.startsWith(base) ? path.slice(base.length) || '/' : path;
+  return new URL(withBase(clean), origin).toString();
 }
 
