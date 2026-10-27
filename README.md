@@ -2,10 +2,10 @@
 
 > Every color has a story.
 
-[![Deploy to GitHub Pages](https://github.com/lunrenyi/theme/actions/workflows/deploy.yml/badge.svg)](https://github.com/lunrenyi/theme/actions/workflows/deploy.yml)
-[![Pages](https://github.com/lunrenyi/theme/actions/workflows/deploy.yml?query=branch%3Amain&badge=pages-deploy)](https://lunrenyi.github.io/theme/)
+[![Deploy to GitHub Pages](https://github.com/lunrenyi/theme-atlas/actions/workflows/deploy.yml/badge.svg)](https://github.com/lunrenyi/theme-atlas/actions/workflows/deploy.yml)
+[![Pages](https://github.com/lunrenyi/theme-atlas/actions/workflows/deploy.yml?query=branch%3Amain&badge=pages-deploy)](https://lunrenyi.github.io/theme-atlas/)
 
-**在线站点 / Live site → <https://lunrenyi.github.io/theme/>**
+**在线站点 / Live site → <https://lunrenyi.github.io/theme-atlas/>**
 
 一个有故事的配色主题库。每套主题先讲清楚灵感与出处，再给出可以直接复制、可以导出的颜色。
 
@@ -149,7 +149,7 @@ export const terminalAdapter: ToolAdapter = {
 本地验证子路径构建：
 
 ```bash
-BASE_PATH=/theme SITE_URL=https://lunrenyi.github.io npm run build
+BASE_PATH=/theme-atlas SITE_URL=https://lunrenyi.github.io npm run build
 npx serve dist
 ```
 
@@ -163,7 +163,7 @@ npx serve dist
 
 ## 参与
 
-- 发现引用错误、出处存疑或更好的版本 → [提 issue](https://github.com/lunrenyi/theme/issues)。
+- 发现引用错误、出处存疑或更好的版本 → [提 issue](https://github.com/lunrenyi/theme-atlas/issues)。
 - 想加一套主题 → 在 `src/data/themes.ts` 里补一个对象即可，页面、导出与对比度校验会自动跟上。
 - 想加一种输出格式 → 见上面「新增一个输出格式」。
 

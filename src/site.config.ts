@@ -13,8 +13,8 @@ export const site = {
   descriptionEn:
     'A colour theme archive built from stories and cultures - mineral pigments of Chinese myth, ' +
     'glaze colours of porcelain, starlight of imagined worlds.',
-  repoUrl: 'https://github.com/lunrenyi/theme',
-  repoLabel: 'lunrenyi/theme',
+  repoUrl: 'https://github.com/lunrenyi/theme-atlas',
+  repoLabel: 'lunrenyi/theme-atlas',
   fanStatementPath: '/about#fan-works',
   edition: 'EDITION 01',
 } as const;
