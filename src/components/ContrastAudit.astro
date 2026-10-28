@@ -1,48 +1,50 @@
 ---
 import type { Theme } from '../data/types';
 import { auditContrast } from '../lib/color';
+import { t, type Locale, type UiKey } from '../i18n';
 
 interface Props {
   theme: Theme;
+  lang: Locale;
 }
 
-const { theme } = Astro.props;
+const { theme, lang } = Astro.props;
 const checks = auditContrast(theme);
 const failed = checks.filter((c) => !c.pass);
 ---
 
 <section class="audit" aria-labelledby="audit-heading">
   <div class="audit__head">
-    <h2 id="audit-heading" class="audit__heading">对比度校验</h2>
+    <h2 id="audit-heading" class="audit__heading">{t(lang, 'audit.heading')}</h2>
     <p class="audit__sub mono">
       {
         failed.length === 0
-          ? 'PASS · WCAG AA'
-          : failed.length + ' 项未达标'
+          ? t(lang, 'audit.pass')
+          : t(lang, 'audit.fail', { count: failed.length })
       }
     </p>
   </div>
 
   <table class="audit__table">
-    <caption class="sr-only">{theme.title} 的前景与背景对比度检查结果</caption>
+    <caption class="sr-only">{t(lang, 'audit.caption', { title: theme.title })}</caption>
     <thead>
       <tr>
-        <th scope="col">组合</th>
-        <th scope="col">比值</th>
-        <th scope="col">要求</th>
-        <th scope="col">结果</th>
+        <th scope="col">{t(lang, 'audit.colPair')}</th>
+        <th scope="col">{t(lang, 'audit.colRatio')}</th>
+        <th scope="col">{t(lang, 'audit.colTarget')}</th>
+        <th scope="col">{t(lang, 'audit.colResult')}</th>
       </tr>
     </thead>
     <tbody>
       {
         checks.map((check) => (
           <tr>
-            <th scope="row">{check.label}</th>
+            <th scope="row">{t(lang, ('audit.pair.' + check.key) as UiKey)}</th>
             <td class="mono">{check.ratio.toFixed(2)}:1</td>
             <td class="mono">{check.threshold}:1</td>
             <td>
               <span class:list={['audit__badge', check.pass ? 'is-pass' : 'is-fail']}>
-                {check.pass ? '通过' : '未达标'}
+                {check.pass ? t(lang, 'audit.passLabel') : t(lang, 'audit.failLabel')}
               </span>
             </td>
           </tr>
@@ -51,10 +53,7 @@ const failed = checks.filter((c) => !c.pass);
     </tbody>
   </table>
 
-  <p class="audit__note">
-    分割线一项的阈值仅为 1.2:1——它属于装饰性元素，不承载文字信息。
-    其余组合按 WCAG AA 的正文标准（4.5:1）核验。
-  </p>
+  <p class="audit__note">{t(lang, 'audit.note')}</p>
 </section>
 
 <style>

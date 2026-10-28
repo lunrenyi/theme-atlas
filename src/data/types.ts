@@ -87,10 +87,18 @@ export interface Collection {
   titleEn: string;
   /** Short label used where space is tight (star map, chips). */
   short: string;
+  /** Short label used where space is tight in the English interface. */
+  shortEn: string;
+  /** Stable catalogue code, used as a technical label in both languages. */
+  code: string;
   /** Short line shown on the collection panel. */
   tagline: string;
+  /** English version of the tagline. */
+  taglineEn: string;
   /** Longer paragraph on the collection page. */
   description: string;
+  /** English version of the collection description. */
+  descriptionEn: string;
   /** Hue used for the collection's own graphic motif. */
   accent: string;
   /** Secondary hue used by the motif gradients. */

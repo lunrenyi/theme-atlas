@@ -57,7 +57,8 @@ export function paletteMap(theme: Theme): Record<PaletteRole, PaletteColor> {
 }
 
 export interface ContrastCheck {
-  label: string;
+  /** Stable identifier of the pair; the interface localises it. */
+  key: 'textBg' | 'mutedBg' | 'textSurface' | 'onAccent' | 'accentBg' | 'borderBg';
   fg: string;
   bg: string;
   ratio: number;
@@ -78,13 +79,18 @@ export function auditContrast(theme: Theme): ContrastCheck[] {
   const surface = get('surface');
   const accent = get('accent');
 
-  const checks: Array<{ label: string; fg: string; bg: string; threshold: number }> = [
-    { label: '正文 / 背景', fg: get('text'), bg, threshold: 4.5 },
-    { label: '次要文字 / 背景', fg: get('muted'), bg, threshold: 4.5 },
-    { label: '正文 / 面板', fg: get('text'), bg: surface, threshold: 4.5 },
-    { label: '强调色上的文字 / 强调色', fg: get('onAccent'), bg: accent, threshold: 4.5 },
-    { label: '强调色 / 背景', fg: accent, bg, threshold: 3 },
-    { label: '分割线 / 背景', fg: get('border'), bg, threshold: 1.2 },
+  const checks: Array<{
+    key: ContrastCheck['key'];
+    fg: string;
+    bg: string;
+    threshold: number;
+  }> = [
+    { key: 'textBg', fg: get('text'), bg, threshold: 4.5 },
+    { key: 'mutedBg', fg: get('muted'), bg, threshold: 4.5 },
+    { key: 'textSurface', fg: get('text'), bg: surface, threshold: 4.5 },
+    { key: 'onAccent', fg: get('onAccent'), bg: accent, threshold: 4.5 },
+    { key: 'accentBg', fg: accent, bg, threshold: 3 },
+    { key: 'borderBg', fg: get('border'), bg, threshold: 1.2 },
   ];
 
   return checks.map((c) => {

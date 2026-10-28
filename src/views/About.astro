@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site.config';
+import { getCollections, getThemes } from '../lib/content';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const themes = getThemes(lang);
+const collections = getCollections(lang);
+---
+
+<BaseLayout
+  title={t(lang, 'about.title')}
+  description={t(lang, 'about.p1', {
+    themes: themes.length,
+    collections: collections.length,
+  })}
+  lang={lang}
+>
+  <section class="page-head">
+    <div class="wrap wrap--wide">
+      <p class="eyebrow eyebrow--gold">{t(lang, 'about.eyebrow')}</p>
+      <h1 class="page-head__title">{t(lang, 'about.title')}</h1>
+      <p class="lede">{site.description[lang]}</p>
+    </div>
+  </section>
+
+  <div class="wrap wrap--wide">
+    <div class="about">
+      <div class="about__main">
+        <section class="prose-block">
+          <h2 class="prose-block__heading">
+            <span class="prose-block__index mono">01</span>{t(lang, 'about.sectionWhat')}
+          </h2>
+          <p>
+            {t(lang, 'about.p1', {
+              themes: themes.length,
+              collections: collections.length,
+            })}
+          </p>
+          <p>{t(lang, 'about.p2')}</p>
+        </section>
+
+        <section class="prose-block">
+          <h2 class="prose-block__heading">
+            <span class="prose-block__index mono">02</span>{t(lang, 'about.sectionPrinciples')}
+          </h2>
+          <ul class="principles">
+            <li><strong>{t(lang, 'about.principle1')}</strong></li>
+            <li><strong>{t(lang, 'about.principle2')}</strong></li>
+            <li><strong>{t(lang, 'about.principle3')}</strong></li>
+            <li><strong>{t(lang, 'about.principle4')}</strong></li>
+          </ul>
+        </section>
+
+        <section class="prose-block" id="fan-works">
+          <h2 class="prose-block__heading">
+            <span class="prose-block__index mono">03</span>{t(lang, 'about.sectionFan')}
+          </h2>
+          <p>{t(lang, 'about.fanP1')}</p>
+          <ul class="notes">
+            <li>{t(lang, 'about.fanNote1')}</li>
+            <li>{t(lang, 'about.fanNote2')}</li>
+            <li>{t(lang, 'about.fanNote3')}</li>
+            <li>{t(lang, 'about.fanNote4')}</li>
+          </ul>
+        </section>
+
+        <section class="prose-block">
+          <h2 class="prose-block__heading">
+            <span class="prose-block__index mono">04</span>{t(lang, 'about.sectionLicence')}
+          </h2>
+          <p>{t(lang, 'about.licenceP1')}</p>
+          <p>
+            {t(lang, 'about.licenceP2')}{' '}
+            <a href={site.repoUrl + '/issues'} rel="noopener noreferrer" target="_blank">
+              GitHub
+            </a>
+          </p>
+        </section>
+      </div>
+
+      <aside class="about__side">
+        <div class="fact">
+          <p class="eyebrow">{t(lang, 'about.repo')}</p>
+          <p class="fact__value">
+            <a href={site.repoUrl} rel="noopener noreferrer" target="_blank">
+              {site.repoLabel} <span aria-hidden="true">↗</span>
+            </a>
+          </p>
+          <p class="fact__note">{t(lang, 'about.repoNote')}</p>
+        </div>
+
+        <div class="fact">
+          <p class="eyebrow">{t(lang, 'about.content')}</p>
+          <p class="fact__value">
+            {t(lang, 'about.contentValue', {
+              themes: themes.length,
+              collections: collections.length,
+            })}
+          </p>
+          <p class="fact__note">{t(lang, 'about.contentNote')}</p>
+        </div>
+
+        <div class="fact">
+          <p class="eyebrow">{t(lang, 'about.formats')}</p>
+          <ul class="fact__list">
+            <li><span class="mono">CSS</span> {t(lang, 'export.cssName')}</li>
+            <li><span class="mono">JSON</span> {t(lang, 'export.jsonName')}</li>
+          </ul>
+          <p class="fact__note">{t(lang, 'about.formatsNote')}</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-block: clamp(48px, 7vw, 100px) clamp(16px, 2vw, 28px);
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .page-head__title {
+    font-size: var(--step-4);
+    margin: 14px 0 18px;
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+    padding-block: clamp(40px, 5vw, 72px);
+  }
+
+  .prose-block {
+    margin-bottom: 42px;
+  }
+
+  .prose-block__heading {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: var(--step-2);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--orbit-faint);
+    margin-bottom: 18px;
+  }
+
+  .prose-block__index {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+  }
+
+  .prose-block p {
+    color: var(--text-2);
+    line-height: 1.9;
+  }
+
+  .prose-block p + p {
+    margin-top: 14px;
+  }
+
+  .prose-block strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .principles {
+    list-style: none;
+  }
+
+  .principles li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 14px;
+    color: var(--text-2);
+    line-height: 1.85;
+  }
+
+  .principles li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.78em;
+    width: 12px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .notes {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .notes li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    color: var(--text-2);
+    line-height: 1.8;
+    font-size: 0.94rem;
+  }
+
+  .notes li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.72em;
+    width: 8px;
+    height: 1px;
+    background: var(--orbit);
+  }
+
+  .about__side {
+    position: sticky;
+    top: 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .fact {
+    border: 1px solid var(--orbit-faint);
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+
+  .fact__value {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    margin: 8px 0 8px;
+    line-height: 1.4;
+  }
+
+  .fact__value a {
+    text-decoration: none;
+  }
+
+  .fact__value a:hover {
+    color: var(--gold);
+  }
+
+  .fact__note {
+    font-size: 0.78rem;
+    color: var(--text-3);
+    line-height: 1.7;
+  }
+
+  .fact__list {
+    list-style: none;
+    margin: 10px 0;
+  }
+
+  .fact__list li {
+    font-size: 0.86rem;
+    color: var(--text-2);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .fact__list li:last-child {
+    border-bottom: 0;
+  }
+
+  .fact__list .mono {
+    display: inline-block;
+    min-width: 46px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--glow);
+  }
+
+  @media (max-width: 900px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    .about__side {
+      position: static;
+    }
+  }
+</style>

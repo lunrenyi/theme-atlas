@@ -1,4 +1,5 @@
 import type { Theme } from '../data/types';
+import type { Locale } from '../i18n';
 
 /**
  * A tool adapter turns a theme into one concrete output format. The theme
@@ -10,6 +11,8 @@ export interface ToolAdapter {
   id: string;
   /** Human readable label shown in the export row. */
   label: string;
+  /** English label, shown when the interface is in English. */
+  labelEn: string;
   /** One line describing what the format is for. */
   description: string;
   /** MIME type used for downloads. */
@@ -17,6 +20,6 @@ export interface ToolAdapter {
   /** File extension without the dot. */
   extension: string;
   /** Render the theme into the adapter's format. */
-  render(theme: Theme): string;
+  render(theme: Theme, lang?: Locale): string;
 }
 

@@ -1,22 +1,24 @@
 ---
 import type { PaletteColor } from '../data/types';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   palette: PaletteColor[];
   /** Height / density of the strip. */
   variant?: 'card' | 'hero' | 'detail';
   class?: string;
+  lang: Locale;
 }
 
-const { palette, variant = 'card', class: className = '' } = Astro.props;
-const summary = palette.map((c) => c.name + ' ' + c.hex).join('，');
+const { palette, variant = 'card', class: className = '', lang } = Astro.props;
+const summary = palette.map((c) => c.name + ' ' + c.hex).join(t(lang, 'palette.stripSeparator'));
 ---
 
 <div class:list={['strip-wrap', className]}>
   <div
     class:list={['strip', 'strip--' + variant]}
     role="img"
-    aria-label={'配色条：' + summary}
+    aria-label={t(lang, 'palette.stripLabel', { summary })}
   >
     {
       palette.map((c) => (

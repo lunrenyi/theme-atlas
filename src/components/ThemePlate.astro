@@ -8,19 +8,21 @@
  * drawn for this site from simple geometric rules.
  */
 import type { Theme } from '../data/types';
-import { getCollection } from '../data/collections';
+import { getCollectionById } from '../lib/content';
 import { luminance, paletteMap } from '../lib/color';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   theme: Theme;
   class?: string;
+  lang: Locale;
 }
 
-const { theme, class: className = '' } = Astro.props;
+const { theme, class: className = '', lang } = Astro.props;
 const map = paletteMap(theme);
 const hex = (role: keyof typeof map) => map[role]?.hex ?? '#7a7a7a';
 
-const variant = getCollection(theme.collection).motif;
+const variant = getCollectionById(theme.collection, lang).motif;
 
 /**
  * Light-ground themes (paper, glaze) are drawn with their own tints; dark
@@ -37,7 +39,7 @@ const bright = hex('onAccent');
   <svg
     viewBox="0 0 320 200"
     role="img"
-    aria-label={theme.title + ' 的原创插图，使用本主题自身的颜色绘制'}
+    aria-label={t(lang, 'plate.label', { title: theme.title })}
     fill="none"
   >
     {
@@ -153,7 +155,7 @@ const bright = hex('onAccent');
     }
   </svg>
   <figcaption class="plate__caption mono">
-    PLATE · {theme.title}
+    {t(lang, 'detail.plateCaption', { title: theme.title })}
   </figcaption>
 </figure>
 

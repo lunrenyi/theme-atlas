@@ -1,5 +1,6 @@
 import type { CollectionId, PaletteColor, PaletteRole, Theme } from '../data/types';
 import { luminance } from './color';
+import { t, type Locale, type UiKey } from '../i18n';
 
 /**
  * Each collection organises its colours differently, and the strip on the card
@@ -33,8 +34,13 @@ export const arrangements: Record<CollectionId, Arrangement> = {
   },
 };
 
-export function arrangementFor(collection: CollectionId): Arrangement {
-  return arrangements[collection];
+export function arrangementFor(collection: CollectionId, lang: Locale = 'zh'): Arrangement {
+  const rule = arrangements[collection];
+  return {
+    ...rule,
+    label: t(lang, ('rule.' + rule.id) as UiKey),
+    note: t(lang, ('rule.' + rule.id + 'Note') as UiKey),
+  };
 }
 
 const STRATA_ORDER: PaletteRole[] = [

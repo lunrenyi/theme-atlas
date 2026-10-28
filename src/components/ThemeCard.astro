@@ -1,8 +1,9 @@
 ---
 import type { Theme } from '../data/types';
-import { getCollection } from '../data/collections';
+import { getCollectionById } from '../lib/content';
 import { arrangementFor, arrangePalette } from '../lib/arrangement';
-import { withBase } from '../lib/url';
+import { localePath } from '../lib/url';
+import { t, type Locale } from '../i18n';
 import PaletteStrip from './PaletteStrip.astro';
 
 interface Props {
@@ -10,25 +11,26 @@ interface Props {
   variant?: 'grid' | 'featured';
   /** Show the long description instead of the short subtitle. */
   showDescription?: boolean;
+  lang: Locale;
 }
 
-const { theme, variant = 'grid', showDescription = variant === 'featured' } = Astro.props;
+const { theme, variant = 'grid', showDescription = variant === 'featured', lang } = Astro.props;
 
-const collection = getCollection(theme.collection);
-const rule = arrangementFor(theme.collection);
+const collection = getCollectionById(theme.collection, lang);
+const rule = arrangementFor(theme.collection, lang);
 const palette = arrangePalette(theme);
 
 const statusMap = {
-  verified: { label: '来源可核验', tone: 'ok' },
-  interpretation: { label: '同人演绎', tone: 'fan' },
-  draft: { label: '待补充', tone: 'warn' },
+  verified: { label: t(lang, 'card.statusVerified'), tone: 'ok' },
+  interpretation: { label: t(lang, 'card.statusInterpretation'), tone: 'fan' },
+  draft: { label: t(lang, 'card.statusDraft'), tone: 'warn' },
 } as const;
 const status = statusMap[theme.status];
 ---
 
 <article class:list={['card', 'card--' + variant]} data-collection={theme.collection}>
   <div class="card__meta">
-    <a class="card__collection mono" href={withBase('/collections#' + collection.id)}>
+    <a class="card__collection mono" href={localePath('/collections#' + collection.id, lang)}>
       <span class="card__swatch" style={'--tone:' + collection.accent} aria-hidden="true"></span>
       {collection.title}
     </a>
@@ -40,7 +42,7 @@ const status = statusMap[theme.status];
   </div>
 
   <h3 class="card__title">
-    <a class="card__link" href={withBase('/theme/' + theme.slug)}>{theme.title}</a>
+    <a class="card__link" href={localePath('/theme/' + theme.slug, lang)}>{theme.title}</a>
   </h3>
 
   {
@@ -49,7 +51,7 @@ const status = statusMap[theme.status];
     )
   }
 
-  <PaletteStrip palette={palette} variant={variant === 'featured' ? 'hero' : 'card'} />
+  <PaletteStrip palette={palette} variant={variant === 'featured' ? 'hero' : 'card'} lang={lang} />
 
   <ul class="card__names">
     {palette.map((c) => <li class="mono">{c.name}</li>)}

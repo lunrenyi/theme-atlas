@@ -1,7 +1,14 @@
 ---
 import { nav, site } from '../site.config';
-import { withBase } from '../lib/url';
-import { themes } from '../data/themes';
+import { localePath, pathForLocale, withBase } from '../lib/url';
+import { localeMeta, locales, t, type Locale, type UiKey } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const meta = localeMeta[lang];
 
 const path = Astro.url.pathname.replace(withBase('/') === '/' ? '' : withBase('/'), '');
 const isActive = (href: string) => {
@@ -9,12 +16,19 @@ const isActive = (href: string) => {
   if (href.startsWith('/#')) return false;
   return path.startsWith(href);
 };
-const total = themes.length;
+
+const total = 9;
+
+/** The same page in the other language. */
+const alternate: Record<Locale, string> = {
+  zh: pathForLocale(Astro.url.pathname, 'zh'),
+  en: pathForLocale(Astro.url.pathname, 'en'),
+};
 ---
 
 <header class="site-header" data-header>
   <div class="wrap wrap--wide site-header__inner">
-    <a class="brand" href={withBase('/')} aria-label={site.name + ' 首页'}>
+    <a class="brand" href={localePath('/', lang)} aria-label={site.name}>
       <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none">
         <ellipse cx="16" cy="16" rx="13" ry="5" stroke="currentColor" stroke-width="1.1" opacity="0.55" transform="rotate(-24 16 16)"></ellipse>
         <ellipse cx="16" cy="16" rx="13" ry="5" stroke="currentColor" stroke-width="1.1" opacity="0.35" transform="rotate(48 16 16)"></ellipse>
@@ -23,22 +37,21 @@ const total = themes.length;
       </svg>
       <span class="brand__text">
         <span class="brand__name">{site.name}</span>
-        <span class="brand__zh">{site.nameZh}</span>
+        <span class="brand__zh mono">{t(lang, 'brand.subtitle')}</span>
       </span>
     </a>
 
-    <nav class="site-nav" aria-label="主导航">
+    <nav class="site-nav" aria-label={t(lang, 'nav.label')}>
       <ul>
         {
           nav.map((item) => (
             <li>
               <a
-                href={withBase(item.href)}
+                href={localePath(item.href, lang)}
                 class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
-                <span>{item.label}</span>
-                <span class="site-nav__zh">{item.zh}</span>
+                <span>{t(lang, item.key as UiKey)}</span>
               </a>
             </li>
           ))
@@ -47,8 +60,8 @@ const total = themes.length;
     </nav>
 
     <div class="site-header__tools">
-      <p class="catalog mono" aria-label={'共 ' + total + ' 套主题'}>
-        <span class="catalog__label">CATALOG</span>
+      <p class="catalog mono" aria-label={t(lang, 'header.catalogLabel', { n: total })}>
+        <span class="catalog__label">{t(lang, 'header.catalog')}</span>
         <span class="catalog__value">{String(total).padStart(3, '0')}</span>
       </p>
 
@@ -57,16 +70,78 @@ const total = themes.length;
           <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
           <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
         </svg>
-        <label class="sr-only" for="header-search-input">搜索主题</label>
+        <label class="sr-only" for="header-search-input">{t(lang, 'header.searchLabel')}</label>
         <input
           id="header-search-input"
           type="search"
           name="q"
-          placeholder="搜索主题、颜色或关键词"
+          placeholder={t(lang, 'header.searchPlaceholder')}
           autocomplete="off"
           data-global-search
         />
       </form>
+
+      <!-- language switcher -->
+      <div class="lang" data-lang>
+        <button
+          type="button"
+          class="lang__button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-label={t(lang, 'header.languageSwitch')}
+          data-lang-toggle
+        >
+          <svg class="lang__globe" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none">
+            <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"></circle>
+            <path d="M1.75 8h12.5" stroke="currentColor" stroke-width="1.2"></path>
+            <path d="M8 1.75c1.9 2 2.9 4 2.9 6.25S9.9 12.25 8 14.25C6.1 12.25 5.1 10.25 5.1 8S6.1 3.75 8 1.75z" stroke="currentColor" stroke-width="1.2"></path>
+          </svg>
+          <span class="lang__current">{meta.nativeLabel}</span>
+          <span class="lang__short">{lang === 'zh' ? '中' : 'EN'}</span>
+          <svg class="lang__caret" width="9" height="9" viewBox="0 0 10 10" aria-hidden="true" fill="none">
+            <path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path>
+          </svg>
+        </button>
+
+        <div class="lang__menu" role="menu" aria-label={t(lang, 'header.languageLabel')} hidden data-lang-menu>
+          {
+            locales.map((option) => (
+              <a
+                class:list={['lang__option', { 'is-active': option === lang }]}
+                role="menuitemradio"
+                aria-checked={option === lang ? 'true' : 'false'}
+                hreflang={localeMeta[option].hreflang}
+                href={alternate[option]}
+                data-lang-option={option}
+              >
+                <span class="lang__option-name">{localeMeta[option].nativeLabel}</span>
+                {option === lang && (
+                  <span class="lang__check" aria-hidden="true">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                      <path d="M2 6.4 4.6 9 10 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                )}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- repository -->
+      <a
+        class="github"
+        href={site.repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t(lang, 'header.githubLabel')}
+        title={t(lang, 'header.githubLabel')}
+      >
+        <svg class="github__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        <span class="github__label">{t(lang, 'header.github')}</span>
+      </a>
 
       <button
         type="button"
@@ -76,7 +151,7 @@ const total = themes.length;
         data-menu-toggle
       >
         <span class="menu-toggle__bars" aria-hidden="true"><i></i><i></i></span>
-        <span class="sr-only">打开菜单</span>
+        <span class="sr-only">{t(lang, 'header.openMenu')}</span>
       </button>
     </div>
   </div>
@@ -88,12 +163,12 @@ const total = themes.length;
           <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
           <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
         </svg>
-        <label class="sr-only" for="mobile-search-input">搜索主题</label>
+        <label class="sr-only" for="mobile-search-input">{t(lang, 'header.searchLabel')}</label>
         <input
           id="mobile-search-input"
           type="search"
           name="q"
-          placeholder="搜索主题、颜色或关键词"
+          placeholder={t(lang, 'header.searchPlaceholder')}
           autocomplete="off"
           data-global-search
         />
@@ -102,9 +177,8 @@ const total = themes.length;
         {
           nav.map((item) => (
             <li>
-              <a href={withBase(item.href)}>
-                <span>{item.label}</span>
-                <span class="mono">{item.zh}</span>
+              <a href={localePath(item.href, lang)}>
+                <span>{t(lang, item.key as UiKey)}</span>
               </a>
             </li>
           ))
@@ -123,6 +197,68 @@ const total = themes.length;
       const open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
       panel.hidden = open;
+    });
+  }
+
+  // --- language switcher -------------------------------------------
+  const langRoot = document.querySelector<HTMLElement>('[data-lang]');
+  const langToggle = document.querySelector<HTMLButtonElement>('[data-lang-toggle]');
+  const langMenu = document.querySelector<HTMLElement>('[data-lang-menu]');
+
+  if (langRoot && langToggle && langMenu) {
+    const options = Array.from(langMenu.querySelectorAll<HTMLAnchorElement>('[data-lang-option]'));
+
+    const setOpen = (open: boolean) => {
+      langToggle.setAttribute('aria-expanded', String(open));
+      langMenu.hidden = !open;
+      langRoot.classList.toggle('is-open', open);
+    };
+
+    langToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const open = langToggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!open);
+      if (!open) options[0]?.focus();
+    });
+
+    langMenu.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
+    langToggle.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        setOpen(true);
+        options[0]?.focus();
+      }
+    });
+
+    langMenu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        langToggle.focus();
+        return;
+      }
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      const index = options.indexOf(document.activeElement as HTMLAnchorElement);
+      const next =
+        event.key === 'ArrowDown'
+          ? (index + 1) % options.length
+          : (index - 1 + options.length) % options.length;
+      options[next]?.focus();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!langRoot.contains(event.target as Node)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && langToggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        langToggle.focus();
+      }
     });
   }
 
@@ -198,7 +334,7 @@ const total = themes.length;
   .site-header__inner {
     display: flex;
     align-items: center;
-    gap: clamp(16px, 3vw, 40px);
+    gap: clamp(12px, 2.4vw, 32px);
     min-height: 66px;
   }
 
@@ -235,19 +371,19 @@ const total = themes.length;
   }
 
   .brand__zh {
-    font-family: var(--font-mono);
     font-size: 0.64rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     color: var(--text-3);
   }
 
   .site-nav {
     flex: 1;
+    min-width: 0;
   }
 
   .site-nav ul {
     display: flex;
-    gap: clamp(14px, 2.2vw, 28px);
+    gap: clamp(12px, 2vw, 26px);
     list-style: none;
   }
 
@@ -263,6 +399,7 @@ const total = themes.length;
     color: var(--text-2);
     padding-bottom: 2px;
     border-bottom: 1px solid transparent;
+    white-space: nowrap;
   }
 
   .site-nav__link:hover {
@@ -275,18 +412,10 @@ const total = themes.length;
     border-bottom-color: var(--gold);
   }
 
-  .site-nav__zh {
-    font-family: var(--font-sans);
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    color: var(--text-3);
-    text-transform: none;
-  }
-
   .site-header__tools {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     flex: none;
   }
 
@@ -299,7 +428,7 @@ const total = themes.length;
     font-size: 0.62rem;
     letter-spacing: 0.18em;
     color: var(--text-3);
-    padding-right: 16px;
+    padding-right: 14px;
     border-right: 1px solid var(--orbit-faint);
   }
 
@@ -315,7 +444,7 @@ const total = themes.length;
     gap: 8px;
     border-bottom: 1px solid var(--orbit-dim);
     padding: 5px 2px;
-    width: clamp(140px, 16vw, 200px);
+    width: clamp(130px, 14vw, 190px);
     transition: border-color 0.18s var(--ease);
   }
 
@@ -334,6 +463,145 @@ const total = themes.length;
 
   .header-search input::-webkit-search-cancel-button {
     -webkit-appearance: none;
+  }
+
+  /* --- language switcher ------------------------------------------- */
+  .lang {
+    position: relative;
+  }
+
+  .lang__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 34px;
+    padding: 0 9px;
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: color 0.18s var(--ease), border-color 0.18s var(--ease),
+      background 0.18s var(--ease);
+  }
+
+  .lang__button:hover {
+    color: var(--text);
+    border-color: var(--orbit);
+  }
+
+  .lang.is-open .lang__button {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+  }
+
+  .lang__globe {
+    flex: none;
+    color: var(--text-3);
+  }
+
+  .lang.is-open .lang__globe {
+    color: var(--gold);
+  }
+
+  .lang__current {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .lang__short {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .lang__caret {
+    flex: none;
+    opacity: 0.7;
+  }
+
+  .lang__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 60;
+    min-width: 152px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--panel);
+    border: 1px solid var(--orbit);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 40px rgb(0 0 0 / 0.45);
+  }
+
+  .lang__menu[hidden] {
+    display: none;
+  }
+
+  .lang__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 9px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    color: var(--text-2);
+    transition: color 0.16s var(--ease), background 0.16s var(--ease);
+  }
+
+  .lang__option:hover,
+  .lang__option:focus-visible {
+    color: var(--text);
+    background: var(--panel-3);
+  }
+
+  .lang__option.is-active {
+    color: var(--gold);
+  }
+
+  .lang__check {
+    display: inline-flex;
+    color: var(--gold);
+  }
+
+  /* --- github ------------------------------------------------------- */
+  .github {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 34px;
+    padding: 0 11px;
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius-sm);
+    color: var(--text-2);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    transition: color 0.18s var(--ease), border-color 0.18s var(--ease),
+      background 0.18s var(--ease);
+  }
+
+  .github:hover {
+    color: var(--text);
+    border-color: var(--orbit);
+    background: var(--panel);
+  }
+
+  .github__icon {
+    flex: none;
   }
 
   .menu-toggle {
@@ -384,21 +652,20 @@ const total = themes.length;
     text-transform: uppercase;
   }
 
-  .mobile-panel__nav .mono {
-    font-size: 0.72rem;
-    color: var(--text-3);
-    letter-spacing: 0.1em;
-  }
-
-  @media (max-width: 1020px) {
+  @media (max-width: 1180px) {
     .catalog {
       display: none;
     }
   }
 
-  @media (max-width: 900px) {
-    .site-nav,
+  @media (max-width: 1020px) {
     .header-search {
+      display: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .site-nav {
       display: none;
     }
 
@@ -406,5 +673,55 @@ const total = themes.length;
       display: inline-flex;
     }
   }
-</style>
 
+  /* on small screens the repository button shrinks to its mark */
+  @media (max-width: 560px) {
+    .site-header__inner {
+      gap: 10px;
+    }
+
+    .site-header__tools {
+      gap: 8px;
+    }
+
+    .github {
+      width: 38px;
+      padding: 0;
+      justify-content: center;
+    }
+
+    .github__label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .brand__zh {
+      display: none;
+    }
+  }
+
+  /* and on very narrow screens the language button keeps only its code */
+  @media (max-width: 430px) {
+    .lang__current {
+      display: none;
+    }
+
+    .lang__short {
+      display: inline;
+    }
+  }
+
+  /* below that the wordmark gives way so the controls still fit */
+  @media (max-width: 370px) {
+    .brand__text {
+      display: none;
+    }
+  }
+</style>

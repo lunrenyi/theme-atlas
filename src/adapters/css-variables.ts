@@ -1,4 +1,5 @@
 import type { Theme } from '../data/types';
+import { t, type Locale } from '../i18n';
 import type { ToolAdapter } from './types';
 
 const ROLE_VARS: Record<string, string> = {
@@ -14,10 +15,11 @@ const ROLE_VARS: Record<string, string> = {
 export const cssVariableAdapter: ToolAdapter = {
   id: 'css',
   label: 'CSS 变量',
+  labelEn: 'CSS variables',
   description: '可直接粘进样式表的 :root 变量。',
   mime: 'text/css',
   extension: 'css',
-  render(theme: Theme): string {
+  render(theme: Theme, lang: Locale = 'zh'): string {
     const lines = theme.palette.map((c) => {
       const varName = ROLE_VARS[c.role] ?? '--theme-' + c.role.toLowerCase();
       return '  ' + varName + ': ' + c.hex + '; /* ' + c.name + ' · ' + c.role + ' */';
@@ -26,7 +28,7 @@ export const cssVariableAdapter: ToolAdapter = {
       '/*',
       ' * ' + theme.title + ' — ' + theme.subtitle,
       ' * Theme Atlas · ' + theme.slug,
-      ' * 语义角色：bg / surface / text / muted / border / accent / onAccent',
+      ' * ' + t(lang, 'adapter.css.roles'),
       ' */',
       ':root {',
       ...lines,

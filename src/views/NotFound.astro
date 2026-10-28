@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localePath } from '../lib/url';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+---
+
+<BaseLayout title={t(lang, 'notFound.title')} description={t(lang, 'notFound.lede')} lang={lang}>
+  <section class="notfound">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--gold">{t(lang, 'notFound.eyebrow')}</p>
+      <h1 class="notfound__title">{t(lang, 'notFound.title')}</h1>
+      <p class="lede">{t(lang, 'notFound.lede')}</p>
+      <svg class="notfound__chart" viewBox="0 0 320 140" aria-hidden="true" fill="none">
+        <g stroke="#344363" stroke-width="1">
+          <circle cx="160" cy="70" r="58" stroke-dasharray="3 6" opacity="0.5"></circle>
+          <ellipse cx="160" cy="70" rx="58" ry="20" transform="rotate(-18 160 70)" opacity="0.45"></ellipse>
+          <path d="M160 6v128M96 70h128" opacity="0.2" stroke-dasharray="2 6"></path>
+        </g>
+        <circle cx="160" cy="70" r="5" fill="#DCC38B" opacity="0.85"></circle>
+        <circle cx="214" cy="52" r="3" fill="#9885FF" opacity="0.8"></circle>
+        <circle cx="106" cy="92" r="2.4" fill="#76D8DF" opacity="0.7"></circle>
+        <path d="M160 70L214 52" stroke="#9885FF" stroke-width="1" opacity="0.5"></path>
+      </svg>
+      <div class="notfound__actions">
+        <a class="btn btn--solid" href={localePath('/', lang)}>{t(lang, 'notFound.home')}</a>
+        <a class="btn btn--ghost" href={localePath('/#themes', lang)}>{t(lang, 'notFound.browse')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block: clamp(72px, 12vw, 180px);
+    max-width: 640px;
+  }
+
+  .notfound__title {
+    font-size: var(--step-4);
+    margin: 16px 0 20px;
+  }
+
+  .notfound__chart {
+    width: min(320px, 100%);
+    margin: 28px 0 6px;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+</style>

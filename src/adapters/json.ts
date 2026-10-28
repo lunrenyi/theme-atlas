@@ -1,13 +1,15 @@
 import type { Theme } from '../data/types';
+import type { Locale } from '../i18n';
 import type { ToolAdapter } from './types';
 
 export const jsonAdapter: ToolAdapter = {
   id: 'json',
   label: 'JSON',
+  labelEn: 'JSON',
   description: '含角色、来源与许可信息的完整结构化数据。',
   mime: 'application/json',
   extension: 'json',
-  render(theme: Theme): string {
+  render(theme: Theme, _lang: Locale = 'zh'): string {
     const payload = {
       slug: theme.slug,
       title: theme.title,

@@ -1,0 +1,464 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StarMap from '../components/StarMap.astro';
+import SeriesPanel from '../components/SeriesPanel.astro';
+import ThemeCard from '../components/ThemeCard.astro';
+import ThemeLibrary from '../components/ThemeLibrary.astro';
+import { getCollections, getFeaturedThemes, getThemes } from '../lib/content';
+import { cssVariableAdapter } from '../adapters';
+import { site } from '../site.config';
+import { localePath } from '../lib/url';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const collections = getCollections(lang);
+const themes = getThemes(lang);
+const featured = getFeaturedThemes(lang);
+const total = themes.length;
+const sample = themes[0];
+const sampleCss = cssVariableAdapter.render(sample, lang);
+---
+
+<BaseLayout title={site.name} description={site.description[lang]} lang={lang}>
+  <!-- ============================ hero ============================ -->
+  <section class="hero">
+    <div class="wrap wrap--wide">
+      <div class="hero__kicker">
+        <span class="eyebrow eyebrow--gold">{site.edition}</span>
+        <span class="eyebrow hero__kicker-mid">{t(lang, 'hero.kicker')}</span>
+        <span class="eyebrow hero__kicker-end">
+          {t(lang, 'hero.counts', {
+            series: String(collections.length).padStart(2, '0'),
+            themes: String(total).padStart(3, '0'),
+          })}
+        </span>
+      </div>
+
+      <div class="hero__grid">
+        <div class="hero__lead">
+          <h1 class="display hero__title">
+            {t(lang, 'hero.title1')}<br />{t(lang, 'hero.title2')} <em>{t(lang, 'hero.titleEm')}</em>
+          </h1>
+          <p class="lede hero__text">{t(lang, 'hero.lede')}</p>
+          <div class="hero__actions">
+            <a class="btn btn--solid" href={localePath('/#themes', lang)}>
+              {t(lang, 'hero.ctaPrimary')}
+            </a>
+            <a class="hero__more" href={localePath('/collections', lang)}>
+              {t(lang, 'hero.ctaSecondary')} <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <dl class="hero__readout">
+            <div>
+              <dt class="eyebrow">{t(lang, 'hero.readoutSeries')}</dt>
+              <dd>{collections.length}</dd>
+            </div>
+            <div>
+              <dt class="eyebrow">{t(lang, 'hero.readoutThemes')}</dt>
+              <dd>{total}</dd>
+            </div>
+            <div>
+              <dt class="eyebrow">{t(lang, 'hero.readoutRoles')}</dt>
+              <dd>7</dd>
+            </div>
+            <div>
+              <dt class="eyebrow">{t(lang, 'hero.readoutExport')}</dt>
+              <dd class="hero__readout-sm">CSS / JSON</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero__chart">
+          <StarMap collections={collections} lang={lang} />
+          <p class="hero__chart-note mono">{t(lang, 'hero.chartNote')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap wrap--wide"><div class="scale" aria-hidden="true"></div></div>
+
+  <!-- ======================== series nav ========================== -->
+  <section class="section series-section" id="series">
+    <div class="wrap wrap--wide">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">01</span> {t(lang, 'section.seriesEyebrow')}
+          </p>
+          <h2 class="section-head__title">{t(lang, 'section.seriesTitle')}</h2>
+        </div>
+        <p class="section-head__meta">{t(lang, 'section.seriesMeta')}</p>
+      </div>
+
+      <div class="series-grid">
+        {
+          collections.map((collection, i) => (
+            <SeriesPanel collection={collection} index={i} lang={lang} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== featured ========================== -->
+  <section class="section featured">
+    <div class="wrap wrap--wide">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">02</span> {t(lang, 'section.featuredEyebrow')}
+          </p>
+          <h2 class="section-head__title">{t(lang, 'section.featuredTitle')}</h2>
+        </div>
+        <p class="section-head__meta">{t(lang, 'section.featuredMeta')}</p>
+      </div>
+
+      <div class="featured__list">
+        {featured.map((theme) => <ThemeCard theme={theme} variant="featured" lang={lang} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== library ========================== -->
+  <section class="section library" id="themes">
+    <div class="wrap wrap--wide">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">03</span> {t(lang, 'section.catalogEyebrow')}
+          </p>
+          <h2 class="section-head__title">{t(lang, 'section.catalogTitle')}</h2>
+        </div>
+        <p class="section-head__meta">{String(total).padStart(3, '0')} THEMES</p>
+      </div>
+
+      <ThemeLibrary themes={themes} lang={lang} />
+    </div>
+  </section>
+
+  <!-- =========================== export =========================== -->
+  <section class="section export">
+    <div class="wrap wrap--wide">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow eyebrow--gold">
+            <span class="index">04</span> {t(lang, 'section.exportEyebrow')}
+          </p>
+          <h2 class="section-head__title">{t(lang, 'section.exportTitle')}</h2>
+        </div>
+        <p class="section-head__meta">{t(lang, 'section.exportMeta')}</p>
+      </div>
+
+      <div class="export__grid">
+        <div class="export__intro">
+          <p class="export__lede">{t(lang, 'export.lede')}</p>
+          <ul class="export__list">
+            <li>
+              <span class="export__tag mono">CSS</span>
+              <span class="export__name">{t(lang, 'export.cssName')}</span>
+              <span class="export__desc">{t(lang, 'export.cssDesc')}</span>
+            </li>
+            <li>
+              <span class="export__tag mono">JSON</span>
+              <span class="export__name">{t(lang, 'export.jsonName')}</span>
+              <span class="export__desc">{t(lang, 'export.jsonDesc')}</span>
+            </li>
+            <li>
+              <span class="export__tag mono">＋</span>
+              <span class="export__name">{t(lang, 'export.adapterName')}</span>
+              <span class="export__desc">{t(lang, 'export.adapterDesc')}</span>
+            </li>
+          </ul>
+          <p class="export__note mono">
+            {t(lang, 'export.note', {
+              count: String(sample.palette.length).padStart(2, '0'),
+              title: sample.title,
+            })}
+          </p>
+        </div>
+
+        <figure class="export__code">
+          <figcaption class="export__code-head mono">
+            <span>{sample.slug}.css</span>
+            <span>CSS VARIABLES</span>
+          </figcaption>
+          <pre class="export__pre"><code>{sampleCss}</code></pre>
+        </figure>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------------- hero ---------------- */
+  .hero {
+    padding-top: clamp(26px, 3.6vw, 52px);
+    padding-bottom: clamp(36px, 5vw, 72px);
+  }
+
+  .hero__kicker {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--orbit-faint);
+    margin-bottom: clamp(26px, 3.4vw, 46px);
+  }
+
+  .hero__kicker-end {
+    margin-left: auto;
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: clamp(28px, 4vw, 68px);
+    align-items: center;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 5.4vw, 5.1rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero__text {
+    margin-top: clamp(18px, 2.2vw, 26px);
+    max-width: 34em;
+    text-wrap: balance;
+  }
+
+  .hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    margin-top: clamp(22px, 2.6vw, 30px);
+  }
+
+  .hero__more {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-2);
+    border-bottom: 1px solid var(--orbit);
+    padding-bottom: 3px;
+  }
+
+  .hero__more:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* instrument read-out under the deck */
+  .hero__readout {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: clamp(26px, 3.4vw, 40px) 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--orbit-faint);
+  }
+
+  .hero__readout dt {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hero__readout dd {
+    margin: 5px 0 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero__readout .hero__readout-sm {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: var(--glow);
+    padding-top: 4px;
+  }
+
+  .hero__chart {
+    position: relative;
+  }
+
+  .hero__chart-note {
+    margin-top: 10px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+    text-align: center;
+  }
+
+  @media (max-width: 980px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__chart {
+      order: 2;
+      max-width: 480px;
+      margin-inline: auto;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .hero__kicker-mid {
+      display: none;
+    }
+
+    .hero__kicker {
+      gap: 12px;
+    }
+
+    .hero__kicker-end {
+      letter-spacing: 0.12em;
+    }
+
+    .hero__readout {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+  }
+
+  /* ---------------- series nav ---------------- */
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(20px, 2.6vw, 44px);
+  }
+
+  @media (max-width: 900px) {
+    .series-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------------- featured ---------------- */
+  .featured__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ---------------- export ---------------- */
+  .export__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+  }
+
+  .export__lede {
+    font-size: var(--step-1);
+    line-height: 1.72;
+    color: var(--text-2);
+    max-width: 44ch;
+  }
+
+  .export__list {
+    list-style: none;
+    margin-top: 24px;
+    border-top: 1px solid var(--orbit-faint);
+  }
+
+  .export__list li {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 4px 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .export__tag {
+    grid-row: span 2;
+    align-self: start;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--quantum);
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius-sm);
+    padding: 3px 0;
+    text-align: center;
+  }
+
+  .export__name {
+    color: var(--text);
+    font-size: var(--step-0);
+  }
+
+  .export__desc {
+    font-size: 0.78rem;
+    color: var(--text-3);
+  }
+
+  .export__note {
+    margin-top: 22px;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+  }
+
+  .export__code {
+    margin: 0;
+    border: 1px solid var(--orbit-faint);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--panel) 70%, transparent);
+    overflow: hidden;
+  }
+
+  .export__code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--orbit-faint);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+  }
+
+  .export__code-head span:last-child {
+    color: var(--glow);
+  }
+
+  .export__pre {
+    margin: 0;
+    padding: 18px 20px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    line-height: 1.85;
+    color: var(--text-2);
+  }
+
+  .export__pre code {
+    font-family: inherit;
+  }
+
+  @media (max-width: 900px) {
+    .export__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

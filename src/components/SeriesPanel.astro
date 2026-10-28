@@ -1,30 +1,31 @@
 ---
 import type { Collection } from '../data/types';
-import { themes } from '../data/themes';
+import { getThemes } from '../lib/content';
 import { arrangementFor, arrangePalette } from '../lib/arrangement';
-import { withBase } from '../lib/url';
+import { localePath } from '../lib/url';
+import { t, type Locale } from '../i18n';
 import CollectionMotif from './CollectionMotif.astro';
 import PaletteStrip from './PaletteStrip.astro';
 
 interface Props {
   collection: Collection;
   index: number;
+  lang: Locale;
 }
 
-const { collection, index } = Astro.props;
+const { collection, index, lang } = Astro.props;
 
-const list = themes.filter((t) => t.collection === collection.id);
-const rule = arrangementFor(collection.id);
+const list = getThemes(lang).filter((t) => t.collection === collection.id);
+const rule = arrangementFor(collection.id, lang);
 const representative = list[0] ? arrangePalette(list[0]) : [];
-const codes = ['MYTH', 'CELADON', 'ORBIT'];
 ---
 
 <article class="series" id={collection.id} style={'--tone:' + collection.accent}>
   <header class="series__head">
     <span class="series__code mono">
-      SERIES {String(index + 1).padStart(2, '0')} / {codes[index % codes.length]}
+      {t(lang, 'series.code', { n: String(index + 1).padStart(2, '0') })}
     </span>
-    <span class="series__count mono">{list.length} THEMES</span>
+    <span class="series__count mono">{t(lang, 'series.themes', { n: list.length })}</span>
   </header>
 
   <CollectionMotif
@@ -32,27 +33,28 @@ const codes = ['MYTH', 'CELADON', 'ORBIT'];
     accent={collection.accent}
     accentAlt={collection.accentAlt}
     class="series__motif"
+    lang={lang}
   />
 
   <h3 class="series__title">{collection.title}</h3>
-  <p class="series__en mono">{collection.titleEn}</p>
+  <p class="series__en mono">{collection.code}</p>
   <p class="series__tagline">{collection.tagline}</p>
   <p class="series__desc">{collection.description}</p>
 
   {
     representative.length > 0 && (
       <div class="series__palette">
-        <PaletteStrip palette={representative} variant="card" />
+        <PaletteStrip palette={representative} variant="card" lang={lang} />
         <p class="series__palette-meta mono">
-          <span>代表配色 / {list[0].title}</span>
+          <span>{t(lang, 'series.representative', { title: list[0].title })}</span>
           <span>{rule.label}</span>
         </p>
       </div>
     )
   }
 
-  <a class="series__link" href={withBase('/collections#' + collection.id)}>
-    进入系列 <span aria-hidden="true">→</span>
+  <a class="series__link" href={localePath('/collections#' + collection.id, lang)}>
+    {t(lang, 'series.enter')} <span aria-hidden="true">→</span>
   </a>
 </article>
 

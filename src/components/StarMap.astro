@@ -5,14 +5,17 @@
  * equations at build time so each marker sits exactly on its ring.
  */
 import type { Collection } from '../data/types';
-import { themes } from '../data/themes';
-import { withBase } from '../lib/url';
+import { getThemes } from '../lib/content';
+import { localePath } from '../lib/url';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   collections: Collection[];
+  lang: Locale;
 }
 
-const { collections } = Astro.props;
+const { collections, lang } = Astro.props;
+const themes = getThemes(lang);
 
 interface Orbit {
   rx: number;
@@ -58,8 +61,6 @@ const nodes = collections.map((collection, i) => {
   };
 });
 
-/** A short code for each series, used as a technical label. */
-const codes = ['MYTH', 'CELADON', 'ORBIT'];
 ---
 
 <div class="starmap">
@@ -116,7 +117,7 @@ const codes = ['MYTH', 'CELADON', 'ORBIT'];
             '--y:' + node.point.y.toFixed(2) + '%;' +
             '--tone:' + node.collection.accent
           }
-          href={withBase('/collections#' + node.collection.id)}
+          href={localePath('/collections#' + node.collection.id, lang)}
         >
           <span class="starmap__marker" aria-hidden="true">
             <i class="starmap__marker-ring"></i>
@@ -124,7 +125,7 @@ const codes = ['MYTH', 'CELADON', 'ORBIT'];
           </span>
 
           <span class="starmap__label">
-            <span class="starmap__code mono">{codes[i % codes.length]} / {String(i + 1).padStart(2, '0')}</span>
+            <span class="starmap__code mono">{node.collection.code} / {String(i + 1).padStart(2, '0')}</span>
             <span class="starmap__name">{node.collection.short}</span>
             <span class="starmap__strip" aria-hidden="true">
               {node.swatches.map((c) => (
@@ -132,7 +133,7 @@ const codes = ['MYTH', 'CELADON', 'ORBIT'];
               ))}
             </span>
             <span class="sr-only">
-              {' ' + node.collection.title + '系列，' + node.count + ' 套主题'}
+              {' ' + t(lang, 'star.nodeLabel', { title: node.collection.title, count: node.count })}
             </span>
           </span>
         </a>
@@ -141,7 +142,7 @@ const codes = ['MYTH', 'CELADON', 'ORBIT'];
 
     <p class="starmap__core-label mono" aria-hidden="true">
       <span>THEME ATLAS</span>
-      <span>CORE / 核心星体</span>
+      <span>{t(lang, 'star.coreLabel')}</span>
     </p>
   </div>
 </div>

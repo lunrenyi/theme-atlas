@@ -8,12 +8,14 @@
  */
 import type { Theme } from '../data/types';
 import { luminance } from '../lib/color';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   theme: Theme;
+  lang: Locale;
 }
 
-const { theme } = Astro.props;
+const { theme, lang } = Astro.props;
 
 const accent = theme.palette.find((c) => c.role === 'accent') ?? theme.palette[0];
 const onAccent = theme.palette.find((c) => c.role === 'onAccent');
@@ -29,10 +31,11 @@ const bars = theme.palette.map((color, i) => ({
 <div class="hud">
   <div class="hud__head">
     <h2 id="palette-heading" class="hud__heading">
-      配色 <span class="mono hud__heading-en">/ PALETTE</span>
+        {t(lang, 'palette.heading')}
+        <span class="mono hud__heading-en">{t(lang, 'palette.headingSuffix')}</span>
     </h2>
     <p class="hud__sub mono">
-      HEX DATA · {String(theme.palette.length).padStart(2, '0')} COLORS · 7 ROLES
+      {t(lang, 'palette.meta', { count: String(theme.palette.length).padStart(2, '0') })}
     </p>
   </div>
 
@@ -41,13 +44,13 @@ const bars = theme.palette.map((color, i) => ({
       class="hud__key"
       style={'--swatch:' + accent.hex + ';--on:' + (onAccent?.hex ?? '#ffffff')}
     >
-      <span class="hud__key-role mono">关键色 · ACCENT</span>
+      <span class="hud__key-role mono">{t(lang, 'palette.keyRole')}</span>
       <span class="hud__key-name">{accent.name}</span>
       <span class="hud__key-hex mono">{accent.hex}</span>
     </div>
 
     <div class="hud__chart">
-      <p class="hud__chart-label mono">相对明度 · LUMINANCE</p>
+      <p class="hud__chart-label mono">{t(lang, 'palette.chartLabel')}</p>
       <div class="hud__bars">
         {
           bars.map((bar, i) => (
@@ -56,7 +59,7 @@ const bars = theme.palette.map((color, i) => ({
               class="hud__bar"
               style={'--swatch:' + bar.color.hex + ';--h:' + bar.height.toFixed(1) + '%'}
               data-copy-color={bar.color.hex}
-              aria-label={'复制颜色 ' + bar.color.name + ' ' + bar.color.hex}
+              aria-label={t(lang, 'palette.copyLabel', { name: bar.color.name, hex: bar.color.hex })}
             >
               <span class="hud__bar-fill" aria-hidden="true"></span>
               <span class="hud__bar-tip mono" aria-hidden="true">{bar.color.name}</span>
@@ -67,10 +70,21 @@ const bars = theme.palette.map((color, i) => ({
           ))
         }
       </div>
-      <p class="hud__chart-hint mono">点击色条复制色值</p>
+      <p class="hud__chart-hint mono">{t(lang, 'palette.chartHint')}</p>
     </div>
 
-    <p class="hud__status mono" role="status" aria-live="polite" data-palette-status></p>
+    <p
+      class="hud__status mono"
+      role="status"
+      aria-live="polite"
+      data-palette-status
+      data-copied={t(lang, 'palette.copied')}
+      data-copy-failed={t(lang, 'palette.copyFailed')}
+      data-copied-all={t(lang, 'palette.copiedAll')}
+      data-copy-all-failed={t(lang, 'palette.copyAllFailed')}
+      data-exported={t(lang, 'palette.exported')}
+    >
+    </p>
   </div>
 </div>
 

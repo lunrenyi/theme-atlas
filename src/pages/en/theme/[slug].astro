@@ -1,0 +1,13 @@
+---
+import ThemeDetail from '../../../views/ThemeDetail.astro';
+import { getThemes } from '../../../lib/content';
+
+export function getStaticPaths() {
+  return getThemes('en').map((theme) => ({
+    params: { slug: theme.slug },
+    props: { theme },
+  }));
+}
+---
+
+<ThemeDetail theme={Astro.props.theme} lang="en" />

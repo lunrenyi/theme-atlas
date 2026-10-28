@@ -1,22 +1,24 @@
 ---
 import type { Theme } from '../data/types';
 import { paletteMap } from '../lib/color';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   theme: Theme;
+  lang: Locale;
 }
 
-const { theme } = Astro.props;
+const { theme, lang } = Astro.props;
 const map = paletteMap(theme);
 
-const usage: Array<{ role: string; label: string; where: string }> = [
-  { role: 'bg', label: '背景', where: '页面底色' },
-  { role: 'surface', label: '面板', where: '卡片与分区' },
-  { role: 'text', label: '正文', where: '标题与段落' },
-  { role: 'muted', label: '次要文字', where: '说明与注释' },
-  { role: 'border', label: '分割线', where: '描边与分隔' },
-  { role: 'accent', label: '强调', where: '按钮与焦点' },
-  { role: 'onAccent', label: '强调上文字', where: '按钮内文字' },
+const usage = [
+  { role: 'bg', label: t(lang, 'palette.role.bg'), where: t(lang, 'preview.legend.bg') },
+  { role: 'surface', label: t(lang, 'palette.role.surface'), where: t(lang, 'preview.legend.surface') },
+  { role: 'text', label: t(lang, 'palette.role.text'), where: t(lang, 'preview.legend.text') },
+  { role: 'muted', label: t(lang, 'palette.role.muted'), where: t(lang, 'preview.legend.muted') },
+  { role: 'border', label: t(lang, 'palette.role.border'), where: t(lang, 'preview.legend.border') },
+  { role: 'accent', label: t(lang, 'palette.role.accent'), where: t(lang, 'preview.legend.accent') },
+  { role: 'onAccent', label: t(lang, 'palette.role.onAccent'), where: t(lang, 'preview.legend.onAccent') },
 ];
 
 const vars = [
@@ -28,51 +30,59 @@ const vars = [
   '--t-accent:' + map.accent?.hex,
   '--t-on-accent:' + map.onAccent?.hex,
 ].join(';');
+
+/* The colour names sit inside the sentence as code chips; the strings come
+   from our own data files, so the markup is safe to inline. */
+const bodyText = t(lang, 'preview.bodyText', {
+  text: '<code>' + (map.text?.name ?? '') + '</code>',
+  bg: '<code>' + (map.bg?.name ?? '') + '</code>',
+  muted: '<code>' + (map.muted?.name ?? '') + '</code>',
+});
+
+const caption = t(lang, 'preview.caption', {
+  border: '<code>' + (map.border?.name ?? '') + '</code>',
+  accent: '<code>' + (map.accent?.name ?? '') + '</code>',
+});
 ---
 
 <section class="preview" aria-labelledby="preview-heading" style={vars}>
   <div class="preview__head">
-    <h2 id="preview-heading" class="preview__heading">应用预览</h2>
-    <p class="preview__sub mono">Live preview</p>
+    <h2 id="preview-heading" class="preview__heading">{t(lang, 'preview.heading')}</h2>
+    <p class="preview__sub mono">{t(lang, 'preview.sub')}</p>
   </div>
 
   <div class="preview__frame">
     <div class="preview__bar">
       <span class="preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="preview__bar-title mono">预览 · PREVIEW</span>
+      <span class="preview__bar-title mono">{t(lang, 'preview.barTitle')}</span>
     </div>
 
     <div class="preview__body">
       <nav class="preview__side" aria-hidden="true">
-        <span class="preview__side-item is-active">概览</span>
-        <span class="preview__side-item">调色</span>
-        <span class="preview__side-item">导出</span>
-        <span class="preview__side-item">关于</span>
+        <span class="preview__side-item is-active">{t(lang, 'preview.navOverview')}</span>
+        <span class="preview__side-item">{t(lang, 'preview.navPalette')}</span>
+        <span class="preview__side-item">{t(lang, 'preview.navExport')}</span>
+        <span class="preview__side-item">{t(lang, 'preview.navAbout')}</span>
       </nav>
 
       <div class="preview__main">
-        <p class="preview__eyebrow mono">REPORT</p>
+        <p class="preview__eyebrow mono">{t(lang, 'preview.eyebrow')}</p>
         <p class="preview__title">{theme.title}</p>
-        <p class="preview__body-text">
-          正文使用 <code>{map.text?.name}</code>，落在背景
-          <code>{map.bg?.name}</code> 上；次要说明使用 <code>{map.muted?.name}</code>。
-        </p>
+        <p class="preview__body-text" set:html={bodyText} />
 
         <div class="preview__actions">
-          <span class="preview__btn preview__btn--solid">主要操作</span>
-          <span class="preview__btn preview__btn--ghost">次要操作</span>
+          <span class="preview__btn preview__btn--solid">{t(lang, 'preview.primary')}</span>
+          <span class="preview__btn preview__btn--ghost">{t(lang, 'preview.secondary')}</span>
         </div>
 
         <div class="preview__field">
-          <span class="preview__field-placeholder">输入框 · 占位文字</span>
+          <span class="preview__field-placeholder">{t(lang, 'preview.field')}</span>
           <span class="preview__focus-ring" aria-hidden="true"></span>
         </div>
 
         <div class="preview__rule" aria-hidden="true"></div>
 
-        <p class="preview__caption">
-          分割线使用 <code>{map.border?.name}</code>，强调元素使用 <code>{map.accent?.name}</code>。
-        </p>
+        <p class="preview__caption" set:html={caption} />
       </div>
     </div>
   </div>

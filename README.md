@@ -12,6 +12,9 @@
 当前版本收录 **9 套示范主题**，覆盖三个系列：中国神话、中国瓷器、崩坏：星穹铁道同人主题。
 主题数据与输出格式解耦，以后接入终端、编辑器等其它工具时只需要新增一个适配器。
 
+站点提供 **简体中文与 English** 两个版本：中文在根路径（`/`），英文在 `/en/`，
+两种语言都在构建时生成，没有客户端翻译，也没有运行时翻译服务。
+
 ---
 
 ## 这是什么
@@ -92,15 +95,39 @@ npm run preview      # 本地预览构建产物
 | `npm run verify` | 依次执行类型检查与构建 |
 | `npm run og` | 重新生成社交预览图 `public/og-default.png` |
 
+## 双语结构
+
+| 位置 | 内容 |
+| --- | --- |
+| `src/i18n/index.ts` | 全部界面文案的字典（`zh` / `en`），`t(lang, key)` 带占位符替换 |
+| `src/data/themes.ts` | 中文主题数据：slug、HEX、语义角色、来源类型等**唯一数据源** |
+| `src/data/themes.en.ts` | 英文文案覆盖层：标题、故事、灵感、说明、颜色名与备注 |
+| `src/data/collections.ts` | 系列数据，中英字段并列（`title` / `titleEn`、`tagline` / `taglineEn`…） |
+| `src/lib/content.ts` | 按语言读取主题与系列，把英文文案合并进中文数据 |
+| `src/views/` | 页面视图，接收 `lang` 参数；`src/pages/` 只是路由外壳 |
+| `src/lib/url.ts` | `localePath()`、`pathForLocale()`：语言前缀与切换链接 |
+
+约定：
+
+- **只有文案被翻译**。slug、HEX、语义角色 ID、来源类型和计算逻辑保持不变，
+  因此不会出现两份互相漂移的配色数据。
+- 中文是默认语言，URL 不变；英文使用 `/en/` 前缀，
+  例如 `/theme/deep-space-orbit/` ↔ `/en/theme/deep-space-orbit/`。
+- 页面右上角的语言菜单会**停留在当前页面**：从中文详情切到英文，
+  仍然是同一个主题的英文详情页。
+- 每个页面都输出正确的 `html lang`、`canonical` 与 `hreflang`（含 `x-default`）。
+
 ## 目录结构
 
 ```
 src/
+├── i18n/index.ts       中英文案字典与语言元数据
 ├── site.config.ts      项目名、简介、导航等公共信息（集中管理）
 ├── data/
 │   ├── types.ts        主题与配色的类型定义
 │   ├── collections.ts  三个系列的元数据
-│   └── themes.ts       主题数据（可整体替换的初始数据集）
+│   ├── themes.ts       主题数据（可整体替换的初始数据集）
+│   └── themes.en.ts    主题的英文文案覆盖层
 ├── adapters/           输出格式适配器，与主题数据完全解耦
 │   ├── types.ts        ToolAdapter 接口
 │   ├── css-variables.ts
@@ -113,7 +140,8 @@ src/
 │   └── url.ts          GitHub Pages 子路径前缀
 ├── components/         页面组件
 ├── layouts/            基础布局
-├── pages/              路由（index / collections / about / theme/[slug] / 404）
+├── views/              页面视图（Home / Collections / About / ThemeDetail / NotFound）
+├── pages/              路由外壳（中文在根目录，英文在 /en/）
 └── styles/global.css   设计系统（色彩、字体、栅格、基础组件）
 
 scripts/

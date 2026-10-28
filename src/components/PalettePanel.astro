@@ -5,28 +5,23 @@
  * key colour and the luminance chart lives in PaletteHud.
  */
 import type { Theme } from '../data/types';
-import { adapters } from '../adapters';
+import { adapters, adapterLabel } from '../adapters';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   theme: Theme;
+  lang: Locale;
 }
 
-const { theme } = Astro.props;
+const { theme, lang } = Astro.props;
 
-const roleLabels: Record<string, string> = {
-  bg: '背景',
-  surface: '面板',
-  text: '正文',
-  muted: '次要文字',
-  border: '分割线',
-  accent: '强调',
-  onAccent: '强调上文字',
-};
+const roleLabel = (role: string) =>
+  t(lang, ('palette.role.' + role) as Parameters<typeof t>[1], {});
 
 const exports: Record<string, { text: string; mime: string; extension: string }> = {};
 for (const adapter of adapters) {
   exports[adapter.id] = {
-    text: adapter.render(theme),
+    text: adapter.render(theme, lang),
     mime: adapter.mime,
     extension: adapter.extension,
   };
@@ -48,12 +43,12 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
             type="button"
             class="swatch__copy"
             data-copy-color={color.hex}
-            aria-label={'复制颜色 ' + color.name + ' ' + color.hex}
+            aria-label={t(lang, 'palette.copyLabel', { name: color.name, hex: color.hex })}
           >
             <span class="swatch__name">{color.name}</span>
             <span class="swatch__hex mono">{color.hex}</span>
           </button>
-          <span class="swatch__role mono">{roleLabels[color.role] ?? color.role}</span>
+          <span class="swatch__role mono">{roleLabel(color.role)}</span>
           {color.note && <p class="swatch__note">{color.note}</p>}
         </li>
       ))
@@ -61,17 +56,30 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
   </ul>
 
   <div class="palette__actions">
-    <button type="button" class="btn btn--sm btn--solid" data-copy-all>复制整套配色</button>
+    <button type="button" class="btn btn--sm btn--solid" data-copy-all>
+      {t(lang, 'palette.copyAll')}
+    </button>
     {
       adapters.map((adapter) => (
         <button type="button" class="btn btn--sm btn--ghost" data-export={adapter.id}>
-          导出 {adapter.label}
+          {t(lang, 'palette.export', { format: adapterLabel(adapter, lang) })}
         </button>
       ))
     }
   </div>
 
-  <p class="palette__status" role="status" aria-live="polite" data-palette-status></p>
+  <p
+    class="palette__status"
+    role="status"
+    aria-live="polite"
+    data-palette-status
+    data-copied={t(lang, 'palette.copied')}
+    data-copy-failed={t(lang, 'palette.copyFailed')}
+    data-copied-all={t(lang, 'palette.copiedAll')}
+    data-copy-all-failed={t(lang, 'palette.copyAllFailed')}
+    data-exported={t(lang, 'palette.exported')}
+  >
+  </p>
 
   <script type="application/json" data-export-payload set:html={payload} />
 </section>
@@ -196,6 +204,13 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
   // two readouts exist: one pinned in the header, one next to the buttons
   const statusEls = Array.from(document.querySelectorAll<HTMLElement>('[data-palette-status]'));
 
+  /** The message templates are rendered on the server, in the page language. */
+  const template = (key: string, fallback: string) => statusEls[0]?.dataset[key] ?? fallback;
+  const fill = (text: string, values: Record<string, string | number>) =>
+    text.replace(/\{(\w+)\}/g, (match, name: string) =>
+      name in values ? String(values[name]) : match,
+    );
+
   const exports: Record<string, { text: string; mime: string; extension: string }> = payloadEl
     ? JSON.parse(payloadEl.textContent ?? '{}')
     : {};
@@ -217,7 +232,11 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
     button.addEventListener('click', async () => {
       const hex = button.dataset.copyColor ?? '';
       const ok = await copyText(hex);
-      say(ok ? '已复制 ' + hex : '复制失败，请手动选择 ' + hex);
+      say(
+        ok
+          ? fill(template('copied', 'Copied {hex}'), { hex })
+          : fill(template('copyFailed', 'Copy failed — select {hex} manually'), { hex }),
+      );
     });
   });
 
@@ -230,7 +249,13 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
       return name + '  ' + hex + '  ' + role;
     });
     const ok = await copyText(lines.join('\n'));
-    say(ok ? '已复制整套配色（' + lines.length + ' 色）' : '复制失败，请手动选择');
+    say(
+      ok
+        ? fill(template('copiedAll', 'Copied the full palette ({count} colours)'), {
+            count: lines.length,
+          })
+        : template('copyAllFailed', 'Copy failed — select the values manually'),
+    );
   });
 
   document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach((button) => {
@@ -239,7 +264,11 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
       const entry = exports[id];
       if (!entry) return;
       downloadText(slug + '.' + entry.extension, entry.text, entry.mime);
-      say('已导出 ' + slug + '.' + entry.extension);
+      say(
+        fill(template('exported', 'Exported {file}'), {
+          file: slug + '.' + entry.extension,
+        }),
+      );
     });
   });
 </script>

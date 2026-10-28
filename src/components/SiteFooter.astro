@@ -1,7 +1,15 @@
 ---
 import { site } from '../site.config';
-import { collections } from '../data/collections';
-import { withBase } from '../lib/url';
+import { getCollections } from '../lib/content';
+import { localePath } from '../lib/url';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const collections = getCollections(lang);
 
 const year = new Date().getFullYear();
 ---
@@ -15,37 +23,37 @@ const year = new Date().getFullYear();
           {site.edition}
         </p>
         <p class="site-footer__statement">{site.tagline}</p>
-        <p class="site-footer__blurb">{site.description}</p>
+        <p class="site-footer__blurb">{site.description[lang]}</p>
       </div>
 
       <div class="site-footer__cols">
         <div class="site-footer__col">
-          <p class="eyebrow">系列 / Series</p>
+          <p class="eyebrow">{t(lang, 'footer.series')}</p>
           <ul>
             {
               collections.map((c) => (
                 <li>
-                  <a href={withBase('/collections#' + c.id)}>{c.title}</a>
+                  <a href={localePath('/collections#' + c.id, lang)}>{c.title}</a>
                 </li>
               ))
             }
-            <li><a href={withBase('/collections')}>全部系列</a></li>
+            <li><a href={localePath('/collections', lang)}>{t(lang, 'footer.allCollections')}</a></li>
           </ul>
         </div>
         <div class="site-footer__col">
-          <p class="eyebrow">项目 / Project</p>
+          <p class="eyebrow">{t(lang, 'footer.project')}</p>
           <ul>
-            <li><a href={withBase('/about')}>关于本站</a></li>
-            <li><a href={withBase(site.fanStatementPath)}>同人创作声明</a></li>
+            <li><a href={localePath('/about', lang)}>{t(lang, 'footer.about')}</a></li>
+            <li><a href={localePath(site.fanStatementPath, lang)}>{t(lang, 'footer.fanStatement')}</a></li>
             <li>
               <a href={site.repoUrl} rel="noopener noreferrer" target="_blank">
-                GitHub 仓库
+                {t(lang, 'footer.repo')}
                 <span class="mono site-footer__ext" aria-hidden="true">↗</span>
               </a>
             </li>
             <li>
               <a href={site.repoUrl + '/issues'} rel="noopener noreferrer" target="_blank">
-                问题反馈
+                {t(lang, 'footer.issues')}
               </a>
             </li>
           </ul>
@@ -54,9 +62,9 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="site-footer__bottom">
-      <p class="mono">© {year} {site.name} · 配色数据以 CC BY 4.0 释出</p>
+      <p class="mono">© {year} {site.name} · {t(lang, 'footer.licence')}</p>
       <p class="mono site-footer__note">
-        本站与任何游戏厂商无隶属或授权关系；同人主题均为非官方演绎。
+        {t(lang, 'footer.disclaimer')}
       </p>
     </div>
   </div>

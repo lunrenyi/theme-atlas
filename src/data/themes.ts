@@ -584,25 +584,4 @@ export const themes: Theme[] = [
   },
 ];
 
-export const themeMap = new Map(themes.map((t) => [t.slug, t]));
-
-export function getTheme(slug: string): Theme | undefined {
-  return themeMap.get(slug);
-}
-
-export const featuredThemes = themes.filter((t) => t.featured);
-
-export function themesByCollection(id: Theme['collection']): Theme[] {
-  return themes.filter((t) => t.collection === id);
-}
-
-/** Themes ordered for the switch-theme control on a detail page. */
-export function themeNeighbours(slug: string): { prev?: Theme; next?: Theme } {
-  const i = themes.findIndex((t) => t.slug === slug);
-  if (i < 0) return {};
-  return {
-    prev: themes[(i - 1 + themes.length) % themes.length],
-    next: themes[(i + 1) % themes.length],
-  };
-}
 

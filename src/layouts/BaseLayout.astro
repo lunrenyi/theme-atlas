@@ -4,47 +4,61 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import StarField from '../components/StarField.astro';
 import { site } from '../site.config';
-import { absoluteUrl, withBase } from '../lib/url';
+import { absoluteUrl, pathForLocale, withBase } from '../lib/url';
+import { localeMeta, type Locale } from '../i18n';
 
 interface Props {
   title: string;
   description?: string;
+  /** Which language this route renders. */
+  lang: Locale;
   ogImage?: string;
 }
 
-const { title, description = site.description, ogImage = '/og-default.png' } = Astro.props;
+const { title, description, lang, ogImage } = Astro.props;
+const meta = localeMeta[lang];
 const fullTitle = title === site.name ? site.tagline : title + ' · ' + site.name;
 const canonical = absoluteUrl(Astro.url.pathname);
+const pageDescription = description ?? site.description[lang];
+const socialImage = ogImage ?? (lang === 'zh' ? '/og-default.png' : '/og-en.png');
+
+// the same page in the other language - every route exists in both
+const alternateZh = absoluteUrl(pathForLocale(Astro.url.pathname, 'zh'));
+const alternateEn = absoluteUrl(pathForLocale(Astro.url.pathname, 'en'));
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={meta.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="alternate" hreflang={localeMeta.zh.hreflang} href={alternateZh} />
+    <link rel="alternate" hreflang={localeMeta.en.hreflang} href={alternateEn} />
+    <link rel="alternate" hreflang="x-default" href={alternateZh} />
     <meta name="theme-color" content="#080D1C" />
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={absoluteUrl(ogImage)} />
+    <meta property="og:image" content={absoluteUrl(socialImage)} />
+    <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a class="skip-link" href="#main">{lang === 'zh' ? '跳到主要内容' : 'Skip to main content'}</a>
     <StarField />
-    <SiteHeader />
+    <SiteHeader lang={lang} />
     <main id="main">
       <slot />
     </main>
-    <SiteFooter />
+    <SiteFooter lang={lang} />
   </body>
 </html>
 
