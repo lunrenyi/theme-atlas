@@ -12,12 +12,12 @@ export const site = {
   tagline: 'Every color has a story.',
   description: {
     zh:
-      '一个从故事与文化中打捞配色的主题档案库。中国神话的矿物颜料、瓷器的釉色、宇宙的星光，' +
-      '都被拆解成可复制、可导出的颜色语义。',
+      'Theme Atlas 收集来自神话、历史与虚构世界的颜色，把每一组整理成可以在屏幕上直接使用的' +
+      '主题：色值有名字、有语义角色，也记录了来处。',
     en:
-      'A colour theme archive recovered from stories and cultures — mineral pigments of ' +
-      'Chinese myth, glaze colours of porcelain, starlight of imagined worlds — each broken ' +
-      'into colours you can copy and export.',
+      'Theme Atlas collects colours from myth, history and imagined worlds, and files each set ' +
+      'as a theme you can put straight to work on screen: every value named, given a role, ' +
+      'and traced back to where it came from.',
   },
   repoUrl: 'https://github.com/lunrenyi/theme-atlas',
   repoLabel: 'lunrenyi/theme-atlas',

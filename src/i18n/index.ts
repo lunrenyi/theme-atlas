@@ -71,37 +71,42 @@ const zh = {
     '本站与任何游戏厂商无隶属或授权关系；同人主题均为非官方演绎。',
 
   /* home — hero */
-  'hero.kicker': '色谱档案 · 配色主题库',
+  'hero.kicker': '故事里的配色档案',
   'hero.counts': '{series} 个系列 / {themes} 套主题',
-  'hero.title1': 'Every color',
-  'hero.title2': 'has a',
-  'hero.titleEm': 'story.',
+  'hero.title1': '有些故事，',
+  'hero.title2': '最后变成了',
+  'hero.titleEm': '颜色。',
   'hero.lede':
-    '从神话、瓷器与虚构世界打捞颜色。每套主题先讲故事，再给出颜色——名字、色值、语义角色与出处都写清楚，复制走就能用。',
+    '它们来自窑火、古老的传说，也来自想象中的星海。我们循着这些线索寻找颜色，' +
+    '为每一组色彩记录它的来处，再把它们变成可以带进屏幕的主题。',
   'hero.ctaPrimary': '浏览全部主题',
   'hero.ctaSecondary': '按系列浏览',
   'hero.readoutSeries': '系列',
   'hero.readoutThemes': '主题',
   'hero.readoutRoles': '每套角色',
   'hero.readoutExport': '导出',
-  'hero.chartNote': '星图：三个系列节点，悬停或聚焦可查看代表配色',
+  'hero.chartNote': '星图 · 三个系列节点，悬停或聚焦可查看代表配色',
   'star.nodeLabel': '{title}系列，共 {count} 套主题',
 
   /* home — sections */
   'section.seriesEyebrow': '系列导航',
-  'section.seriesTitle': '三条轨道，三个来源',
-  'section.seriesMeta': '导航',
+  'section.seriesTitle': '循着星轨，寻找颜色的来处。',
+  'section.seriesLede':
+    '从古老神话到窑火釉色，再到想象中的银河，每一条轨道，都通向一种不同的美学。',
+  'section.seriesMeta': '三个来源',
   'section.featuredEyebrow': '精选主题',
-  'section.featuredTitle': '先看这三个',
+  'section.featuredTitle': '从这三套主题开始。',
   'section.featuredMeta': '精选',
   'section.catalogEyebrow': '全部主题',
-  'section.catalogTitle': '按系列筛选，或直接搜索',
+  'section.catalogTitle': '更多故事，更多颜色。',
+  'section.catalogLede': '全部 {count} 套主题都在这里，可以按系列筛选，也可以按名称、颜色或关键词搜索。',
   'section.exportEyebrow': '导出',
-  'section.exportTitle': '拿走就能用',
-  'section.exportMeta': '适配器',
+  'section.exportTitle': '把喜欢的颜色，带进你的世界。',
+  'section.exportMeta': 'CSS / JSON',
   'section.themesCount': '{count} 套主题',
   'export.lede':
-    '每套主题都带 7 个语义角色。导出时角色会变成变量名，粘贴进任意样式表就能直接用；JSON 还带着出处、授权与配色说明。',
+    '复制单个色值，就能直接取用它的 HEX；导出 CSS 变量，七个语义角色会变成 :root 里的变量名；' +
+    '导出 JSON，出处、授权与配色说明会跟着一起带走。',
   'export.cssName': 'CSS 变量',
   'export.cssDesc': ':root 变量，含角色注释',
   'export.jsonName': '结构化数据',
@@ -334,37 +339,46 @@ const en: Record<UiKey, string> = {
   'footer.disclaimer':
     'This site is not affiliated with or endorsed by any game publisher; fan themes are unofficial interpretations.',
 
-  'hero.kicker': 'Colour theme archive',
+  'hero.kicker': 'A colour archive drawn from stories',
   'hero.counts': '{series} collections / {themes} themes',
-  'hero.title1': 'Every color',
-  'hero.title2': 'has a',
-  'hero.titleEm': 'story.',
+  'hero.title1': 'Some stories end',
+  'hero.title2': 'up as',
+  'hero.titleEm': 'colours.',
   'hero.lede':
-    'Colours recovered from myth, porcelain and imagined worlds. Every theme tells its story first and hands over the colours second — names, hex values, semantic roles and sources, all written down and ready to copy.',
+    'They come from kiln fire and old legends, from a galaxy that only exists in the telling. ' +
+    'We follow those trails, keep a record of where each colour came from, and turn them ' +
+    'into themes you can take straight to your screen.',
   'hero.ctaPrimary': 'Browse all themes',
   'hero.ctaSecondary': 'Browse by collection',
   'hero.readoutSeries': 'Collections',
   'hero.readoutThemes': 'Themes',
-  'hero.readoutRoles': 'Roles each',
+  'hero.readoutRoles': 'Roles per theme',
   'hero.readoutExport': 'Export',
   'hero.chartNote':
-    'Star chart — three collection nodes; hover or focus a node to preview its palette',
+    'Star chart · three collection nodes; hover or focus one to preview its palette',
   'star.nodeLabel': '{title} collection, {count} themes',
 
   'section.seriesEyebrow': 'Collections',
-  'section.seriesTitle': 'Three orbits, three sources',
-  'section.seriesMeta': 'Navigation',
+  'section.seriesTitle': 'Three trails, and the colour at the end of each',
+  'section.seriesLede':
+    'From ancient myth to kiln glaze to a galaxy that never existed at all — ' +
+    'every trail ends in a different idea of beauty.',
+  'section.seriesMeta': 'Three sources',
   'section.featuredEyebrow': 'Featured',
-  'section.featuredTitle': 'Start with these three',
+  'section.featuredTitle': 'Begin with these three',
   'section.featuredMeta': 'Selected',
   'section.catalogEyebrow': 'Catalogue',
-  'section.catalogTitle': 'Filter by collection, or search',
+  'section.catalogTitle': 'More stories, more colours',
+  'section.catalogLede':
+    'All {count} themes live here — filter them by collection, or search by name, colour or keyword.',
   'section.exportEyebrow': 'Export',
-  'section.exportTitle': 'Take it and go',
-  'section.exportMeta': 'Adapters',
+  'section.exportTitle': 'Bring the colours you like into your world',
+  'section.exportMeta': 'CSS / JSON',
   'section.themesCount': '{count} themes',
   'export.lede':
-    'Every theme carries seven semantic roles. On export the roles become variable names, ready to paste into any stylesheet; the JSON file travels with the sources, the licence and the colour notes.',
+    'Copy a single colour and take its hex value with you. Export CSS variables and the seven ' +
+    'semantic roles become names inside :root. Export JSON and the sources, the licence and ' +
+    'the notes on each colour travel with the palette.',
   'export.cssName': 'CSS variables',
   'export.cssDesc': ':root variables with role comments',
   'export.jsonName': 'Structured data',
@@ -562,6 +576,15 @@ const en: Record<UiKey, string> = {
 };
 
 export const ui = { zh, en };
+
+/**
+ * Latin text needs a space between two words; Chinese does not. The home
+ * title joins a lead line with an emphasised word, so the gap is decided by
+ * the locale instead of being hard-coded in the markup.
+ */
+export function spaceBefore(lang: Locale): string {
+  return lang === 'en' ? ' ' : '';
+}
 
 /** Look up a UI string; {placeholders} are replaced by the given values. */
 export function t(lang: Locale, key: UiKey, values?: Record<string, string | number>): string {

@@ -38,8 +38,7 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     title: 'Taotie · Cinnabar',
     subtitle: 'The beast mask on a bronze ritual vessel, and the touch of cinnabar below it',
     description:
-      'The taotie mask of Shang and Zhou bronzes rebuilt as an interface: cinnabar, ' +
-      'azurite and umber for a palette that is quiet but still sharp.',
+      'Bronze holds the frame quiet; cinnabar shows its edge in a single stroke.',
     story:
       'The name taotie appears in pre-Qin texts, and the beast mask turns up in large ' +
       'numbers on ritual bronzes from the late Shang to the early Western Zhou: staring ' +
@@ -270,8 +269,7 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     title: 'Ru Ware · Sky After Rain',
     subtitle: 'That indefinable blue after the rain, fixed only when the kiln opens',
     description:
-      'Four steps of lightness in the sky-blue glaze of Ru ware, with a touch of incense ' +
-      'ash underneath: the quietest interface in the archive.',
+      'Glaze laid down in quiet layers — warm, restrained, never competing.',
     story:
       'Ru ware was an imperial kiln of the Northern Song; fewer than a hundred pieces ' +
       'survive, and it is famous for a glaze in which agate was ground and mixed into the ' +
@@ -470,8 +468,7 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     title: 'Deep-Space Orbit',
     subtitle: 'Cold violet beyond the window, and one streak of quantum colour',
     description:
-      'The picture of a train running along a stellar track compressed into seven colours: ' +
-      'cold violet as the anchor, blue-grey as the ground, like a night cockpit.',
+      'Cold violet and blue-grey, the way a far-off sea of stars looks through a window.',
     story:
       'In the world of Honkai: Star Rail, a train travels along stellar tracks between ' +
       'worlds, and the Trailblazer’s task is a constant choice of path. The setting is ' +

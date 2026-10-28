@@ -8,7 +8,7 @@ import { getCollections, getFeaturedThemes, getThemes } from '../lib/content';
 import { cssVariableAdapter } from '../adapters';
 import { site } from '../site.config';
 import { localePath } from '../lib/url';
-import { t, type Locale } from '../i18n';
+import { spaceBefore, t, type Locale } from '../i18n';
 
 interface Props {
   lang: Locale;
@@ -42,7 +42,7 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
       <div class="hero__grid">
         <div class="hero__lead">
           <h1 class="display hero__title">
-            {t(lang, 'hero.title1')}<br />{t(lang, 'hero.title2')} <em>{t(lang, 'hero.titleEm')}</em>
+            {t(lang, 'hero.title1')}<br />{t(lang, 'hero.title2')}{spaceBefore(lang)}<em data-lang={lang}>{t(lang, 'hero.titleEm')}</em>
           </h1>
           <p class="lede hero__text">{t(lang, 'hero.lede')}</p>
           <div class="hero__actions">
@@ -97,6 +97,8 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
         <p class="section-head__meta">{t(lang, 'section.seriesMeta')}</p>
       </div>
 
+      <p class="section-lede">{t(lang, 'section.seriesLede')}</p>
+
       <div class="series-grid">
         {
           collections.map((collection, i) => (
@@ -138,6 +140,10 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
         </div>
         <p class="section-head__meta">{String(total).padStart(3, '0')} THEMES</p>
       </div>
+
+      <p class="section-lede">
+        {t(lang, 'section.catalogLede', { count: String(total) })}
+      </p>
 
       <ThemeLibrary themes={themes} lang={lang} />
     </div>
@@ -232,6 +238,11 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
   .hero__title em {
     font-style: italic;
     color: var(--gold);
+  }
+
+  /* Chinese display type is never slanted — the accent colour carries it. */
+  .hero__title em[data-lang='zh'] {
+    font-style: normal;
   }
 
   .hero__text {
@@ -341,6 +352,14 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
   }
 
   /* ---------------- series nav ---------------- */
+  .section-lede {
+    max-width: 52ch;
+    margin: -clamp(12px, 1.6vw, 22px) 0 clamp(22px, 2.6vw, 34px);
+    color: var(--text-2);
+    font-size: var(--step-0);
+    line-height: 1.72;
+  }
+
   .series-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
