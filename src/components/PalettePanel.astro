@@ -195,6 +195,14 @@ const payload = JSON.stringify(exports).replace(/</g, '\u003c');
   .palette__status:empty {
     min-height: 0;
   }
+
+  @media (max-width: 560px) {
+    /* on a phone the whole name + hex line is one tap target */
+    .swatch__copy {
+      min-height: 2.75rem;
+      align-items: center;
+    }
+  }
 </style>
 
 <script>

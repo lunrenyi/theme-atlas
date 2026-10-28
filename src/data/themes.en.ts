@@ -279,13 +279,16 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
       'are an original reading of the imagery in Journey to the West, rearranged so that ' +
       'defiance and freedom become something an interface can actually show.',
     inspiration:
-      'Each colour comes from a thing the text actually names: the stone of ' +
-      'Flower-Fruit Mountain that the Monkey King was born from; the dark iron of the ' +
-      'Dragon King\'s treasure house under the Eastern Sea; the gilt of the crown, the ' +
-      'armour and the gold-banded staff; the cold white of the cloud he rides; and the ' +
-      'ember red of the banner and the forge. The values are an original Theme Atlas ' +
-      'derivation from that imagery — not the official colours of any film, animation ' +
-      'or game adaptation.',
+      'Each colour comes from something the text actually names: the stone of ' +
+      'Flower-Fruit Mountain that the Monkey King was born from; the iron of the staff ' +
+      'he takes from the Dragon King\'s arsenal and the gold bands around it; the gilt ' +
+      'the eye reads in his crown and armour; and the cold white of the cloud he rides. ' +
+      'The banner that names him Great Sage Equal to Heaven maps to no colour of its ' +
+      'own — it supplies an attitude, a claim of rank. Ember vermilion is the one ' +
+      'addition Theme Atlas makes: the novel never gives that banner a colour, so the ' +
+      'red stands for motion rather than description. The values are an original Theme ' +
+      'Atlas derivation from that imagery — not the official colours of any film, ' +
+      'animation or game adaptation.',
     designRationale:
       'Dark iron holds the ground. Body text is the cold white of cloud, and secondary ' +
       'text uses celestial blue, lifted one step from #58788A to #86A6B8 so that small ' +
@@ -320,12 +323,21 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
           'the troop on Flower-Fruit Mountain — the source of the stone imagery.',
       },
       {
+        title: 'Journey to the West, Chapter 3 (西游记 · 第三回)',
+        detail: 'Public text on Wikisource',
+        note:
+          'The Dragon King offers the staff that pins the sea and the Monkey King takes ' +
+          'it as his golden cudgel: an iron shaft bound with gold at both ends, ' +
+          'inscribed with the weight it carries. This is where dark iron and gilt gold ' +
+          'meet in the palette.',
+      },
+      {
         title: 'Journey to the West, Chapter 4 (西游记 · 第四回)',
         detail: 'Public text on Wikisource',
         note:
           '“What is the harm in calling myself Great Sage Equal to Heaven?”, the banner ' +
-          'bearing those four characters, and the descriptions of the gilt armour, the ' +
-          'crown and the gold-banded staff.',
+          'bearing those four characters, and the descriptions of the armour and crown ' +
+          'he wears.',
       },
       {
         title: 'Journey to the West (西游记)',
