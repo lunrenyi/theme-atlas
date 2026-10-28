@@ -22,7 +22,7 @@ const { theme, class: className = '', lang } = Astro.props;
 const map = paletteMap(theme);
 const hex = (role: keyof typeof map) => map[role]?.hex ?? '#7a7a7a';
 
-const variant = getCollectionById(theme.collection, lang).motif;
+const variant = theme.plate ?? getCollectionById(theme.collection, lang).motif;
 
 /**
  * Light-ground themes (paper, glaze) are drawn with their own tints; dark
@@ -33,6 +33,8 @@ const line = isDark ? hex('text') : hex('border');
 const soft = hex('muted');
 const accent = hex('accent');
 const bright = hex('onAccent');
+const flare = hex('flare') ?? accent;
+const stone = hex('border');
 ---
 
 <figure class:list={['plate', className]}>
@@ -150,6 +152,83 @@ const bright = hex('onAccent');
           <circle cx="206" cy="42" r="2.6" fill={soft} />
           {/* sight line */}
           <path d="M160 100L292 66" stroke={accent} stroke-width="0.9" opacity="0.55" />
+        </g>
+      )
+    }
+
+    {
+      /* The staff of a Great Sage: a gold shaft through a ring that is not
+         closed, sparks leaving through the gap, clouds underneath. Drawn
+         only from this theme's own colours. */
+      variant === 'staff' && (
+        <g>
+          {/* a quieter, tilted orbit for depth */}
+          <ellipse
+            cx="160"
+            cy="100"
+            rx="116"
+            ry="50"
+            transform="rotate(-24 160 100)"
+            stroke={soft}
+            stroke-width="1"
+            opacity="0.32"
+            stroke-dasharray="2 6"
+          />
+
+          {/* the broken orbit: one segment of the ring is missing */}
+          <path
+            d="M179.2 28.5A74 74 0 1 0 227.1 68.7"
+            stroke={accent}
+            stroke-width="2"
+            stroke-linecap="round"
+            opacity="0.9"
+          />
+          <circle cx="179.2" cy="28.5" r="2" fill={accent} />
+          <circle cx="227.1" cy="68.7" r="2" fill={accent} />
+
+          {/* clouds below the staff */}
+          <g fill="none" stroke={soft} stroke-linecap="round">
+            <path
+              d="M88 172c8-10 18-10 26 0s18 10 26 0 18-10 26 0 18 10 26 0 18-10 26 0"
+              stroke-width="1.6"
+              opacity="0.7"
+            />
+            <path
+              d="M116 188c7-8 15-8 22 0s15 8 22 0 15-8 22 0"
+              stroke-width="1.2"
+              opacity="0.42"
+            />
+          </g>
+
+          {/* stone at the foot */}
+          <g stroke={stone} stroke-width="1.2" opacity="0.5" stroke-linecap="round">
+            <path d="M30 191h30" />
+            <path d="M70 191h16" />
+            <path d="M212 191h34" />
+            <path d="M258 191h22" />
+          </g>
+
+          {/* the staff: a gold shaft with two bands and tapered ends */}
+          <path d="M155.6 26l4.4-9 4.4 9z" fill={accent} opacity="0.95" />
+          <path d="M155.6 174l4.4 9 4.4-9z" fill={accent} opacity="0.95" />
+          <rect x="155.6" y="22" width="8.8" height="156" rx="4.4" fill={accent} opacity="0.95" />
+          <rect x="150" y="48" width="20" height="8" rx="2.4" fill={accent} />
+          <rect x="150" y="144" width="20" height="8" rx="2.4" fill={accent} />
+          <line x1="158.4" y1="30" x2="158.4" y2="170" stroke={line} stroke-width="1" opacity="0.45" />
+          <line x1="162.2" y1="28" x2="162.2" y2="172" stroke={bright} stroke-width="1.4" opacity="0.5" />
+
+          {/* sparks leaving through the break */}
+          <path
+            d="M239 46l13-13"
+            stroke={flare}
+            stroke-width="1.8"
+            stroke-linecap="round"
+            opacity="0.9"
+          />
+          <circle cx="257" cy="26" r="1.5" fill={flare} opacity="0.9" />
+          <circle cx="246" cy="21" r="1.1" fill={flare} opacity="0.7" />
+          <circle cx="264" cy="38" r="1" fill={flare} opacity="0.6" />
+          <circle cx="236" cy="10" r="1.3" fill={flare} opacity="0.65" />
         </g>
       )
     }

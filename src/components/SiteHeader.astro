@@ -1,5 +1,6 @@
 ---
 import { nav, site } from '../site.config';
+import { getThemes } from '../lib/content';
 import { localePath, pathForLocale, withBase } from '../lib/url';
 import { localeMeta, locales, t, type Locale, type UiKey } from '../i18n';
 
@@ -17,7 +18,8 @@ const isActive = (href: string) => {
   return path.startsWith(href);
 };
 
-const total = 9;
+// the catalogue size is counted from the data, never written down twice
+const total = getThemes(lang).length;
 
 /** The same page in the other language. */
 const alternate: Record<Locale, string> = {
@@ -60,9 +62,10 @@ const alternate: Record<Locale, string> = {
     </nav>
 
     <div class="site-header__tools">
-      <p class="catalog mono" aria-label={t(lang, 'header.catalogLabel', { n: total })}>
-        <span class="catalog__label">{t(lang, 'header.catalog')}</span>
-        <span class="catalog__value">{String(total).padStart(3, '0')}</span>
+      <p class="catalog mono">
+        <span class="sr-only">{t(lang, 'header.catalogLabel', { n: total })}</span>
+        <span class="catalog__label" aria-hidden="true">{t(lang, 'header.catalog')}</span>
+        <span class="catalog__value" aria-hidden="true">{String(total).padStart(3, '0')}</span>
       </p>
 
       <form class="header-search" role="search" data-header-search>

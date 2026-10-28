@@ -7,7 +7,7 @@
  * stays visible while the story is read — the colours never leave the screen.
  */
 import type { Theme } from '../data/types';
-import { luminance } from '../lib/color';
+import { luminance, paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 
 interface Props {
@@ -18,7 +18,9 @@ interface Props {
 const { theme, lang } = Astro.props;
 
 const accent = theme.palette.find((c) => c.role === 'accent') ?? theme.palette[0];
-const onAccent = theme.palette.find((c) => c.role === 'onAccent');
+// text on the accent falls back to the ground colour when a theme does not
+// name one of its own
+const onAccent = paletteMap(theme).onAccent;
 
 const lums = theme.palette.map((c) => luminance(c.hex));
 const peak = Math.max(...lums, 0.0001);

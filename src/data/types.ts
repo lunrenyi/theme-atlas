@@ -12,7 +12,14 @@ export type PaletteRole =
   | 'muted'
   | 'border'
   | 'accent'
-  | 'onAccent';
+  | 'onAccent'
+  /**
+   * A second, hotter accent. Optional: a theme only declares one when it
+   * really has a colour that must not be confused with the primary accent -
+   * a flame, a warning, a signal. It is meant for small, deliberate marks,
+   * never for body text.
+   */
+  | 'flare';
 
 export interface PaletteColor {
   /** Human readable colour name, e.g. 朱砂. */
@@ -73,6 +80,11 @@ export interface Theme {
   credits: Credits;
   /** Shown in the Featured section on the home page. */
   featured?: boolean;
+  /**
+   * Overrides the collection's default specimen drawing. Used by themes
+   * whose own image says something the generic motif cannot.
+   */
+  plate?: 'staff';
   /**
    * - verified: sources are checkable references
    * - interpretation: original / fan re-interpretation of a copyrighted work

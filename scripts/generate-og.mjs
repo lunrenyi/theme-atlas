@@ -12,6 +12,7 @@ const root = resolve(here, '..');
 
 const { themes } = await import(resolve(root, 'src/data/themes.ts'));
 const { themeTranslations } = await import(resolve(root, 'src/data/themes.en.ts'));
+const { collections } = await import(resolve(root, 'src/data/collections.ts'));
 
 const SPACE = '#080D1C';
 const ORBIT = '#344363';
@@ -105,6 +106,8 @@ function card({ subtitle, deck, rows, footer, line1, line2 }) {
 }
 
 const featured = themes.filter((t) => t.featured).slice(0, 3);
+const seriesCount = String(collections.length).padStart(2, '0');
+const themeCount = String(themes.length).padStart(3, '0');
 
 const chinese = card({
   subtitle: '色谱档案',
@@ -116,7 +119,7 @@ const chinese = card({
     slug: theme.slug,
     palette: theme.palette,
   })),
-  footer: '第一辑 / 03 个系列 / 009 套主题',
+  footer: '第一辑 / ' + seriesCount + ' 个系列 / ' + themeCount + ' 套主题',
 });
 
 const english = card({
@@ -129,7 +132,7 @@ const english = card({
     slug: theme.slug,
     palette: theme.palette,
   })),
-  footer: 'EDITION 01 / 03 COLLECTIONS / 009 THEMES',
+  footer: 'EDITION 01 / ' + seriesCount + ' COLLECTIONS / ' + themeCount + ' THEMES',
 });
 
 const outDir = resolve(root, 'public');

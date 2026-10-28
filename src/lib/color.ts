@@ -46,13 +46,16 @@ export function contrastRatio(a: string, b: string): number {
 }
 
 export function roleHex(theme: Theme, role: PaletteRole): string {
-  const found = theme.palette.find((c) => c.role === role);
-  return found?.hex ?? '#000000';
+  return paletteMap(theme)[role]?.hex ?? '#000000';
 }
 
 export function paletteMap(theme: Theme): Record<PaletteRole, PaletteColor> {
   const out = {} as Record<PaletteRole, PaletteColor>;
   for (const c of theme.palette) out[c.role] = c;
+  // Text on the accent is optional. When a theme does not name one, the
+  // ground colour is used instead - which is what a dark accent wants
+  // anyway, and keeps every exported format complete.
+  if (!out.onAccent && out.bg) out.onAccent = { ...out.bg, role: 'onAccent' };
   return out;
 }
 

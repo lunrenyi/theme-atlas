@@ -21,6 +21,15 @@ const usage = [
   { role: 'onAccent', label: t(lang, 'palette.role.onAccent'), where: t(lang, 'preview.legend.onAccent') },
 ];
 
+// a theme may carry a second, hotter accent; it only appears when it does
+if (map.flare) {
+  usage.push({
+    role: 'flare',
+    label: t(lang, 'palette.role.flare'),
+    where: t(lang, 'preview.legend.flare'),
+  });
+}
+
 const vars = [
   '--t-bg:' + map.bg?.hex,
   '--t-surface:' + map.surface?.hex,
@@ -29,6 +38,7 @@ const vars = [
   '--t-border:' + map.border?.hex,
   '--t-accent:' + map.accent?.hex,
   '--t-on-accent:' + map.onAccent?.hex,
+  '--t-flare:' + (map.flare?.hex ?? map.accent?.hex),
 ].join(';');
 
 /* The colour names sit inside the sentence as code chips; the strings come
@@ -55,6 +65,14 @@ const caption = t(lang, 'preview.caption', {
     <div class="preview__bar">
       <span class="preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <span class="preview__bar-title mono">{t(lang, 'preview.barTitle')}</span>
+      {
+        map.flare && (
+          <span class="preview__pulse">
+            <i aria-hidden="true" />
+            {t(lang, 'preview.pulse')}
+          </span>
+        )
+      }
     </div>
 
     <div class="preview__body">
@@ -163,7 +181,25 @@ const caption = t(lang, 'preview.caption', {
   .preview__bar-title {
     font-size: 0.6rem;
     letter-spacing: 0.12em;
-    color: var(--t-muted);
+    color: var(--t-text);
+  }
+
+  /* the secondary accent, used for one small signal only */
+  .preview__pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: var(--t-text);
+  }
+
+  .preview__pulse i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--t-flare);
   }
 
   .preview__body {
@@ -177,7 +213,7 @@ const caption = t(lang, 'preview.caption', {
     flex-direction: column;
     gap: 3px;
     padding: 14px 10px;
-    background: var(--t-surface);
+    background: var(--t-bg);
     border-right: 1px solid var(--t-border);
   }
 
@@ -253,7 +289,7 @@ const caption = t(lang, 'preview.caption', {
   .preview__btn--ghost {
     border-color: var(--t-border);
     color: var(--t-text);
-    background: transparent;
+    background: var(--t-surface);
   }
 
   .preview__field {

@@ -1,6 +1,7 @@
 ---
 import type { Theme } from '../data/types';
 import { getCollectionById } from '../lib/content';
+import { paletteMap } from '../lib/color';
 import { arrangementFor, arrangePalette } from '../lib/arrangement';
 import { localePath } from '../lib/url';
 import { t, type Locale } from '../i18n';
@@ -19,6 +20,8 @@ const { theme, variant = 'grid', showDescription = variant === 'featured', lang 
 const collection = getCollectionById(theme.collection, lang);
 const rule = arrangementFor(theme.collection, lang);
 const palette = arrangePalette(theme);
+const map = paletteMap(theme);
+const mark = theme.plate ? { gold: map.accent?.hex, flame: map.flare?.hex } : null;
 
 const statusMap = {
   verified: { label: t(lang, 'card.statusVerified'), tone: 'ok' },
@@ -30,10 +33,32 @@ const status = statusMap[theme.status];
 
 <article class:list={['card', 'card--' + variant]} data-collection={theme.collection}>
   <div class="card__meta">
-    <a class="card__collection mono" href={localePath('/collections#' + collection.id, lang)}>
-      <span class="card__swatch" style={'--tone:' + collection.accent} aria-hidden="true"></span>
-      {collection.title}
-    </a>
+    <div class="card__meta-left">
+      <a class="card__collection mono" href={localePath('/collections#' + collection.id, lang)}>
+        <span class="card__swatch" style={'--tone:' + collection.accent} aria-hidden="true"></span>
+        {collection.title}
+      </a>
+      {
+        mark && (
+          <span class="card__mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path
+                d="M39.5 11.3A22 22 0 1 0 52.7 24.5"
+                stroke={mark.gold}
+                stroke-width="2.6"
+                stroke-linecap="round"
+              />
+              <rect x="28.6" y="5" width="6.8" height="54" rx="3.4" fill={mark.gold} />
+              <rect x="25.4" y="13" width="13.2" height="4" rx="1.4" fill={mark.gold} />
+              <rect x="25.4" y="47" width="13.2" height="4" rx="1.4" fill={mark.gold} />
+              <circle cx="56.5" cy="16.5" r="1.7" fill={mark.flame} />
+              <circle cx="60" cy="27" r="1.1" fill={mark.flame} opacity="0.85" />
+              <circle cx="54.5" cy="8.5" r="1.2" fill={mark.flame} opacity="0.7" />
+            </svg>
+          </span>
+        )
+      }
+    </div>
     {
       theme.status !== 'verified' && (
         <span class:list={['tag', 'tag--' + status.tone]}>{status.label}</span>
@@ -101,6 +126,30 @@ const status = statusMap[theme.status];
     justify-content: space-between;
     gap: 12px;
     min-height: 20px;
+  }
+
+  .card__meta-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  /* the theme's own seal: a small original mark, drawn with its colours */
+  .card__mark {
+    display: inline-flex;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--orbit-faint);
+    border-radius: var(--radius-sm);
+    background: var(--space);
+    padding: 3px;
+  }
+
+  .card__mark svg {
+    width: 100%;
+    height: 100%;
   }
 
   .card__collection {

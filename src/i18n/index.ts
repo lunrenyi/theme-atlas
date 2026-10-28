@@ -83,7 +83,7 @@ const zh = {
   'hero.ctaSecondary': '按系列浏览',
   'hero.readoutSeries': '系列',
   'hero.readoutThemes': '主题',
-  'hero.readoutRoles': '每套角色',
+  'hero.readoutRoles': '基础角色',
   'hero.readoutExport': '导出',
   'hero.readoutExportValue': 'CSS 样式 / JSON 数据',
   'hero.chartNote': '星图 · 三个系列节点，悬停或聚焦可查看代表配色',
@@ -117,7 +117,7 @@ const zh = {
   'export.adapterName': '可插拔适配器',
   'export.adapterDesc': '终端 / 编辑器格式只需新增一个适配器',
   'export.note': '色值档案 · {count} 色 · {title}',
-  'adapter.css.roles': '语义角色：bg / surface / text / muted / border / accent / onAccent',
+  'adapter.css.roles': '语义角色',
 
   /* series panel */
   'series.code': '系列 {n}',
@@ -170,6 +170,7 @@ const zh = {
   'palette.role.border': '分割线',
   'palette.role.accent': '强调',
   'palette.role.onAccent': '强调上文字',
+  'palette.role.flare': '次强调',
   'palette.copied': '已复制 {hex}',
   'palette.copyFailed': '复制失败，请手动选择 {hex}',
   'palette.copiedAll': '已复制整套配色（{count} 色）',
@@ -180,6 +181,7 @@ const zh = {
   'preview.heading': '应用预览',
   'preview.sub': '实时预览',
   'preview.barTitle': '预览',
+  'preview.pulse': '信号',
   'preview.navOverview': '概览',
   'preview.navPalette': '调色',
   'preview.navExport': '导出',
@@ -197,6 +199,7 @@ const zh = {
   'preview.legend.border': '描边与分隔',
   'preview.legend.accent': '按钮与焦点',
   'preview.legend.onAccent': '按钮内文字',
+  'preview.legend.flare': '火焰与警示',
 
   /* contrast audit */
   'audit.heading': '对比度校验',
@@ -356,7 +359,7 @@ const en: Record<UiKey, string> = {
   'hero.ctaSecondary': 'Browse by collection',
   'hero.readoutSeries': 'Collections',
   'hero.readoutThemes': 'Themes',
-  'hero.readoutRoles': 'Roles per theme',
+  'hero.readoutRoles': 'Base roles',
   'hero.readoutExport': 'Export',
   'hero.readoutExportValue': 'CSS / JSON',
   'hero.chartNote':
@@ -393,7 +396,7 @@ const en: Record<UiKey, string> = {
   'export.adapterName': 'Pluggable adapters',
   'export.adapterDesc': 'A terminal or editor format is one more adapter',
   'export.note': 'HEX DATA · {count} COLORS · {title}',
-  'adapter.css.roles': 'Semantic roles: bg / surface / text / muted / border / accent / onAccent',
+  'adapter.css.roles': 'Semantic roles',
 
   'series.code': 'COLLECTION {n}',
   'series.themes': '{n} themes',
@@ -445,6 +448,7 @@ const en: Record<UiKey, string> = {
   'palette.role.border': 'Border',
   'palette.role.accent': 'Accent',
   'palette.role.onAccent': 'On accent',
+  'palette.role.flare': 'Secondary accent',
   'palette.copied': 'Copied {hex}',
   'palette.copyFailed': 'Copy failed — select {hex} manually',
   'palette.copiedAll': 'Copied the full palette ({count} colours)',
@@ -454,6 +458,7 @@ const en: Record<UiKey, string> = {
   'preview.heading': 'Application preview',
   'preview.sub': 'Live preview',
   'preview.barTitle': 'Preview',
+  'preview.pulse': 'Signal',
   'preview.navOverview': 'Overview',
   'preview.navPalette': 'Palette',
   'preview.navExport': 'Export',
@@ -472,6 +477,7 @@ const en: Record<UiKey, string> = {
   'preview.legend.border': 'Outlines and dividers',
   'preview.legend.accent': 'Buttons and focus',
   'preview.legend.onAccent': 'Labels on buttons',
+  'preview.legend.flare': 'Flames and alerts',
 
   'audit.heading': 'Contrast audit',
   'audit.pass': 'PASS · WCAG AA',

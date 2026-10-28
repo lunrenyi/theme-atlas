@@ -265,6 +265,92 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     },
   },
 
+  'qitian-pojie': {
+    title: 'The Great Sage · Unbound',
+    subtitle: 'Born of stone. Bound by nothing.',
+    description:
+      'Stone, dark iron, gilt gold and ember-red converge beneath the cool sweep of cloud.',
+    story:
+      'From the moment the immortal stone split open, Sun Wukong was never content with ' +
+      'the place the heavens had assigned him. The rock of Flower-Fruit Mountain, the ' +
+      'iron of the Dragon King\'s arsenal, the gold of his crown and armour, and the ' +
+      'banner that named him Great Sage Equal to Heaven supply the materials for this ' +
+      'palette. Nothing here is copied from any screen version of the legend: the colours ' +
+      'are an original reading of the imagery in Journey to the West, rearranged so that ' +
+      'defiance and freedom become something an interface can actually show.',
+    inspiration:
+      'Each colour comes from a thing the text actually names: the stone of ' +
+      'Flower-Fruit Mountain that the Monkey King was born from; the dark iron of the ' +
+      'Dragon King\'s treasure house under the Eastern Sea; the gilt of the crown, the ' +
+      'armour and the gold-banded staff; the cold white of the cloud he rides; and the ' +
+      'ember red of the banner and the forge. The values are an original Theme Atlas ' +
+      'derivation from that imagery — not the official colours of any film, animation ' +
+      'or game adaptation.',
+    designRationale:
+      'Dark iron holds the ground. Body text is the cold white of cloud, and secondary ' +
+      'text uses celestial blue, lifted one step from #58788A to #86A6B8 so that small ' +
+      'type still clears WCAG AA against the dark ground. Stone grey draws the rules ' +
+      'and the outlines. Gilt gold is the primary accent — buttons, links, focus — while ' +
+      'ember vermilion is held back as a secondary accent for flames, alerts and the one ' +
+      'instant that must be seen, never as a field. Text on the accent falls back to the ' +
+      'ground colour, which is also the darkest ink this gold can carry.',
+    tags: [
+      'Sun Wukong',
+      'Great Sage Equal to Heaven',
+      'Golden cudgel',
+      'Stone Monkey',
+      'Auspicious cloud',
+      'Breaking bounds',
+    ],
+    palette: [
+      { name: 'Dark Iron', note: 'The cold weight of a weapon, and the ink on the gold' },
+      { name: 'Flower-Fruit Brown', note: 'Panel ground, the warmth of earth and bark' },
+      { name: 'Cloud White', note: 'Headings and body text, cold white with room to breathe' },
+      { name: 'Celestial Blue', note: 'Captions and notes; lifted from #58788A to clear AA' },
+      { name: 'Stone', note: 'Dividers and outlines, the neutral grey of rock' },
+      { name: 'Gilt Gold', note: 'Primary accent: buttons, links, focus' },
+      { name: 'Ember Vermilion', note: 'Secondary accent: sparks, alerts, a single decisive moment' },
+    ],
+    sources: [
+      {
+        title: 'Journey to the West, Chapter 1 (西游记 · 第一回)',
+        detail: 'Public text on Wikisource',
+        note:
+          'The stone that splits, the stone that becomes a monkey, and the gathering of ' +
+          'the troop on Flower-Fruit Mountain — the source of the stone imagery.',
+      },
+      {
+        title: 'Journey to the West, Chapter 4 (西游记 · 第四回)',
+        detail: 'Public text on Wikisource',
+        note:
+          '“What is the harm in calling myself Great Sage Equal to Heaven?”, the banner ' +
+          'bearing those four characters, and the descriptions of the gilt armour, the ' +
+          'crown and the gold-banded staff.',
+      },
+      {
+        title: 'Journey to the West (西游记)',
+        detail: 'Ming dynasty; traditionally attributed to Wu Cheng\'en, authorship still discussed',
+        note:
+          'Every image quoted here is taken from the novel itself, not from the ' +
+          'storyteller\'s tradition, opera or any screen adaptation.',
+      },
+      {
+        title: 'Metals and pigments behind the gold and the red (to be added)',
+        note:
+          'Still to be added: the link between gilt gold and ember vermilion and specific ' +
+          'minerals and workshop processes has to be checked one by one before this ' +
+          'entry is replaced.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: originalSvg,
+    },
+  },
+
   'ru-ware-sky': {
     title: 'Ru Ware · Sky After Rain',
     subtitle: 'That indefinable blue after the rain, fixed only when the kiln opens',
