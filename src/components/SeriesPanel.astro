@@ -3,7 +3,7 @@ import type { Collection } from '../data/types';
 import { getThemes } from '../lib/content';
 import { arrangementFor, arrangePalette } from '../lib/arrangement';
 import { localePath } from '../lib/url';
-import { t, type Locale } from '../i18n';
+import { seriesNumber, t, type Locale } from '../i18n';
 import CollectionMotif from './CollectionMotif.astro';
 import PaletteStrip from './PaletteStrip.astro';
 
@@ -23,7 +23,7 @@ const representative = list[0] ? arrangePalette(list[0]) : [];
 <article class="series" id={collection.id} style={'--tone:' + collection.accent}>
   <header class="series__head">
     <span class="series__code mono">
-      {t(lang, 'series.code', { n: String(index + 1).padStart(2, '0') })}
+      {t(lang, 'series.code', { n: seriesNumber(lang, index) })}
     </span>
     <span class="series__count mono">{t(lang, 'series.themes', { n: list.length })}</span>
   </header>
@@ -37,7 +37,7 @@ const representative = list[0] ? arrangePalette(list[0]) : [];
   />
 
   <h3 class="series__title">{collection.title}</h3>
-  <p class="series__en mono">{collection.code}</p>
+  {collection.code && <p class="series__en mono">{collection.code}</p>}
   <p class="series__tagline">{collection.tagline}</p>
   <p class="series__desc">{collection.description}</p>
 

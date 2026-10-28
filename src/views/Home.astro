@@ -8,7 +8,7 @@ import { getCollections, getFeaturedThemes, getThemes } from '../lib/content';
 import { cssVariableAdapter } from '../adapters';
 import { site } from '../site.config';
 import { localePath } from '../lib/url';
-import { spaceBefore, t, type Locale } from '../i18n';
+import { catalogCount, spaceBefore, t, type Locale } from '../i18n';
 
 interface Props {
   lang: Locale;
@@ -29,7 +29,7 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
   <section class="hero">
     <div class="wrap wrap--wide">
       <div class="hero__kicker">
-        <span class="eyebrow eyebrow--gold">{site.edition}</span>
+        <span class="eyebrow eyebrow--gold">{site.edition[lang]}</span>
         <span class="eyebrow hero__kicker-mid">{t(lang, 'hero.kicker')}</span>
         <span class="eyebrow hero__kicker-end">
           {t(lang, 'hero.counts', {
@@ -69,7 +69,7 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
             </div>
             <div>
               <dt class="eyebrow">{t(lang, 'hero.readoutExport')}</dt>
-              <dd class="hero__readout-sm">CSS / JSON</dd>
+              <dd class="hero__readout-sm">{t(lang, 'hero.readoutExportValue')}</dd>
             </div>
           </dl>
         </div>
@@ -138,7 +138,9 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
           </p>
           <h2 class="section-head__title">{t(lang, 'section.catalogTitle')}</h2>
         </div>
-        <p class="section-head__meta">{String(total).padStart(3, '0')} THEMES</p>
+        <p class="section-head__meta">
+          {t(lang, 'section.catalogMeta', { count: catalogCount(lang, total) })}
+        </p>
       </div>
 
       <p class="section-lede">
@@ -193,7 +195,7 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
         <figure class="export__code">
           <figcaption class="export__code-head mono">
             <span>{sample.slug}.css</span>
-            <span>CSS VARIABLES</span>
+            <span>{t(lang, 'export.codeLabel')}</span>
           </figcaption>
           <pre class="export__pre"><code>{sampleCss}</code></pre>
         </figure>
@@ -224,13 +226,13 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
 
   .hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-    gap: clamp(28px, 4vw, 68px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+    gap: clamp(24px, 3vw, 52px);
     align-items: center;
   }
 
   .hero__title {
-    font-size: clamp(2.6rem, 5.4vw, 5.1rem);
+    font-size: clamp(2.5rem, 4.9vw, 4.7rem);
     line-height: 1;
     letter-spacing: -0.03em;
   }
@@ -238,6 +240,7 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
   .hero__title em {
     font-style: italic;
     color: var(--gold);
+    white-space: nowrap;
   }
 
   /* Chinese display type is never slanted — the accent colour carries it. */
@@ -301,8 +304,8 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
 
   .hero__readout .hero__readout-sm {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    letter-spacing: 0.06em;
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
     color: var(--glow);
     padding-top: 4px;
   }

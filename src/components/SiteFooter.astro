@@ -20,9 +20,9 @@ const year = new Date().getFullYear();
       <div class="site-footer__intro">
         <p class="eyebrow eyebrow--gold">
           <span class="site-footer__pulse" aria-hidden="true"></span>
-          {site.edition}
+          {site.edition[lang]}
         </p>
-        <p class="site-footer__statement">{site.tagline}</p>
+        <p class="site-footer__statement">{site.tagline[lang]}</p>
         <p class="site-footer__blurb">{site.description[lang]}</p>
       </div>
 

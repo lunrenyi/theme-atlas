@@ -71,7 +71,7 @@ const zh = {
     '本站与任何游戏厂商无隶属或授权关系；同人主题均为非官方演绎。',
 
   /* home — hero */
-  'hero.kicker': '故事里的配色档案',
+  'hero.kicker': '从故事到屏幕',
   'hero.counts': '{series} 个系列 / {themes} 套主题',
   'hero.title1': '有些故事，',
   'hero.title2': '最后变成了',
@@ -85,6 +85,7 @@ const zh = {
   'hero.readoutThemes': '主题',
   'hero.readoutRoles': '每套角色',
   'hero.readoutExport': '导出',
+  'hero.readoutExportValue': 'CSS 样式 / JSON 数据',
   'hero.chartNote': '星图 · 三个系列节点，悬停或聚焦可查看代表配色',
   'star.nodeLabel': '{title}系列，共 {count} 套主题',
 
@@ -99,21 +100,23 @@ const zh = {
   'section.featuredMeta': '精选',
   'section.catalogEyebrow': '全部主题',
   'section.catalogTitle': '更多故事，更多颜色。',
+  'section.catalogMeta': '{count} 套主题',
   'section.catalogLede': '全部 {count} 套主题都在这里，可以按系列筛选，也可以按名称、颜色或关键词搜索。',
   'section.exportEyebrow': '导出',
   'section.exportTitle': '把喜欢的颜色，带进你的世界。',
-  'section.exportMeta': 'CSS / JSON',
+  'section.exportMeta': 'CSS 样式 / JSON 数据',
   'section.themesCount': '{count} 套主题',
   'export.lede':
     '复制单个色值，就能直接取用它的 HEX；导出 CSS 变量，七个语义角色会变成 :root 里的变量名；' +
     '导出 JSON，出处、授权与配色说明会跟着一起带走。',
+  'export.codeLabel': 'CSS 变量',
   'export.cssName': 'CSS 变量',
   'export.cssDesc': ':root 变量，含角色注释',
   'export.jsonName': '结构化数据',
   'export.jsonDesc': '色值、角色、来源与授权',
   'export.adapterName': '可插拔适配器',
   'export.adapterDesc': '终端 / 编辑器格式只需新增一个适配器',
-  'export.note': 'HEX DATA · {count} 色 · {title}',
+  'export.note': '色值档案 · {count} 色 · {title}',
   'adapter.css.roles': '语义角色：bg / surface / text / muted / border / accent / onAccent',
 
   /* series panel */
@@ -151,7 +154,7 @@ const zh = {
 
   /* palette */
   'palette.heading': '配色',
-  'palette.headingSuffix': ' / PALETTE',
+  'palette.headingSuffix': '',
   'palette.meta': 'HEX 数据 · {count} 色 · 7 个角色',
   'palette.metaEn': 'HEX DATA · {count} COLORS · 7 ROLES',
   'palette.keyRole': '关键色',
@@ -197,7 +200,7 @@ const zh = {
 
   /* contrast audit */
   'audit.heading': '对比度校验',
-  'audit.pass': 'PASS · WCAG AA',
+  'audit.pass': '通过 · WCAG AA',
   'audit.fail': '{count} 项未达标',
   'audit.colPair': '组合',
   'audit.colRatio': '比值',
@@ -237,13 +240,14 @@ const zh = {
   'detail.previous': '上一套',
   'detail.next': '下一套',
   'detail.backToAll': '回到全部主题',
-  'detail.plateCaption': 'PLATE · {title}',
+  'detail.plateCaption': '图版 · {title}',
   'palette.stripLabel': '配色条：{summary}',
   'palette.stripSeparator': '，',
   'plate.label': '{title} 的原创插图，使用本主题自身的颜色绘制',
   'motif.ruyi': '青铜器回纹地纹与兽面装饰图形',
   'motif.glaze': '釉色开片装饰图形',
   'motif.orbit': '星轨轨道装饰图形',
+  'star.coreBrand': '色谱档案',
   'star.coreLabel': '核心星体',
 
   /* collections page */
@@ -339,7 +343,7 @@ const en: Record<UiKey, string> = {
   'footer.disclaimer':
     'This site is not affiliated with or endorsed by any game publisher; fan themes are unofficial interpretations.',
 
-  'hero.kicker': 'A colour archive drawn from stories',
+  'hero.kicker': 'From story to screen',
   'hero.counts': '{series} collections / {themes} themes',
   'hero.title1': 'Some stories end',
   'hero.title2': 'up as',
@@ -354,6 +358,7 @@ const en: Record<UiKey, string> = {
   'hero.readoutThemes': 'Themes',
   'hero.readoutRoles': 'Roles per theme',
   'hero.readoutExport': 'Export',
+  'hero.readoutExportValue': 'CSS / JSON',
   'hero.chartNote':
     'Star chart · three collection nodes; hover or focus one to preview its palette',
   'star.nodeLabel': '{title} collection, {count} themes',
@@ -369,6 +374,7 @@ const en: Record<UiKey, string> = {
   'section.featuredMeta': 'Selected',
   'section.catalogEyebrow': 'Catalogue',
   'section.catalogTitle': 'More stories, more colours',
+  'section.catalogMeta': '{count} THEMES',
   'section.catalogLede':
     'All {count} themes live here — filter them by collection, or search by name, colour or keyword.',
   'section.exportEyebrow': 'Export',
@@ -379,6 +385,7 @@ const en: Record<UiKey, string> = {
     'Copy a single colour and take its hex value with you. Export CSS variables and the seven ' +
     'semantic roles become names inside :root. Export JSON and the sources, the licence and ' +
     'the notes on each colour travel with the palette.',
+  'export.codeLabel': 'CSS VARIABLES',
   'export.cssName': 'CSS variables',
   'export.cssDesc': ':root variables with role comments',
   'export.jsonName': 'Structured data',
@@ -514,6 +521,7 @@ const en: Record<UiKey, string> = {
   'motif.ruyi': 'Bronze key-fret band and beast-mask motif',
   'motif.glaze': 'Glaze crackle motif',
   'motif.orbit': 'Stellar track orbit motif',
+  'star.coreBrand': 'THEME ATLAS',
   'star.coreLabel': 'Core body',
 
   'collections.eyebrow': 'Collections',
@@ -576,6 +584,21 @@ const en: Record<UiKey, string> = {
 };
 
 export const ui = { zh, en };
+
+const CN_ORDINALS = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+
+/**
+ * Series numbering. Chinese reads 一 / 二 / 三, English reads 01 / 02 / 03.
+ */
+export function seriesNumber(lang: Locale, index: number): string {
+  if (lang === 'zh') return CN_ORDINALS[index] ?? String(index + 1);
+  return String(index + 1).padStart(2, '0');
+}
+
+/** Catalogue counters: the Chinese pages use two digits, English three. */
+export function catalogCount(lang: Locale, total: number): string {
+  return String(total).padStart(lang === 'zh' ? 2 : 3, '0');
+}
 
 /**
  * Latin text needs a space between two words; Chinese does not. The home

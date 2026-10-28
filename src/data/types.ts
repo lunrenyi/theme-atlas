@@ -91,10 +91,20 @@ export interface Collection {
   shortEn: string;
   /** Stable catalogue code, used as a technical label in both languages. */
   code: string;
+  /**
+   * Catalogue code for the Chinese interface. The Chinese pages do not
+   * repeat a Latin code next to a Chinese title, so this is empty there and
+   * the code line is simply not rendered.
+   */
+  codeZh: string;
   /** Short line shown on the collection panel. */
   tagline: string;
   /** English version of the tagline. */
   taglineEn: string;
+  /** One short line used as the star map annotation for the collection. */
+  starNote: string;
+  /** English version of the star map annotation. */
+  starNoteEn: string;
   /** Longer paragraph on the collection page. */
   description: string;
   /** English version of the collection description. */

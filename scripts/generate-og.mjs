@@ -32,7 +32,7 @@ const stars = Array.from({ length: 46 }, (_, i) => {
   );
 }).join('');
 
-function card({ subtitle, deck, rows, footer }) {
+function card({ subtitle, deck, rows, footer, line1, line2 }) {
   const stripRows = rows
     .map((row, index) => {
       const y = 448 + index * 58;
@@ -83,8 +83,12 @@ function card({ subtitle, deck, rows, footer }) {
     '<text x="330" y="70" font-family="monospace" font-size="15" letter-spacing="4" fill="' + TEXT3 + '">' +
       subtitle +
       '</text>',
-    '<text x="60" y="212" font-family="Georgia, serif" font-size="88" fill="' + TEXT + '">Every color has</text>',
-    '<text x="60" y="306" font-family="Georgia, serif" font-size="88" fill="' + GOLD + '">a story.</text>',
+    '<text x="60" y="212" font-family="Georgia, serif" font-size="88" fill="' + TEXT + '">' +
+    line1 +
+    '</text>',
+    '<text x="60" y="306" font-family="Georgia, serif" font-size="88" fill="' + GOLD + '">' +
+    line2 +
+    '</text>',
     '<text x="60" y="362" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="' + TEXT2 + '">' +
       deck +
     '</text>',
@@ -105,17 +109,21 @@ const featured = themes.filter((t) => t.featured).slice(0, 3);
 const chinese = card({
   subtitle: '色谱档案',
   deck: '中国神话 · 中国瓷器 · 虚构世界 —— 有故事的配色主题库',
+  line1: '有些故事，',
+  line2: '最后变成了颜色。',
   rows: featured.map((theme) => ({
     title: theme.title,
     slug: theme.slug,
     palette: theme.palette,
   })),
-  footer: 'EDITION 01 / 03 SERIES / 009 THEMES',
+  footer: '第一辑 / 03 个系列 / 009 套主题',
 });
 
 const english = card({
   subtitle: 'COLOUR ARCHIVE',
   deck: 'Chinese myth · Chinese porcelain · imagined worlds — colour themes with a story',
+  line1: 'Every color has',
+  line2: 'a story.',
   rows: featured.map((theme) => ({
     title: themeTranslations[theme.slug].title,
     slug: theme.slug,

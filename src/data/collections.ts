@@ -8,8 +8,11 @@ export const collections: Collection[] = [
     short: '中国神话',
     shortEn: 'Myth',
     code: 'MYTH',
+    codeZh: '',
     tagline: '神话的形状，是青铜器替它留下的',
     taglineEn: 'Myth left its shape on bronze and stone',
+    starNote: '青铜器替神话留下了形状',
+    starNoteEn: 'Bronze gave myth its shape',
     description:
       '神话本身没有画面，是青铜器、纹样与壁画替它留下了痕迹：饕餮的巨目、汉画像石上的祥云、' +
       '敦煌壁画剥落后露出的土红。这个系列沿这些痕迹取色，再用矿物颜料的质感——朱砂、石青、' +
@@ -31,8 +34,11 @@ export const collections: Collection[] = [
     short: '中国瓷器',
     shortEn: 'Porcelain',
     code: 'CELADON',
+    codeZh: '',
     tagline: '从胎土到釉层，最后由窑火定色',
     taglineEn: 'Clay, glaze, kiln — the fire has the last word',
+    starNote: '泥、釉与窑火定下的颜色',
+    starNoteEn: 'Clay, glaze and fire decide the colour',
     description:
       '一种颜色要经过泥、釉与窑火才会出现：胎体吸釉，釉层有厚有薄，烧成的温度与火痕又各不相同，' +
       '同一层釉于是分出深浅。汝窑的天青、钧窑的玫瑰紫、景德镇的青花都从这里开始。' +
@@ -55,8 +61,11 @@ export const collections: Collection[] = [
     short: '星穹铁道',
     shortEn: 'Star Rail',
     code: 'ORBIT',
+    codeZh: '',
     tagline: '把想象中的银河，重新折算成颜色',
     taglineEn: 'An imagined galaxy, measured out in colour',
+    starNote: '把想象折算成能用的颜色',
+    starNoteEn: 'Imagination, measured into usable colour',
     description:
       '星轨、列车与遥不可及的星域，是几个关于远行与选择的想象。我们把这些想象重新折算成' +
       '数字里用得上的颜色：冷紫作锚，青灰铺底，信号金点睛。这是本站的非官方同人演绎，' +

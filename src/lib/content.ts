@@ -12,13 +12,20 @@ import type { Collection, CollectionId, Theme } from '../data/types';
 import type { Locale } from '../i18n';
 
 export function getCollections(lang: Locale): Collection[] {
-  if (lang === 'zh') return collectionsZh;
   return collectionsZh.map((collection) => ({
     ...collection,
-    title: collection.titleEn,
-    short: collection.shortEn,
-    tagline: collection.taglineEn,
-    description: collection.descriptionEn,
+    // the Chinese interface does not repeat a Latin catalogue code beside a
+    // Chinese title, so the code line is simply empty there
+    code: lang === 'zh' ? collection.codeZh : collection.code,
+    ...(lang === 'zh'
+      ? {}
+      : {
+          title: collection.titleEn,
+          short: collection.shortEn,
+          tagline: collection.taglineEn,
+            starNote: collection.starNoteEn,
+          description: collection.descriptionEn,
+        }),
   }));
 }
 

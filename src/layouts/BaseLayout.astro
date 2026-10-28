@@ -17,7 +17,7 @@ interface Props {
 
 const { title, description, lang, ogImage } = Astro.props;
 const meta = localeMeta[lang];
-const fullTitle = title === site.name ? site.tagline : title + ' · ' + site.name;
+const fullTitle = title === site.name ? site.tagline[lang] : title + ' · ' + site.name;
 const canonical = absoluteUrl(Astro.url.pathname);
 const pageDescription = description ?? site.description[lang];
 const socialImage = ogImage ?? (lang === 'zh' ? '/og-default.png' : '/og-en.png');

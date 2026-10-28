@@ -9,7 +9,11 @@
 export const site = {
   name: 'Theme Atlas',
   nameZh: '色谱档案',
-  tagline: 'Every color has a story.',
+  /** The brand statement. It is the home page title and the footer line. */
+  tagline: {
+    zh: '有些故事，最后变成了颜色。',
+    en: 'Every color has a story.',
+  },
   description: {
     zh:
       'Theme Atlas 收集来自神话、历史与虚构世界的颜色，把每一组整理成可以在屏幕上直接使用的' +
@@ -23,7 +27,10 @@ export const site = {
   repoLabel: 'lunrenyi/theme-atlas',
   /** Locale-independent path; the locale prefix is added at render time. */
   fanStatementPath: '/about#fan-works',
-  edition: 'EDITION 01',
+  edition: {
+    zh: '第一辑 · 色彩主题档案',
+    en: 'EDITION 01',
+  },
 } as const;
 
 export const nav = [

@@ -4,7 +4,7 @@ import CollectionMotif from '../components/CollectionMotif.astro';
 import ThemeCard from '../components/ThemeCard.astro';
 import ThemeLibrary from '../components/ThemeLibrary.astro';
 import { getCollections, getThemes } from '../lib/content';
-import { t, type Locale } from '../i18n';
+import { catalogCount, seriesNumber, t, type Locale } from '../i18n';
 
 interface Props {
   lang: Locale;
@@ -37,10 +37,10 @@ const themes = getThemes(lang);
             <div class="collection__head">
               <div class="collection__intro">
                 <span class="collection__index mono">
-                  {t(lang, 'collections.index', { n: String(index + 1).padStart(2, '0') })}
+                  {t(lang, 'collections.index', { n: seriesNumber(lang, index) })}
                 </span>
                 <h2 class="collection__title">{collection.title}</h2>
-                <p class="collection__en mono">{collection.code}</p>
+                {collection.code && <p class="collection__en mono">{collection.code}</p>}
                 <p class="collection__tagline">{collection.tagline}</p>
                 <p class="collection__desc">{collection.description}</p>
                 <p class="collection__count mono">
@@ -74,7 +74,9 @@ const themes = getThemes(lang);
           <p class="eyebrow eyebrow--gold">{t(lang, 'collections.allEyebrow')}</p>
           <h2 class="section-head__title">{t(lang, 'collections.allTitle')}</h2>
         </div>
-        <p class="section-head__meta">{themes.length} THEMES</p>
+        <p class="section-head__meta">
+          {t(lang, 'section.catalogMeta', { count: catalogCount(lang, themes.length) })}
+        </p>
       </div>
       <ThemeLibrary themes={themes} lang={lang} />
     </div>
