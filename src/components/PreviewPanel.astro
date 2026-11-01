@@ -2,6 +2,7 @@
 import type { Theme } from '../data/types';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
+import TerminalPromptPreview from './TerminalPromptPreview.astro';
 
 interface Props {
   theme: Theme;
@@ -61,65 +62,163 @@ const caption = t(lang, 'preview.caption', {
     <p class="preview__sub mono">{t(lang, 'preview.sub')}</p>
   </div>
 
-  <div class="preview__frame">
-    <div class="preview__bar">
-      <span class="preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="preview__bar-title mono">{t(lang, 'preview.barTitle')}</span>
-      {
-        map.flare && (
-          <span class="preview__pulse">
-            <i aria-hidden="true" />
-            {t(lang, 'preview.pulse')}
-          </span>
-        )
-      }
-    </div>
-
-    <div class="preview__body">
-      <nav class="preview__side" aria-hidden="true">
-        <span class="preview__side-item is-active">{t(lang, 'preview.navOverview')}</span>
-        <span class="preview__side-item">{t(lang, 'preview.navPalette')}</span>
-        <span class="preview__side-item">{t(lang, 'preview.navExport')}</span>
-        <span class="preview__side-item">{t(lang, 'preview.navAbout')}</span>
-      </nav>
-
-      <div class="preview__main">
-        <p class="preview__eyebrow mono">{t(lang, 'preview.eyebrow')}</p>
-        <p class="preview__title">{theme.title}</p>
-        <p class="preview__body-text" set:html={bodyText} />
-
-        <div class="preview__actions">
-          <span class="preview__btn preview__btn--solid">{t(lang, 'preview.primary')}</span>
-          <span class="preview__btn preview__btn--ghost">{t(lang, 'preview.secondary')}</span>
-        </div>
-
-        <div class="preview__field">
-          <span class="preview__field-placeholder">{t(lang, 'preview.field')}</span>
-          <span class="preview__focus-ring" aria-hidden="true"></span>
-        </div>
-
-        <div class="preview__rule" aria-hidden="true"></div>
-
-        <p class="preview__caption" set:html={caption} />
-      </div>
-    </div>
+  <div class="preview__modes" role="tablist" aria-label={t(lang, 'preview.tabsLabel')}>
+    <button
+      type="button"
+      id="preview-tab-ui"
+      class="preview__mode is-active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="preview-panel-ui"
+      tabindex="0"
+      data-preview-tab="ui"
+      title={t(lang, 'preview.interfaceTab')}
+    >
+      {t(lang, 'preview.interfaceTab')}
+    </button>
+    <button
+      type="button"
+      id="preview-tab-terminal"
+      class="preview__mode"
+      role="tab"
+      aria-selected="false"
+      aria-controls="preview-panel-terminal"
+      tabindex="-1"
+      data-preview-tab="terminal"
+      title={t(lang, 'preview.terminalTab')}
+    >
+      {t(lang, 'preview.terminalTab')}
+    </button>
   </div>
 
-  <ul class="preview__legend">
-    {
-      usage.map((u) => {
-        const color = map[u.role as keyof typeof map];
-        return (
-          <li>
-            <span class="preview__legend-dot" style={'--tone:' + (color?.hex ?? '#000')} aria-hidden="true" />
-            <span class="preview__legend-label">{u.label}</span>
-            <span class="preview__legend-where">{u.where}</span>
-          </li>
-        );
-      })
-    }
-  </ul>
+  <div
+    id="preview-panel-ui"
+    class="preview__panel"
+    role="tabpanel"
+    aria-labelledby="preview-tab-ui"
+    data-preview-panel="ui"
+  >
+    <div class="preview__frame">
+      <div class="preview__bar">
+        <span class="preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="preview__bar-title mono">{t(lang, 'preview.barTitle')}</span>
+        {
+          map.flare && (
+            <span class="preview__pulse">
+              <i aria-hidden="true" />
+              {t(lang, 'preview.pulse')}
+            </span>
+          )
+        }
+      </div>
+
+      <div class="preview__body">
+        <nav class="preview__side" aria-hidden="true">
+          <span class="preview__side-item is-active">{t(lang, 'preview.navOverview')}</span>
+          <span class="preview__side-item">{t(lang, 'preview.navPalette')}</span>
+          <span class="preview__side-item">{t(lang, 'preview.navExport')}</span>
+          <span class="preview__side-item">{t(lang, 'preview.navAbout')}</span>
+        </nav>
+
+        <div class="preview__main">
+          <p class="preview__eyebrow mono">{t(lang, 'preview.eyebrow')}</p>
+          <p class="preview__title">{theme.title}</p>
+          <p class="preview__body-text" set:html={bodyText} />
+
+          <div class="preview__actions">
+            <span class="preview__btn preview__btn--solid">{t(lang, 'preview.primary')}</span>
+            <span class="preview__btn preview__btn--ghost">{t(lang, 'preview.secondary')}</span>
+          </div>
+
+          <div class="preview__field">
+            <span class="preview__field-placeholder">{t(lang, 'preview.field')}</span>
+            <span class="preview__focus-ring" aria-hidden="true"></span>
+          </div>
+
+          <div class="preview__rule" aria-hidden="true"></div>
+
+          <p class="preview__caption" set:html={caption} />
+        </div>
+      </div>
+    </div>
+
+    <ul class="preview__legend">
+      {
+        usage.map((u) => {
+          const color = map[u.role as keyof typeof map];
+          return (
+            <li>
+              <span class="preview__legend-dot" style={'--tone:' + (color?.hex ?? '#000')} aria-hidden="true" />
+              <span class="preview__legend-label">{u.label}</span>
+              <span class="preview__legend-where">{u.where}</span>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+
+  <div
+    id="preview-panel-terminal"
+    class="preview__panel preview__panel--terminal"
+    role="tabpanel"
+    aria-labelledby="preview-tab-terminal"
+    data-preview-panel="terminal"
+    hidden
+  >
+    <TerminalPromptPreview theme={theme} lang={lang} />
+  </div>
 </section>
+
+<script>
+  const tablist = document.querySelector<HTMLElement>('[data-preview-tab]')?.closest<HTMLElement>('[role="tablist"]');
+
+  if (tablist) {
+    const tabs = Array.from(tablist.querySelectorAll<HTMLButtonElement>('[data-preview-tab]'));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-preview-panel]'));
+
+    const selectTab = (tab: HTMLButtonElement, focus = false) => {
+      tabs.forEach((candidate) => {
+        const active = candidate === tab;
+        candidate.classList.toggle('is-active', active);
+        candidate.setAttribute('aria-selected', String(active));
+        candidate.tabIndex = active ? 0 : -1;
+      });
+
+      const panelId = tab.getAttribute('aria-controls');
+      panels.forEach((panel) => {
+        panel.hidden = panel.id !== panelId;
+      });
+
+      if (focus) tab.focus();
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => selectTab(tab));
+    });
+
+    tablist.addEventListener('keydown', (event) => {
+      const index = tabs.indexOf(document.activeElement as HTMLButtonElement);
+      if (index < 0) return;
+
+      let next = index;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        next = (index + 1) % tabs.length;
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        next = (index - 1 + tabs.length) % tabs.length;
+      } else if (event.key === 'Home') {
+        next = 0;
+      } else if (event.key === 'End') {
+        next = tabs.length - 1;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      selectTab(tabs[next], true);
+    });
+  }
+</script>
 
 <style>
   .preview {
@@ -145,6 +244,40 @@ const caption = t(lang, 'preview.caption', {
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--text-3);
+  }
+
+  .preview__modes {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .preview__mode {
+    padding: 7px 10px 8px;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    color: var(--text-2);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .preview__mode:hover {
+    color: var(--text);
+  }
+
+  .preview__mode.is-active {
+    border-bottom-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .preview__panel[hidden] {
+    display: none;
+  }
+
+  .preview__panel--terminal {
+    min-width: 0;
   }
 
   /* the mock UI is painted entirely with the theme's own palette */
