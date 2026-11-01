@@ -3,21 +3,24 @@ import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import StarField from '../components/StarField.astro';
-import { site } from '../site.config';
+import { documentTitle, site, type DocumentPage } from '../site.config';
 import { absoluteUrl, pathForLocale, withBase } from '../lib/url';
 import { localeMeta, type Locale } from '../i18n';
 
 interface Props {
-  title: string;
+  /** The localized kind of page, used to build the browser-tab title. */
+  page: DocumentPage;
+  /** Required for theme pages; the already-localized theme name. */
+  subject?: string;
   description?: string;
   /** Which language this route renders. */
   lang: Locale;
   ogImage?: string;
 }
 
-const { title, description, lang, ogImage } = Astro.props;
+const { page, subject, description, lang, ogImage } = Astro.props;
 const meta = localeMeta[lang];
-const fullTitle = title === site.name ? site.tagline[lang] : title + ' · ' + site.name;
+const fullTitle = documentTitle(lang, page, subject);
 const canonical = absoluteUrl(Astro.url.pathname);
 const pageDescription = description ?? site.description[lang];
 const socialImage = ogImage ?? (lang === 'zh' ? '/og-default.png' : '/og-en.png');
@@ -35,7 +38,7 @@ const alternateEn = absoluteUrl(pathForLocale(Astro.url.pathname, 'en'));
     <title>{fullTitle}</title>
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" type="image/svg+xml" sizes="any" href={withBase('/favicon.svg')} />
     <link rel="alternate" hreflang={localeMeta.zh.hreflang} href={alternateZh} />
     <link rel="alternate" hreflang={localeMeta.en.hreflang} href={alternateEn} />
     <link rel="alternate" hreflang="x-default" href={alternateZh} />
@@ -50,6 +53,8 @@ const alternateEn = absoluteUrl(pathForLocale(Astro.url.pathname, 'en'));
     <meta property="og:image" content={absoluteUrl(socialImage)} />
     <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={pageDescription} />
   </head>
   <body>
     <a class="skip-link" href="#main">{lang === 'zh' ? '跳到主要内容' : 'Skip to main content'}</a>

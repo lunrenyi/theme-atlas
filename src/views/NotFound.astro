@@ -10,7 +10,7 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<BaseLayout title={t(lang, 'notFound.title')} description={t(lang, 'notFound.lede')} lang={lang}>
+<BaseLayout page="notFound" description={t(lang, 'notFound.lede')} lang={lang}>
   <section class="notfound">
     <div class="wrap">
       <p class="eyebrow eyebrow--gold">{t(lang, 'notFound.eyebrow')}</p>

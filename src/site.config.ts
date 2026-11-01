@@ -6,22 +6,24 @@
  * is chosen by the route, never by a client-side toggle.
  */
 
+import type { Locale } from './i18n';
+
 export const site = {
   name: 'Theme Atlas',
   nameZh: '色谱档案',
-  /** The brand statement. It is the home page title and the footer line. */
+  /** The brand statement used by the home page H1 and footer, not the tab title. */
   tagline: {
     zh: '有些故事，最后变成了颜色。',
     en: 'Every color has a story.',
   },
   description: {
     zh:
-      'Theme Atlas 收集来自神话、历史与虚构世界的颜色，把每一组整理成可以在屏幕上直接使用的' +
-      '主题：色值有名字、有语义角色，也记录了来处。',
+      'Theme Atlas 收录中国神话、中国瓷器与虚构世界的配色主题。每套主题都有故事、' +
+      '完整色值与语义角色，并支持复制和导出 CSS、JSON。',
     en:
-      'Theme Atlas collects colours from myth, history and imagined worlds, and files each set ' +
-      'as a theme you can put straight to work on screen: every value named, given a role, ' +
-      'and traced back to where it came from.',
+      'Theme Atlas archives colour themes inspired by Chinese mythology, Chinese porcelain ' +
+      'and imagined worlds. Every theme includes its story, full palette and semantic roles, ' +
+      'with one-click copy and CSS or JSON export.',
   },
   repoUrl: 'https://github.com/lunrenyi/theme-atlas',
   repoLabel: 'lunrenyi/theme-atlas',
@@ -32,6 +34,47 @@ export const site = {
     en: 'EDITION 01',
   },
 } as const;
+
+export type DocumentPage = 'home' | 'theme' | 'collections' | 'about' | 'notFound';
+
+const documentPageTitles: Record<
+  Exclude<DocumentPage, 'home' | 'theme'>,
+  Record<Locale, string>
+> = {
+  collections: {
+    zh: '主题系列',
+    en: 'Theme collections',
+  },
+  about: {
+    zh: '关于本站',
+    en: 'About',
+  },
+  notFound: {
+    zh: '页面未找到',
+    en: 'Page Not Found',
+  },
+};
+
+const homeDocumentTitle: Record<Locale, string> = {
+  zh: '有故事的配色主题库',
+  en: 'Color Themes with Stories',
+};
+
+/**
+ * Build every browser-tab title in one place. Home leads with the brand;
+ * every other page leads with its own localized subject.
+ */
+export function documentTitle(lang: Locale, page: DocumentPage, subject?: string): string {
+  const separator = lang === 'zh' ? '｜' : ' — ';
+
+  if (page === 'home') return site.name + separator + homeDocumentTitle[lang];
+  if (page === 'theme') {
+    if (!subject) throw new Error('Theme document titles require a localized theme name.');
+    return subject + separator + site.name;
+  }
+
+  return documentPageTitles[page][lang] + separator + site.name;
+}
 
 export const nav = [
   { key: 'nav.explore', href: '/#themes' },
