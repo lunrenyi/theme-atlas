@@ -1,0 +1,784 @@
+---
+import type { PaletteRole, Theme } from '../data/types';
+import { paletteMap } from '../lib/color';
+import { t, type Locale, type UiKey } from '../i18n';
+import PromptMotif from './PromptMotif.astro';
+
+interface Props {
+  theme: Theme;
+  lang: Locale;
+}
+
+const { theme, lang } = Astro.props;
+const design = theme.promptDesign;
+const map = paletteMap(theme);
+
+const roleKeys: Record<PaletteRole, UiKey> = {
+  bg: 'palette.role.bg',
+  surface: 'palette.role.surface',
+  text: 'palette.role.text',
+  muted: 'palette.role.muted',
+  border: 'palette.role.border',
+  accent: 'palette.role.accent',
+  onAccent: 'palette.role.onAccent',
+  flare: 'palette.role.flare',
+};
+
+const baseRoles: PaletteRole[] = ['bg', 'surface', 'text', 'muted', 'border', 'accent', 'onAccent'];
+const legendRoles = map.flare ? [...baseRoles, 'flare' as const] : baseRoles;
+const isFlareTheme = Boolean(map.flare);
+const sceneId = 'prompt-scene-' + theme.slug;
+const designNote = lang === 'zh' ? design.designNote : design.designNoteEn;
+const command = t(lang, 'preview.promptCommand');
+const output = t(lang, 'preview.promptOutput');
+
+const emphasisFor = (role: PaletteRole) => {
+  if (design.roleEmphasis.primary.includes(role)) return 'primary';
+  if (design.roleEmphasis.secondary.includes(role)) return 'secondary';
+  if (design.roleEmphasis.restrained.includes(role)) return 'restrained';
+  return 'secondary';
+};
+
+const emphasisLabel = (level: string) => {
+  if (level === 'primary') return t(lang, 'preview.promptPrimary');
+  if (level === 'secondary') return t(lang, 'preview.promptSecondary');
+  return t(lang, 'preview.promptRestrained');
+};
+
+const legend = legendRoles.map((role) => {
+  const color = map[role];
+  const roleLabel = t(lang, roleKeys[role]);
+  return {
+    role,
+    color,
+    roleLabel,
+    emphasis: emphasisFor(role),
+    accessibleLabel: t(lang, 'preview.promptRoleButton', {
+      role: roleLabel,
+      name: color?.name ?? '',
+      hex: color?.hex ?? '',
+    }),
+  };
+});
+---
+
+<div
+  class="prompt-preview"
+  data-prompt-preview
+  data-theme={theme.slug}
+  data-visual-style={design.visualStyle}
+  data-layout={design.layout}
+  data-line-mode={design.defaultLineMode}
+  data-role-primary={design.roleEmphasis.primary.join(' ')}
+  data-git="on"
+>
+  <div class="prompt-preview__controls">
+    <div class="prompt-preview__layout" role="group" aria-label={t(lang, 'preview.terminalLayoutLabel')}>
+      <span class="prompt-preview__control-label mono">{t(lang, 'preview.terminalLayoutLabel')}</span>
+      <button
+        type="button"
+        class:list={['prompt-preview__button', { 'is-active': design.defaultLineMode === 'single' }]}
+        data-prompt-line-mode="single"
+        aria-controls={sceneId}
+        aria-pressed={design.defaultLineMode === 'single' ? 'true' : 'false'}
+        title={t(lang, 'preview.terminalSingleTitle')}
+      >
+        {t(lang, 'preview.terminalSingle')}
+      </button>
+      <button
+        type="button"
+        class:list={['prompt-preview__button', { 'is-active': design.defaultLineMode === 'double' }]}
+        data-prompt-line-mode="double"
+        aria-controls={sceneId}
+        aria-pressed={design.defaultLineMode === 'double' ? 'true' : 'false'}
+        title={t(lang, 'preview.terminalDoubleTitle')}
+      >
+        {t(lang, 'preview.terminalDouble')}
+      </button>
+    </div>
+
+    <label class="prompt-preview__git-toggle">
+      <input type="checkbox" data-prompt-git checked />
+      <span title={t(lang, 'preview.terminalShowGitTitle')}>
+        {t(lang, 'preview.terminalShowGit')}
+      </span>
+    </label>
+  </div>
+
+  <figure class="prompt-window" aria-label={t(lang, 'preview.terminalWindowLabel')}>
+    <div class="prompt-window__bar" data-prompt-role="surface">
+      <span class="prompt-window__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="prompt-window__title mono">{t(lang, 'preview.terminalTitle')}</span>
+      <span class="prompt-window__subtitle mono">{t(lang, 'preview.terminalSubtitle')}</span>
+      <span class="prompt-window__glyph mono" aria-hidden="true">{design.glyphSet.connector}</span>
+    </div>
+
+    <div id={sceneId} class="prompt-window__screen" data-prompt-role="bg">
+      <PromptMotif
+        variant={design.motif}
+        density={design.motifDensity}
+        hasFlare={isFlareTheme}
+      />
+
+      <div class="prompt-scene">
+        <div class="prompt-prompt">
+          <span class="prompt-context" data-prompt-role="surface">
+            <span class="prompt-context__identity">
+              <span class="prompt-user">dev</span><span class="prompt-at">@</span><span class="prompt-host">atlas</span>
+            </span>
+            <span class="prompt-separator" data-prompt-role="muted" aria-hidden="true">{design.glyphSet.separator}</span>
+            <span class="prompt-path" data-prompt-role="text">~/theme-atlas</span>
+          </span>
+
+          <span class="prompt-branch-status">
+            <span class="prompt-branch" data-prompt-role="accent onAccent">
+              <span class="prompt-branch__name">main</span>
+            </span>
+            <span class="prompt-status" data-prompt-role="accent">
+              <span aria-hidden="true">●</span>
+              {t(lang, 'preview.promptStatusReady')}
+            </span>
+            {
+              isFlareTheme && (
+                <span class="prompt-flare" data-prompt-role="flare" aria-hidden="true">
+                  {design.glyphSet.connector}
+                </span>
+              )
+            }
+          </span>
+
+          <span class="prompt-entry">
+            <span class="prompt-symbol" data-prompt-role="accent" aria-hidden="true">{design.glyphSet.prompt}</span>
+            <span class="prompt-command" data-prompt-role="text">{command}</span>
+          </span>
+        </div>
+
+        <div class="prompt-output" data-prompt-role="border">
+          <span class="prompt-output__connector" data-prompt-role="muted" aria-hidden="true">
+            {design.glyphSet.connector}
+          </span>
+          <span class="prompt-output__theme" data-prompt-role="text">{theme.title}</span>
+          <span class="prompt-output__separator" data-prompt-role="muted" aria-hidden="true">
+            {design.glyphSet.separator}
+          </span>
+          <span class="prompt-output__text" data-prompt-role="muted">{output}</span>
+        </div>
+      </div>
+    </div>
+  </figure>
+
+  <p class="prompt-preview__note">{t(lang, 'preview.terminalNote')}</p>
+
+  <section class="prompt-roles" aria-labelledby={`prompt-roles-${theme.slug}`}>
+    <div class="prompt-roles__head">
+      <h3 id={`prompt-roles-${theme.slug}`} class="prompt-roles__title">
+        {t(lang, 'preview.promptLegendTitle')}
+      </h3>
+      <p>{t(lang, 'preview.promptLegendHint')}</p>
+    </div>
+
+    <div class="prompt-roles__grid" role="group" aria-label={t(lang, 'preview.promptLegendTitle')}>
+      {
+        legend.map(({ role, color, roleLabel, emphasis, accessibleLabel }) => (
+          <button
+            type="button"
+            class:list={['prompt-role', 'is-' + emphasis]}
+            style={'--role-tone:' + (color?.hex ?? 'transparent')}
+            data-prompt-role-button={role}
+            aria-controls={sceneId}
+            aria-pressed="false"
+            title={accessibleLabel}
+            aria-label={accessibleLabel}
+          >
+            <span class="prompt-role__swatch" aria-hidden="true"></span>
+            <span class="prompt-role__copy">
+              <span class="prompt-role__meta">
+                <span class="prompt-role__label">{roleLabel}</span>
+                <span class="prompt-role__emphasis">{emphasisLabel(emphasis)}</span>
+              </span>
+              <span class="prompt-role__name">{color?.name}</span>
+              <span class="prompt-role__hex mono">{color?.hex}</span>
+            </span>
+          </button>
+        ))
+      }
+    </div>
+  </section>
+
+  <p class="prompt-preview__design-note">
+    <span class="mono">{t(lang, 'preview.promptDesignNoteLabel')}</span>
+    {designNote}
+  </p>
+</div>
+
+<script>
+  const previews = Array.from(document.querySelectorAll<HTMLElement>('[data-prompt-preview]'));
+
+  previews.forEach((preview) => {
+    const lineButtons = Array.from(
+      preview.querySelectorAll<HTMLButtonElement>('[data-prompt-line-mode]'),
+    );
+    const gitToggle = preview.querySelector<HTMLInputElement>('[data-prompt-git]');
+    const roleButtons = Array.from(
+      preview.querySelectorAll<HTMLButtonElement>('[data-prompt-role-button]'),
+    );
+    const roleTargets = Array.from(
+      preview.querySelectorAll<HTMLElement>('[data-prompt-role]'),
+    );
+    const roleVars: Record<string, string> = {
+      bg: '--t-bg',
+      surface: '--t-surface',
+      text: '--t-text',
+      muted: '--t-muted',
+      border: '--t-border',
+      accent: '--t-accent',
+      onAccent: '--t-on-accent',
+      flare: '--t-flare',
+    };
+
+    let pointerRole = '';
+    let focusedRole = '';
+    let pinnedRole = '';
+
+    const applyRoleHighlight = () => {
+      const activeRole = pointerRole || focusedRole || pinnedRole;
+      if (activeRole) {
+        preview.dataset.activeRole = activeRole;
+        preview.style.setProperty('--prompt-highlight', `var(${roleVars[activeRole]})`);
+      } else {
+        delete preview.dataset.activeRole;
+        preview.style.removeProperty('--prompt-highlight');
+      }
+
+      roleTargets.forEach((target) => {
+        const roles = (target.dataset.promptRole ?? '').split(/\s+/).filter(Boolean);
+        target.classList.toggle('is-role-highlighted', roles.includes(activeRole));
+      });
+    };
+
+    const setLineMode = (mode: string) => {
+      preview.dataset.lineMode = mode;
+      lineButtons.forEach((button) => {
+        const active = button.dataset.promptLineMode === mode;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    };
+
+    lineButtons.forEach((button) => {
+      button.addEventListener('click', () =>
+        setLineMode(button.dataset.promptLineMode ?? 'single'),
+      );
+    });
+
+    const setGit = () => {
+      preview.dataset.git = gitToggle?.checked ? 'on' : 'off';
+    };
+    gitToggle?.addEventListener('change', setGit);
+    setGit();
+
+    roleButtons.forEach((button) => {
+      const role = button.dataset.promptRoleButton ?? '';
+      const setPointer = () => {
+        pointerRole = role;
+        applyRoleHighlight();
+      };
+      const clearPointer = () => {
+        if (pointerRole === role) pointerRole = '';
+        applyRoleHighlight();
+      };
+      const setFocus = () => {
+        focusedRole = role;
+        applyRoleHighlight();
+      };
+      const clearFocus = () => {
+        if (focusedRole === role) focusedRole = '';
+        applyRoleHighlight();
+      };
+
+      button.addEventListener('pointerenter', setPointer);
+      button.addEventListener('pointerleave', clearPointer);
+      button.addEventListener('focus', setFocus);
+      button.addEventListener('blur', clearFocus);
+      button.addEventListener('click', () => {
+        pinnedRole = pinnedRole === role ? '' : role;
+        roleButtons.forEach((candidate) => {
+          candidate.setAttribute(
+            'aria-pressed',
+            String(candidate.dataset.promptRoleButton === pinnedRole),
+          );
+          candidate.classList.toggle(
+            'is-pinned',
+            candidate.dataset.promptRoleButton === pinnedRole,
+          );
+        });
+        applyRoleHighlight();
+      });
+    });
+  });
+</script>
+
+<style>
+  .prompt-preview {
+    --prompt-highlight: var(--quantum);
+    min-width: 0;
+  }
+
+  .prompt-preview__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    margin-bottom: 12px;
+  }
+
+  .prompt-preview__layout {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prompt-preview__control-label {
+    margin-right: 4px;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+  }
+
+  .prompt-preview__button {
+    min-height: 30px;
+    padding: 4px 10px;
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-2);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .prompt-preview__button:hover {
+    border-color: var(--orbit);
+    color: var(--text);
+  }
+
+  .prompt-preview__button.is-active {
+    border-color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+    color: var(--gold);
+  }
+
+  .prompt-preview__git-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--text-2);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .prompt-preview__git-toggle input {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    accent-color: var(--gold);
+  }
+
+  .prompt-window {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--t-border);
+    border-radius: var(--radius);
+    background: var(--t-bg);
+    color: var(--t-text);
+  }
+
+  .prompt-window__bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    padding: 7px 11px;
+    border-bottom: 1px solid var(--t-border);
+    background: var(--t-surface);
+  }
+
+  .prompt-window__dots {
+    display: inline-flex;
+    flex: none;
+    gap: 4px;
+  }
+
+  .prompt-window__dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--t-muted);
+    opacity: 0.45;
+  }
+
+  .prompt-window__title {
+    color: var(--t-text);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+
+  .prompt-window__subtitle {
+    margin-left: auto;
+    color: var(--t-muted);
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+  }
+
+  .prompt-window__glyph {
+    color: var(--t-accent);
+    font-size: 0.68rem;
+  }
+
+  .prompt-window__screen {
+    position: relative;
+    min-width: 0;
+    padding: clamp(18px, 3.4vw, 30px);
+    background: var(--t-bg);
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .prompt-scene {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    color: var(--t-text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: clamp(0.76rem, 2.2vw, 0.9rem);
+    line-height: 1.65;
+  }
+
+  .prompt-prompt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.9rem;
+    min-width: 0;
+  }
+
+  .prompt-context {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.65rem;
+    min-width: 0;
+    padding: 4px 8px;
+    border: 1px solid var(--t-border);
+    background: var(--t-surface);
+  }
+
+  .prompt-context__identity,
+  .prompt-path,
+  .prompt-command {
+    overflow-wrap: anywhere;
+  }
+
+  .prompt-user,
+  .prompt-symbol {
+    color: var(--t-accent);
+    font-weight: 650;
+  }
+
+  .prompt-at,
+  .prompt-separator,
+  .prompt-output__connector,
+  .prompt-output__separator,
+  .prompt-output__text {
+    color: var(--t-muted);
+  }
+
+  .prompt-host,
+  .prompt-path,
+  .prompt-command,
+  .prompt-output__theme {
+    color: var(--t-text);
+  }
+
+  .prompt-branch-status,
+  .prompt-entry {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .prompt-branch {
+    padding: 1px 5px;
+    background: var(--t-accent);
+    color: var(--t-on-accent);
+  }
+
+  .prompt-branch__name {
+    font-weight: 700;
+  }
+
+  .prompt-status {
+    color: var(--t-accent);
+  }
+
+  .prompt-flare {
+    color: var(--t-flare);
+  }
+
+  .prompt-prompt__entry {
+    min-width: 0;
+  }
+
+  .prompt-output {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.6rem;
+    min-width: 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--t-border);
+    font-size: 0.9em;
+  }
+
+  .prompt-preview[data-git='off'] .prompt-branch {
+    display: none;
+  }
+
+  .prompt-preview[data-line-mode='double'] .prompt-prompt {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .prompt-preview[data-line-mode='double'] .prompt-context {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .prompt-preview[data-line-mode='double'] .prompt-branch-status {
+    grid-column: 1;
+  }
+
+  .prompt-preview[data-line-mode='double'] .prompt-entry {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  .prompt-preview[data-layout='centered'] .prompt-scene {
+    align-items: center;
+    text-align: center;
+  }
+
+  .prompt-preview[data-layout='centered'] .prompt-context {
+    justify-content: center;
+  }
+
+  .prompt-preview[data-layout='stacked'] .prompt-output {
+    background: var(--t-surface);
+    padding: 10px;
+  }
+
+  .prompt-preview[data-layout='rail'] .prompt-scene {
+    padding-left: 16px;
+    border-left: 2px solid var(--t-accent);
+  }
+
+  .prompt-preview[data-layout='orbital'] .prompt-context {
+    border-right-color: var(--t-accent);
+  }
+
+  .prompt-preview[data-layout='tactical'] .prompt-window__screen {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--t-border) 26%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--t-border) 26%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .prompt-preview[data-layout='tactical'] .prompt-context {
+    border-left-width: 3px;
+  }
+
+  .prompt-preview[data-layout='asymmetric'] .prompt-scene {
+    margin-left: clamp(0px, 2.2vw, 24px);
+    padding-left: 14px;
+    border-left: 1px solid var(--t-accent);
+  }
+
+  .prompt-preview__note {
+    margin-top: 9px;
+    color: var(--text-3);
+    font-size: 0.68rem;
+    line-height: 1.65;
+  }
+
+  .prompt-preview [data-prompt-role].is-role-highlighted {
+    outline: 2px solid var(--prompt-highlight);
+    outline-offset: 3px;
+  }
+
+  .prompt-roles {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--orbit-faint);
+  }
+
+  .prompt-roles__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 14px;
+    margin-bottom: 10px;
+  }
+
+  .prompt-roles__title {
+    font-size: 0.76rem;
+    color: var(--text-2);
+  }
+
+  .prompt-roles__head p {
+    color: var(--text-3);
+    font-size: 0.64rem;
+  }
+
+  .prompt-roles__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .prompt-role {
+    display: grid;
+    grid-template-columns: 12px minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+    min-width: 0;
+    padding: 7px;
+    border: 1px solid var(--orbit-faint);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-2);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .prompt-role:hover,
+  .prompt-role:focus-visible,
+  .prompt-role.is-pinned {
+    border-color: var(--gold);
+    background: var(--panel-2);
+  }
+
+  .prompt-role.is-primary {
+    box-shadow: inset 2px 0 0 var(--gold);
+  }
+
+  .prompt-role__swatch {
+    width: 12px;
+    height: 12px;
+    margin-top: 2px;
+    background: var(--role-tone);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+  }
+
+  .prompt-role__copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .prompt-role__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .prompt-role__label {
+    font-size: 0.62rem;
+    color: var(--text-3);
+  }
+
+  .prompt-role__emphasis {
+    font-size: 0.55rem;
+    color: var(--text-3);
+    opacity: 0.72;
+  }
+
+  .prompt-role.is-primary .prompt-role__emphasis {
+    color: var(--gold);
+  }
+
+  .prompt-role__name {
+    overflow: hidden;
+    color: var(--text);
+    font-size: 0.69rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .prompt-role__hex {
+    color: var(--text-3);
+    font-size: 0.61rem;
+    letter-spacing: 0.03em;
+  }
+
+  .prompt-preview__design-note {
+    margin-top: 12px;
+    color: var(--text-3);
+    font-size: 0.68rem;
+    line-height: 1.7;
+  }
+
+  .prompt-preview__design-note span {
+    margin-right: 7px;
+    color: var(--gold);
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 520px) {
+    .prompt-preview__controls {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .prompt-window__screen {
+      padding: 16px 14px;
+    }
+
+    .prompt-scene {
+      gap: 12px;
+      font-size: 0.78rem;
+    }
+
+    .prompt-preview[data-line-mode='double'] .prompt-prompt {
+      grid-template-columns: 1fr;
+    }
+
+    .prompt-preview[data-line-mode='double'] .prompt-context,
+    .prompt-preview[data-line-mode='double'] .prompt-branch-status,
+    .prompt-preview[data-line-mode='double'] .prompt-entry {
+      grid-column: 1;
+      justify-self: start;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-preview__button,
+    .prompt-preview [data-prompt-role],
+    .prompt-role {
+      transition: none;
+    }
+  }
+</style>

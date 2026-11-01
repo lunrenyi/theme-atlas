@@ -68,6 +68,76 @@ export interface Credits {
 
 export type ThemeStatus = 'verified' | 'interpretation' | 'draft';
 
+export type PromptVisualStyle =
+  | 'bronze-axis'
+  | 'stone-strata'
+  | 'archive-annotation'
+  | 'broken-axis'
+  | 'glaze-strata'
+  | 'kiln-flow'
+  | 'cobalt-symmetry'
+  | 'stellar-orbit'
+  | 'beacon-route'
+  | 'compressed-core'
+  | 'stellar-navigation'
+  | 'allied-tactical'
+  | 'soviet-industrial'
+  | 'terran-industrial'
+  | 'protoss-sanctum'
+  | 'zerg-branch';
+
+export type PromptLayout =
+  | 'inline'
+  | 'stacked'
+  | 'centered'
+  | 'rail'
+  | 'orbital'
+  | 'tactical'
+  | 'asymmetric';
+
+export type PromptMotif =
+  | 'axis'
+  | 'strata'
+  | 'annotation'
+  | 'fracture'
+  | 'symmetry'
+  | 'orbit'
+  | 'beacon'
+  | 'singularity'
+  | 'flow'
+  | 'grid'
+  | 'industrial'
+  | 'organic';
+
+export type PromptLineMode = 'single' | 'double';
+
+export interface PromptGlyphSet {
+  /** Primary command symbol, always a common Unicode character. */
+  prompt: string;
+  /** Separator between Prompt context fields. */
+  separator: string;
+  /** Connector used by the motif or output line. */
+  connector: string;
+}
+
+export interface PromptRoleEmphasis {
+  primary: PaletteRole[];
+  secondary: PaletteRole[];
+  restrained: PaletteRole[];
+}
+
+export interface PromptDesign {
+  visualStyle: PromptVisualStyle;
+  layout: PromptLayout;
+  glyphSet: PromptGlyphSet;
+  motif: PromptMotif;
+  motifDensity: 'sparse' | 'structured' | 'dense';
+  defaultLineMode: PromptLineMode;
+  roleEmphasis: PromptRoleEmphasis;
+  designNote: string;
+  designNoteEn: string;
+}
+
 export interface Theme {
   slug: string;
   title: string;
@@ -107,6 +177,8 @@ export interface Theme {
    * - draft: story still needs research, content is a placeholder
    */
   status: ThemeStatus;
+  /** Visual treatment used by the reusable terminal Prompt preview. */
+  promptDesign: PromptDesign;
 }
 
 export interface Collection {

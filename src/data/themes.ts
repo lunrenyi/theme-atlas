@@ -1,4 +1,5 @@
 import type { Theme } from './types';
+import { promptDesigns } from './promptDesigns.ts';
 
 /**
  * The seed data set. Every theme is a plain object so it can be replaced by a
@@ -8,7 +9,7 @@ import type { Theme } from './types';
  * reference is listed. Where a claim could not be checked against a source,
  * the source is typed as pending and the text says so.
  */
-export const themes: Theme[] = [
+const themeData: Omit<Theme, 'promptDesign'>[] = [
   {
     slug: 'taotie-cinnabar',
     title: '饕餮 · 朱丹',
@@ -1018,5 +1019,11 @@ export const themes: Theme[] = [
     plate: 'zerg',
   },
 ];
+
+export const themes: Theme[] = themeData.map((theme) => {
+  const promptDesign = promptDesigns[theme.slug];
+  if (!promptDesign) throw new Error('Missing Prompt design for theme: ' + theme.slug);
+  return { ...theme, promptDesign };
+});
 
 

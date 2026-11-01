@@ -1,0 +1,245 @@
+---
+import type { PromptMotif } from '../data/types';
+
+interface Props {
+  variant: PromptMotif;
+  density: 'sparse' | 'structured' | 'dense';
+  hasFlare: boolean;
+}
+
+const { variant, density, hasFlare } = Astro.props;
+---
+
+<svg
+  class="prompt-motif"
+  data-density={density}
+  viewBox="0 0 360 160"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  fill="none"
+>
+  {
+    variant === 'axis' && (
+      <g>
+        <path d="M180 0v160" stroke="var(--t-border)" stroke-width="1" />
+        <path d="M142 20h76M130 30h100M118 40h124" stroke="var(--t-border)" stroke-width="0.7" opacity="0.7" />
+        <path d="M42 80h72l18-18h48l18 18h72M54 92h56l16 16h108l16-16h56" stroke="var(--t-accent)" stroke-width="0.8" opacity="0.55" />
+        <circle cx="180" cy="80" r="4" fill="var(--t-accent)" />
+        <circle cx="180" cy="80" r="13" stroke="var(--t-accent)" opacity="0.4" />
+        <g stroke="var(--t-muted)" opacity="0.45">
+          <path d="M28 42h36v-12H40v7h12" />
+          <path d="M332 42h-36v-12h24v7h-12" />
+          <path d="M28 118h36v12H40v-7h12" />
+          <path d="M332 118h-36v12h24v-7h-12" />
+        </g>
+      </g>
+    )
+  }
+
+  {
+    variant === 'strata' && (
+      <g>
+        <path d="M0 34h360M0 56h360M0 78h360M0 100h360M0 122h360" stroke="var(--t-border)" stroke-width="0.7" opacity="0.55" />
+        <path d="M24 34c42 9 78-9 120 0s78 9 120 0 54-6 72 0" stroke="var(--t-accent)" stroke-width="0.8" opacity="0.55" />
+        <path d="M0 100c70-8 116 8 184 0s118-8 176 0" stroke="var(--t-muted)" stroke-width="0.8" opacity="0.55" />
+        {density !== 'sparse' && (
+          <g fill="var(--t-accent)" opacity="0.55">
+            <circle cx="82" cy="56" r="2" />
+            <circle cx="180" cy="78" r="2.5" />
+            <circle cx="294" cy="100" r="1.8" />
+          </g>
+        )}
+        {hasFlare && <circle cx="318" cy="34" r="2.2" fill="var(--t-flare)" opacity="0.8" />}
+      </g>
+    )
+  }
+
+  {
+    variant === 'annotation' && (
+      <g>
+        <g stroke="var(--t-border)" stroke-width="0.65" opacity="0.6">
+          <path d="M16 28h328M16 52h250M16 110h292M16 134h230" />
+          <path d="M16 20v124M344 20v124" />
+        </g>
+        <g stroke="var(--t-muted)" opacity="0.6">
+          <path d="M16 28l-6 6M16 52l-6 6M16 110l-6 6M16 134l-6 6" />
+          <path d="M344 28l6 6M344 52l6 6M344 110l6 6M344 134l6 6" />
+        </g>
+        <circle cx="286" cy="52" r="3" fill="var(--t-accent)" />
+        <path d="M260 52h18" stroke="var(--t-accent)" opacity="0.65" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'fracture' && (
+      <g>
+        <path d="M64 0v160" stroke="var(--t-border)" stroke-width="0.8" opacity="0.65" />
+        <path d="M64 80 116 45h38l22-26" stroke="var(--t-border)" stroke-width="0.9" />
+        <path d="M64 120 112 88h46M74 102l36-25" stroke="var(--t-muted)" stroke-width="0.8" opacity="0.55" />
+        <path d="M194 27 224 50l-24 12 34 21-16 15" stroke="var(--t-accent)" stroke-width="1.2" opacity="0.75" />
+        <circle cx="194" cy="27" r="3.5" fill="var(--t-accent)" />
+        {hasFlare && (
+          <g stroke="var(--t-flare)" fill="var(--t-flare)">
+            <path d="M202 25l18-14" stroke-width="1.2" />
+            <circle cx="224" cy="7" r="2" />
+            <circle cx="234" cy="17" r="1.2" opacity="0.75" />
+          </g>
+        )}
+      </g>
+    )
+  }
+
+  {
+    variant === 'symmetry' && (
+      <g>
+        <path d="M180 0v160M0 80h360" stroke="var(--t-border)" stroke-width="0.65" opacity="0.55" />
+        <path d="M180 38 246 80l-66 42-66-42z" stroke="var(--t-accent)" stroke-width="0.85" opacity="0.6" />
+        <path d="M180 56 222 80l-42 24-42-24z" stroke="var(--t-border)" stroke-width="0.8" opacity="0.7" />
+        <circle cx="180" cy="80" r="9" stroke="var(--t-accent)" opacity="0.65" />
+        <circle cx="180" cy="80" r="3" fill="var(--t-accent)" />
+        <g fill="var(--t-accent)" opacity="0.75">
+          <circle cx="180" cy="38" r="2" />
+          <circle cx="180" cy="122" r="2" />
+          <circle cx="114" cy="80" r="2" />
+          <circle cx="246" cy="80" r="2" />
+        </g>
+        {hasFlare && <circle cx="222" cy="80" r="2.4" fill="var(--t-flare)" />}
+      </g>
+    )
+  }
+
+  {
+    variant === 'orbit' && (
+      <g>
+        <ellipse cx="180" cy="80" rx="168" ry="50" transform="rotate(-10 180 80)" stroke="var(--t-border)" opacity="0.55" />
+        <ellipse cx="180" cy="80" rx="116" ry="68" transform="rotate(35 180 80)" stroke="var(--t-border)" opacity="0.38" />
+        <ellipse cx="180" cy="80" rx="58" ry="19" transform="rotate(-10 180 80)" stroke="var(--t-accent)" opacity="0.45" />
+        <path d="M10 130 78 92 118 102 172 80 238 93 302 54 350 68" stroke="var(--t-border)" stroke-width="0.7" stroke-dasharray="2 5" />
+        <g fill="var(--t-accent)">
+          <circle cx="172" cy="80" r="3.5" />
+          <circle cx="302" cy="54" r="2.2" opacity="0.8" />
+          <circle cx="78" cy="92" r="1.8" opacity="0.65" />
+        </g>
+        <circle cx="172" cy="80" r="12" stroke="var(--t-accent)" opacity="0.35" />
+        {hasFlare && <circle cx="302" cy="54" r="4" fill="var(--t-flare)" opacity="0.75" />}
+      </g>
+    )
+  }
+
+  {
+    variant === 'beacon' && (
+      <g>
+        <path d="M22 20v120" stroke="var(--t-border)" opacity="0.7" />
+        <path d="M22 36h40v12H34v16h28" stroke="var(--t-muted)" opacity="0.6" />
+        <path d="M22 108h42v14H34" stroke="var(--t-muted)" opacity="0.5" />
+        <path d="M78 80h214" stroke="var(--t-border)" stroke-dasharray="2 6" />
+        <circle cx="78" cy="80" r="5" fill="var(--t-accent)" />
+        <circle cx="78" cy="80" r="20" stroke="var(--t-accent)" opacity="0.3" />
+        <g stroke="var(--t-accent)" opacity="0.45">
+          <path d="M78 52 62 34M78 108l-15 19M98 80l25 0" />
+        </g>
+      </g>
+    )
+  }
+
+  {
+    variant === 'singularity' && (
+      <g>
+        <g stroke="var(--t-border)" opacity="0.55">
+          <circle cx="180" cy="80" r="72" stroke-dasharray="2 5" />
+          <circle cx="180" cy="80" r="46" stroke-dasharray="1 4" />
+          <circle cx="180" cy="80" r="24" />
+        </g>
+        <path d="M30 80h92M238 80h92M180 16v34M180 110v34" stroke="var(--t-border)" opacity="0.45" stroke-dasharray="2 5" />
+        <circle cx="180" cy="80" r="5" fill="var(--t-accent)" />
+        <path d="M180 61v38M161 80h38" stroke="var(--t-accent)" opacity="0.5" />
+        {density === 'dense' && <circle cx="180" cy="80" r="14" stroke="var(--t-accent)" opacity="0.25" />}
+      </g>
+    )
+  }
+
+  {
+    variant === 'flow' && (
+      <g>
+        <path d="M0 48c46-20 82 20 128 0s82 20 128 0 74-16 104 0" stroke="var(--t-border)" opacity="0.65" />
+        <path d="M0 84c46 20 82-20 128 0s82 20 128 0 74 16 104 0" stroke="var(--t-accent)" opacity="0.5" />
+        <path d="M0 120c46-20 82 20 128 0s82 20 128 0 74-16 104 0" stroke="var(--t-muted)" opacity="0.4" />
+        <circle cx="128" cy="48" r="2.4" fill="var(--t-accent)" />
+        <circle cx="256" cy="84" r="2.8" fill="var(--t-accent)" opacity="0.75" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'grid' && (
+      <g>
+        <g stroke="var(--t-border)" stroke-width="0.65" opacity="0.55">
+          <path d="M20 20h320v120H20zM68 20v120M116 20v120M164 20v120M212 20v120M260 20v120M308 20v120" />
+          <path d="M20 50h320M20 80h320M20 110h320" />
+        </g>
+        <path d="M46 130h70l24-32h58M314 130h-62l-20-34h-56" stroke="var(--t-accent)" opacity="0.55" />
+        <circle cx="140" cy="80" r="3" fill="var(--t-accent)" />
+        <rect x="256" y="66" width="28" height="28" stroke="var(--t-accent)" opacity="0.65" />
+        {hasFlare && <circle cx="270" cy="80" r="3" fill="var(--t-flare)" />}
+      </g>
+    )
+  }
+
+  {
+    variant === 'industrial' && (
+      <g>
+        <path d="M20 25h70v18H46v20h70v16H54v56h64" stroke="var(--t-border)" opacity="0.65" />
+        <path d="M340 25h-70v18h44v20h-70v16h62v56h-64" stroke="var(--t-border)" opacity="0.55" />
+        <path d="M116 32h128M116 62h96M116 94h116M116 128h92" stroke="var(--t-muted)" opacity="0.38" stroke-dasharray="2 5" />
+        <path d="M116 80h54l18-18 18 18h62" stroke="var(--t-accent)" opacity="0.58" />
+        <g fill="var(--t-accent)">
+          <circle cx="188" cy="80" r="3.2" />
+          <circle cx="252" cy="80" r="2.2" opacity="0.75" />
+        </g>
+        {hasFlare && <circle cx="310" cy="45" r="3" fill="var(--t-flare)" opacity="0.8" />}
+      </g>
+    )
+  }
+
+  {
+    variant === 'organic' && (
+      <g>
+        <path d="M20 132c38-16 38-54 78-65s44 18 80-12 58-22 78 8 42 24 84 4" stroke="var(--t-border)" stroke-width="1" opacity="0.65" />
+        <path d="M164 54c-18-16-16-34-4-48M168 62c26-4 38-16 42-36M190 124c-20 14-40 14-58 2M190 128c22 8 36 18 42 30" stroke="var(--t-muted)" stroke-width="0.9" opacity="0.5" />
+        <path d="M78 91c-22-12-30-26-26-44M248 82c24-4 38 4 48 20M292 104c18 6 26 16 28 28" stroke="var(--t-accent)" stroke-width="0.9" opacity="0.6" />
+        <g fill="var(--t-accent)">
+          <circle cx="164" cy="54" r="3" />
+          <circle cx="248" cy="82" r="2.4" opacity="0.8" />
+          <circle cx="78" cy="91" r="2" opacity="0.7" />
+        </g>
+        {hasFlare && <circle cx="210" cy="20" r="2.8" fill="var(--t-flare)" opacity="0.8" />}
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .prompt-motif {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.34;
+  }
+
+  .prompt-motif[data-density='sparse'] {
+    opacity: 0.2;
+  }
+
+  .prompt-motif[data-density='dense'] {
+    opacity: 0.3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-motif {
+      transition: none;
+    }
+  }
+</style>

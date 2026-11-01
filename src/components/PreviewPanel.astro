@@ -2,7 +2,7 @@
 import type { Theme } from '../data/types';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
-import TerminalPromptPreview from './TerminalPromptPreview.astro';
+import PromptPreview from './PromptPreview.astro';
 
 interface Props {
   theme: Theme;
@@ -166,7 +166,7 @@ const caption = t(lang, 'preview.caption', {
     data-preview-panel="terminal"
     hidden
   >
-    <TerminalPromptPreview theme={theme} lang={lang} />
+    <PromptPreview theme={theme} lang={lang} />
   </div>
 </section>
 
