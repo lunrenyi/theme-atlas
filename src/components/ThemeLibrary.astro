@@ -1,6 +1,6 @@
 ---
 import type { Theme } from '../data/types';
-import { getCollections } from '../lib/content';
+import { getCollections, getGameWorlds } from '../lib/content';
 import { t, type Locale } from '../i18n';
 import ThemeCard from './ThemeCard.astro';
 
@@ -12,11 +12,14 @@ interface Props {
 const { themes, lang } = Astro.props;
 const collections = getCollections(lang);
 const collectionById = new Map(collections.map((collection) => [collection.id, collection]));
+const gameWorlds = getGameWorlds(lang);
+const gameWorldById = new Map(gameWorlds.map((game) => [game.id, game]));
 const countFor = (id: string) =>
   id === 'all' ? themes.length : themes.filter((theme) => theme.collection === id).length;
 
 const searchText = (theme: Theme) => {
   const collection = collectionById.get(theme.collection);
+  const gameWorld = theme.game ? gameWorldById.get(theme.game) : undefined;
   return [
     theme.slug,
     theme.title,
@@ -29,6 +32,10 @@ const searchText = (theme: Theme) => {
     collection?.short,
     collection?.tagline,
     collection?.description,
+    gameWorld?.title,
+    gameWorld?.short,
+    gameWorld?.tagline,
+    gameWorld?.description,
     theme.palette.map((color) => [color.name, color.hex, color.note].filter(Boolean).join(' ')).join(' '),
   ]
     .filter(Boolean)

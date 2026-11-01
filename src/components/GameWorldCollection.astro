@@ -1,0 +1,240 @@
+---
+import type { Collection, GameWorld, Theme } from '../data/types';
+import { getGameWorlds } from '../lib/content';
+import { seriesNumber, t, type Locale } from '../i18n';
+import GameWorldChart from './GameWorldChart.astro';
+import GameWorldMotif from './GameWorldMotif.astro';
+import ThemeCard from './ThemeCard.astro';
+
+interface Props {
+  collection: Collection;
+  themes: Theme[];
+  lang: Locale;
+}
+
+const { collection, themes, lang } = Astro.props;
+const games = getGameWorlds(lang);
+const groups = games.map((game) => ({
+  game,
+  themes: themes.filter((theme) => theme.game === game.id),
+}));
+
+const accentFor = (theme: Theme) =>
+  theme.palette.find((color) => color.role === 'accent')?.hex ??
+  theme.palette.find((color) => color.role === 'flare')?.hex ??
+  theme.palette[0].hex;
+
+const motifAccents = (group: { game: GameWorld; themes: Theme[] }) =>
+  group.themes.map(accentFor);
+---
+
+<section
+  class="section game-world"
+  id={collection.id}
+  data-collection-section={collection.id}
+  data-theme-count={themes.length}
+  style={'--tone:' + collection.accent + ';--tone-alt:' + collection.accentAlt}
+>
+  <div class="wrap wrap--wide">
+    <div class="game-world__hero">
+      <div class="game-world__intro">
+        <p class="eyebrow eyebrow--gold">
+          {t(lang, 'gameWorlds.eyebrow', { count: themes.length })}
+        </p>
+        <h2 class="game-world__title">{t(lang, 'gameWorlds.title')}</h2>
+        <p class="game-world__desc">{collection.description}</p>
+        <p class="game-world__disclaimer">{t(lang, 'gameWorlds.disclaimer')}</p>
+      </div>
+      <GameWorldChart />
+    </div>
+
+    <div class="game-world__groups">
+      {
+        groups.map(({ game, themes: gameThemes }, gameIndex) => (
+          <article class="game-group" data-game-world={game.id}>
+            <header class="game-group__head">
+              <div class="game-group__copy">
+                <p class="game-group__meta mono">
+                  <span>{t(lang, 'gameWorlds.group', { n: seriesNumber(lang, gameIndex) })}</span>
+                  <span>{t(lang, 'gameWorlds.groupThemes', { count: gameThemes.length })}</span>
+                </p>
+                <h3 class="game-group__title">{game.title}</h3>
+                <p class="game-group__tagline">{game.tagline}</p>
+                <p class="game-group__desc">{game.description}</p>
+                <a
+                  class="game-group__source"
+                  href={game.referenceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={game.referenceTitle}
+                >
+                  {t(lang, 'gameWorlds.originalWork')} <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <GameWorldMotif
+                variant={game.motif}
+                accent={game.accent}
+                accentAlt={game.accentAlt}
+                accents={motifAccents({ game, themes: gameThemes })}
+                class="game-group__motif"
+                lang={lang}
+              />
+            </header>
+
+            <div class="game-group__grid">
+              {gameThemes.map((theme) => <ThemeCard theme={theme} lang={lang} />)}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .game-world {
+    border-top: 1px solid var(--orbit-faint);
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .game-world__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+    align-items: center;
+    gap: clamp(28px, 5vw, 78px);
+    padding-bottom: clamp(44px, 6vw, 88px);
+  }
+
+  .game-world__title {
+    max-width: 13ch;
+    margin: 14px 0 20px;
+    font-size: var(--step-4);
+    line-height: 1.08;
+  }
+
+  .game-world__desc {
+    max-width: 52ch;
+    margin-top: 0;
+    color: var(--text-2);
+    line-height: 1.85;
+  }
+
+  .game-world__disclaimer {
+    max-width: 58ch;
+    margin-top: 18px;
+    padding-left: 14px;
+    border-left: 1px solid var(--orbit);
+    color: var(--text-3);
+    font-size: var(--step--1);
+    line-height: 1.7;
+  }
+
+  .game-world__groups {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(50px, 7vw, 100px);
+  }
+
+  .game-group {
+    padding-top: clamp(28px, 4vw, 52px);
+    border-top: 1px solid var(--orbit-faint);
+  }
+
+  .game-group__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    margin-bottom: clamp(24px, 3vw, 38px);
+  }
+
+  .game-group__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin-bottom: 12px;
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .game-group__title {
+    font-size: var(--step-3);
+  }
+
+  .game-group__tagline {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--tone);
+  }
+
+  .game-group__desc {
+    max-width: 54ch;
+    margin-top: 12px;
+    color: var(--text-2);
+    font-size: var(--step--1);
+    line-height: 1.8;
+  }
+
+  .game-group__source {
+    display: inline-block;
+    margin-top: 16px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--orbit);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--text-2);
+    text-decoration: none;
+  }
+
+  .game-group__source:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .game-group__motif {
+    width: 100%;
+    max-height: 210px;
+  }
+
+  .game-group__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 26px 24px;
+  }
+
+  @media (max-width: 980px) {
+    .game-world__hero,
+    .game-group__head {
+      grid-template-columns: 1fr;
+    }
+
+    .game-group__motif {
+      max-width: 520px;
+    }
+
+    .game-group__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .game-group__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .game-world *,
+    .game-world *::before,
+    .game-world *::after {
+      scroll-behavior: auto;
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

@@ -669,6 +669,354 @@ export const themes: Theme[] = [
     },
     status: 'interpretation',
   },
+
+  {
+    slug: 'uncharted-reach',
+    title: '未知疆域',
+    subtitle: '在星图尚未命名的地方，点亮第一束文明信号',
+    collection: 'game',
+    game: 'stellaris',
+    description: '深蓝黑、星云紫、离子青与文明金组成一张向未知展开的星系航图。',
+    story:
+      '《群星》把太空探索呈现为一连串选择：观测一颗陌生行星，建立前哨，' +
+      '与未知文明接触，再决定边界如何被画出。' +
+      '本主题不从任何具体场景取色，而是把“发现”拆成四层视觉关系：' +
+      '深蓝黑是未测绘的空间，星云紫是遥远天体的光，离子青是仪器与通信信号，' +
+      '文明金只在已经建立联系的位置出现。' +
+      '这些色值来自 Theme Atlas 对深空探索题材的原创色彩推导，不是游戏的官方配色。',
+    inspiration:
+      '主色以深空蓝黑铺底，紫色集中在面板与边界层，模拟星云在黑暗中留下的色偏；' +
+      '高亮青用于链接、焦点与数据信号，文明金作为次强调，只标记文明节点与关键状态。' +
+      '星系轨道、星点和通信脉冲都来自抽象几何，不借用游戏内星图、图标或界面。',
+    designRationale:
+      '深色背景中的层级主要靠明度而不是饱和度区分：面板与背景只拉开一小档，' +
+      '保证长时间浏览时不会变成一片发光色块。青色作为主强调保持清晰，' +
+      '金色只在少量“发现完成”的语义上出现。正文、次要文字和强调边界均按 WCAG AA 校验。',
+    palette: [
+      { name: '未测绘深空', hex: '#070B1D', role: 'bg', note: '星图边缘的深蓝黑' },
+      { name: '星云紫层', hex: '#17142F', role: 'surface', note: '面板与航道之间的紫黑层' },
+      { name: '航图白', hex: '#EDF2FF', role: 'text', note: '仪器读数般的冷白正文' },
+      { name: '远星灰蓝', hex: '#A2AFD2', role: 'muted', note: '次要说明与坐标文字' },
+      { name: '轨道线', hex: '#35446A', role: 'border', note: '星图网格与结构边界' },
+      { name: '离子青', hex: '#76DDE5', role: 'accent', note: '通信信号、链接与焦点' },
+      { name: '文明金', hex: '#D8BE7E', role: 'flare', note: '文明节点与关键发现' },
+    ],
+    tags: ['群星', '深空', '星云', '文明信号', '探索', '原创演绎'],
+    sources: [
+      {
+        title: 'Paradox Interactive · Stellaris 官方网站',
+        type: 'link',
+        url: 'https://www.paradoxinteractive.com/games/stellaris/about',
+        detail: '官方公开产品页面，仅用于确认作品与题材背景',
+        note: '本页面的配色、图形与版式均未用于本站；所有色值和图形由 Theme Atlas 独立创作。',
+      },
+      {
+        title: '深空视觉语汇与色值关系（待补充）',
+        type: 'pending',
+        note: '待补充：计划加入带页码的美术设定资料后替换本条，当前不主张任何官方配色依据。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与 Paradox Interactive 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏截图、Logo、单位肖像或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'stellaris',
+  },
+
+  {
+    slug: 'frozen-front',
+    title: '冰蓝防线',
+    subtitle: '战术网格覆盖钢铁前线，冷白信号在蓝灰中亮起',
+    collection: 'game',
+    game: 'red-alert',
+    description: '钢铁蓝灰、冷白与信号青构成克制的盟军军事科技界面。',
+    story:
+      '本主题以《命令与征服：红色警戒》在《命令与征服：红色警戒 重制版合集》' +
+      '（2020）中的公开呈现为版本范围，不混用《红色警戒 2》《红色警戒 3》或其他分支。' +
+      '视觉重心不是某位角色或某一支部队，而是一张被低温光照亮的战术桌面：' +
+      '网格先定义空间，钢铁结构再划出边界，最后用信号青提示当前节点。' +
+      '颜色与图形均由 Theme Atlas 原创推导，不代表原作官方视觉标准。',
+    inspiration:
+      '蓝灰色取自工业钢板与冷光环境的抽象组合，冷白用于主要读数，' +
+      '信号青只负责行动状态与交互焦点。战术网格、模块化装甲和扫描环没有仿照任何游戏内 HUD，' +
+      '它们由重复线、坐标和机械插槽重新构成。',
+    designRationale:
+      '这套主题保持低饱和的蓝灰层级，让青色高亮在深底上足够清楚；' +
+      '文字不使用纯白，而是偏冷的仪器白，减少长时间盯屏时的刺激。' +
+      '面板与背景之间的明度差足够支撑结构，同时避免让机械线条比正文更抢眼。',
+    palette: [
+      { name: '北方夜蓝', hex: '#08131D', role: 'bg', note: '寒冷环境中的深蓝黑' },
+      { name: '装甲蓝灰', hex: '#142636', role: 'surface', note: '钢板与面板的中性蓝灰' },
+      { name: '冷光白', hex: '#E9F4F8', role: 'text', note: '仪器读数般的正文色' },
+      { name: '战术灰', hex: '#97ADB8', role: 'muted', note: '坐标、注释与次要信息' },
+      { name: '钢构线', hex: '#3A5361', role: 'border', note: '网格与结构分割线' },
+      { name: '信号青', hex: '#65D9E8', role: 'accent', note: '状态、链接与焦点信号' },
+      { name: '霜蓝', hex: '#B8DDE8', role: 'flare', note: '扫描结果与次级提示' },
+    ],
+    tags: ['红色警戒', '盟军', '战术地图', '钢铁蓝灰', '军事科技', '原创演绎'],
+    sources: [
+      {
+        title: 'Command & Conquer Remastered Collection 官方网站',
+        type: 'link',
+        url: 'https://www.ea.com/games/command-and-conquer/command-and-conquer-remastered',
+        detail: '版本范围：2020 年《命令与征服：红色警戒 重制版合集》',
+        note: '官方页面仅用于确认作品和版本；本站未使用其截图、Logo、单位肖像或界面素材。',
+      },
+      {
+        title: '盟军战术视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的美术资料与页码后替换本条，当前色板不作为官方设定引用。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与 Electronic Arts 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏截图、Logo、单位肖像或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'red-alert-allied',
+  },
+
+  {
+    slug: 'crimson-iron-curtain',
+    title: '赤色铁幕',
+    subtitle: '重工业的阴影里，一枚警戒红缓慢亮起',
+    collection: 'game',
+    game: 'red-alert',
+    description: '铁灰、警戒红与旧铜色呈现重机械、冷硬结构与低频警报。',
+    story:
+      '这套苏维埃方向的主题同样以《命令与征服：红色警戒 重制版合集》（2020）' +
+      '为版本范围，不混用《红色警戒 2》《红色警戒 3》等后续分支的阵营造型。' +
+      '它不复制任何徽章、宣传画或单位，而是从重工业空间提取三个动作：' +
+      '钢铁结构压低视野，警戒灯把红色送入阴影，旧铜色保留设备使用过的痕迹。' +
+      '原作信息只用于确认题材，具体色值与机械图形均为 Theme Atlas 的艺术演绎。',
+    inspiration:
+      '背景与面板取铁灰的两档明度，正文用略带暖意的旧纸白。' +
+      '警戒红是主强调，为了确保深底上的文字和焦点可读，色值被提升到较明亮的红橙区间；' +
+      '旧铜色只用于连接件、刻度和次级标记，避免红色与金属色同时大面积铺开。',
+    designRationale:
+      '红黑主题容易变成单一的警示界面，因此这里用铜色和暖白把层级拆开。' +
+      '主强调保持高识别度，但不使用纯红；正文与面板则维持在稳定的暖灰关系。' +
+      '粗重的工业线条只出现在边缘和图形中，正文区域继续保持安静。',
+    palette: [
+      { name: '铁幕黑', hex: '#16171A', role: 'bg', note: '重工业空间里的近黑铁灰' },
+      { name: '机械灰', hex: '#29282A', role: 'surface', note: '设备面板与装甲的中灰' },
+      { name: '旧纸白', hex: '#EEE8DE', role: 'text', note: '略暖的正文与读数' },
+      { name: '磨损银', hex: '#B1A79C', role: 'muted', note: '次要说明与金属刻度' },
+      { name: '铆接线', hex: '#57524F', role: 'border', note: '结构边缘与分割线' },
+      { name: '警戒红', hex: '#E36A5F', role: 'accent', note: '警报、按钮与焦点' },
+      { name: '旧铜', hex: '#B58A55', role: 'flare', note: '连接件与次级标记' },
+    ],
+    tags: ['红色警戒', '苏维埃', '重工业', '警戒红', '铁灰', '原创演绎'],
+    sources: [
+      {
+        title: 'Command & Conquer Remastered Collection 官方网站',
+        type: 'link',
+        url: 'https://www.ea.com/games/command-and-conquer/command-and-conquer-remastered',
+        detail: '版本范围：2020 年《命令与征服：红色警戒 重制版合集》',
+        note: '官方页面仅用于确认作品和版本；本站未使用其截图、Logo、单位肖像或界面素材。',
+      },
+      {
+        title: '苏维埃工业视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的美术资料与页码后替换本条，当前色板不作为官方设定引用。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与 Electronic Arts 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏截图、Logo、单位肖像或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'red-alert-soviet',
+  },
+
+  {
+    slug: 'koprulu-frontier',
+    title: '科普卢边境',
+    subtitle: '工业装甲穿过边境，橙色信标在冷青暗面里闪烁',
+    collection: 'game',
+    game: 'starcraft',
+    description: '钢铁蓝灰、军用橄榄、信号橙与冷青构成边境工业科技的节奏。',
+    story:
+      '泰伦方向的视觉线索来自边境据点、可维修的工业装甲和不断移动的军事设施。' +
+      '本主题不绘制任何人物、单位或阵营标志，而是把“边境”理解成一套可拆装的结构：' +
+      '蓝灰负责框架，橄榄绿进入表面，橙色信标负责让人找到下一处接点，' +
+      '冷青则提示扫描与通信仍然在线。' +
+      '所有颜色和结构均为 Theme Atlas 的原创非官方演绎。',
+    inspiration:
+      '工业装甲的蓝灰色作为大面积背景，军用橄榄被放进面板与次要结构，' +
+      '信号橙承担主强调，冷青作为另一端的电子信号。' +
+      '装甲分块、螺栓节奏和准星形状都来自基础几何，不复刻游戏内单位或 HUD。',
+    designRationale:
+      '橄榄色如果直接铺满会显得混浊，因此它只出现在中层，由深蓝灰和冷白把它夹住。' +
+      '橙色高亮足够明确，但面积被限制在按钮、焦点和少量状态点；' +
+      '冷青负责第二种信号，避免整套主题只有一种暖色发光。',
+    palette: [
+      { name: '边疆夜空', hex: '#0B1216', role: 'bg', note: '边境基地外侧的深蓝黑' },
+      { name: '装甲橄榄', hex: '#1B2522', role: 'surface', note: '军用装甲与面板的暗橄榄' },
+      { name: '舰队白', hex: '#EEF1E6', role: 'text', note: '略带暖意的冷白正文' },
+      { name: '军布灰绿', hex: '#A6B18F', role: 'muted', note: '标签与次要说明' },
+      { name: '结构钢', hex: '#465348', role: 'border', note: '装甲分块与结构线' },
+      { name: '信标橙', hex: '#F29A42', role: 'accent', note: '按钮、焦点与战术信号' },
+      { name: '通信青', hex: '#6ED7D0', role: 'flare', note: '扫描、通信与次级状态' },
+    ],
+    tags: ['星际争霸', '泰伦', '工业装甲', '科普卢', '信号橙', '原创演绎'],
+    sources: [
+      {
+        title: 'Blizzard Entertainment · StarCraft 官方网站',
+        type: 'link',
+        url: 'https://starcraft.blizzard.com/',
+        detail: '官方公开页面，仅用于确认作品与题材背景',
+        note: '官方页面仅用于确认作品；本站未使用其截图、Logo、单位肖像或界面素材。',
+      },
+      {
+        title: '泰伦工业视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的美术资料与页码后替换本条，当前色板不作为官方设定引用。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与 Blizzard Entertainment 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏截图、Logo、单位肖像或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'terran',
+  },
+
+  {
+    slug: 'echoes-of-khala',
+    title: '圣辉回响',
+    subtitle: '对称几何在紫黑中展开，金色与灵能蓝彼此回响',
+    collection: 'game',
+    game: 'starcraft',
+    description: '紫黑、金色、象牙白与灵能蓝组成精密、对称的古老高科技文明色序。',
+    story:
+      '星灵方向的灵感来自精密结构、仪式性的对称和古老科技对光的克制使用。' +
+      '本主题不复制阵营徽章、角色或建筑设定，而是把这种秩序感改写为几何图形：' +
+      '中心保持对称，金色描述结构骨架，象牙白承担阅读，灵能蓝只在不稳定的能量节点出现。' +
+      '《星际争霸》的作品名和公开页面只用于标注题材来源，色值均为 Theme Atlas 原创演绎。',
+    inspiration:
+      '紫黑背景让金色可以被看作结构而不是装饰；面板继续使用低明度紫色，' +
+      '维持空间的连续性。正文字形使用象牙白，避免冷白把主题推回普通科幻界面。' +
+      '强调金用于按钮与焦点，灵能蓝作为次强调，表达能量连接与通信。',
+    designRationale:
+      '金色强调在紫黑上非常醒目，因此必须控制面积：它负责轮廓、轴线和主要操作，' +
+      '不承担大面积底色。象牙白和紫色层负责长时间阅读，' +
+      '蓝色只在能量节点和交互反馈处出现，避免三套高识别色互相争夺。',
+    palette: [
+      { name: '虚空紫黑', hex: '#100B18', role: 'bg', note: '古老空间中的紫黑背景' },
+      { name: '圣殿暗紫', hex: '#21172F', role: 'surface', note: '低明度紫面板' },
+      { name: '象牙光', hex: '#F3EDE2', role: 'text', note: '仪式器物般的暖白正文' },
+      { name: '灵灰紫', hex: '#B6A8CA', role: 'muted', note: '注释与次要信息' },
+      { name: '几何线', hex: '#4B3E5B', role: 'border', note: '结构边界与对称线' },
+      { name: '圣辉金', hex: '#D9B65F', role: 'accent', note: '轴线、按钮、焦点与结构骨架' },
+      { name: '灵能蓝', hex: '#75A9FF', role: 'flare', note: '能量节点与通信反馈' },
+    ],
+    tags: ['星际争霸', '星灵', '对称几何', '灵能', '金色', '原创演绎'],
+    sources: [
+      {
+        title: 'Blizzard Entertainment · StarCraft 官方网站',
+        type: 'link',
+        url: 'https://starcraft.blizzard.com/',
+        detail: '官方公开页面，仅用于确认作品与题材背景',
+        note: '官方页面仅用于确认作品；本站未使用其截图、Logo、单位肖像或界面素材。',
+      },
+      {
+        title: '星灵几何与灵能视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的美术资料与页码后替换本条，当前色板不作为官方设定引用。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与 Blizzard Entertainment 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏截图、Logo、单位肖像或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'protoss',
+  },
+
+  {
+    slug: 'spore-tide',
+    title: '虫群孢潮',
+    subtitle: '甲壳与孢子覆盖边境，酸性绿光在暗莓紫中生长',
+    collection: 'game',
+    game: 'starcraft',
+    description: '甲壳紫黑、暗莓紫、酸性绿与骨白描绘异星组织的蔓延与分裂。',
+    story:
+      '异虫方向的核心不是某只具体生物，而是“生长”本身：组织分叉、孢子扩散、' +
+      '甲壳层叠，以及生物信号在潮湿黑暗里持续传播。' +
+      '本主题因此采用不对称、有机的图形语法，让线条像脉络一样缓慢分叉；' +
+      '所有图形均为原创 SVG，不描绘角色、单位，也不复刻任何阵营纹样。' +
+      '游戏作品只作为题材来源标注，色值不代表官方设定。',
+    inspiration:
+      '紫黑背景像甲壳下的阴影，暗莓紫面板呈现湿润的组织层，' +
+      '骨白用于正文与结构说明。酸性绿作为主强调，代表孢子信号与活性节点；' +
+      '莓紫次强调用于脉络和边缘光，避免整套主题只剩一种荧光色。',
+    designRationale:
+      '有机主题容易堆满曲线，因此正文区域只保留清晰的层级和少量脉络线。' +
+      '酸性绿在深紫底上有很强的辨识度，使用范围被限制在操作与焦点；' +
+      '骨白保证长段落可读，暗莓紫则维持和背景的连续性。',
+    palette: [
+      { name: '甲壳黑紫', hex: '#130F16', role: 'bg', note: '甲壳下的近黑紫' },
+      { name: '暗莓组织', hex: '#2A1830', role: 'surface', note: '湿润组织层的暗莓紫' },
+      { name: '骨白', hex: '#EEE5DC', role: 'text', note: '骨与甲壳高光般的正文' },
+      { name: '孢子灰紫', hex: '#B9A6B2', role: 'muted', note: '次要信息与注释' },
+      { name: '脉络线', hex: '#52374E', role: 'border', note: '分叉脉络与结构边界' },
+      { name: '酸性绿', hex: '#A9D95B', role: 'accent', note: '孢子活性、按钮与焦点' },
+      { name: '莓紫光', hex: '#B85A96', role: 'flare', note: '组织边缘与次级信号' },
+    ],
+    tags: ['星际争霸', '异虫', '有机轮廓', '孢子', '酸性绿', '原创演绎'],
+    sources: [
+      {
+        title: 'Blizzard Entertainment · StarCraft 官方网站',
+        type: 'link',
+        url: 'https://starcraft.blizzard.com/',
+        detail: '官方公开页面，仅用于确认作品与题材背景',
+        note: '官方页面仅用于确认作品；本站未使用其截图、Logo、单位肖像或界面素材。',
+      },
+      {
+        title: '异虫有机视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的美术资料与页码后替换本条，当前色板不作为官方设定引用。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与 Blizzard Entertainment 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏截图、Logo、单位肖像或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'zerg',
+  },
 ];
 
 

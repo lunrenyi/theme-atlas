@@ -6,9 +6,10 @@
  * translated, and it lives in themes.en.ts / collections.ts.
  */
 import { collections as collectionsZh } from '../data/collections';
+import { gameWorlds as gameWorldsZh } from '../data/gameWorlds';
 import { themeTranslations } from '../data/themes.en';
 import { themes as themesZh } from '../data/themes';
-import type { Collection, CollectionId, Theme } from '../data/types';
+import type { Collection, CollectionId, GameWorld, GameWorldId, Theme } from '../data/types';
 import type { Locale } from '../i18n';
 
 export function getCollections(lang: Locale): Collection[] {
@@ -32,6 +33,27 @@ export function getCollections(lang: Locale): Collection[] {
 export function getCollectionById(id: CollectionId, lang: Locale): Collection {
   const found = getCollections(lang).find((collection) => collection.id === id);
   if (!found) throw new Error('Unknown collection: ' + id);
+  return found;
+}
+
+export function getGameWorlds(lang: Locale): GameWorld[] {
+  return gameWorldsZh.map((game) => ({
+    ...game,
+    ...(lang === 'zh'
+      ? {}
+      : {
+          title: game.titleEn,
+          short: game.shortEn,
+          tagline: game.taglineEn,
+          description: game.descriptionEn,
+          referenceTitle: game.referenceTitleEn,
+        }),
+  }));
+}
+
+export function getGameWorldById(id: GameWorldId, lang: Locale): GameWorld {
+  const found = getGameWorlds(lang).find((game) => game.id === id);
+  if (!found) throw new Error('Unknown game world: ' + id);
   return found;
 }
 
@@ -79,6 +101,10 @@ export function getFeaturedThemes(lang: Locale): Theme[] {
 
 export function getThemesByCollection(id: CollectionId, lang: Locale): Theme[] {
   return getThemes(lang).filter((theme) => theme.collection === id);
+}
+
+export function getThemesByGameWorld(id: GameWorldId, lang: Locale): Theme[] {
+  return getThemes(lang).filter((theme) => theme.game === id);
 }
 
 /** Themes ordered for the switch-theme control on a detail page. */

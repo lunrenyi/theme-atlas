@@ -1,0 +1,167 @@
+---
+import type { GameWorldId } from '../data/types';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  variant: GameWorldId;
+  accent: string;
+  accentAlt: string;
+  /** Faction accents used by the combined StarCraft graphic. */
+  accents?: string[];
+  class?: string;
+  lang: Locale;
+}
+
+const {
+  variant,
+  accent,
+  accentAlt,
+  accents = [accent, accentAlt, accentAlt],
+  class: className = '',
+  lang,
+} = Astro.props;
+
+const labels: Record<GameWorldId, string> = {
+  stellaris: t(lang, 'motif.stellaris'),
+  'red-alert': t(lang, 'motif.redAlert'),
+  starcraft: t(lang, 'motif.starcraft'),
+};
+const [terran = accent, protoss = accentAlt, zerg = accentAlt] = accents;
+---
+
+{
+  variant === 'stellaris' && (
+    <svg
+      class:list={['game-motif', className]}
+      viewBox="0 0 360 180"
+      role="img"
+      aria-label={labels.stellaris}
+      fill="none"
+    >
+      <g stroke={accent} opacity="0.55">
+        <ellipse cx="184" cy="90" rx="144" ry="46" transform="rotate(-18 184 90)" />
+        <ellipse cx="184" cy="90" rx="102" ry="74" transform="rotate(36 184 90)" opacity="0.6" />
+        <path d="M24 143 82 103 126 116 186 65 236 77 322 31" stroke-dasharray="3 7" />
+      </g>
+      <g fill={accentAlt}>
+        <circle cx="82" cy="103" r="3" />
+        <circle cx="236" cy="77" r="2.5" />
+        <circle cx="322" cy="31" r="2" />
+      </g>
+      <g fill={accent}>
+        <circle cx="184" cy="90" r="7" />
+        <circle cx="126" cy="116" r="3.2" />
+        <circle cx="288" cy="91" r="2.4" />
+      </g>
+      <circle cx="184" cy="90" r="20" stroke={accent} opacity="0.32" />
+      <circle cx="184" cy="90" r="34" stroke={accentAlt} opacity="0.2" />
+      <g stroke={accentAlt} opacity="0.55">
+        <path d="M184 70v40M164 90h40" />
+        <path d="M126 116 184 90 288 91" stroke-dasharray="2 5" />
+      </g>
+      <g fill={accentAlt} opacity="0.55">
+        <circle cx="46" cy="39" r="1.3" />
+        <circle cx="104" cy="24" r="1.1" />
+        <circle cx="266" cy="146" r="1.2" />
+        <circle cx="328" cy="126" r="1" />
+        <circle cx="210" cy="18" r="0.9" />
+      </g>
+    </svg>
+  )
+}
+
+{
+  variant === 'red-alert' && (
+    <svg
+      class:list={['game-motif', className]}
+      viewBox="0 0 360 180"
+      role="img"
+      aria-label={labels['red-alert']}
+      fill="none"
+    >
+      <g stroke={accentAlt} stroke-width="0.8" opacity="0.35">
+        {Array.from({ length: 13 }, (_, i) => <path d={'M' + (i * 30) + ' 0v180'} />)}
+        {Array.from({ length: 7 }, (_, i) => <path d={'M0 ' + (i * 30) + 'h360'} />)}
+      </g>
+      <path d="M180 0v180" stroke={accentAlt} opacity="0.42" />
+      <path d="M180 0v180" stroke={accent} opacity="0.32" transform="translate(2 0)" />
+      <g stroke={accentAlt} stroke-width="1.4" opacity="0.85">
+        <path d="M34 132h68l22-31h28" />
+        <path d="M34 142h56l18-28" opacity="0.65" />
+        <circle cx="90" cy="65" r="31" />
+        <circle cx="90" cy="65" r="18" opacity="0.65" />
+        <path d="M59 65h62M90 34v62" opacity="0.55" />
+      </g>
+      <g stroke={accent} stroke-width="1.4" opacity="0.9">
+        <path d="M326 132h-68l-22-31h-28" />
+        <path d="M326 142h-56l-18-28" opacity="0.65" />
+        <rect x="237" y="36" width="61" height="61" rx="4" />
+        <rect x="249" y="48" width="37" height="37" rx="2" opacity="0.65" />
+        <path d="M267 28v77M228 66h79" opacity="0.55" />
+      </g>
+      <g fill={accentAlt}>
+        <circle cx="90" cy="65" r="4" />
+        <circle cx="34" cy="132" r="2.4" />
+      </g>
+      <g fill={accent}>
+        <circle cx="267" cy="66" r="4" />
+        <circle cx="326" cy="132" r="2.4" />
+      </g>
+      <path d="M148 28h64M148 152h64" stroke={accentAlt} opacity="0.25" />
+    </svg>
+  )
+}
+
+{
+  variant === 'starcraft' && (
+    <svg
+      class:list={['game-motif', className]}
+      viewBox="0 0 360 180"
+      role="img"
+      aria-label={labels.starcraft}
+      fill="none"
+    >
+      <g stroke="#344363" opacity="0.45">
+        <path d="M120 12v156M240 12v156" />
+      </g>
+
+      <g stroke={terran} opacity="0.88">
+        <path d="M20 45h76v16H38v20h58v16H32v42h70" />
+        <path d="M34 95h52M22 132h74" opacity="0.55" />
+        <circle cx="60" cy="73" r="16" opacity="0.65" />
+        <path d="M60 50v46M37 73h46" opacity="0.45" />
+      </g>
+      <rect x="52" y="68" width="16" height="10" fill={terran} opacity="0.9" />
+
+      <g stroke={protoss} opacity="0.9">
+        <path d="M180 28 226 90l-46 62-46-62z" />
+        <path d="M180 47 208 90l-28 37-28-37z" opacity="0.7" />
+        <path d="M180 64 193 90l-13 19-13-19z" opacity="0.55" />
+        <path d="M180 16v148M142 90h76" opacity="0.35" />
+        <circle cx="180" cy="90" r="9" />
+        <circle cx="180" cy="90" r="24" opacity="0.45" />
+      </g>
+      <circle cx="180" cy="90" r="4" fill={protoss} />
+
+      <g stroke={zerg} stroke-linecap="round" opacity="0.9">
+        <path d="M305 28c-8 22 10 26 2 44s13 25 4 45 8 24 0 38" />
+        <path d="M303 63c-18-8-27-21-24-38M306 84c75 30 15 22 55 21M307 111c-18 20-18 33-10 43M309 130c22 12 32 20 32 34" />
+        <path d="M287 50c-12-2-19-8-22-17M326 75c13-5 24-2 32 8M288 131c-11 6-16 13-17 23" opacity="0.65" />
+      </g>
+      <g fill={zerg}>
+        <circle cx="305" cy="28" r="3.2" />
+        <circle cx="279" cy="25" r="2.4" />
+        <circle cx="337" cy="83" r="2.6" />
+        <circle cx="297" cy="154" r="2.2" />
+      </g>
+    </svg>
+  )
+}
+
+<style>
+  .game-motif {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

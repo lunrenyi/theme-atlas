@@ -1,6 +1,6 @@
 ---
 /**
- * The hero star map: one core body, three orbits, one node per collection.
+ * The hero star map: one core body, one orbit and node per collection.
  *
  * Everything is original geometry. The node positions are computed from the
  * orbit equations at build time, so every marker sits exactly on its ring,
@@ -41,11 +41,12 @@ interface Orbit {
   rot: number;
 }
 
-/** Three orbits carry a collection node; two more only add depth. */
+/** One orbit carries each collection node; two more only add depth. */
 const ORBITS: Orbit[] = [
   { id: 'porcelain', rx: 37, ry: 12.5, rot: -16 },
   { id: 'myth', rx: 23.5, ry: 20, rot: 44 },
   { id: 'rail', rx: 44, ry: 16.5, rot: 12 },
+  { id: 'game', rx: 34, ry: 17, rot: -55 },
 ];
 
 const BACKGROUND_ORBITS: Orbit[] = [
@@ -78,11 +79,12 @@ function orbitPath(orbit: Orbit, steps = 60): string {
 /** Node placement — a calm triangle around the core. */
 const NODE_PLAN: Record<
   string,
-  { orbit: string; angle: number; place: 'left' | 'right' | 'below' }
+  { orbit: string; angle: number; place: 'left' | 'right' | 'below' | 'above' }
 > = {
   myth: { orbit: 'myth', angle: 150, place: 'left' },
   porcelain: { orbit: 'porcelain', angle: 115, place: 'below' },
   rail: { orbit: 'rail', angle: 298, place: 'right' },
+  game: { orbit: 'game', angle: 300, place: 'above' },
 };
 
 const nodes = collections.map((collection, i) => {
@@ -157,6 +159,7 @@ const travellers = [
   { orbit: ORBITS[2], dur: '26s', delay: '-4s', r: 0.42, tone: '#EAF0FF' },
   { orbit: ORBITS[0], dur: '34s', delay: '-17s', r: 0.34, tone: '#76D8DF' },
   { orbit: ORBITS[1], dur: '44s', delay: '-28s', r: 0.3, tone: '#DCC38B' },
+  { orbit: ORBITS[3], dur: '48s', delay: '-21s', r: 0.28, tone: '#B85A96' },
 ];
 ---
 
@@ -650,6 +653,13 @@ const travellers = [
     align-items: center;
   }
 
+  .starmap__node--above .starmap__label {
+    left: 0;
+    bottom: 22px;
+    transform: translateX(-50%);
+    align-items: center;
+  }
+
   .starmap__code {
     font-size: 0.56rem;
     letter-spacing: 0.2em;
@@ -708,6 +718,13 @@ const travellers = [
     text-align: center;
   }
 
+  .starmap__node--above .starmap__note {
+    left: 50%;
+    bottom: 86px;
+    transform: translate(-50%, 4px);
+    text-align: center;
+  }
+
   /* --- hover / focus ---------------------------------------------- */
   .starmap__node:hover .starmap__dot,
   .starmap__node:focus-visible .starmap__dot {
@@ -746,6 +763,11 @@ const travellers = [
     transform: translate(-50%, 0);
   }
 
+  .starmap__node--above:hover .starmap__note,
+  .starmap__node--above:focus-visible .starmap__note {
+    transform: translate(-50%, 0);
+  }
+
   .starmap__node:focus-visible {
     outline: 1px solid var(--quantum);
     outline-offset: 6px;
@@ -757,11 +779,14 @@ const travellers = [
   .starmap:has(.starmap__node[data-collection='porcelain']:hover)
     .sm-orbit[data-orbit='porcelain'],
   .starmap:has(.starmap__node[data-collection='rail']:hover) .sm-orbit[data-orbit='rail'],
+  .starmap:has(.starmap__node[data-collection='game']:hover) .sm-orbit[data-orbit='game'],
   .starmap:has(.starmap__node[data-collection='myth']:focus-visible) .sm-orbit[data-orbit='myth'],
   .starmap:has(.starmap__node[data-collection='porcelain']:focus-visible)
     .sm-orbit[data-orbit='porcelain'],
   .starmap:has(.starmap__node[data-collection='rail']:focus-visible)
-    .sm-orbit[data-orbit='rail'] {
+    .sm-orbit[data-orbit='rail'],
+  .starmap:has(.starmap__node[data-collection='game']:focus-visible)
+    .sm-orbit[data-orbit='game'] {
     stroke: var(--gold);
     opacity: 0.9;
     stroke-width: 0.15;
@@ -784,13 +809,21 @@ const travellers = [
     stroke: #9885ff;
   }
 
+  .starmap:has(.starmap__node[data-collection='game']:hover) .sm-orbit[data-orbit='game'],
+  .starmap:has(.starmap__node[data-collection='game']:focus-visible) .sm-orbit[data-orbit='game'] {
+    stroke: #76dde5;
+  }
+
   .starmap:has(.starmap__node[data-collection='myth']:hover) .sm-spoke[data-orbit='myth'],
   .starmap:has(.starmap__node[data-collection='porcelain']:hover) .sm-spoke[data-orbit='porcelain'],
   .starmap:has(.starmap__node[data-collection='rail']:hover) .sm-spoke[data-orbit='rail'],
+  .starmap:has(.starmap__node[data-collection='game']:hover) .sm-spoke[data-orbit='game'],
   .starmap:has(.starmap__node[data-collection='myth']:focus-visible) .sm-spoke[data-orbit='myth'],
   .starmap:has(.starmap__node[data-collection='porcelain']:focus-visible)
     .sm-spoke[data-orbit='porcelain'],
-  .starmap:has(.starmap__node[data-collection='rail']:focus-visible) .sm-spoke[data-orbit='rail'] {
+  .starmap:has(.starmap__node[data-collection='rail']:focus-visible) .sm-spoke[data-orbit='rail'],
+  .starmap:has(.starmap__node[data-collection='game']:focus-visible)
+    .sm-spoke[data-orbit='game'] {
     stroke: var(--gold);
     opacity: 0.6;
   }

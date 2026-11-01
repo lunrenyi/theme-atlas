@@ -6,7 +6,7 @@
 import { t, type Locale } from '../i18n';
 
 interface Props {
-  variant: 'ruyi' | 'glaze' | 'orbit';
+  variant: 'ruyi' | 'glaze' | 'orbit' | 'game';
   accent: string;
   accentAlt?: string;
   class?: string;
@@ -19,6 +19,7 @@ const motifLabel: Record<Props['variant'], string> = {
   ruyi: t(lang, 'motif.ruyi'),
   glaze: t(lang, 'motif.glaze'),
   orbit: t(lang, 'motif.orbit'),
+  game: t(lang, 'motif.game'),
 };
 ---
 
@@ -123,6 +124,47 @@ const motifLabel: Record<Props['variant'], string> = {
         <circle cx="96" cy="24" r="1.6" opacity="0.6" />
       </g>
       <path d="M30 100 L110 22" stroke={accentAlt} stroke-width="1" opacity="0.45" />
+    </svg>
+  )
+}
+
+{
+  variant === 'game' && (
+    <svg
+      class:list={['motif', className]}
+      viewBox="0 0 300 120"
+      width="300"
+      height="120"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      aria-label={motifLabel.game}
+      fill="none"
+    >
+      <g stroke={accent} stroke-width="1.2" opacity="0.65">
+        <path d="M26 84 78 32l58 12 48-24 42 18 32-10" stroke-dasharray="3 6" />
+        <path d="M70 100 118 70l42 10 50-34 46 24" opacity="0.6" />
+        <ellipse cx="150" cy="62" rx="112" ry="42" transform="rotate(-12 150 62)" opacity="0.45" />
+        <ellipse cx="150" cy="62" rx="76" ry="27" transform="rotate(34 150 62)" opacity="0.38" />
+      </g>
+      <g fill={accentAlt}>
+        <circle cx="78" cy="32" r="3.2" />
+        <circle cx="184" cy="20" r="2.6" opacity="0.85" />
+        <circle cx="260" cy="28" r="2.2" opacity="0.7" />
+      </g>
+      <g fill={accent}>
+        <circle cx="150" cy="62" r="5" />
+        <circle cx="118" cy="70" r="3" />
+        <circle cx="210" cy="46" r="3.4" />
+        <circle cx="256" cy="84" r="2.5" />
+      </g>
+      <circle cx="150" cy="62" r="16" stroke={accent} stroke-width="1" opacity="0.35" />
+      <path d="M150 47v30M135 62h30" stroke={accentAlt} stroke-width="0.8" opacity="0.4" />
+      <g fill={accentAlt} opacity="0.55">
+        <circle cx="48" cy="38" r="1.4" />
+        <circle cx="96" cy="18" r="1.2" />
+        <circle cx="232" cy="92" r="1.3" />
+        <circle cx="278" cy="52" r="1.1" />
+      </g>
     </svg>
   )
 }

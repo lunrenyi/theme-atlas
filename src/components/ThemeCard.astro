@@ -1,6 +1,6 @@
 ---
 import type { Theme } from '../data/types';
-import { getCollectionById } from '../lib/content';
+import { getCollectionById, getGameWorldById } from '../lib/content';
 import { paletteMap } from '../lib/color';
 import { arrangementFor, arrangePalette } from '../lib/arrangement';
 import { localePath } from '../lib/url';
@@ -18,10 +18,12 @@ interface Props {
 const { theme, variant = 'grid', showDescription = variant === 'featured', lang } = Astro.props;
 
 const collection = getCollectionById(theme.collection, lang);
+const gameWorld = theme.game ? getGameWorldById(theme.game, lang) : null;
 const rule = arrangementFor(theme.collection, lang);
 const palette = arrangePalette(theme);
 const map = paletteMap(theme);
-const mark = theme.plate ? { gold: map.accent?.hex, flame: map.flare?.hex } : null;
+const mark =
+  theme.plate === 'staff' ? { gold: map.accent?.hex, flame: map.flare?.hex } : null;
 
 const statusMap = {
   verified: { label: t(lang, 'card.statusVerified'), tone: 'ok' },
@@ -38,6 +40,7 @@ const status = statusMap[theme.status];
         <span class="card__swatch" style={'--tone:' + collection.accent} aria-hidden="true"></span>
         {collection.title}
       </a>
+      {gameWorld && <span class="card__world mono">{gameWorld.short}</span>}
       {
         mark && (
           <span class="card__mark" aria-hidden="true">
@@ -121,6 +124,7 @@ const status = statusMap[theme.status];
   .card__meta-left {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
     min-width: 0;
   }
@@ -163,6 +167,19 @@ const status = statusMap[theme.status];
     border-radius: 50%;
     background: var(--tone);
     flex: none;
+  }
+
+  .card__world {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .card__world::before {
+    content: '/';
+    margin-right: 8px;
+    opacity: 0.5;
   }
 
   .card__title {

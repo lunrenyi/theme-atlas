@@ -87,7 +87,7 @@ const zh = {
   'hero.readoutRoles': '基础角色',
   'hero.readoutExport': '导出',
   'hero.readoutExportValue': 'CSS 样式 / JSON 数据',
-  'hero.chartNote': '星图 · 三个系列节点，悬停或聚焦可查看代表配色',
+  'hero.chartNote': '星图 · {count} 个系列节点，悬停或聚焦可查看代表配色',
   'star.nodeLabel': '{title}系列，共 {count} 套主题',
 
   /* home — sections */
@@ -95,7 +95,7 @@ const zh = {
   'section.seriesTitle': '循着星轨，寻找颜色的来处。',
   'section.seriesLede':
     '从古老神话到窑火釉色，再到想象中的银河，每一条轨道，都通向一种不同的美学。',
-  'section.seriesMeta': '三个来源',
+  'section.seriesMeta': '{count} 个来源',
   'section.featuredEyebrow': '精选主题',
   'section.featuredTitle': '从这三套主题开始。',
   'section.featuredMeta': '精选',
@@ -136,6 +136,15 @@ const zh = {
   'series.rule': '排列规则',
   'series.enter': '进入系列',
 
+  /* game worlds */
+  'gameWorlds.eyebrow': '游戏世界 · {count} 套主题',
+  'gameWorlds.title': '每个世界，都有自己的色彩秩序。',
+  'gameWorlds.disclaimer':
+    '以下主题均为 Theme Atlas 原创的非官方演绎；未使用游戏 Logo、截图、角色、单位立绘、地图界面或游戏内纹理。',
+  'gameWorlds.originalWork': '查看原作页面',
+  'gameWorlds.groupThemes': '{count} 套主题',
+  'gameWorlds.group': '游戏 {n}',
+
   /* library */
   'library.searchPlaceholder': '按名称、灵感、颜色或关键词搜索',
   'library.searchLabel': '搜索主题',
@@ -162,10 +171,12 @@ const zh = {
   'rule.symmetry': '中心对称',
   'rule.strata': '釉层分层',
   'rule.luminance': '明度序列',
+  'rule.spectrum': '世界色序',
   'rule.symmetryNote':
     '强调色落在轴心，两侧按与它的明度距离镜像排布——兽面纹的构图逻辑。',
   'rule.strataNote': '由胎体到釉彩逐层叠置，落在最后的是窑火定下的颜色。',
   'rule.luminanceNote': '按相对明度由暗到亮排列，读起来像一段光谱。',
+  'rule.spectrumNote': '按叙事角色排列：环境、结构、信号与强调，组成一个游戏世界的视觉秩序。',
 
   /* palette */
   'palette.heading': '配色',
@@ -266,6 +277,10 @@ const zh = {
   'motif.ruyi': '青铜器回纹地纹与兽面装饰图形',
   'motif.glaze': '釉色开片装饰图形',
   'motif.orbit': '星轨轨道装饰图形',
+  'motif.game': '游戏世界星域与文明节点图形',
+  'motif.stellaris': '星系、轨道与文明节点组成的原创星图',
+  'motif.redAlert': '盟军与苏维埃战术网格和机械结构组成的原创图形',
+  'motif.starcraft': '泰伦工业结构、星灵对称几何与异虫有机脉络组成的原创图形',
   'star.coreBrand': '色谱档案',
   'star.coreLabel': '核心星体',
 
@@ -273,7 +288,7 @@ const zh = {
   'collections.eyebrow': '系列',
   'collections.title': '主题系列',
   'collections.lede':
-    '每个系列有自己的取材范围与配色纪律。中国神话靠矿物颜料，瓷器靠釉色的明度关系，同人系列则把虚构世界的光重新推导一遍。',
+    '每个系列有自己的取材范围与配色纪律。中国神话靠矿物颜料，瓷器靠釉色的明度关系，同人系列把虚构世界的光重新推导一遍，游戏世界则从不同作品的视觉规则中整理出三组原创色序。',
   'collections.index': '系列 {n}',
   'collections.browseSeries': '在主题目录中浏览该系列',
   'collections.allEyebrow': '全部',
@@ -390,15 +405,15 @@ const en: Record<UiKey, string> = {
   'hero.readoutExport': 'Export',
   'hero.readoutExportValue': 'CSS / JSON',
   'hero.chartNote':
-    'Star chart · three collection nodes; hover or focus one to preview its palette',
+    'Star chart · {count} collection nodes; hover or focus one to preview its palette',
   'star.nodeLabel': '{title} collection, {count} themes',
 
   'section.seriesEyebrow': 'Collections',
-  'section.seriesTitle': 'Three trails, and the colour at the end of each',
+  'section.seriesTitle': 'Every trail ends in a different idea of beauty',
   'section.seriesLede':
     'From ancient myth to kiln glaze to a galaxy that never existed at all — ' +
     'every trail ends in a different idea of beauty.',
-  'section.seriesMeta': 'Three sources',
+  'section.seriesMeta': '{count} sources',
   'section.featuredEyebrow': 'Featured',
   'section.featuredTitle': 'Begin with these three',
   'section.featuredMeta': 'Selected',
@@ -441,6 +456,14 @@ const en: Record<UiKey, string> = {
   'series.rule': 'Arrangement',
   'series.enter': 'Open collection',
 
+  'gameWorlds.eyebrow': 'Game Worlds · {count} themes',
+  'gameWorlds.title': 'Every world has its own language of color.',
+  'gameWorlds.disclaimer':
+    'Every theme below is an original, unofficial Theme Atlas interpretation. No game logo, screenshot, character, unit portrait, map interface or in-game texture is used.',
+  'gameWorlds.originalWork': 'Visit the original work',
+  'gameWorlds.groupThemes': '{count} themes',
+  'gameWorlds.group': 'Game {n}',
+
   'library.searchPlaceholder': 'Search by name, inspiration, colour or keyword',
   'library.searchLabel': 'Search themes',
   'library.clearSearch': 'Clear search',
@@ -466,12 +489,15 @@ const en: Record<UiKey, string> = {
   'rule.symmetry': 'Centre symmetry',
   'rule.strata': 'Glaze strata',
   'rule.luminance': 'Luminance ramp',
+  'rule.spectrum': 'World order',
   'rule.symmetryNote':
     'The accent sits on the axis, the rest mirrored by its distance in lightness — the logic of a taotie mask.',
   'rule.strataNote':
     'Layered from body to glaze, with the colour the kiln decided on arriving last.',
   'rule.luminanceNote':
     'Ordered from dark to light by relative luminance, so it reads like a spectrum.',
+  'rule.spectrumNote':
+    'Ordered by narrative role: environment, structure, signal and emphasis form one game world’s visual order.',
 
   'palette.heading': 'Palette',
   'palette.headingSuffix': '',
@@ -570,13 +596,17 @@ const en: Record<UiKey, string> = {
   'motif.ruyi': 'Bronze key-fret band and beast-mask motif',
   'motif.glaze': 'Glaze crackle motif',
   'motif.orbit': 'Stellar track orbit motif',
+  'motif.game': 'Game-world starfield and civilisation-node motif',
+  'motif.stellaris': 'An original chart of galaxies, orbits and civilisation nodes',
+  'motif.redAlert': 'An original motif of Allied-Soviet tactical grids and mechanical structures',
+  'motif.starcraft': 'An original motif joining Terran industry, Protoss symmetry and Zerg organic growth',
   'star.coreBrand': 'THEME ATLAS',
   'star.coreLabel': 'Core body',
 
   'collections.eyebrow': 'Collections',
   'collections.title': 'Theme collections',
   'collections.lede':
-    'Each collection has its own material range and colour discipline. Chinese myth draws on mineral pigments, porcelain on the lightness relationships of glaze, and the fan collection re-derives the light of imagined worlds.',
+    'Each collection has its own material range and colour discipline. Chinese myth draws on mineral pigments, porcelain on the lightness of glaze, the fan collection re-derives imagined light, and Game Worlds turns the visual rules of three different games into original colour orders.',
   'collections.index': 'COLLECTION {n}',
   'collections.browseSeries': 'Browse this collection',
   'collections.allEyebrow': 'All',

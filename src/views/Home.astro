@@ -73,7 +73,9 @@ const sample = themes[0];
 
         <div class="hero__chart">
           <StarMap collections={collections} lang={lang} />
-          <p class="hero__chart-note mono">{t(lang, 'hero.chartNote')}</p>
+          <p class="hero__chart-note mono">
+            {t(lang, 'hero.chartNote', { count: collections.length })}
+          </p>
         </div>
       </div>
     </div>
@@ -91,7 +93,9 @@ const sample = themes[0];
           </p>
           <h2 class="section-head__title">{t(lang, 'section.seriesTitle')}</h2>
         </div>
-        <p class="section-head__meta">{t(lang, 'section.seriesMeta')}</p>
+        <p class="section-head__meta">
+          {t(lang, 'section.seriesMeta', { count: collections.length })}
+        </p>
       </div>
 
       <p class="section-lede">{t(lang, 'section.seriesLede')}</p>
@@ -343,11 +347,17 @@ const sample = themes[0];
 
   .series-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: clamp(20px, 2.6vw, 44px);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1180px) {
+    .series-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
     .series-grid {
       grid-template-columns: 1fr;
     }

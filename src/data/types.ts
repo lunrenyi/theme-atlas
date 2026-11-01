@@ -1,4 +1,11 @@
-export type CollectionId = 'myth' | 'porcelain' | 'rail';
+export type CollectionId = 'myth' | 'porcelain' | 'rail' | 'game';
+
+/**
+ * Optional game grouping inside the flat "game" collection. This is not a
+ * second collection: counts continue to come from the collection and theme
+ * arrays, so a future parent/child migration cannot double-count themes.
+ */
+export type GameWorldId = 'stellaris' | 'red-alert' | 'starcraft';
 
 /**
  * The seven semantic slots a theme palette must fill. Keeping them explicit
@@ -66,6 +73,8 @@ export interface Theme {
   title: string;
   subtitle: string;
   collection: CollectionId;
+  /** Optional game grouping, currently used only by the game collection. */
+  game?: GameWorldId;
   /** One-line summary used on cards and meta tags. */
   description: string;
   /** The narrative the theme is built from. */
@@ -84,7 +93,14 @@ export interface Theme {
    * Overrides the collection's default specimen drawing. Used by themes
    * whose own image says something the generic motif cannot.
    */
-  plate?: 'staff';
+  plate?:
+    | 'staff'
+    | 'stellaris'
+    | 'red-alert-allied'
+    | 'red-alert-soviet'
+    | 'terran'
+    | 'protoss'
+    | 'zerg';
   /**
    * - verified: sources are checkable references
    * - interpretation: original / fan re-interpretation of a copyrighted work
@@ -126,6 +142,26 @@ export interface Collection {
   /** Secondary hue used by the motif gradients. */
   accentAlt: string;
   /** Which motif component to draw. */
-  motif: 'ruyi' | 'glaze' | 'orbit';
+  motif: 'ruyi' | 'glaze' | 'orbit' | 'game';
+}
+
+/** A localized game group displayed inside the Game Worlds collection. */
+export interface GameWorld {
+  id: GameWorldId;
+  title: string;
+  titleEn: string;
+  short: string;
+  shortEn: string;
+  code: string;
+  tagline: string;
+  taglineEn: string;
+  description: string;
+  descriptionEn: string;
+  accent: string;
+  accentAlt: string;
+  motif: GameWorldId;
+  referenceTitle: string;
+  referenceTitleEn: string;
+  referenceUrl: string;
 }
 

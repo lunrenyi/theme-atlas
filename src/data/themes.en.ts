@@ -730,4 +730,360 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
       imageLicence: noOfficialArt,
     },
   },
+
+  'uncharted-reach': {
+    title: 'Uncharted Reach',
+    subtitle: 'Light the first signal from a region the charts have not named',
+    description:
+      'Deep navy, nebula violet, ion cyan and civilisation gold form a stellar navigation chart opening towards the unknown.',
+    story:
+      'Stellaris presents exploration as a chain of decisions: survey a strange planet, plant ' +
+      'an outpost, meet an unknown civilisation, then decide where the border should be drawn. ' +
+      'This theme takes no colours from a specific scene. It treats discovery as four visual ' +
+      'relationships: deep navy is unmapped space, nebula violet is the light of distant ' +
+      'bodies, ion cyan is instrumentation and communication, and civilisation gold appears ' +
+      'only where contact has been established. The values are an original Theme Atlas ' +
+      'reading of deep-space exploration, not official game colours.',
+    inspiration:
+      'A deep-space blue-black carries the ground, violet gathers in panels and boundaries as ' +
+      'the cast left by a nebula, bright cyan marks links, focus and data signals, and ' +
+      'civilisation gold is held back for contact points and key states. Orbits, star points ' +
+      'and communication pulses are abstract geometry; no in-game star map, icon or interface ' +
+      'is reused.',
+    designRationale:
+      'Hierarchy in this dark theme relies on lightness rather than saturation: panel and ' +
+      'ground stay close enough for long reading without becoming one luminous field. Cyan ' +
+      'keeps the primary emphasis legible while gold is reserved for the small semantics of ' +
+      'discovery. Body text, secondary text and the accent are checked against WCAG AA.',
+    tags: ['Stellaris', 'Deep space', 'Nebula', 'Civilisation signal', 'Exploration', 'Original interpretation'],
+    palette: [
+      { name: 'Uncharted Deep', note: 'The blue-black at the edge of the chart' },
+      { name: 'Nebula Violet', note: 'The violet-black layer between panels and routes' },
+      { name: 'Chart White', note: 'Cool instrument-white body text' },
+      { name: 'Distant Blue', note: 'Secondary notes and coordinate labels' },
+      { name: 'Orbit Rule', note: 'Chart grids and structural boundaries' },
+      { name: 'Ion Cyan', note: 'Communication signals, links and focus' },
+      { name: 'Civilisation Gold', note: 'Contact nodes and discoveries' },
+    ],
+    sources: [
+      {
+        title: 'Paradox Interactive · Stellaris official site',
+        detail: 'Official public product page, used only to identify the work and subject',
+        note:
+          'No colour, graphic or layout from that page is used here; all values and visuals ' +
+          'are original Theme Atlas work.',
+      },
+      {
+        title: 'Deep-space visual language and colour relationships (to be added)',
+        note:
+          'Pending: a page-referenced art source will replace this entry. The current palette ' +
+          'makes no claim to be official.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This is an unofficial Theme Atlas interpretation for colour research and interface ' +
+        'demonstration only. It is not affiliated with, licensed by or endorsed by Paradox Interactive.',
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'frozen-front': {
+    title: 'Frozen Front',
+    subtitle: 'A tactical grid covers the steel front as cold signals rise through blue-grey',
+    description:
+      'Steel blue-grey, cold white and signal cyan produce a restrained Allied military-technology study.',
+    story:
+      'This study takes Command & Conquer: Red Alert as represented in the Command & Conquer ' +
+      'Remastered Collection (2020) as its version boundary; Red Alert 2, Red Alert 3 and ' +
+      'other continuities are not mixed in. The subject is not a character or a particular ' +
+      'unit but a tactical table lit by cold light: a grid defines space, steel structure ' +
+      'draws the frame, and a cyan signal marks the current node. Colours and forms are ' +
+      'original Theme Atlas interpretations, not official visual standards.',
+    inspiration:
+      'Blue-grey combines an abstract industrial-steel surface with cold ambient light, ' +
+      'cold white is used for readings, and signal cyan is reserved for actions and focus. ' +
+      'The grid, modular armour and scanning rings imitate no in-game HUD; they are rebuilt ' +
+      'from repeated lines, coordinates and mechanical slots.',
+    designRationale:
+      'The study keeps a low-saturation blue-grey hierarchy so the cyan highlight remains ' +
+      'clear. Text uses a cool instrument white rather than pure white to reduce glare, and ' +
+      'the panel/ground separation gives structure without letting technical lines outrank ' +
+      'the writing.',
+    tags: ['Red Alert', 'Allied', 'Tactical map', 'Steel blue', 'Military technology', 'Original interpretation'],
+    palette: [
+      { name: 'Northern Night', note: 'The blue-black of a cold environment' },
+      { name: 'Armour Blue-Grey', note: 'Neutral steel and panel blue-grey' },
+      { name: 'Cold Readout White', note: 'Instrument-like body text' },
+      { name: 'Tactical Grey', note: 'Coordinates, notes and secondary information' },
+      { name: 'Steel Rule', note: 'Grid and structural dividers' },
+      { name: 'Signal Cyan', note: 'Status, links and focus' },
+      { name: 'Frost Blue', note: 'Scan results and secondary prompts' },
+    ],
+    sources: [
+      {
+        title: 'Command & Conquer Remastered Collection official site',
+        detail: 'Version boundary: Command & Conquer: Red Alert in the 2020 remastered collection',
+        note:
+          'The official page only identifies the work and version. No screenshot, logo, unit ' +
+          'portrait or interface asset is reused.',
+      },
+      {
+        title: 'Allied tactical visual analysis (to be added)',
+        note:
+          'Pending: a verifiable art reference with page numbers will replace this entry. ' +
+          'The current palette is not presented as official canon.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This is an unofficial Theme Atlas interpretation for colour research and interface ' +
+        'demonstration only. It is not affiliated with, licensed by or endorsed by Electronic Arts.',
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'crimson-iron-curtain': {
+    title: 'Crimson Iron Curtain',
+    subtitle: 'In the shadow of heavy industry, one warning red lights slowly',
+    description:
+      'Iron grey, warning red and aged copper carry heavy machinery, hard structure and a low industrial alarm.',
+    story:
+      'This Soviet-direction study is also bounded to Command & Conquer: Red Alert as presented ' +
+      'in the Remastered Collection (2020); later Red Alert continuities are not mixed in. ' +
+      'It reproduces no insignia, propaganda image or unit. Three gestures are drawn ' +
+      'from heavy-industrial space: steel structure lowers the horizon, a warning lamp sends ' +
+      'red into shadow, and aged copper keeps the trace of machinery in use. Game information ' +
+      'identifies the subject only; the palette and forms are Theme Atlas artistry.',
+    inspiration:
+      'Background and panel use two grades of iron grey, with warm aged-paper white for text. ' +
+      'Warning red is the primary accent, lifted into a brighter red-orange range so accent ' +
+      'contrast remains readable. Aged copper is kept for joints, scales and secondary marks, ' +
+      'preventing red and metal from spreading across large fields at once.',
+    designRationale:
+      'A red-and-black theme easily collapses into one alarm panel, so copper and warm white ' +
+      'split the hierarchy. Red stays highly recognisable without becoming a flat pure red, ' +
+      'while the writing surfaces keep a stable warm-grey relationship. Heavy lines remain at ' +
+      'edges and inside graphics; the reading area stays quiet.',
+    tags: ['Red Alert', 'Soviet', 'Heavy industry', 'Warning red', 'Iron grey', 'Original interpretation'],
+    palette: [
+      { name: 'Iron Curtain Black', note: 'Near-black iron in an industrial interior' },
+      { name: 'Machine Grey', note: 'Equipment panels and armour' },
+      { name: 'Aged Paper White', note: 'Warm body text and readings' },
+      { name: 'Worn Silver', note: 'Secondary notes and metal scales' },
+      { name: 'Rivet Rule', note: 'Structural edges and dividers' },
+      { name: 'Warning Red', note: 'Alarms, actions and focus' },
+      { name: 'Aged Copper', note: 'Joints and secondary markers' },
+    ],
+    sources: [
+      {
+        title: 'Command & Conquer Remastered Collection official site',
+        detail: 'Version boundary: Command & Conquer: Red Alert in the 2020 remastered collection',
+        note:
+          'The official page only identifies the work and version. No screenshot, logo, unit ' +
+          'portrait or interface asset is reused.',
+      },
+      {
+        title: 'Soviet industrial visual analysis (to be added)',
+        note:
+          'Pending: a verifiable art reference with page numbers will replace this entry. ' +
+          'The current palette is not presented as official canon.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This is an unofficial Theme Atlas interpretation for colour research and interface ' +
+        'demonstration only. It is not affiliated with, licensed by or endorsed by Electronic Arts.',
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'koprulu-frontier': {
+    title: 'Koprulu Frontier',
+    subtitle: 'Industrial armour crosses the frontier while orange beacons pulse against cold cyan',
+    description:
+      'Steel blue-grey, military olive, signal orange and cool cyan establish the rhythm of frontier industry.',
+    story:
+      'The Terran direction begins with frontier outposts, serviceable industrial armour and ' +
+      'military facilities that keep moving. Nothing here depicts a person, unit or faction ' +
+      'mark. The frontier becomes a structure that can be taken apart: blue-grey holds the ' +
+      'frame, olive enters the surfaces, orange beacons lead the eye to the next connection, ' +
+      'and cool cyan confirms that scanning and communication are still online. Every colour ' +
+      'and form is an original, unofficial Theme Atlas interpretation.',
+    inspiration:
+      'Industrial blue-grey fills the background, military olive moves into panels and ' +
+      'secondary structure, signal orange becomes the primary accent, and cool cyan supplies ' +
+      'the opposite electronic signal. Armour divisions, bolt rhythm and reticles derive from ' +
+      'basic geometry rather than any in-game unit or HUD.',
+    designRationale:
+      'Olive becomes muddy if spread across the whole page, so it remains a middle layer ' +
+      'between deep blue-grey and cold white. Orange is unmistakable but limited to actions, ' +
+      'focus and a few status points; cyan gives the palette a second signal so the interface ' +
+      'does not glow with a single warm accent.',
+    tags: ['StarCraft', 'Terran', 'Industrial armour', 'Koprulu', 'Signal orange', 'Original interpretation'],
+    palette: [
+      { name: 'Frontier Night', note: 'Deep blue-black beyond the outpost' },
+      { name: 'Armour Olive', note: 'Dark olive armour and panel surfaces' },
+      { name: 'Fleet White', note: 'Slightly warm cool-white body text' },
+      { name: 'Field Grey-Green', note: 'Labels and secondary explanation' },
+      { name: 'Structural Steel', note: 'Armour divisions and structural lines' },
+      { name: 'Beacon Orange', note: 'Actions, focus and tactical signals' },
+      { name: 'Comm Cyan', note: 'Scanning, communication and secondary states' },
+    ],
+    sources: [
+      {
+        title: 'Blizzard Entertainment · StarCraft official site',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'The official page only identifies the work. No screenshot, logo, unit portrait or ' +
+          'interface asset is reused.',
+      },
+      {
+        title: 'Terran industrial visual analysis (to be added)',
+        note:
+          'Pending: a verifiable art reference with page numbers will replace this entry. ' +
+          'The current palette is not presented as official canon.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This is an unofficial Theme Atlas interpretation for colour research and interface ' +
+        'demonstration only. It is not affiliated with, licensed by or endorsed by Blizzard Entertainment.',
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'echoes-of-khala': {
+    title: 'Echoes of the Khala',
+    subtitle: 'Symmetry unfolds through violet-black as gold and psionic blue answer each other',
+    description:
+      'Violet-black, gold, ivory and psionic blue form a precise, symmetrical order for an ancient high-technology civilisation.',
+    story:
+      'The Protoss direction draws on precise structure, ceremonial symmetry and the restrained ' +
+      'use of light by an ancient technological culture. It copies no faction insignia, ' +
+      'character or architecture. Instead, that sense of order becomes geometry: the centre ' +
+      'remains symmetrical, gold describes the structural skeleton, ivory carries reading, ' +
+      'and psionic blue appears only at unstable energy nodes. StarCraft identifies the source ' +
+      'subject; all values are original Theme Atlas interpretations.',
+    inspiration:
+      'The violet-black ground lets gold read as structure rather than decoration. Panels stay ' +
+      'in a low-lightness violet to preserve spatial continuity. Ivory keeps long text away ' +
+      'from the ordinary cool-white science-fiction interface, while gold handles actions and ' +
+      'focus and psionic blue becomes the secondary accent for energy and communication.',
+    designRationale:
+      'Gold has enormous presence on violet-black, so its area is controlled: it carries ' +
+      'outlines, axes and primary actions but not large fields. Ivory and violet support long ' +
+      'reading, and blue appears only at energy nodes and interaction feedback so the three ' +
+      'strong colours do not compete.',
+    tags: ['StarCraft', 'Protoss', 'Symmetry', 'Psionic', 'Gold', 'Original interpretation'],
+    palette: [
+      { name: 'Void Violet-Black', note: 'The violet-black space around an ancient structure' },
+      { name: 'Temple Violet', note: 'Low-lightness violet panels' },
+      { name: 'Ivory Light', note: 'Warm-white body text like a ceremonial object' },
+      { name: 'Psionic Grey-Violet', note: 'Notes and secondary information' },
+      { name: 'Geometry Rule', note: 'Structural and symmetrical boundaries' },
+      { name: 'Sacred Gold', note: 'Axes, actions, focus and structural skeleton' },
+      { name: 'Psionic Blue', note: 'Energy nodes and communication feedback' },
+    ],
+    sources: [
+      {
+        title: 'Blizzard Entertainment · StarCraft official site',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'The official page only identifies the work. No screenshot, logo, unit portrait or ' +
+          'interface asset is reused.',
+      },
+      {
+        title: 'Protoss geometry and psionic visual analysis (to be added)',
+        note:
+          'Pending: a verifiable art reference with page numbers will replace this entry. ' +
+          'The current palette is not presented as official canon.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This is an unofficial Theme Atlas interpretation for colour research and interface ' +
+        'demonstration only. It is not affiliated with, licensed by or endorsed by Blizzard Entertainment.',
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'spore-tide': {
+    title: 'Spore Tide',
+    subtitle: 'Carapace and spores cover the frontier as acid green grows through berry-violet',
+    description:
+      'Carapace violet-black, berry purple, acid green and bone white describe alien tissue spreading and dividing.',
+    story:
+      'The Zerg direction is not about one creature but about growth itself: branching tissue, ' +
+      'dispersing spores, layered carapace and biological signals travelling through damp ' +
+      'darkness. The visual grammar is therefore asymmetric and organic, with lines dividing ' +
+      'slowly like veins. Every SVG is original; no character, unit or faction pattern is ' +
+      'depicted or copied. The game identifies the subject, while the colours remain an ' +
+      'interpretation rather than official settings.',
+    inspiration:
+      'Violet-black is the shadow beneath a carapace, berry-purple panels form a damp tissue ' +
+      'layer, and bone white carries body text and structural explanation. Acid green is the ' +
+      'primary accent for spore signals and live nodes; berry light becomes the secondary ' +
+      'accent for veins and edge glow, preventing the palette from relying on a single neon.',
+    designRationale:
+      'Organic themes can easily fill every space with curves, so reading areas keep a clear ' +
+      'hierarchy and only a few vein lines. Acid green is highly recognisable on deep violet ' +
+      'and is therefore restricted to actions and focus. Bone white keeps long paragraphs ' +
+      'legible while berry-violet maintains continuity with the ground.',
+    tags: ['StarCraft', 'Zerg', 'Organic contours', 'Spores', 'Acid green', 'Original interpretation'],
+    palette: [
+      { name: 'Carapace Violet-Black', note: 'Near-black violet beneath a carapace' },
+      { name: 'Berry Tissue', note: 'Damp berry-violet panel layers' },
+      { name: 'Bone White', note: 'Body text like a bone-and-shell highlight' },
+      { name: 'Spore Grey-Violet', note: 'Secondary notes and explanation' },
+      { name: 'Vein Rule', note: 'Branching veins and structural boundaries' },
+      { name: 'Acid Green', note: 'Spore activity, actions and focus' },
+      { name: 'Berry Glow', note: 'Tissue edges and secondary signals' },
+    ],
+    sources: [
+      {
+        title: 'Blizzard Entertainment · StarCraft official site',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'The official page only identifies the work. No screenshot, logo, unit portrait or ' +
+          'interface asset is reused.',
+      },
+      {
+        title: 'Zerg organic visual analysis (to be added)',
+        note:
+          'Pending: a verifiable art reference with page numbers will replace this entry. ' +
+          'The current palette is not presented as official canon.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This is an unofficial Theme Atlas interpretation for colour research and interface ' +
+        'demonstration only. It is not affiliated with, licensed by or endorsed by Blizzard Entertainment.',
+      imageLicence: noOfficialArt,
+    },
+  },
 };

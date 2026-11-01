@@ -6,7 +6,7 @@ import { t, type Locale, type UiKey } from '../i18n';
  * Each collection organises its colours differently, and the strip on the card
  * is the place where that difference is visible. These are the rules.
  */
-export type ArrangementId = 'symmetry' | 'strata' | 'luminance';
+export type ArrangementId = 'symmetry' | 'strata' | 'luminance' | 'spectrum';
 
 export interface Arrangement {
   id: ArrangementId;
@@ -31,6 +31,11 @@ export const arrangements: Record<CollectionId, Arrangement> = {
     id: 'luminance',
     label: '明度序列',
     note: '按相对明度由暗到亮排列，读起来像一段光谱。',
+  },
+  game: {
+    id: 'spectrum',
+    label: '世界色序',
+    note: '按叙事角色排列：环境、结构、信号与强调，组成一个游戏世界的视觉秩序。',
   },
 };
 
@@ -73,6 +78,8 @@ export function arrangePalette(theme: Theme): PaletteColor[] {
     const rest = palette.filter((c) => !ordered.includes(c));
     return [...ordered, ...rest];
   }
+
+  if (rule.id === 'spectrum') return palette;
 
   // symmetry: accent in the centre, the rest mirrored by lightness distance
   const accent = palette.find((c) => c.role === 'accent') ?? palette[0];

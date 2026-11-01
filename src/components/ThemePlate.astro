@@ -5,7 +5,8 @@
  * narrative and the palette are visibly the same object.
  *
  * Nothing here is traced from any artwork — the three compositions are
- * drawn for this site from simple geometric rules.
+ * drawn for this site from simple geometric rules. Game-world plates remain
+ * abstract studies in each theme's own palette.
  */
 import type { Theme } from '../data/types';
 import { getCollectionById } from '../lib/content';
@@ -152,6 +153,186 @@ const stone = hex('border');
           <circle cx="206" cy="42" r="2.6" fill={soft} />
           {/* sight line */}
           <path d="M160 100L292 66" stroke={accent} stroke-width="0.9" opacity="0.55" />
+        </g>
+      )
+    }
+
+    {
+      variant === 'stellaris' && (
+        <g>
+          <g stroke={stone} stroke-width="0.9" opacity="0.65">
+            <ellipse cx="160" cy="100" rx="138" ry="48" transform="rotate(-17 160 100)" />
+            <ellipse cx="160" cy="100" rx="96" ry="70" transform="rotate(37 160 100)" opacity="0.55" />
+            <path d="M22 158 78 129 122 138 176 95 234 106 302 56" stroke-dasharray="3 7" />
+          </g>
+          <g fill={accent} opacity="0.88">
+            <circle cx="160" cy="100" r="6" />
+            <circle cx="78" cy="129" r="3.2" />
+            <circle cx="234" cy="106" r="2.5" />
+            <circle cx="302" cy="56" r="2" />
+          </g>
+          <g fill={flare}>
+            <circle cx="122" cy="138" r="2.8" />
+            <circle cx="264" cy="42" r="2" />
+          </g>
+          <circle cx="160" cy="100" r="20" stroke={accent} stroke-width="1" opacity="0.4" />
+          <circle cx="160" cy="100" r="34" stroke={flare} stroke-width="0.8" opacity="0.28" />
+          <g stroke={accent} opacity="0.58">
+            <path d="M160 76v48M136 100h48" />
+            <path d="M78 129 160 100 234 106 302 56" stroke-dasharray="2 5" />
+          </g>
+          <g fill={soft} opacity="0.6">
+            <circle cx="42" cy="50" r="1.4" />
+            <circle cx="282" cy="145" r="1.2" />
+            <circle cx="208" cy="24" r="1" />
+            <circle cx="60" cy="178" r="1.1" />
+          </g>
+        </g>
+      )
+    }
+
+    {
+      variant === 'red-alert-allied' && (
+        <g>
+          <g stroke={stone} stroke-width="0.7" opacity="0.4">
+            {Array.from({ length: 11 }, (_, i) => <path d={'M' + (i * 32) + ' 32v136'} />)}
+            {Array.from({ length: 6 }, (_, i) => <path d={'M24 ' + (44 + i * 24) + 'h272'} />)}
+          </g>
+          <g stroke={line} stroke-width="1.2" opacity="0.72">
+            <path d="M42 158h82l25-35h31" />
+            <path d="M278 158h-74l-18-32" opacity="0.65" />
+            <circle cx="112" cy="91" r="38" />
+            <circle cx="112" cy="91" r="24" opacity="0.6" />
+            <path d="M74 91h76M112 53v76" opacity="0.45" />
+          </g>
+          <g stroke={accent} stroke-width="1.4" opacity="0.9">
+            <rect x="210" y="58" width="66" height="66" rx="4" />
+            <rect x="222" y="70" width="42" height="42" rx="2" opacity="0.65" />
+            <path d="M112 91 210 91M243 58V36M243 124v22" />
+          </g>
+          <circle cx="112" cy="91" r="5" fill={accent} />
+          <circle cx="243" cy="91" r="4" fill={flare} />
+          <g fill={flare}>
+            <circle cx="42" cy="158" r="2.4" />
+            <circle cx="278" cy="158" r="2.4" />
+          </g>
+          <path d="M160 24h28M160 176h28" stroke={flare} opacity="0.35" />
+        </g>
+      )
+    }
+
+    {
+      variant === 'red-alert-soviet' && (
+        <g>
+          <g stroke={stone} stroke-width="2" opacity="0.7">
+            <path d="M42 34h236v132H42z" />
+            <path d="M56 48h208v104H56z" opacity="0.55" />
+            <path d="M76 48v104M244 48v104M56 76h208M56 124h208" opacity="0.35" />
+          </g>
+          <g stroke={flare} stroke-width="1.2" opacity="0.75">
+            <circle cx="96" cy="100" r="34" />
+            <path d="M96 62v76M58 100h76M69 73l54 54M123 73l-54 54" opacity="0.55" />
+            <rect x="84" y="88" width="24" height="24" fill={flare} opacity="0.75" />
+          </g>
+          <g stroke={accent} stroke-width="1.3" opacity="0.9">
+            <path d="M174 64h74v18h-74zM174 94h56v16h-56zM174 122h84v16h-84z" />
+            <path d="M284 34v132M292 34h18v24h-18zM292 142h18v24h-18z" />
+          </g>
+          <g fill={accent}>
+            <circle cx="174" cy="64" r="3" />
+            <circle cx="174" cy="122" r="3" />
+            <circle cx="301" cy="46" r="2.5" />
+            <circle cx="301" cy="154" r="2.5" />
+          </g>
+          <path d="M32 186h256" stroke={stone} opacity="0.55" />
+        </g>
+      )
+    }
+
+    {
+      variant === 'terran' && (
+        <g>
+          <g stroke={stone} stroke-width="1.2" opacity="0.72">
+            <path d="M44 40h58v18H62v26h72v18H48v46h76" />
+            <path d="M210 40h66v20h-48v24h58v18h-46v46h-54" />
+            <path d="M44 158h96l34-58 40 58h102" opacity="0.55" />
+          </g>
+          <g fill={soft} opacity="0.7">
+            <circle cx="54" cy="50" r="2" />
+            <circle cx="96" cy="50" r="2" />
+            <circle cx="103" cy="72" r="2" />
+            <circle cx="103" cy="144" r="2" />
+            <circle cx="268" cy="50" r="2" />
+            <circle cx="280" cy="70" r="2" />
+          </g>
+          <g stroke={accent} stroke-width="1.5" opacity="0.9">
+            <circle cx="160" cy="100" r="35" />
+            <circle cx="160" cy="100" r="21" opacity="0.65" />
+            <path d="M160 55v24M160 121v24M115 100h24M181 100h24" />
+            <rect x="150" y="90" width="20" height="20" rx="2" fill={accent} opacity="0.88" />
+          </g>
+          <path d="M30 100h82l20-19M292 100h38M160 26v20M160 154v20" stroke={flare} opacity="0.75" />
+          <circle cx="132" cy="81" r="2.5" fill={flare} />
+          <circle cx="286" cy="100" r="2.5" fill={flare} />
+        </g>
+      )
+    }
+
+    {
+      variant === 'protoss' && (
+        <g>
+          <g stroke={stone} stroke-width="0.8" opacity="0.55">
+            <path d="M160 20v160M28 100h264" />
+            <circle cx="160" cy="100" r="78" stroke-dasharray="3 6" />
+          </g>
+          <g stroke={accent} stroke-width="1.3" opacity="0.9">
+            <path d="M160 22 250 100l-90 78-90-78z" />
+            <path d="M160 48 224 100l-64 52-64-52z" opacity="0.72" />
+            <path d="M160 72 191 100l-31 28-31-28z" opacity="0.56" />
+            <circle cx="160" cy="100" r="12" />
+            <circle cx="160" cy="100" r="31" opacity="0.42" />
+          </g>
+          <g fill={flare}>
+            <circle cx="160" cy="100" r="4" />
+            <circle cx="160" cy="22" r="2.7" />
+            <circle cx="250" cy="100" r="2.7" />
+            <circle cx="160" cy="178" r="2.7" />
+            <circle cx="70" cy="100" r="2.7" />
+          </g>
+          <g stroke={flare} opacity="0.6">
+            <path d="M160 31v22M160 147v22M241 100h-22M101 100H79" />
+          </g>
+        </g>
+      )
+    }
+
+    {
+      variant === 'zerg' && (
+        <g>
+          <path
+            d="M38 160c20-32 13-59 40-79s48-7 68-31 55-8 65 20 34 24 27 52-31 27-30 52"
+            stroke={stone}
+            stroke-width="1.4"
+            opacity="0.7"
+          />
+          <g stroke={flare} stroke-linecap="round" opacity="0.85">
+            <path d="M160 24c-12 31 15 38 4 64s18 35 7 61 9 30 1 42" />
+            <path d="M164 72c-31-12-49-34-42-58M168 108c38 18 70 12 86-14M166 132c-29 27-26 48-13 62M171 154c31 14 42 27 37 43" />
+            <path d="M122 14c-16 2-28 9-38 23M254 94c17-9 29-10 42-4M153 194c-17 2-27-2-38-12" opacity="0.68" />
+          </g>
+          <g fill={accent}>
+            <circle cx="160" cy="24" r="4" />
+            <circle cx="122" cy="14" r="2.7" />
+            <circle cx="254" cy="94" r="3" />
+            <circle cx="153" cy="194" r="2.5" />
+            <circle cx="208" cy="197" r="2.2" />
+          </g>
+          <g fill={flare} opacity="0.85">
+            <circle cx="164" cy="72" r="2.5" />
+            <circle cx="168" cy="108" r="2.2" />
+            <circle cx="166" cy="132" r="2.4" />
+          </g>
+          <path d="M48 184c30-10 52-5 74 6s43 8 68-4 48-12 70 4" stroke={soft} stroke-width="1" opacity="0.45" />
         </g>
       )
     }

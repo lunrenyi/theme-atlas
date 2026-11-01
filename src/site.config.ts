@@ -18,11 +18,11 @@ export const site = {
   },
   description: {
     zh:
-      'Theme Atlas 收录中国神话、中国瓷器与虚构世界的配色主题。每套主题都有故事、' +
+      'Theme Atlas 收录中国神话、中国瓷器、游戏与虚构世界的配色主题。每套主题都有故事、' +
       '完整色值与语义角色，并支持复制和导出 CSS、JSON。',
     en:
       'Theme Atlas archives colour themes inspired by Chinese mythology, Chinese porcelain ' +
-      'and imagined worlds. Every theme includes its story, full palette and semantic roles, ' +
+      'games and imagined worlds. Every theme includes its story, full palette and semantic roles, ' +
       'with one-click copy and CSS or JSON export.',
   },
   repoUrl: 'https://github.com/lunrenyi/theme-atlas',

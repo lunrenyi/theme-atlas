@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CollectionMotif from '../components/CollectionMotif.astro';
+import GameWorldCollection from '../components/GameWorldCollection.astro';
 import ThemeCard from '../components/ThemeCard.astro';
 import { getCollections, getThemesByCollection } from '../lib/content';
 import { localePath } from '../lib/url';
@@ -33,6 +34,10 @@ const collectionGroups = collections.map((collection) => ({
 
   {
     collectionGroups.map(({ collection, themes: list }, index) => {
+      if (collection.id === 'game') {
+        return <GameWorldCollection collection={collection} themes={list} lang={lang} />;
+      }
+
       return (
         <section
           class="section collection"

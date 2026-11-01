@@ -1,0 +1,73 @@
+---
+/**
+ * Original overview graphic for Game Worlds. The three nodes are abstract
+ * representations of the three game groups, not faction insignia.
+ */
+---
+
+<svg
+  class="game-chart"
+  viewBox="0 0 540 300"
+  aria-hidden="true"
+  fill="none"
+>
+  <defs>
+    <radialGradient id="game-chart-halo">
+      <stop offset="0%" stop-color="#76DDE5" stop-opacity="0.2"></stop>
+      <stop offset="42%" stop-color="#B85A96" stop-opacity="0.08"></stop>
+      <stop offset="100%" stop-color="#080D1C" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  <circle cx="278" cy="145" r="132" fill="url(#game-chart-halo)"></circle>
+  <g stroke="#344363" opacity="0.65">
+    <ellipse cx="278" cy="145" rx="210" ry="72" transform="rotate(-13 278 145)"></ellipse>
+    <ellipse cx="278" cy="145" rx="150" ry="104" transform="rotate(33 278 145)" opacity="0.72"></ellipse>
+    <ellipse cx="278" cy="145" rx="96" ry="38" transform="rotate(-13 278 145)" opacity="0.65"></ellipse>
+    <path d="M22 248 82 211 135 220 196 169 250 156" stroke-dasharray="3 7"></path>
+    <path d="M338 145 399 108 454 117 518 76" stroke-dasharray="2 6"></path>
+    <path d="M278 145 304 232 367 257" stroke-dasharray="2 5" opacity="0.7"></path>
+  </g>
+
+  <g transform="translate(112 86)">
+    <circle r="27" stroke="#76DDE5" opacity="0.62"></circle>
+    <ellipse rx="41" ry="13" transform="rotate(-24)" stroke="#76DDE5" opacity="0.42"></ellipse>
+    <path d="M-19 0h38M0-19v38" stroke="#76DDE5" opacity="0.4"></path>
+    <circle r="5" fill="#D8BE7E"></circle>
+    <circle cx="31" cy="-15" r="2.5" fill="#76DDE5"></circle>
+  </g>
+
+  <g transform="translate(306 82)">
+    <path d="M0-31 31 0 0 31-31 0z" stroke="#E36A5F" opacity="0.78"></path>
+    <path d="M0-17 17 0 0 17-17 0z" stroke="#65D9E8" opacity="0.72"></path>
+    <path d="M-39 0h78M0-39v78" stroke="#65D9E8" opacity="0.32"></path>
+    <circle r="4" fill="#E36A5F"></circle>
+    <circle cx="25" cy="-24" r="2.4" fill="#65D9E8"></circle>
+  </g>
+
+  <g transform="translate(415 200)">
+    <path d="M-34 18-6-26l24 10 18-18" stroke="#F29A42" opacity="0.8"></path>
+    <path d="M-24 29 0 2l18 7 22-17" stroke="#75A9FF" opacity="0.65"></path>
+    <path d="M31 4c-6 13 5 18 0 29s6 15 1 23" stroke="#A9D95B" opacity="0.8"></path>
+    <circle cx="-34" cy="18" r="2.8" fill="#F29A42"></circle>
+    <circle cx="0" cy="2" r="3.2" fill="#75A9FF"></circle>
+    <circle cx="32" cy="33" r="2.5" fill="#A9D95B"></circle>
+  </g>
+
+  <g fill="#EAF0FF" opacity="0.6">
+    <circle cx="43" cy="52" r="1.4"></circle>
+    <circle cx="78" cy="265" r="1.1"></circle>
+    <circle cx="212" cy="31" r="1.6"></circle>
+    <circle cx="464" cy="34" r="1.3"></circle>
+    <circle cx="498" cy="186" r="1.1"></circle>
+    <circle cx="350" cy="270" r="1.4"></circle>
+  </g>
+</svg>
+
+<style>
+  .game-chart {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
