@@ -11,33 +11,60 @@ interface Props {
 }
 
 const { palette, variant = 'card', class: className = '', lang } = Astro.props;
-const summary = palette.map((c) => c.name + ' ' + c.hex).join(t(lang, 'palette.stripSeparator'));
+const summary = palette.map((color) => color.name + ' ' + color.hex).join(t(lang, 'palette.stripSeparator'));
 ---
 
 <div class:list={['strip-wrap', className]}>
   <div
     class:list={['strip', 'strip--' + variant]}
-    role="img"
+    role="group"
     aria-label={t(lang, 'palette.stripLabel', { summary })}
   >
     {
-      palette.map((c) => (
-        <span
+      palette.map((color) => (
+        <button
+          type="button"
           class="strip__swatch"
-          style={'--swatch:' + c.hex}
-          data-label={c.name + ' · ' + c.hex}
-          data-role={c.role}
+          style={'--swatch:' + color.hex}
+          data-label={color.name + ' · ' + color.hex}
+          data-palette-swatch
+          aria-label={t(lang, 'palette.swatchLabel', { name: color.name, hex: color.hex })}
+          aria-expanded="false"
         />
       ))
     }
   </div>
 </div>
 
+<script>
+  const swatches = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-palette-swatch]'));
+
+  function closeSwatches(except?: HTMLButtonElement) {
+    swatches.forEach((swatch) => {
+      if (swatch === except) return;
+      swatch.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  swatches.forEach((swatch) => {
+    swatch.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const expanded = swatch.getAttribute('aria-expanded') === 'true';
+      closeSwatches(swatch);
+      swatch.setAttribute('aria-expanded', String(!expanded));
+    });
+  });
+
+  document.addEventListener('click', () => closeSwatches());
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeSwatches();
+  });
+</script>
+
 <style>
   .strip {
     display: flex;
     width: 100%;
-    overflow: hidden;
     border-radius: var(--radius-sm);
     box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1);
   }
@@ -46,11 +73,23 @@ const summary = palette.map((c) => c.name + ' ' + c.hex).join(t(lang, 'palette.s
     position: relative;
     flex: 1 1 0;
     min-width: 0;
+    appearance: none;
+    border: 0;
+    padding: 0;
     background: var(--swatch);
+    cursor: help;
+  }
+
+  .strip__swatch:first-child {
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+
+  .strip__swatch:last-child {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   }
 
   .strip--card .strip__swatch {
-    height: 86px;
+    height: 76px;
   }
 
   .strip--hero .strip__swatch {
@@ -78,13 +117,18 @@ const summary = palette.map((c) => c.name + ' ' + c.hex).join(t(lang, 'palette.s
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
-    z-index: 3;
+    z-index: 5;
   }
 
   .strip__swatch:hover::after,
-  .strip__swatch:focus-visible::after {
+  .strip__swatch:focus-visible::after,
+  .strip__swatch[aria-expanded='true']::after {
     opacity: 1;
     transform: translate(-50%, 0);
   }
-</style>
 
+  .strip__swatch:focus-visible {
+    outline-offset: -3px;
+    z-index: 2;
+  }
+</style>

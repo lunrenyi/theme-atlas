@@ -1,6 +1,5 @@
 ---
-import type { Collection } from '../data/types';
-import { getThemes } from '../lib/content';
+import type { Collection, Theme } from '../data/types';
 import { arrangementFor, arrangePalette } from '../lib/arrangement';
 import { localePath } from '../lib/url';
 import { seriesNumber, t, type Locale } from '../i18n';
@@ -9,13 +8,13 @@ import PaletteStrip from './PaletteStrip.astro';
 
 interface Props {
   collection: Collection;
+  themes: Theme[];
   index: number;
   lang: Locale;
 }
 
-const { collection, index, lang } = Astro.props;
+const { collection, themes: list, index, lang } = Astro.props;
 
-const list = getThemes(lang).filter((t) => t.collection === collection.id);
 const rule = arrangementFor(collection.id, lang);
 const representative = list[0] ? arrangePalette(list[0]) : [];
 ---

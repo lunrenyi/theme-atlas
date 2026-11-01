@@ -37,6 +37,7 @@ const year = new Date().getFullYear();
                 </li>
               ))
             }
+            <li><a href={localePath('/themes/', lang)}>{t(lang, 'footer.browseAll')}</a></li>
             <li><a href={localePath('/collections', lang)}>{t(lang, 'footer.allCollections')}</a></li>
           </ul>
         </div>

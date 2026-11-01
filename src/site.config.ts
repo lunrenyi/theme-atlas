@@ -35,12 +35,16 @@ export const site = {
   },
 } as const;
 
-export type DocumentPage = 'home' | 'theme' | 'collections' | 'about' | 'notFound';
+export type DocumentPage = 'home' | 'themes' | 'theme' | 'collections' | 'about' | 'notFound';
 
 const documentPageTitles: Record<
   Exclude<DocumentPage, 'home' | 'theme'>,
   Record<Locale, string>
 > = {
+  themes: {
+    zh: '浏览全部主题',
+    en: 'Browse All Themes',
+  },
   collections: {
     zh: '主题系列',
     en: 'Theme collections',
@@ -77,7 +81,7 @@ export function documentTitle(lang: Locale, page: DocumentPage, subject?: string
 }
 
 export const nav = [
-  { key: 'nav.explore', href: '/#themes' },
+  { key: 'nav.explore', href: '/themes/' },
   { key: 'nav.collections', href: '/collections' },
   { key: 'nav.about', href: '/about' },
 ] as const;

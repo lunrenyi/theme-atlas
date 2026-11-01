@@ -3,12 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import StarMap from '../components/StarMap.astro';
 import SeriesPanel from '../components/SeriesPanel.astro';
 import ThemeCard from '../components/ThemeCard.astro';
-import ThemeLibrary from '../components/ThemeLibrary.astro';
-import { getCollections, getFeaturedThemes, getThemes } from '../lib/content';
-import { cssVariableAdapter } from '../adapters';
+import { getCollections, getFeaturedThemes, getThemes, getThemesByCollection } from '../lib/content';
 import { site } from '../site.config';
 import { localePath } from '../lib/url';
-import { catalogCount, spaceBefore, t, type Locale } from '../i18n';
+import { spaceBefore, t, type Locale } from '../i18n';
 
 interface Props {
   lang: Locale;
@@ -18,10 +16,9 @@ const { lang } = Astro.props;
 
 const collections = getCollections(lang);
 const themes = getThemes(lang);
-const featured = getFeaturedThemes(lang);
+const featured = getFeaturedThemes(lang).slice(0, 3);
 const total = themes.length;
 const sample = themes[0];
-const sampleCss = cssVariableAdapter.render(sample, lang);
 ---
 
 <BaseLayout page="home" description={site.description[lang]} lang={lang}>
@@ -46,7 +43,7 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
           </h1>
           <p class="lede hero__text">{t(lang, 'hero.lede')}</p>
           <div class="hero__actions">
-            <a class="btn btn--solid" href={localePath('/#themes', lang)}>
+            <a class="btn btn--solid" href={localePath('/themes/', lang)}>
               {t(lang, 'hero.ctaPrimary')}
             </a>
             <a class="hero__more" href={localePath('/collections', lang)}>
@@ -102,7 +99,12 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
       <div class="series-grid">
         {
           collections.map((collection, i) => (
-            <SeriesPanel collection={collection} index={i} lang={lang} />
+            <SeriesPanel
+              collection={collection}
+              themes={getThemesByCollection(collection.id, lang)}
+              index={i}
+              lang={lang}
+            />
           ))
         }
       </div>
@@ -128,77 +130,53 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
     </div>
   </section>
 
-  <!-- =========================== library ========================== -->
-  <section class="section library" id="themes">
+  <!-- ======================= all themes CTA ======================= -->
+  <section class="section browse-invite">
     <div class="wrap wrap--wide">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow eyebrow--gold">
-            <span class="index">03</span> {t(lang, 'section.catalogEyebrow')}
-          </p>
-          <h2 class="section-head__title">{t(lang, 'section.catalogTitle')}</h2>
-        </div>
-        <p class="section-head__meta">
-          {t(lang, 'section.catalogMeta', { count: catalogCount(lang, total) })}
-        </p>
-      </div>
-
-      <p class="section-lede">
-        {t(lang, 'section.catalogLede', { count: String(total) })}
-      </p>
-
-      <ThemeLibrary themes={themes} lang={lang} />
+      <a class="browse-invite__link" href={localePath('/themes/', lang)}>
+        <span class="browse-invite__copy">
+          <span class="eyebrow eyebrow--gold">{t(lang, 'section.browseEyebrow')}</span>
+          <span class="browse-invite__title">{t(lang, 'section.browseTitle')}</span>
+          <span class="browse-invite__lede">{t(lang, 'section.browseLede')}</span>
+          <span class="browse-invite__action">
+            {t(lang, 'section.browseAll', { count: total })} <span aria-hidden="true">→</span>
+          </span>
+        </span>
+        <svg class="browse-invite__orbit" viewBox="0 0 300 190" aria-hidden="true" fill="none">
+          <ellipse cx="158" cy="96" rx="112" ry="38" transform="rotate(-14 158 96)" stroke="#344363"></ellipse>
+          <ellipse cx="158" cy="96" rx="75" ry="58" transform="rotate(38 158 96)" stroke="#344363" opacity="0.55"></ellipse>
+          <circle cx="158" cy="96" r="5" fill="#DCC38B"></circle>
+          <circle cx="250" cy="59" r="3.5" fill="#76D8DF"></circle>
+          <circle cx="91" cy="151" r="2.6" fill="#9885FF"></circle>
+          <circle cx="35" cy="32" r="1.5" fill="#EAF0FF" opacity="0.65"></circle>
+        </svg>
+      </a>
     </div>
   </section>
 
-  <!-- =========================== export =========================== -->
-  <section class="section export">
+  <!-- ========================= capabilities ======================= -->
+  <section class="section capabilities">
     <div class="wrap wrap--wide">
       <div class="section-head">
         <div>
           <p class="eyebrow eyebrow--gold">
-            <span class="index">04</span> {t(lang, 'section.exportEyebrow')}
+            <span class="index">03</span> {t(lang, 'section.capabilityEyebrow')}
           </p>
-          <h2 class="section-head__title">{t(lang, 'section.exportTitle')}</h2>
+          <h2 class="section-head__title">{t(lang, 'section.capabilityTitle')}</h2>
         </div>
-        <p class="section-head__meta">{t(lang, 'section.exportMeta')}</p>
+        <p class="section-head__meta">CSS / JSON</p>
       </div>
 
-      <div class="export__grid">
-        <div class="export__intro">
-          <p class="export__lede">{t(lang, 'export.lede')}</p>
-          <ul class="export__list">
-            <li>
-              <span class="export__tag mono">CSS</span>
-              <span class="export__name">{t(lang, 'export.cssName')}</span>
-              <span class="export__desc">{t(lang, 'export.cssDesc')}</span>
-            </li>
-            <li>
-              <span class="export__tag mono">JSON</span>
-              <span class="export__name">{t(lang, 'export.jsonName')}</span>
-              <span class="export__desc">{t(lang, 'export.jsonDesc')}</span>
-            </li>
-            <li>
-              <span class="export__tag mono">＋</span>
-              <span class="export__name">{t(lang, 'export.adapterName')}</span>
-              <span class="export__desc">{t(lang, 'export.adapterDesc')}</span>
-            </li>
-          </ul>
-          <p class="export__note mono">
-            {t(lang, 'export.note', {
-              count: String(sample.palette.length).padStart(2, '0'),
-              title: sample.title,
-            })}
-          </p>
+      <div class="capabilities__body">
+        <p>{t(lang, 'section.capabilityLede')}</p>
+        <div class="capabilities__actions">
+          <a class="btn btn--ghost btn--sm" href={localePath('/theme/' + sample.slug, lang)}>
+            {t(lang, 'section.capabilityDetail')}
+          </a>
+          <a class="hero__more" href={localePath('/themes/', lang)}>
+            {t(lang, 'hero.ctaPrimary')} <span aria-hidden="true">→</span>
+          </a>
         </div>
-
-        <figure class="export__code">
-          <figcaption class="export__code-head mono">
-            <span>{sample.slug}.css</span>
-            <span>{t(lang, 'export.codeLabel')}</span>
-          </figcaption>
-          <pre class="export__pre"><code>{sampleCss}</code></pre>
-        </figure>
       </div>
     </div>
   </section>
@@ -382,105 +360,102 @@ const sampleCss = cssVariableAdapter.render(sample, lang);
     gap: 0;
   }
 
-  /* ---------------- export ---------------- */
-  .export__grid {
+  /* ---------------- browse invitation ---------------- */
+  .browse-invite {
+    padding-block: clamp(12px, 2vw, 24px);
+  }
+
+  .browse-invite__link {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    gap: clamp(28px, 4vw, 64px);
-    align-items: start;
-  }
-
-  .export__lede {
-    font-size: var(--step-1);
-    line-height: 1.72;
-    color: var(--text-2);
-    max-width: 44ch;
-  }
-
-  .export__list {
-    list-style: none;
-    margin-top: 24px;
-    border-top: 1px solid var(--orbit-faint);
-  }
-
-  .export__list li {
-    display: grid;
-    grid-template-columns: 54px minmax(0, 1fr);
-    gap: 4px 14px;
-    padding: 13px 0;
-    border-bottom: 1px solid var(--orbit-faint);
-  }
-
-  .export__tag {
-    grid-row: span 2;
-    align-self: start;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    color: var(--quantum);
-    border: 1px solid var(--orbit-dim);
-    border-radius: var(--radius-sm);
-    padding: 3px 0;
-    text-align: center;
-  }
-
-  .export__name {
-    color: var(--text);
-    font-size: var(--step-0);
-  }
-
-  .export__desc {
-    font-size: 0.78rem;
-    color: var(--text-3);
-  }
-
-  .export__note {
-    margin-top: 22px;
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    color: var(--text-3);
-  }
-
-  .export__code {
-    margin: 0;
-    border: 1px solid var(--orbit-faint);
-    border-radius: var(--radius);
-    background: color-mix(in srgb, var(--panel) 70%, transparent);
-    overflow: hidden;
-  }
-
-  .export__code-head {
-    display: flex;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.54fr);
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--orbit-faint);
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    color: var(--text-3);
+    gap: 24px;
+    overflow: hidden;
+    padding: clamp(24px, 3.2vw, 42px);
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius);
+    background:
+      linear-gradient(100deg, rgb(17 27 53 / 0.72), rgb(8 13 28 / 0.24)),
+      radial-gradient(circle at 86% 30%, rgb(118 216 223 / 0.08), transparent 34%);
+    text-decoration: none;
+    transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
   }
 
-  .export__code-head span:last-child {
+  .browse-invite__link:hover,
+  .browse-invite__link:focus-visible {
+    border-color: var(--gold);
+  }
+
+  .browse-invite__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .browse-invite__title {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  .browse-invite__lede {
+    max-width: 50ch;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  .browse-invite__action {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
     color: var(--glow);
   }
 
-  .export__pre {
-    margin: 0;
-    padding: 18px 20px;
-    overflow-x: auto;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    line-height: 1.85;
+  .browse-invite__orbit {
+    width: 100%;
+    height: auto;
+    opacity: 0.9;
+  }
+
+  /* ---------------- capabilities ---------------- */
+  .capabilities__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: clamp(24px, 4vw, 64px);
+    padding-top: 6px;
+  }
+
+  .capabilities__body > p {
+    max-width: 62ch;
     color: var(--text-2);
+    font-size: var(--step-0);
+    line-height: 1.82;
   }
 
-  .export__pre code {
-    font-family: inherit;
+  .capabilities__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px 22px;
   }
 
-  @media (max-width: 900px) {
-    .export__grid {
+  @media (max-width: 820px) {
+    .browse-invite__link {
       grid-template-columns: 1fr;
+    }
+
+    .browse-invite__orbit {
+      display: none;
+    }
+
+    .capabilities__body {
+      grid-template-columns: 1fr;
+      align-items: start;
     }
   }
 </style>

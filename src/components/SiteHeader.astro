@@ -1,21 +1,24 @@
 ---
 import { nav, site } from '../site.config';
 import { getThemes } from '../lib/content';
-import { localePath, pathForLocale, withBase } from '../lib/url';
+import { localePath, pathForLocale, stripBase } from '../lib/url';
 import { localeMeta, locales, t, type Locale, type UiKey } from '../i18n';
 
 interface Props {
   lang: Locale;
+  /** The dedicated themes page owns the main search field. */
+  showSearch?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, showSearch = true } = Astro.props;
 const meta = localeMeta[lang];
 
-const path = Astro.url.pathname.replace(withBase('/') === '/' ? '' : withBase('/'), '');
+const path = stripBase(Astro.url.pathname);
+const pagePath = path === '/en' ? '/' : path.startsWith('/en/') ? path.slice('/en'.length) : path;
 const isActive = (href: string) => {
-  if (href === '/') return path === '/';
+  if (href === '/') return pagePath === '/';
   if (href.startsWith('/#')) return false;
-  return path.startsWith(href);
+  return pagePath.startsWith(href);
 };
 
 // the catalogue size is counted from the data, never written down twice
@@ -68,21 +71,32 @@ const alternate: Record<Locale, string> = {
         <span class="catalog__value" aria-hidden="true">{String(total).padStart(3, '0')}</span>
       </p>
 
-      <form class="header-search" role="search" data-header-search>
-        <svg class="field__icon" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
-          <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
-          <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
-        </svg>
-        <label class="sr-only" for="header-search-input">{t(lang, 'header.searchLabel')}</label>
-        <input
-          id="header-search-input"
-          type="search"
-          name="q"
-          placeholder={t(lang, 'header.searchPlaceholder')}
-          autocomplete="off"
-          data-global-search
-        />
-      </form>
+      {
+        showSearch && (
+          <form
+            class="header-search"
+            role="search"
+            action={localePath('/themes/', lang)}
+            method="get"
+            data-header-search
+          >
+            <input type="hidden" name="focus" value="search" />
+            <svg class="field__icon" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+              <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+            </svg>
+            <label class="sr-only" for="header-search-input">{t(lang, 'header.searchLabel')}</label>
+            <input
+              id="header-search-input"
+              type="search"
+              name="q"
+              placeholder={t(lang, 'header.searchPlaceholder')}
+              autocomplete="off"
+              data-global-search
+            />
+          </form>
+        )
+      }
 
       <!-- language switcher -->
       <div class="lang" data-lang>
@@ -161,26 +175,41 @@ const alternate: Record<Locale, string> = {
 
   <div class="mobile-panel" id="mobile-panel" hidden data-mobile-panel>
     <div class="wrap">
-      <form class="field" role="search" data-header-search>
-        <svg class="field__icon" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
-          <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
-          <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
-        </svg>
-        <label class="sr-only" for="mobile-search-input">{t(lang, 'header.searchLabel')}</label>
-        <input
-          id="mobile-search-input"
-          type="search"
-          name="q"
-          placeholder={t(lang, 'header.searchPlaceholder')}
-          autocomplete="off"
-          data-global-search
-        />
-      </form>
+      {
+        showSearch && (
+          <form
+            class="field"
+            role="search"
+            action={localePath('/themes/', lang)}
+            method="get"
+            data-header-search
+          >
+            <input type="hidden" name="focus" value="search" />
+            <svg class="field__icon" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+              <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+            </svg>
+            <label class="sr-only" for="mobile-search-input">{t(lang, 'header.searchLabel')}</label>
+            <input
+              id="mobile-search-input"
+              type="search"
+              name="q"
+              placeholder={t(lang, 'header.searchPlaceholder')}
+              autocomplete="off"
+              data-global-search
+            />
+          </form>
+        )
+      }
       <ul class="mobile-panel__nav">
         {
           nav.map((item) => (
             <li>
-              <a href={localePath(item.href, lang)}>
+              <a
+                href={localePath(item.href, lang)}
+                class:list={{ 'is-active': isActive(item.href) }}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
                 <span>{t(lang, item.key as UiKey)}</span>
               </a>
             </li>
@@ -265,62 +294,17 @@ const alternate: Record<Locale, string> = {
     });
   }
 
-  // --- global search ------------------------------------------------
+  // --- global search fields ----------------------------------------
   const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('[data-global-search]'));
-  const home = document.querySelector<HTMLInputElement>('[data-library-search]');
-
-  function applyToLibrary(value: string) {
-    if (!home) return;
-    if (home.value !== value) {
-      home.value = value;
-      home.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  }
 
   inputs.forEach((input) => {
     input.addEventListener('input', () => {
       const value = input.value;
-      // keep the two header fields in sync
       inputs.forEach((other) => {
         if (other !== input && other.value !== value) other.value = value;
       });
-      if (home) {
-        applyToLibrary(value);
-      }
-    });
-
-    input.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter') return;
-      event.preventDefault();
-      if (home) {
-        applyToLibrary(input.value);
-        home.scrollIntoView({ block: 'center' });
-        home.focus({ preventScroll: true });
-      } else {
-        const target = new URL(window.location.origin + import.meta.env.BASE_URL);
-        target.searchParams.set('q', input.value);
-        target.hash = 'themes';
-        window.location.href = target.toString();
-      }
     });
   });
-
-  // the library tells the header what the current query is
-  document.addEventListener('atlas:search-changed', (event) => {
-    const detail = (event as CustomEvent<{ query: string }>).detail;
-    inputs.forEach((input) => {
-      if (input.value !== detail.query) input.value = detail.query;
-    });
-  });
-
-  // prefill from ?q=
-  const params = new URLSearchParams(window.location.search);
-  const initial = params.get('q');
-  if (initial && home) {
-    home.value = initial;
-    home.dispatchEvent(new Event('input', { bubbles: true }));
-    inputs.forEach((input) => (input.value = initial));
-  }
 </script>
 
 <style>
@@ -653,6 +637,10 @@ const alternate: Record<Locale, string> = {
     font-size: 0.8rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  .mobile-panel__nav a.is-active {
+    color: var(--gold);
   }
 
   @media (max-width: 1180px) {

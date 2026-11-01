@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ThemeLibrary from '../components/ThemeLibrary.astro';
+import { getCollections, getThemes } from '../lib/content';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const themes = getThemes(lang);
+const collections = getCollections(lang);
+const colorCount = themes.reduce((count, theme) => count + theme.palette.length, 0);
+---
+
+<BaseLayout page="themes" description={t(lang, 'themes.lede')} lang={lang}>
+  <section class="browse-hero">
+    <div class="wrap wrap--wide">
+      <div class="browse-hero__grid">
+        <div class="browse-hero__intro">
+          <p class="eyebrow eyebrow--gold">{t(lang, 'themes.eyebrow')}</p>
+          <h1 class="browse-hero__title">{t(lang, 'themes.title')}</h1>
+          <p class="lede">{t(lang, 'themes.lede')}</p>
+        </div>
+
+        <figure class="browse-orbit" aria-hidden="true">
+          <svg viewBox="0 0 420 230" fill="none">
+            <defs>
+              <radialGradient id="browse-halo">
+                <stop offset="0%" stop-color="#DCC38B" stop-opacity="0.28"></stop>
+                <stop offset="44%" stop-color="#9885FF" stop-opacity="0.09"></stop>
+                <stop offset="100%" stop-color="#080D1C" stop-opacity="0"></stop>
+              </radialGradient>
+            </defs>
+            <circle cx="282" cy="112" r="94" fill="url(#browse-halo)"></circle>
+            <g stroke="#344363" stroke-width="1">
+              <ellipse cx="282" cy="112" rx="142" ry="48" transform="rotate(-15 282 112)" opacity="0.75"></ellipse>
+              <ellipse cx="282" cy="112" rx="105" ry="82" transform="rotate(38 282 112)" opacity="0.45"></ellipse>
+              <ellipse cx="282" cy="112" rx="72" ry="27" transform="rotate(-15 282 112)" opacity="0.45"></ellipse>
+              <path d="M52 191 96 174 144 184 198 154 224 119" opacity="0.35" stroke-dasharray="3 7"></path>
+            </g>
+            <circle cx="224" cy="119" r="5" fill="#DCC38B"></circle>
+            <circle cx="224" cy="119" r="14" stroke="#DCC38B" stroke-width="1" opacity="0.28"></circle>
+            <circle cx="374" cy="72" r="3.5" fill="#76D8DF"></circle>
+            <circle cx="194" cy="181" r="2.5" fill="#9885FF"></circle>
+            <circle cx="80" cy="43" r="1.5" fill="#EAF0FF" opacity="0.7"></circle>
+            <circle cx="351" cy="176" r="1.2" fill="#EAF0FF" opacity="0.55"></circle>
+            <circle cx="122" cy="93" r="1" fill="#DCC38B" opacity="0.65"></circle>
+          </svg>
+        </figure>
+      </div>
+
+      <dl class="browse-stats">
+        <div>
+          <dt>{t(lang, 'themes.statThemes')}</dt>
+          <dd>{themes.length}</dd>
+        </div>
+        <div>
+          <dt>{t(lang, 'themes.statCollections')}</dt>
+          <dd>{collections.length}</dd>
+        </div>
+        <div>
+          <dt>{t(lang, 'themes.statColors')}</dt>
+          <dd>{colorCount}</dd>
+        </div>
+      </dl>
+
+      <ThemeLibrary themes={themes} lang={lang} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .browse-hero {
+    padding-top: clamp(38px, 5vw, 72px);
+    padding-bottom: clamp(42px, 5vw, 76px);
+  }
+
+  .browse-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    align-items: center;
+    gap: clamp(20px, 4vw, 72px);
+  }
+
+  .browse-hero__title {
+    font-size: clamp(2.4rem, 4.8vw, 4.65rem);
+    line-height: 1.03;
+    margin: 12px 0 20px;
+    letter-spacing: -0.035em;
+  }
+
+  .browse-hero .lede {
+    max-width: 38em;
+  }
+
+  .browse-orbit {
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .browse-orbit svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .browse-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 30px;
+    margin: clamp(24px, 3vw, 38px) 0 clamp(26px, 3.4vw, 44px);
+    padding: 14px 0;
+    border-top: 1px solid var(--orbit-faint);
+    border-bottom: 1px solid var(--orbit-faint);
+  }
+
+  .browse-stats div {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .browse-stats dt {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .browse-stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1;
+    color: var(--glow);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 840px) {
+    .browse-hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .browse-orbit {
+      display: none;
+    }
+  }
+</style>

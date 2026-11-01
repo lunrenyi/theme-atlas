@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CollectionMotif from '../components/CollectionMotif.astro';
 import ThemeCard from '../components/ThemeCard.astro';
-import ThemeLibrary from '../components/ThemeLibrary.astro';
-import { getCollections, getThemes } from '../lib/content';
-import { catalogCount, seriesNumber, t, type Locale } from '../i18n';
+import { getCollections, getThemesByCollection } from '../lib/content';
+import { localePath } from '../lib/url';
+import { seriesNumber, t, type Locale } from '../i18n';
 
 interface Props {
   lang: Locale;
@@ -12,7 +12,10 @@ interface Props {
 
 const { lang } = Astro.props;
 const collections = getCollections(lang);
-const themes = getThemes(lang);
+const collectionGroups = collections.map((collection) => ({
+  collection,
+  themes: getThemesByCollection(collection.id, lang),
+}));
 ---
 
 <BaseLayout
@@ -29,10 +32,15 @@ const themes = getThemes(lang);
   </section>
 
   {
-    collections.map((collection, index) => {
-      const list = themes.filter((t) => t.collection === collection.id);
+    collectionGroups.map(({ collection, themes: list }, index) => {
       return (
-        <section class="section collection" id={collection.id} style={'--tone:' + collection.accent}>
+        <section
+          class="section collection"
+          id={collection.id}
+          data-collection-section={collection.id}
+          data-theme-count={list.length}
+          style={'--tone:' + collection.accent}
+        >
           <div class="wrap wrap--wide">
             <div class="collection__head">
               <div class="collection__intro">
@@ -43,9 +51,14 @@ const themes = getThemes(lang);
                 {collection.code && <p class="collection__en mono">{collection.code}</p>}
                 <p class="collection__tagline">{collection.tagline}</p>
                 <p class="collection__desc">{collection.description}</p>
-                <p class="collection__count mono">
-                  {t(lang, 'series.themes', { n: list.length })}
-                </p>
+                <div class="collection__meta">
+                  <p class="collection__count mono">
+                    {t(lang, 'series.themes', { n: list.length })}
+                  </p>
+                  <a class="collection__browse" href={localePath('/themes/?c=' + collection.id, lang)}>
+                    {t(lang, 'collections.browseSeries')} <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </div>
               <CollectionMotif
                 variant={collection.motif}
@@ -66,21 +79,6 @@ const themes = getThemes(lang);
       );
     })
   }
-
-  <section class="section" id="all">
-    <div class="wrap wrap--wide">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow eyebrow--gold">{t(lang, 'collections.allEyebrow')}</p>
-          <h2 class="section-head__title">{t(lang, 'collections.allTitle')}</h2>
-        </div>
-        <p class="section-head__meta">
-          {t(lang, 'section.catalogMeta', { count: catalogCount(lang, themes.length) })}
-        </p>
-      </div>
-      <ThemeLibrary themes={themes} lang={lang} />
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
@@ -142,10 +140,33 @@ const themes = getThemes(lang);
   }
 
   .collection__count {
-    margin-top: 16px;
+    margin: 0;
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     color: var(--text-3);
+  }
+
+  .collection__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+    margin-top: 16px;
+  }
+
+  .collection__browse {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    color: var(--text-2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--orbit);
+    padding-bottom: 2px;
+  }
+
+  .collection__browse:hover {
+    color: var(--gold);
+    border-color: var(--gold);
   }
 
   :global(.collection__motif) {

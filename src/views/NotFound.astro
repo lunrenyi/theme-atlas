@@ -29,7 +29,7 @@ const { lang } = Astro.props;
       </svg>
       <div class="notfound__actions">
         <a class="btn btn--solid" href={localePath('/', lang)}>{t(lang, 'notFound.home')}</a>
-        <a class="btn btn--ghost" href={localePath('/#themes', lang)}>{t(lang, 'notFound.browse')}</a>
+        <a class="btn btn--ghost" href={localePath('/themes/', lang)}>{t(lang, 'notFound.browse')}</a>
       </div>
     </div>
   </section>

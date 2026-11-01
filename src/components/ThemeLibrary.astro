@@ -6,28 +6,56 @@ import ThemeCard from './ThemeCard.astro';
 
 interface Props {
   themes: Theme[];
-  /** Hide the collection filter row (used on the collections page). */
-  showFilters?: boolean;
   lang: Locale;
 }
 
-const { themes, showFilters = true, lang } = Astro.props;
+const { themes, lang } = Astro.props;
 const collections = getCollections(lang);
+const collectionById = new Map(collections.map((collection) => [collection.id, collection]));
 const countFor = (id: string) =>
-  id === 'all' ? themes.length : themes.filter((t) => t.collection === id).length;
+  id === 'all' ? themes.length : themes.filter((theme) => theme.collection === id).length;
+
+const searchText = (theme: Theme) => {
+  const collection = collectionById.get(theme.collection);
+  return [
+    theme.slug,
+    theme.title,
+    theme.subtitle,
+    theme.description,
+    theme.story,
+    theme.inspiration,
+    theme.tags.join(' '),
+    collection?.title,
+    collection?.short,
+    collection?.tagline,
+    collection?.description,
+    theme.palette.map((color) => [color.name, color.hex, color.note].filter(Boolean).join(' ')).join(' '),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .normalize('NFKC')
+    .toLocaleLowerCase(lang === 'zh' ? 'zh-CN' : 'en-US');
+};
 ---
 
-<div class="library" data-library>
+<div
+  class="library"
+  id="themes-directory"
+  data-library
+  data-locale={lang === 'zh' ? 'zh-CN' : 'en-US'}
+  data-count-width={lang === 'zh' ? '2' : '3'}
+>
   <div class="library__toolbar">
     <div class="field library__search">
-      <svg class="field__icon" width="15" height="15" viewBox="0 0 16 16" aria-hidden="true">
+      <svg class="field__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
         <circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
         <path d="M11 11 L14.5 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
       </svg>
-      <label class="sr-only" for="library-search">{t(lang, 'library.searchLabel')}</label>
+      <label class="sr-only" for="themes-search">{t(lang, 'library.searchLabel')}</label>
       <input
-        id="library-search"
+        id="themes-search"
         type="search"
+        name="q"
         placeholder={t(lang, 'library.searchPlaceholder')}
         autocomplete="off"
         data-library-search
@@ -40,32 +68,43 @@ const countFor = (id: string) =>
       </button>
     </div>
 
+    <label class="library__sort">
+      <span>{t(lang, 'library.sortLabel')}</span>
+      <select data-library-sort>
+        <option value="default">{t(lang, 'library.sortDefault')}</option>
+        <option value="name">{t(lang, 'library.sortName')}</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="library__filters" role="group" aria-label={t(lang, 'library.filterLabel')}>
+    <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">
+      <span>{t(lang, 'library.filterAll')}</span>
+      <span class="chip__count mono">{countFor('all')}</span>
+    </button>
     {
-      showFilters && (
-        <div class="library__filters" role="group" aria-label={t(lang, 'library.filterLabel')}>
-          <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">
-            <span>{t(lang, 'library.filterAll')}</span>
-            <span class="chip__count mono">{countFor('all')}</span>
-          </button>
-          {collections.map((c) => (
-            <button type="button" class="chip" data-filter={c.id} aria-pressed="false">
-              <span class="chip__dot" style={'--tone:' + c.accent} aria-hidden="true" />
-              <span>{c.title}</span>
-              <span class="chip__count mono">{countFor(c.id)}</span>
-            </button>
-          ))}
-        </div>
-      )
+      collections.map((collection) => (
+        <button type="button" class="chip" data-filter={collection.id} aria-pressed="false">
+          <span class="chip__dot" style={'--tone:' + collection.accent} aria-hidden="true" />
+          <span>{collection.title}</span>
+          <span class="chip__count mono">{countFor(collection.id)}</span>
+        </button>
+      ))
     }
   </div>
 
-  <p
-    class="library__count mono"
-    data-library-count
-    data-count-template={t(lang, 'library.count')}
-    aria-live="polite"
-  >
-  </p>
+  <div class="library__status">
+    <p
+      class="library__count mono"
+      data-library-count
+      data-count-template={t(lang, 'library.count')}
+      aria-live="polite"
+    >
+    </p>
+    <button type="button" class="library__clear-all" data-library-clear-all hidden>
+      {t(lang, 'library.clearFilters')}
+    </button>
+  </div>
 
   <div class="library__grid" data-library-grid>
     {
@@ -74,15 +113,8 @@ const countFor = (id: string) =>
           class="library__item"
           data-library-item
           data-collection={theme.collection}
-          data-search={[
-            theme.title,
-            theme.subtitle,
-            theme.description,
-            theme.tags.join(' '),
-            theme.palette.map((c) => c.name + ' ' + c.hex).join(' '),
-          ]
-            .join(' ')
-            .toLowerCase()}
+          data-sort-name={theme.title}
+          data-search={searchText(theme)}
         >
           <ThemeCard theme={theme} lang={lang} />
         </div>
@@ -113,24 +145,49 @@ const countFor = (id: string) =>
 </div>
 
 <script>
-  const root = document.querySelector('[data-library]');
+  const root = document.querySelector<HTMLElement>('[data-library]');
   if (root) {
     const input = root.querySelector<HTMLInputElement>('[data-library-search]');
-    const clearBtn = root.querySelector<HTMLButtonElement>('[data-library-clear]');
+    const clearSearchBtn = root.querySelector<HTMLButtonElement>('[data-library-clear]');
+    const clearAllBtn = root.querySelector<HTMLButtonElement>('[data-library-clear-all]');
     const resetBtn = root.querySelector<HTMLButtonElement>('[data-library-reset]');
+    const sortSelect = root.querySelector<HTMLSelectElement>('[data-library-sort]');
     const countEl = root.querySelector<HTMLElement>('[data-library-count]');
     const emptyEl = root.querySelector<HTMLElement>('[data-library-empty]');
+    const grid = root.querySelector<HTMLElement>('[data-library-grid]');
     const items = Array.from(root.querySelectorAll<HTMLElement>('[data-library-item]'));
     const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const collator = new Intl.Collator(root.dataset.locale ?? 'en-US', {
+      sensitivity: 'base',
+      numeric: true,
+    });
+    const countWidth = Number(root.dataset.countWidth ?? 2);
 
     let query = '';
     let collection = 'all';
+    let sort = 'default';
 
-    function apply() {
+    const normalize = (value: string) =>
+      value.normalize('NFKC').trim().toLocaleLowerCase(root.dataset.locale);
+
+    function applySort() {
+      if (!grid) return;
+      const ordered = [...items];
+      if (sort === 'name') {
+        ordered.sort((a, b) =>
+          collator.compare(a.dataset.sortName ?? '', b.dataset.sortName ?? ''),
+        );
+      }
+      ordered.forEach((item) => grid.append(item));
+    }
+
+    function applyFilters() {
+      const terms = normalize(query).split(/\s+/).filter(Boolean);
       let visible = 0;
+
       items.forEach((item) => {
-        const matchText =
-          !query || (item.dataset.search ?? '').includes(query);
+        const haystack = item.dataset.search ?? '';
+        const matchText = terms.every((term) => haystack.includes(term));
         const matchCollection =
           collection === 'all' || item.dataset.collection === collection;
         const show = matchText && matchCollection;
@@ -141,11 +198,12 @@ const countFor = (id: string) =>
       if (countEl) {
         const template = countEl.dataset.countTemplate ?? '';
         countEl.textContent = template
-          .replace('{shown}', String(visible).padStart(2, '0'))
-          .replace('{total}', String(items.length).padStart(2, '0'));
+          .replace('{shown}', String(visible).padStart(countWidth, '0'))
+          .replace('{total}', String(items.length).padStart(countWidth, '0'));
       }
       if (emptyEl) emptyEl.hidden = visible !== 0;
-      if (clearBtn) clearBtn.hidden = query.length === 0;
+      if (clearSearchBtn) clearSearchBtn.hidden = query.length === 0;
+      if (clearAllBtn) clearAllBtn.hidden = query.length === 0 && collection === 'all';
 
       chips.forEach((chip) => {
         const active = chip.dataset.filter === collection;
@@ -158,52 +216,76 @@ const countFor = (id: string) =>
       else url.searchParams.delete('q');
       if (collection !== 'all') url.searchParams.set('c', collection);
       else url.searchParams.delete('c');
+      if (sort !== 'default') url.searchParams.set('sort', sort);
+      else url.searchParams.delete('sort');
       history.replaceState({}, '', url.toString());
+    }
 
-      document.dispatchEvent(
-        new CustomEvent('atlas:search-changed', { detail: { query, collection } }),
-      );
+    function resetFilters() {
+      if (input) input.value = '';
+      query = '';
+      collection = 'all';
+      applyFilters();
+      input?.focus();
     }
 
     input?.addEventListener('input', () => {
-      query = input.value.trim().toLowerCase();
-      apply();
+      query = input.value;
+      applyFilters();
     });
 
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         collection = chip.dataset.filter ?? 'all';
-        apply();
+        applyFilters();
       });
     });
 
-    clearBtn?.addEventListener('click', () => {
+    sortSelect?.addEventListener('change', () => {
+      sort = sortSelect.value;
+      applySort();
+      applyFilters();
+    });
+
+    clearSearchBtn?.addEventListener('click', () => {
       if (!input) return;
       input.value = '';
       query = '';
-      apply();
+      applyFilters();
       input.focus();
     });
 
-    resetBtn?.addEventListener('click', () => {
-      if (input) input.value = '';
-      query = '';
-      collection = 'all';
-      apply();
-    });
+    clearAllBtn?.addEventListener('click', resetFilters);
+    resetBtn?.addEventListener('click', resetFilters);
 
-    // initial state from the URL
     const params = new URLSearchParams(window.location.search);
-    const q = params.get('q');
-    const c = params.get('c');
-    if (q && input) {
-      input.value = q;
-      query = q.trim().toLowerCase();
+    const initialQuery = params.get('q') ?? '';
+    const initialCollection = params.get('c');
+    const initialSort = params.get('sort');
+
+    if (initialQuery && input) {
+      input.value = initialQuery;
+      query = initialQuery;
     }
-    if (c && chips.some((chip) => chip.dataset.filter === c)) {
-      collection = c;
+    if (initialCollection && chips.some((chip) => chip.dataset.filter === initialCollection)) {
+      collection = initialCollection;
     }
-    apply();
+    if (initialSort === 'name' && sortSelect) {
+      sort = initialSort;
+      sortSelect.value = initialSort;
+    }
+
+    applySort();
+    applyFilters();
+
+    if (params.get('focus') === 'search' || initialQuery) {
+      requestAnimationFrame(() => {
+        input?.focus({ preventScroll: true });
+        const clean = new URL(window.location.href);
+        clean.searchParams.delete('focus');
+        history.replaceState({}, '', clean.toString());
+      });
+    }
   }
 </script>
 
@@ -211,16 +293,17 @@ const countFor = (id: string) =>
   .library__toolbar {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
     gap: 16px 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--orbit-faint);
+    margin-bottom: 16px;
   }
 
   .library__search {
-    flex: 1 1 260px;
-    max-width: 380px;
+    flex: 1 1 440px;
+    max-width: 720px;
+    min-height: 48px;
+    padding-inline: 15px;
   }
 
   .library__clear {
@@ -228,8 +311,8 @@ const countFor = (id: string) =>
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border: 0;
     background: transparent;
     color: var(--text-3);
@@ -246,6 +329,32 @@ const countFor = (id: string) =>
     background: var(--panel-2);
   }
 
+  .library__sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .library__sort select {
+    min-height: 38px;
+    padding: 7px 30px 7px 10px;
+    border: 1px solid var(--orbit-dim);
+    border-radius: var(--radius-sm);
+    background: var(--space-2);
+    color: var(--text-2);
+    cursor: pointer;
+  }
+
+  .library__sort select:hover,
+  .library__sort select:focus-visible {
+    border-color: var(--quantum);
+  }
+
   .library__filters {
     display: flex;
     flex-wrap: wrap;
@@ -256,7 +365,7 @@ const countFor = (id: string) =>
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 6px 12px;
+    padding: 7px 12px;
     border: 1px solid var(--orbit-dim);
     background: transparent;
     color: var(--text-2);
@@ -285,27 +394,54 @@ const countFor = (id: string) =>
     background: var(--tone);
   }
 
-  .chip.is-active .chip__dot {
-    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4);
-  }
-
   .chip__count {
     font-size: 0.66rem;
-    opacity: 0.6;
+    opacity: 0.65;
+  }
+
+  .library__status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 18px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--orbit-faint);
   }
 
   .library__count {
-    margin: 16px 0 22px;
+    margin: 0;
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-3);
   }
 
+  .library__clear-all {
+    border: 0;
+    border-bottom: 1px solid var(--orbit);
+    background: transparent;
+    padding: 2px 0;
+    color: var(--text-2);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+  }
+
+  .library__clear-all[hidden] {
+    display: none;
+  }
+
+  .library__clear-all:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
   .library__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    gap: 26px 24px;
   }
 
   .library__item[hidden] {
@@ -320,16 +456,8 @@ const countFor = (id: string) =>
     color: var(--text-3);
   }
 
-  @media (max-width: 1080px) {
-    .library__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 680px) {
-    .library__grid {
-      grid-template-columns: 1fr;
-    }
+  .library__empty[hidden] {
+    display: none;
   }
 
   .library__empty-art {
@@ -350,5 +478,35 @@ const countFor = (id: string) =>
     margin: 0 auto 22px;
     font-size: var(--step--1);
   }
-</style>
 
+  @media (max-width: 1080px) {
+    .library__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .library__toolbar {
+      align-items: stretch;
+    }
+
+    .library__search {
+      flex-basis: 100%;
+      max-width: none;
+    }
+
+    .library__sort {
+      justify-content: space-between;
+    }
+
+    .library__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .library__status {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>

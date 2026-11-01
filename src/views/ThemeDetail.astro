@@ -48,7 +48,7 @@ const sourceTypeLabel: Record<string, string> = {
 
     <div class="wrap wrap--wide">
       <nav class="crumbs" aria-label={t(lang, 'detail.back')}>
-        <a href={localePath('/#themes', lang)}>← {t(lang, 'detail.back')}</a>
+        <a href={localePath('/themes/', lang)}>← {t(lang, 'detail.back')}</a>
         <span class="crumbs__sep" aria-hidden="true">/</span>
         <a href={localePath('/collections#' + collection.id, lang)}>{collection.title}</a>
         <span class="crumbs__sep" aria-hidden="true">/</span>
@@ -200,7 +200,7 @@ const sourceTypeLabel: Record<string, string> = {
                   )
                 }
               </div>
-              <a class="switcher__all" href={localePath('/#themes', lang)}>
+              <a class="switcher__all" href={localePath('/themes/', lang)}>
                 {t(lang, 'detail.backToAll')}
               </a>
             </nav>
