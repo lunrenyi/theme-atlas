@@ -8,11 +8,12 @@ import type { PromptDesign } from './types';
 export const promptDesigns: Record<string, PromptDesign> = {
   'taotie-cinnabar': {
     visualStyle: 'bronze-axis',
-    layout: 'centered',
+    layout: 'segmented',
     glyphSet: { prompt: '❯', separator: '│', connector: '◇' },
     motif: 'axis',
     motifDensity: 'structured',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'text'],
       secondary: ['surface', 'border', 'onAccent'],
@@ -24,11 +25,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'nuwa-five-stones': {
     visualStyle: 'stone-strata',
-    layout: 'stacked',
+    layout: 'segmented',
     glyphSet: { prompt: '❯', separator: '·', connector: '◆' },
     motif: 'strata',
     motifDensity: 'structured',
     defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'surface'],
       secondary: ['text', 'border'],
@@ -40,11 +42,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'baize-omens': {
     visualStyle: 'archive-annotation',
-    layout: 'inline',
+    layout: 'minimal',
     glyphSet: { prompt: '›', separator: '/', connector: '┄' },
     motif: 'annotation',
     motifDensity: 'sparse',
     defaultLineMode: 'single',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['text', 'border'],
       secondary: ['surface', 'accent'],
@@ -56,11 +59,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'qitian-pojie': {
     visualStyle: 'broken-axis',
-    layout: 'asymmetric',
+    layout: 'two-line',
     glyphSet: { prompt: '❯', separator: '│', connector: '╱' },
     motif: 'fracture',
     motifDensity: 'structured',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'flare'],
       secondary: ['text', 'border'],
@@ -72,11 +76,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'ru-ware-sky': {
     visualStyle: 'glaze-strata',
-    layout: 'inline',
+    layout: 'minimal',
     glyphSet: { prompt: '›', separator: '·', connector: '┄' },
     motif: 'strata',
     motifDensity: 'sparse',
     defaultLineMode: 'single',
+    moduleOrder: ['directory', 'git', 'runtime', 'user', 'command', 'status'],
     roleEmphasis: {
       primary: ['text', 'border'],
       secondary: ['surface', 'accent'],
@@ -88,11 +93,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'jun-ware-violet': {
     visualStyle: 'kiln-flow',
-    layout: 'stacked',
+    layout: 'segmented',
     glyphSet: { prompt: '❯', separator: '│', connector: '≈' },
     motif: 'flow',
     motifDensity: 'structured',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'runtime', 'git', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'surface'],
       secondary: ['text', 'border'],
@@ -104,11 +110,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'jingdezhen-blue-white': {
     visualStyle: 'cobalt-symmetry',
-    layout: 'centered',
+    layout: 'segmented',
     glyphSet: { prompt: '❯', separator: '│', connector: '◇' },
     motif: 'symmetry',
     motifDensity: 'structured',
     defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'runtime', 'git', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'text'],
       secondary: ['surface', 'border', 'onAccent'],
@@ -120,11 +127,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'deep-space-orbit': {
     visualStyle: 'stellar-orbit',
-    layout: 'orbital',
+    layout: 'minimal',
     glyphSet: { prompt: '❯', separator: '·', connector: '╱' },
     motif: 'orbit',
     motifDensity: 'sparse',
     defaultLineMode: 'single',
+    moduleOrder: ['directory', 'git', 'runtime', 'user', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'text'],
       secondary: ['surface', 'border'],
@@ -136,11 +144,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'pathfinder-beacon': {
     visualStyle: 'beacon-route',
-    layout: 'rail',
+    layout: 'minimal',
     glyphSet: { prompt: '→', separator: '·', connector: '┄' },
     motif: 'beacon',
     motifDensity: 'sparse',
     defaultLineMode: 'single',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'text'],
       secondary: ['surface', 'border'],
@@ -152,11 +161,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'singularity-echo': {
     visualStyle: 'compressed-core',
-    layout: 'centered',
+    layout: 'two-line',
     glyphSet: { prompt: '❯', separator: '×', connector: '·' },
     motif: 'singularity',
     motifDensity: 'dense',
     defaultLineMode: 'double',
+    moduleOrder: ['directory', 'runtime', 'git', 'user', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'text'],
       secondary: ['surface', 'border'],
@@ -168,11 +178,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'uncharted-reach': {
     visualStyle: 'stellar-navigation',
-    layout: 'orbital',
+    layout: 'two-line',
     glyphSet: { prompt: '❯', separator: '·', connector: '╱' },
     motif: 'orbit',
     motifDensity: 'dense',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'runtime', 'git', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'flare'],
       secondary: ['surface', 'text', 'border'],
@@ -184,11 +195,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'frozen-front': {
     visualStyle: 'allied-tactical',
-    layout: 'tactical',
+    layout: 'segmented',
     glyphSet: { prompt: '❯', separator: '│', connector: '┄' },
     motif: 'grid',
     motifDensity: 'dense',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'border'],
       secondary: ['surface', 'text', 'flare'],
@@ -200,11 +212,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'crimson-iron-curtain': {
     visualStyle: 'soviet-industrial',
-    layout: 'tactical',
+    layout: 'segmented',
     glyphSet: { prompt: '❯', separator: '│', connector: '╱' },
-    motif: 'grid',
+    motif: 'pressure',
     motifDensity: 'dense',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'surface'],
       secondary: ['text', 'border', 'flare'],
@@ -216,11 +229,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'koprulu-frontier': {
     visualStyle: 'terran-industrial',
-    layout: 'rail',
+    layout: 'minimal',
     glyphSet: { prompt: '❯', separator: '·', connector: '┄' },
     motif: 'industrial',
     motifDensity: 'structured',
     defaultLineMode: 'single',
+    moduleOrder: ['directory', 'git', 'runtime', 'user', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'flare'],
       secondary: ['text', 'surface', 'border'],
@@ -232,11 +246,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'echoes-of-khala': {
     visualStyle: 'protoss-sanctum',
-    layout: 'centered',
+    layout: 'two-line',
     glyphSet: { prompt: '❯', separator: '│', connector: '◇' },
     motif: 'symmetry',
     motifDensity: 'structured',
     defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'runtime', 'git', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'flare'],
       secondary: ['text', 'surface', 'border'],
@@ -248,11 +263,12 @@ export const promptDesigns: Record<string, PromptDesign> = {
   },
   'spore-tide': {
     visualStyle: 'zerg-branch',
-    layout: 'asymmetric',
+    layout: 'two-line',
     glyphSet: { prompt: '❯', separator: '∿', connector: '·' },
     motif: 'organic',
     motifDensity: 'dense',
     defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'runtime', 'git', 'command', 'status'],
     roleEmphasis: {
       primary: ['accent', 'flare'],
       secondary: ['text', 'surface', 'border'],

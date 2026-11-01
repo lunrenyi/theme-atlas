@@ -87,13 +87,17 @@ export type PromptVisualStyle =
   | 'zerg-branch';
 
 export type PromptLayout =
-  | 'inline'
-  | 'stacked'
-  | 'centered'
-  | 'rail'
-  | 'orbital'
-  | 'tactical'
-  | 'asymmetric';
+  | 'minimal'
+  | 'segmented'
+  | 'two-line';
+
+export type PromptModuleId =
+  | 'user'
+  | 'directory'
+  | 'git'
+  | 'runtime'
+  | 'command'
+  | 'status';
 
 export type PromptMotif =
   | 'axis'
@@ -106,6 +110,7 @@ export type PromptMotif =
   | 'singularity'
   | 'flow'
   | 'grid'
+  | 'pressure'
   | 'industrial'
   | 'organic';
 
@@ -133,6 +138,7 @@ export interface PromptDesign {
   motif: PromptMotif;
   motifDensity: 'sparse' | 'structured' | 'dense';
   defaultLineMode: PromptLineMode;
+  moduleOrder: PromptModuleId[];
   roleEmphasis: PromptRoleEmphasis;
   designNote: string;
   designNoteEn: string;

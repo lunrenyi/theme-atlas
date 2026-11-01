@@ -1,6 +1,6 @@
 ---
-import type { PaletteRole, Theme } from '../data/types';
-import { paletteMap } from '../lib/color';
+import type { PaletteRole, PromptModuleId, Theme } from '../data/types';
+import { luminance, paletteMap } from '../lib/color';
 import { t, type Locale, type UiKey } from '../i18n';
 import PromptMotif from './PromptMotif.astro';
 
@@ -26,11 +26,23 @@ const roleKeys: Record<PaletteRole, UiKey> = {
 
 const baseRoles: PaletteRole[] = ['bg', 'surface', 'text', 'muted', 'border', 'accent', 'onAccent'];
 const legendRoles = map.flare ? [...baseRoles, 'flare' as const] : baseRoles;
-const isFlareTheme = Boolean(map.flare);
+const isDarkGround = luminance(map.bg?.hex ?? '#000000') < 0.32;
+const frameVars = [
+  '--prompt-frame:' + (isDarkGround ? '#FFFFFF' : '#000000'),
+  '--prompt-chrome:' + (isDarkGround ? '#111111' : '#F2F2F2'),
+  '--prompt-chrome-text:' + (isDarkGround ? '#F5F5F5' : '#111111'),
+].join(';');
+
+const contextModules = design.moduleOrder.filter(
+  (module): module is Exclude<PromptModuleId, 'command' | 'status'> =>
+    module !== 'command' && module !== 'status',
+);
+const entryModules = design.moduleOrder.filter(
+  (module): module is 'command' | 'status' => module === 'command' || module === 'status',
+);
+
 const sceneId = 'prompt-scene-' + theme.slug;
 const designNote = lang === 'zh' ? design.designNote : design.designNoteEn;
-const command = t(lang, 'preview.promptCommand');
-const output = t(lang, 'preview.promptOutput');
 
 const emphasisFor = (role: PaletteRole) => {
   if (design.roleEmphasis.primary.includes(role)) return 'primary';
@@ -67,10 +79,11 @@ const legend = legendRoles.map((role) => {
   data-prompt-preview
   data-theme={theme.slug}
   data-visual-style={design.visualStyle}
-  data-layout={design.layout}
+  data-prompt-layout={design.layout}
   data-line-mode={design.defaultLineMode}
   data-role-primary={design.roleEmphasis.primary.join(' ')}
   data-git="on"
+  style={frameVars}
 >
   <div class="prompt-preview__controls">
     <div class="prompt-preview__layout" role="group" aria-label={t(lang, 'preview.terminalLayoutLabel')}>
@@ -105,63 +118,111 @@ const legend = legendRoles.map((role) => {
     </label>
   </div>
 
-  <figure class="prompt-window" aria-label={t(lang, 'preview.terminalWindowLabel')}>
-    <div class="prompt-window__bar" data-prompt-role="surface">
+  <figure
+    class="prompt-window"
+    data-prompt-layout={design.layout}
+    aria-label={`Static zsh prompt preview for ${theme.slug}`}
+  >
+    <div class="prompt-window__bar">
       <span class="prompt-window__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="prompt-window__title mono">{t(lang, 'preview.terminalTitle')}</span>
-      <span class="prompt-window__subtitle mono">{t(lang, 'preview.terminalSubtitle')}</span>
-      <span class="prompt-window__glyph mono" aria-hidden="true">{design.glyphSet.connector}</span>
+      <span class="prompt-window__title mono">zsh - ~/theme-atlas</span>
+      <span class="prompt-window__subtitle mono">starship / oh-my-zsh inspired</span>
     </div>
 
     <div id={sceneId} class="prompt-window__screen" data-prompt-role="bg">
       <PromptMotif
         variant={design.motif}
         density={design.motifDensity}
-        hasFlare={isFlareTheme}
+        hasFlare={Boolean(map.flare)}
       />
 
       <div class="prompt-scene">
         <div class="prompt-prompt">
-          <span class="prompt-context" data-prompt-role="surface">
-            <span class="prompt-context__identity">
-              <span class="prompt-user">dev</span><span class="prompt-at">@</span><span class="prompt-host">atlas</span>
-            </span>
-            <span class="prompt-separator" data-prompt-role="muted" aria-hidden="true">{design.glyphSet.separator}</span>
-            <span class="prompt-path" data-prompt-role="text">~/theme-atlas</span>
-          </span>
-
-          <span class="prompt-branch-status">
-            <span class="prompt-branch" data-prompt-role="accent onAccent">
-              <span class="prompt-branch__name">main</span>
-            </span>
-            <span class="prompt-status" data-prompt-role="accent">
-              <span aria-hidden="true">●</span>
-              {t(lang, 'preview.promptStatusReady')}
-            </span>
+          <div class="prompt-context-modules">
             {
-              isFlareTheme && (
-                <span class="prompt-flare" data-prompt-role="flare" aria-hidden="true">
-                  {design.glyphSet.connector}
-                </span>
-              )
+              contextModules.map((moduleId, moduleIndex) => (
+                <>
+                  {moduleIndex > 0 && (
+                    <span class="prompt-separator" data-prompt-role="muted" aria-hidden="true">
+                      {design.glyphSet.separator}
+                    </span>
+                  )}
+                  <span
+                    class:list={['prompt-module', 'prompt-module--' + moduleId]}
+                    data-prompt-module={moduleId}
+                  >
+                    {moduleId === 'user' && (
+                      <span class="prompt-user-host">
+                        <span data-prompt-role="text">dev</span>
+                        <span class="prompt-muted" data-prompt-role="muted">@</span>
+                        <span data-prompt-role="text">atlas</span>
+                      </span>
+                    )}
+                    {moduleId === 'directory' && (
+                      <span class="prompt-directory" data-prompt-role="text">~/theme-atlas</span>
+                    )}
+                    {moduleId === 'git' && (
+                      <span class="prompt-git">
+                        <span class="prompt-branch" data-prompt-role="accent onAccent">main</span>
+                        <span class="prompt-git-state" data-prompt-role="text">1 modified</span>
+                        {map.flare && (
+                          <span
+                            class="prompt-dirty"
+                            data-prompt-role="flare"
+                            role="img"
+                            aria-label="dirty working tree"
+                          >*</span>
+                        )}
+                      </span>
+                    )}
+                    {moduleId === 'runtime' && (
+                      <span class="prompt-runtime">
+                        <span data-prompt-role="text">node</span>
+                        <span class="prompt-muted" data-prompt-role="muted">v22.11.0</span>
+                      </span>
+                    )}
+                  </span>
+                </>
+              ))
             }
-          </span>
+          </div>
 
-          <span class="prompt-entry">
-            <span class="prompt-symbol" data-prompt-role="accent" aria-hidden="true">{design.glyphSet.prompt}</span>
-            <span class="prompt-command" data-prompt-role="text">{command}</span>
-          </span>
+          <div class="prompt-entry-modules">
+            {
+              entryModules.map((moduleId) => (
+                <span
+                  class:list={['prompt-module', 'prompt-module--' + moduleId]}
+                  data-prompt-module={moduleId}
+                >
+                  {moduleId === 'command' && (
+                    <span class="prompt-command">
+                      <span class="prompt-symbol" data-prompt-role="accent" aria-hidden="true">
+                        {design.glyphSet.prompt}
+                      </span>
+                      <span data-prompt-role="text">git status --short</span>
+                    </span>
+                  )}
+                  {moduleId === 'status' && (
+                    <span class="prompt-runtime-status">
+                      <span data-prompt-role="text">exit 0</span>
+                      <span class="prompt-muted" data-prompt-role="muted">42ms</span>
+                    </span>
+                  )}
+                </span>
+              ))
+            }
+          </div>
         </div>
 
-        <div class="prompt-output" data-prompt-role="border">
-          <span class="prompt-output__connector" data-prompt-role="muted" aria-hidden="true">
-            {design.glyphSet.connector}
+        <div class="prompt-output" data-prompt-role="surface border">
+          <span class="prompt-output__main">
+            <span data-prompt-role="muted" aria-hidden="true">{design.glyphSet.connector}</span>
+            <span data-prompt-role="text">M src/theme.ts</span>
           </span>
-          <span class="prompt-output__theme" data-prompt-role="text">{theme.title}</span>
-          <span class="prompt-output__separator" data-prompt-role="muted" aria-hidden="true">
-            {design.glyphSet.separator}
+          <span class="prompt-output__meta">
+            <span class="mono" data-prompt-role="text">{theme.slug}</span>
+            <span data-prompt-role="muted">7 color roles mapped</span>
           </span>
-          <span class="prompt-output__text" data-prompt-role="muted">{output}</span>
         </div>
       </div>
     </div>
@@ -389,8 +450,8 @@ const legend = legendRoles.map((role) => {
     min-width: 0;
     margin: 0;
     overflow: hidden;
-    border: 1px solid var(--t-border);
-    border-radius: var(--radius);
+    border: 1px solid var(--prompt-frame);
+    border-radius: 4px;
     background: var(--t-bg);
     color: var(--t-text);
   }
@@ -401,42 +462,49 @@ const legend = legendRoles.map((role) => {
     display: flex;
     align-items: center;
     gap: 10px;
-    min-height: 34px;
+    min-height: 35px;
     padding: 7px 11px;
-    border-bottom: 1px solid var(--t-border);
-    background: var(--t-surface);
+    border-bottom: 1px solid var(--prompt-frame);
+    background: var(--prompt-chrome);
+    color: var(--prompt-chrome-text);
   }
 
   .prompt-window__dots {
     display: inline-flex;
     flex: none;
-    gap: 4px;
+    gap: 6px;
   }
 
   .prompt-window__dots i {
-    width: 6px;
-    height: 6px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: var(--t-muted);
-    opacity: 0.45;
+    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.18);
+  }
+
+  .prompt-window__dots i:nth-child(1) {
+    background: #ff5f57;
+  }
+
+  .prompt-window__dots i:nth-child(2) {
+    background: #febc2e;
+  }
+
+  .prompt-window__dots i:nth-child(3) {
+    background: #28c840;
   }
 
   .prompt-window__title {
-    color: var(--t-text);
+    color: var(--prompt-chrome-text);
     font-size: 0.62rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
   }
 
   .prompt-window__subtitle {
     margin-left: auto;
-    color: var(--t-muted);
-    font-size: 0.56rem;
-    letter-spacing: 0.08em;
-  }
-
-  .prompt-window__glyph {
-    color: var(--t-accent);
-    font-size: 0.68rem;
+    color: color-mix(in srgb, var(--prompt-chrome-text) 58%, transparent);
+    font-size: 0.54rem;
+    letter-spacing: 0.06em;
   }
 
   .prompt-window__screen {
@@ -457,7 +525,7 @@ const legend = legendRoles.map((role) => {
     min-width: 0;
     color: var(--t-text);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
-    font-size: clamp(0.76rem, 2.2vw, 0.9rem);
+    font-size: clamp(0.76rem, 2.2vw, 0.88rem);
     line-height: 1.65;
   }
 
@@ -465,151 +533,154 @@ const legend = legendRoles.map((role) => {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.55rem 0.9rem;
+    gap: 0.5rem 0;
     min-width: 0;
   }
 
-  .prompt-context {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.25rem 0.65rem;
-    min-width: 0;
-    padding: 4px 8px;
-    border: 1px solid var(--t-border);
-    background: var(--t-surface);
+  .prompt-context-modules,
+  .prompt-entry-modules {
+    display: contents;
   }
 
-  .prompt-context__identity,
-  .prompt-path,
-  .prompt-command {
+  .prompt-module {
+    min-width: 0;
+  }
+
+  .prompt-module--user,
+  .prompt-module--directory,
+  .prompt-module--git,
+  .prompt-module--runtime,
+  .prompt-module--command,
+  .prompt-module--status {
     overflow-wrap: anywhere;
   }
 
-  .prompt-user,
-  .prompt-symbol {
-    color: var(--t-accent);
-    font-weight: 650;
-  }
-
-  .prompt-at,
-  .prompt-separator,
-  .prompt-output__connector,
-  .prompt-output__separator,
-  .prompt-output__text {
-    color: var(--t-muted);
-  }
-
-  .prompt-host,
-  .prompt-path,
+  .prompt-directory,
+  .prompt-git-state,
+  .prompt-runtime,
   .prompt-command,
-  .prompt-output__theme {
+  .prompt-runtime-status {
     color: var(--t-text);
   }
 
-  .prompt-branch-status,
-  .prompt-entry {
+  .prompt-muted,
+  .prompt-separator {
+    color: var(--t-muted);
+  }
+
+  .prompt-user-host {
     display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.45rem;
-    min-width: 0;
+    align-items: baseline;
   }
 
   .prompt-branch {
+    display: inline-block;
     padding: 1px 5px;
     background: var(--t-accent);
     color: var(--t-on-accent);
-  }
-
-  .prompt-branch__name {
     font-weight: 700;
   }
 
-  .prompt-status {
-    color: var(--t-accent);
+  .prompt-git,
+  .prompt-runtime,
+  .prompt-command,
+  .prompt-runtime-status {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem;
   }
 
-  .prompt-flare {
+  .prompt-dirty {
     color: var(--t-flare);
   }
 
-  .prompt-prompt__entry {
-    min-width: 0;
+  .prompt-symbol {
+    color: var(--t-accent);
+    font-weight: 700;
   }
 
   .prompt-output {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.35rem 0.6rem;
+    justify-content: space-between;
+    gap: 0.45rem 1rem;
     min-width: 0;
-    padding-top: 8px;
+    padding: 8px 9px;
     border-top: 1px solid var(--t-border);
+    background: var(--t-surface);
+    color: var(--t-text);
     font-size: 0.9em;
   }
 
-  .prompt-preview[data-git='off'] .prompt-branch {
+  .prompt-output__main,
+  .prompt-output__meta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.55rem;
+  }
+
+  .prompt-output__meta {
+    color: var(--t-muted);
+  }
+
+  .prompt-preview[data-git='off'] .prompt-branch,
+  .prompt-preview[data-git='off'] .prompt-git-state,
+  .prompt-preview[data-git='off'] .prompt-dirty {
     display: none;
   }
 
   .prompt-preview[data-line-mode='double'] .prompt-prompt {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
-  .prompt-preview[data-line-mode='double'] .prompt-context {
-    grid-column: 1 / -1;
-    justify-self: start;
-  }
-
-  .prompt-preview[data-line-mode='double'] .prompt-branch-status {
-    grid-column: 1;
-  }
-
-  .prompt-preview[data-line-mode='double'] .prompt-entry {
-    grid-column: 2;
-    justify-self: end;
-  }
-
-  .prompt-preview[data-layout='centered'] .prompt-scene {
+  .prompt-preview[data-line-mode='double'] .prompt-context-modules,
+  .prompt-preview[data-line-mode='double'] .prompt-entry-modules {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    text-align: center;
+    gap: 0.45rem 0.55rem;
   }
 
-  .prompt-preview[data-layout='centered'] .prompt-context {
-    justify-content: center;
+  .prompt-preview[data-prompt-layout='minimal'] .prompt-module {
+    white-space: nowrap;
   }
 
-  .prompt-preview[data-layout='stacked'] .prompt-output {
+  .prompt-preview[data-prompt-layout='segmented'] .prompt-module {
+    position: relative;
+    padding: 3px 13px 3px 8px;
     background: var(--t-surface);
-    padding: 10px;
+    border: 1px solid var(--t-border);
   }
 
-  .prompt-preview[data-layout='rail'] .prompt-scene {
-    padding-left: 16px;
-    border-left: 2px solid var(--t-accent);
+  .prompt-preview[data-prompt-layout='segmented'] .prompt-module::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    width: 0;
+    height: 0;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 7px solid var(--t-surface);
+    filter: drop-shadow(1px 0 0 var(--t-border));
   }
 
-  .prompt-preview[data-layout='orbital'] .prompt-context {
-    border-right-color: var(--t-accent);
+  .prompt-preview[data-prompt-layout='segmented'] .prompt-separator {
+    display: none;
   }
 
-  .prompt-preview[data-layout='tactical'] .prompt-window__screen {
-    background-image:
-      linear-gradient(color-mix(in srgb, var(--t-border) 26%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in srgb, var(--t-border) 26%, transparent) 1px, transparent 1px);
-    background-size: 28px 28px;
+  .prompt-preview[data-prompt-layout='two-line'] .prompt-entry-modules {
+    padding-top: 7px;
+    border-top: 1px solid var(--t-border);
   }
 
-  .prompt-preview[data-layout='tactical'] .prompt-context {
-    border-left-width: 3px;
-  }
-
-  .prompt-preview[data-layout='asymmetric'] .prompt-scene {
-    margin-left: clamp(0px, 2.2vw, 24px);
-    padding-left: 14px;
-    border-left: 1px solid var(--t-accent);
+  .prompt-preview[data-line-mode='single'][data-prompt-layout='two-line'] .prompt-entry-modules {
+    display: contents;
   }
 
   .prompt-preview__note {
@@ -710,7 +781,6 @@ const legend = legendRoles.map((role) => {
   .prompt-role__emphasis {
     font-size: 0.55rem;
     color: var(--text-3);
-    opacity: 0.72;
   }
 
   .prompt-role.is-primary .prompt-role__emphasis {
@@ -738,7 +808,7 @@ const legend = legendRoles.map((role) => {
     line-height: 1.7;
   }
 
-  .prompt-preview__design-note span {
+  .prompt-preview__design-note > span {
     margin-right: 7px;
     color: var(--gold);
     font-size: 0.56rem;
@@ -756,22 +826,27 @@ const legend = legendRoles.map((role) => {
       padding: 16px 14px;
     }
 
+    .prompt-window__subtitle {
+      display: none;
+    }
+
     .prompt-scene {
       gap: 12px;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
     }
 
-    .prompt-preview[data-line-mode='double'] .prompt-prompt {
-      grid-template-columns: 1fr;
+    .prompt-preview[data-line-mode='double'] .prompt-context-modules,
+    .prompt-preview[data-line-mode='double'] .prompt-entry-modules {
+      align-items: flex-start;
     }
 
-    .prompt-preview[data-line-mode='double'] .prompt-context,
-    .prompt-preview[data-line-mode='double'] .prompt-branch-status,
-    .prompt-preview[data-line-mode='double'] .prompt-entry {
-      grid-column: 1;
-      justify-self: start;
+    .prompt-preview[data-prompt-layout='segmented'] .prompt-module {
+      padding-right: 9px;
     }
 
+    .prompt-preview[data-prompt-layout='segmented'] .prompt-module::after {
+      display: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
