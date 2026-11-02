@@ -84,7 +84,9 @@ export type PromptVisualStyle =
   | 'soviet-industrial'
   | 'terran-industrial'
   | 'protoss-sanctum'
-  | 'zerg-branch';
+  | 'zerg-branch'
+  | 'everlasting-bough'
+  | 'reignbow-arbiter';
 
 export type PromptLayout =
   | 'minimal'
@@ -212,7 +214,9 @@ export interface Theme {
     | 'red-alert-soviet'
     | 'terran'
     | 'protoss'
-    | 'zerg';
+    | 'zerg'
+    | 'yaoshi-bough'
+    | 'lan-reignbow';
   /**
    * - verified: sources are checkable references
    * - interpretation: original / fan re-interpretation of a copyrighted work

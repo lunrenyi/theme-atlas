@@ -71,6 +71,14 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('stacked', 'accent', 'muted', 'accent'),
   },
+  'yaoshi-everlasting-bough': {
+    vim: vim('compact', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'flare', 'accent'),
+  },
+  'lan-reignbow-arbiter': {
+    vim: vim('classic', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'muted', 'accent'),
+  },
   'uncharted-reach': {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'flare', 'accent'),

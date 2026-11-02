@@ -176,6 +176,42 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'Every field compresses toward the centre and reopens through one small accent point; there are no extra orbits or scattered lights.',
   },
+  'yaoshi-everlasting-bough': {
+    visualStyle: 'everlasting-bough',
+    layout: 'two-line',
+    glyphSet: { prompt: '❯', separator: '·', connector: '╱' },
+    motif: 'organic',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'flare'],
+      secondary: ['text', 'surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '枝冠沿中轴分层展开，苍木色维持秩序，生命金标记新生节点，药红只落在一次异化警报上。',
+    designNoteEn:
+      'A branching crown unfolds along a central axis; deep green holds order, life gold marks new growth, and medicine red appears once as an unsettling alert.',
+  },
+  'lan-reignbow-arbiter': {
+    visualStyle: 'reignbow-arbiter',
+    layout: 'minimal',
+    glyphSet: { prompt: '➤', separator: '›', connector: '┄' },
+    motif: 'beacon',
+    motifDensity: 'sparse',
+    defaultLineMode: 'single',
+    moduleOrder: ['directory', 'git', 'runtime', 'user', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'flare'],
+      secondary: ['text', 'border'],
+      restrained: ['bg', 'surface', 'muted', 'onAccent'],
+    },
+    designNote:
+      '路径像一条锁定后的飞行线，弓弦金只点亮箭首与裁决状态，其余信息沿同一方向保持冷峻。',
+    designNoteEn:
+      'The path becomes a locked flight line; bow gold lights only the arrowhead and verdict state while every other field stays cold and directional.',
+  },
   'uncharted-reach': {
     visualStyle: 'stellar-navigation',
     layout: 'two-line',

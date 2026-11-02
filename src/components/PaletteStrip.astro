@@ -113,11 +113,23 @@ const summary = palette.map((color) => color.name + ' ' + color.hex).join(t(lang
     font-family: var(--font-mono);
     font-size: 0.66rem;
     letter-spacing: 0.04em;
-    white-space: nowrap;
+    max-width: min(220px, calc(100vw - 24px));
+    text-align: center;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
     z-index: 5;
+  }
+
+  .strip__swatch:first-child::after {
+    left: 0;
+    transform: translate(0, 4px);
+  }
+
+  .strip__swatch:last-child::after {
+    right: 0;
+    left: auto;
+    transform: translate(0, 4px);
   }
 
   .strip__swatch:hover::after,
@@ -125,6 +137,15 @@ const summary = palette.map((color) => color.name + ' ' + color.hex).join(t(lang
   .strip__swatch[aria-expanded='true']::after {
     opacity: 1;
     transform: translate(-50%, 0);
+  }
+
+  .strip__swatch:first-child:hover::after,
+  .strip__swatch:first-child:focus-visible::after,
+  .strip__swatch:first-child[aria-expanded='true']::after,
+  .strip__swatch:last-child:hover::after,
+  .strip__swatch:last-child:focus-visible::after,
+  .strip__swatch:last-child[aria-expanded='true']::after {
+    transform: translate(0, 0);
   }
 
   .strip__swatch:focus-visible {

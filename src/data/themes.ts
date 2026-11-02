@@ -674,6 +674,131 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   },
 
   {
+    slug: 'yaoshi-everlasting-bough',
+    title: '药师 · 长生枝',
+    subtitle: '生命从未停止生长。',
+    collection: 'rail',
+    description: '月髓白、苍木与生命金交织成繁盛枝冠，药红留下生命过度生长的隐秘警示。',
+    story:
+      '在遥远的星海中，有一位回应所有祈愿的星神。' +
+      '祂让枯萎的土地重新长出枝叶，让干涸的河流再次流淌，也让生命摆脱时间的束缚。' +
+      '于是，万物得以繁盛。' +
+      '可是当生长不再有尽头，枝冠会遮住天空，根系也会穿过边界；' +
+      '繁盛因此成为另一种无法挣脱的命运。' +
+      '本主题把这份恩赐与压迫放在同一棵树上：它慈悲、丰饶，也永远没有停止生长的意思。',
+    inspiration:
+      '配色取意于神木、玉露与永生之力。月髓白承载神性的纯净，' +
+      '苍木与青枝描绘古木和新叶，生命金记录赐福留下的光，' +
+      '药红则像树冠深处一颗不合时宜的生命印记。' +
+      '枝状冠冕、环绕的星轨和不对称的藤蔓均为原创抽象图形，' +
+      '不描摹游戏中的角色、立绘、Logo 或界面，也不代表官方配色。',
+    designRationale:
+      '浅色底先把丰饶表现为温润、可阅读的空间，再用深翡翠建立庄严的中心。' +
+      '苔痕从初稿的 #6F7969 压深到 #596253，使小字在月髓白和玉露面板上都通过 AA 对比；' +
+      '药红只作为一次警示和少量生命节点，避免绿色主题退化成普通森林配色。' +
+      'Vim 与 Codex 使用独立的深绿、金色、药红与灰褐语法层次，让生命的繁复不只停留在界面装饰上。',
+    palette: [
+      { name: '月髓白', hex: '#F0EEE2', role: 'bg', note: '神性、纯净与留白' },
+      { name: '玉露', hex: '#E1E5D1', role: 'surface', note: '面板与卡片底色' },
+      { name: '幽墨', hex: '#30352E', role: 'text', note: '正文与主要代码文字' },
+      { name: '苔痕', hex: '#596253', role: 'muted', note: '压深后的次要文字，保证浅底可读性' },
+      { name: '青枝', hex: '#A5B18A', role: 'border', note: '枝条、分隔线与低对比结构' },
+      { name: '苍木', hex: '#263D35', role: 'accent', note: '古木主轴、按钮与核心焦点' },
+      { name: '月髓光', hex: '#F0EEE2', role: 'onAccent', note: '苍木色之上的文字与结构高光' },
+      { name: '药红', hex: '#A94D48', role: 'flare', note: '异化节点、警示与少量特殊强调' },
+    ],
+    tags: ['同人', '丰饶', '神木', '枝冠', '玉露', '生命异化'],
+    sources: [
+      {
+        title: '崩坏：星穹铁道 官方网站',
+        type: 'link',
+        url: 'https://hsr.hoyoverse.com/',
+        detail: '官方公开页面，仅作作品与题材背景识别',
+        note: '本站未使用该页面的角色立绘、Logo、界面或其他美术素材。',
+      },
+      {
+        title: '丰饶、药师与长生意象（公开设定摘要）',
+        type: 'pending',
+        note: '待补充：加入带版本与页码的官方设定资料后替换本条；当前文案与色值属于 Theme Atlas 原创演绎。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人演绎）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人作品，仅用于配色研究与界面演示，与米哈游及 HoYoverse 无隶属或授权关系。',
+      imageLicence: '站内插图为原创 SVG，未使用任何官方角色、Logo、纹理或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'yaoshi-bough',
+  },
+
+  {
+    slug: 'lan-reignbow-arbiter',
+    title: '岚 · 帝弓天矢',
+    subtitle: '一道贯穿星海的光，目标既定，绝不回头。',
+    collection: 'rail',
+    description: '冷蓝星弦、深空靛与弓弦金勾勒出锁定星海的巡猎箭轨，精准、轻盈而不可回返。',
+    story:
+      '目标既定，箭无虚发。' +
+      '星海之中，有一道永不停歇的身影。' +
+      '祂是帝弓司命，巡行诸界，以光矢追猎不死的孽物。' +
+      '弓弦拉满的瞬间，星辰也仿佛为之停滞。' +
+      '那道箭光划过遥远星域，只留下短暂而耀眼的虹色轨迹。' +
+      '本主题把这份裁决感压缩成一束方向明确的光：冷静、精准，也从不为任何目标回头。',
+    inspiration:
+      '配色取意于帝弓的苍蓝身影、贯穿星海的光矢，以及巡猎者冷静而坚定的目光。' +
+      '深空靛构成寂静的宇宙，天矢蓝记录箭矢的方向，弧光青描绘速度，' +
+      '弓弦金则标记每一次精准的裁决。' +
+      '主视觉中的星弓、准星、箭轨与虹色残光均为原创几何构图，' +
+      '不描摹角色立绘、游戏 Logo、界面或任何官方美术素材。',
+    designRationale:
+      '星弦白与霜蓝维持轻盈、清晰的浅色工作区，深空靛负责正文与结构骨架。' +
+      '天矢蓝进一步压深到 #2D6888，使白色强调按钮文字和色块内的小号标签都通过 AA；' +
+      '星尘灰改为 #4B667A，确保小字号在背景与面板上都保持可读。' +
+      '弓弦金只出现在锁定、箭首和裁决节点，避免整套界面退化成普通蓝色科技主题。' +
+      'Vim 与 Codex 继续共享独立语法色板，以蓝、金、青、冷红和靛灰形成明确的代码层级。',
+    palette: [
+      { name: '星弦白', hex: '#EAF2F5', role: 'bg', note: '星弓周围的冷白空间' },
+      { name: '霜蓝', hex: '#D0E3EC', role: 'surface', note: '卡片与信息面板' },
+      { name: '深空靛', hex: '#182B43', role: 'text', note: '正文与精密结构' },
+      { name: '星尘灰', hex: '#4B667A', role: 'muted', note: '压深后的坐标与次要信息' },
+      { name: '轨迹线', hex: '#B6CCD8', role: 'border', note: '星轨、边界与低速辅助线' },
+      { name: '天矢蓝', hex: '#2D6888', role: 'accent', note: '锁定、方向与主要操作' },
+      { name: '星弦白字', hex: '#FFFFFF', role: 'onAccent', note: '天矢蓝上的文字' },
+      { name: '弓弦金', hex: '#C4A66A', role: 'flare', note: '箭首、准星与裁决节点' },
+    ],
+    tags: ['同人', '巡猎', '帝弓', '星箭', '目标锁定', '速度与精准'],
+    sources: [
+      {
+        title: '崩坏：星穹铁道 官方网站',
+        type: 'link',
+        url: 'https://hsr.hoyoverse.com/',
+        detail: '官方公开页面，仅作作品与题材背景识别',
+        note: '本站未使用该页面的角色立绘、Logo、界面或其他美术素材。',
+      },
+      {
+        title: '巡猎、帝弓与岚（公开设定摘要）',
+        type: 'pending',
+        note: '待补充：加入带版本与页码的官方设定资料后替换本条；当前文案与色值属于 Theme Atlas 原创演绎。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人演绎）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人作品，仅用于配色研究与界面演示，与米哈游及 HoYoverse 无隶属或授权关系。',
+      imageLicence: '站内插图为原创 SVG，未使用任何官方角色、Logo、纹理或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'lan-reignbow',
+  },
+
+  {
     slug: 'uncharted-reach',
     title: '未知疆域',
     subtitle: '在星图尚未命名的地方，点亮第一束文明信号',

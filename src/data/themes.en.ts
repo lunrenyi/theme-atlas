@@ -731,6 +731,132 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     },
   },
 
+  'yaoshi-everlasting-bough': {
+    title: 'Yaoshi · Everlasting Bough',
+    subtitle: 'Life has never stopped growing.',
+    description:
+      'Moon-marrow white, deep jade and life gold form an abundant crown, while medicine red keeps one quiet warning beneath the bloom.',
+    story:
+      'Somewhere in the distant sea of stars, an Aeon answers every prayer. Wasted ground ' +
+      'sprouts again, dry rivers return, and living things are released from the limits of ' +
+      'time. All things flourish. Yet when growth has no end, the crown can close over the ' +
+      'sky and roots can pass through every boundary; abundance becomes another fate from ' +
+      'which nothing can escape. This theme holds both sides of that gift in one tree — ' +
+      'merciful and fertile, but never willing to stop growing.',
+    inspiration:
+      'The palette is drawn from the imagined sacred tree, jade dew and the force of ' +
+      'everlasting life. Moon-marrow white carries divine purity, deep jade and pale branch ' +
+      'green describe old wood and new leaves, and life gold records the trace of a blessing. ' +
+      'Medicine red appears as an untimely living mark deep in the crown. The crowned branches, ' +
+      'stellar rings and asymmetric vines are original abstract forms; no character, official ' +
+      'artwork, logo, texture or interface from the game is reproduced.',
+    designRationale:
+      'The light ground first presents abundance as a warm, readable space, while deep ' +
+      'emerald establishes a solemn centre. The original mineral-grey secondary text was ' +
+      'darkened to #596253 so small copy passes AA on both moon-marrow white and jade-dew ' +
+      'surfaces. Medicine red is limited to a warning and a few living nodes so the theme ' +
+      'never becomes an ordinary forest palette. Vim and Codex use their own deep-green, ' +
+      'gold, medicine-red and grey-brown syntax hierarchy, carrying the idea of flourishing ' +
+      'life into the code itself.',
+    tags: ['Fan work', 'Abundance', 'Sacred tree', 'Branch crown', 'Jade dew', 'Biological excess'],
+    palette: [
+      { name: 'Moon-Marrow White', note: 'Divine purity and open space' },
+      { name: 'Jade Dew', note: 'Panel and card ground' },
+      { name: 'Deep Ink', note: 'Body text and primary code' },
+      { name: 'Moss Trace', note: 'Darkened secondary text for readable contrast' },
+      { name: 'Pale Branch', note: 'Boughs, dividers and low-contrast structure' },
+      { name: 'Deep Jade', note: 'Ancient wood, primary actions and focus' },
+      { name: 'Moon-Marrow Light', note: 'Text and highlights on deep jade' },
+      { name: 'Medicine Red', note: 'Altered growth, warnings and rare emphasis' },
+    ],
+    sources: [
+      {
+        title: 'Honkai: Star Rail official website',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'No character artwork, logo, interface or other imagery from that page is used on ' +
+          'this site.',
+      },
+      {
+        title: 'Abundance, Yaoshi and visions of eternal life (public setting summary)',
+        note:
+          'Pending: an official setting reference with version and page details will replace ' +
+          'this entry. The current writing and colour values are original Theme Atlas work.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'lan-reignbow-arbiter': {
+    title: 'Lan · Reignbow Arbiter',
+    subtitle: 'A light crosses the sea of stars; once the target is set, it never turns back.',
+    description:
+      'Cold star-string blue, deep-space indigo and bow gold trace a locked hunting flight through the stars.',
+    story:
+      'Once the target is set, the arrow does not miss. Somewhere in the sea of stars moves a ' +
+      'figure that never rests. Lan, the Reignbow Arbiter, patrols the worlds and hunts the ' +
+      'deathless abominations with arrows of light. In the instant the string is drawn fully ' +
+      'back, even the stars seem to stop. The shot crosses a distant region and leaves only ' +
+      'a brief, brilliant rainbow trace. This theme compresses that verdict into a beam with ' +
+      'one direction: cold, exact, and unwilling to turn back for any target.',
+    inspiration:
+      'The colours come from the imagined blue figure of the Reignbow, the light arrow crossing ' +
+      'the stars and the hunter’s calm, unwavering gaze. Deep-space indigo forms the silent ' +
+      'cosmos, arrow blue records the trajectory, arc cyan describes speed, and bow gold marks ' +
+      'each precise verdict. The star bow, reticle, flight trails and rainbow afterimage are ' +
+      'original geometric forms; no character art, game logo, interface or official visual ' +
+      'asset is reproduced.',
+    designRationale:
+      'Star-string white and frost blue keep the workspace light and exact, while deep-space ' +
+      'indigo anchors body copy and structural geometry. Arrow blue is deepened slightly to ' +
+      '#2D6888 so both white action text and small labels inside the accent block pass AA; stardust grey is adjusted to ' +
+      '#4B667A so small labels remain readable on both the background and panels. Bow gold is ' +
+      'reserved for locks, arrowheads and verdict points, preventing the interface from ' +
+      'becoming a generic blue technology theme. Vim and Codex share an independent syntax ' +
+      'palette of blue, gold, cyan, cool rose and indigo-grey.',
+    tags: ['Fan work', 'The Hunt', 'Reignbow', 'Star arrow', 'Target lock', 'Speed and precision'],
+    palette: [
+      { name: 'Star-String White', note: 'The cold white space around the star bow' },
+      { name: 'Frost Blue', note: 'Cards and information panels' },
+      { name: 'Deep-Space Indigo', note: 'Body text and precise structure' },
+      { name: 'Stardust Grey', note: 'Darkened coordinates and secondary information' },
+      { name: 'Trajectory Rule', note: 'Star tracks, boundaries and low-priority guides' },
+      { name: 'Arrow Blue', note: 'Lock-on, direction and primary actions' },
+      { name: 'Star-String White Type', note: 'Text on arrow blue' },
+      { name: 'Bow Gold', note: 'Arrowhead, reticle and verdict nodes' },
+    ],
+    sources: [
+      {
+        title: 'Honkai: Star Rail official website',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'No character artwork, logo, interface or other imagery from that page is used on ' +
+          'this site.',
+      },
+      {
+        title: 'The Hunt, the Reignbow and Lan (public setting summary)',
+        note:
+          'Pending: an official setting reference with version and page details will replace ' +
+          'this entry. The current writing and colour values are original Theme Atlas work.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
+
   'uncharted-reach': {
     title: 'Uncharted Reach',
     subtitle: 'Light the first signal from a region the charts have not named',

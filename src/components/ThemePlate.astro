@@ -36,6 +36,10 @@ const accent = hex('accent');
 const bright = hex('onAccent');
 const flare = hex('flare') ?? accent;
 const stone = hex('border');
+const gold = theme.syntax.keyword;
+const red = theme.syntax.number;
+const bowGold = theme.syntax.function;
+const arcLight = theme.syntax.string;
 ---
 
 <figure class:list={['plate', className]}>
@@ -333,6 +337,154 @@ const stone = hex('border');
             <circle cx="166" cy="132" r="2.4" />
           </g>
           <path d="M48 184c30-10 52-5 74 6s43 8 68-4 48-12 70 4" stroke={soft} stroke-width="1" opacity="0.45" />
+        </g>
+      )
+    }
+
+    {
+      /* An original Reignbow study: an oblique star bow, one unbroken flight
+         line, a verdict reticle and a restrained chromatic wake. The drawing
+         uses geometry rather than any official character or environment art. */
+      variant === 'lan-reignbow' && (
+        <g>
+          <g stroke={line} fill="none" opacity="0.5">
+            <ellipse cx="160" cy="100" rx="128" ry="72" transform="rotate(-17 160 100)" />
+            <ellipse cx="160" cy="100" rx="88" ry="48" transform="rotate(23 160 100)" stroke-dasharray="2 6" />
+          </g>
+
+          <g transform="rotate(-17 160 100)">
+            <g stroke={line} stroke-width="1" opacity="0.55">
+              <path d="M22 74h286M22 126h286" stroke-dasharray="2 7" />
+              <path d="M80 28v144M248 28v144" opacity="0.45" />
+            </g>
+
+            <g fill="none" stroke-linecap="round">
+              <path d="M120 20C76 58 76 142 120 180" stroke={bright} stroke-width="2.2" />
+              <path d="M120 20C101 55 95 79 95 100s6 45 25 80" stroke={soft} stroke-width="0.9" opacity="0.7" />
+              <path d="M120 20v160" stroke={line} stroke-width="1" />
+              <path d="M120 20l-5 11M120 180l-5-11" stroke={bowGold} stroke-width="1.3" />
+            </g>
+
+            <g stroke-linecap="round">
+              <path d="M30 94h242" stroke={arcLight} stroke-width="0.8" opacity="0.36" />
+              <path d="M24 100h262" stroke={accent} stroke-width="1.7" />
+              <path d="M30 106h242" stroke={red} stroke-width="0.8" opacity="0.3" />
+            </g>
+
+            <path d="M278 90l18 10-18 10 5-10z" fill={bowGold} />
+            <path d="M24 96l-9 4 9 4" stroke={arcLight} stroke-width="1" opacity="0.75" />
+
+            <g stroke={line} fill="none" opacity="0.85">
+              <circle cx="266" cy="100" r="25" />
+              <circle cx="266" cy="100" r="14" />
+              <path d="M266 66v20M266 114v20M232 100h20M280 100h20" />
+            </g>
+            <g fill={bowGold}>
+              <circle cx="266" cy="100" r="2.4" />
+              <circle cx="291" cy="100" r="1.5" opacity="0.8" />
+              <circle cx="241" cy="100" r="1.5" opacity="0.8" />
+            </g>
+
+            <g stroke={arcLight} stroke-linecap="round" opacity="0.75">
+              <path d="M44 88h136" stroke-width="0.8" />
+              <path d="M58 112h104" stroke-width="0.7" opacity="0.65" />
+              <path d="M34 82h82" stroke-width="0.6" stroke-dasharray="2 5" />
+            </g>
+          </g>
+
+          <g fill={line} opacity="0.7">
+            <circle cx="45" cy="45" r="1.5" />
+            <circle cx="72" cy="168" r="1.1" />
+            <circle cx="274" cy="27" r="1.7" />
+            <circle cx="291" cy="151" r="1.2" />
+            <circle cx="226" cy="178" r="1" />
+          </g>
+
+          <path d="M26 184h58M237 184h56" stroke={soft} stroke-width="0.8" opacity="0.45" />
+        </g>
+      )
+    }
+
+    {
+      /* An original sacred bough: a symmetrical crown contained by a stellar
+         ring, an eye at its living centre, and one vine breaking the order.
+         It borrows character from sacred trees and botanical diagrams without
+         reproducing any game crest, character or environment design. */
+      variant === 'yaoshi-bough' && (
+        <g>
+          <g stroke={line} stroke-width="0.8" opacity="0.48">
+            <ellipse cx="160" cy="92" rx="104" ry="70" />
+            <ellipse cx="160" cy="92" rx="82" ry="55" stroke-dasharray="2 6" />
+            <path d="M160 14v164" stroke-dasharray="1 7" opacity="0.55" />
+          </g>
+
+          <g stroke={bright} stroke-linecap="round">
+            <path d="M160 178c-2-27 3-51 0-75 2-15 1-32 0-49" stroke-width="2.2" opacity="0.9" />
+            <path
+              d="M160 145c-21-10-34-28-44-47M160 151c23-9 38-25 48-44
+                 M160 130c-171 12-31 31-52M160 129c17-5 33-19 47-34"
+              stroke-width="1.2"
+              opacity="0.78"
+            />
+          </g>
+
+          <g stroke={line} stroke-width="1.15" stroke-linecap="round" opacity="0.9">
+            <path d="M116 108c-14-10-26-25-31-43M205 104c15-12 28-28 34-48" />
+            <path d="M111 129c-20-4-38-16-50-33M209 130c20-6 37-19 48-37" />
+            <path d="M145 92c-16-16-29-32-35-52M175 91c15-17 27-35 32-55" />
+            <path d="M129 72c-12-9-22-20-29-32M188 68c12-9 22-20 29-32" />
+            <path d="M75 158c16-3 30-10 42-22M245 158c-16-3-30-10-42-22" />
+          </g>
+
+          <g fill={gold} stroke={gold} stroke-width="0.7" opacity="0.88">
+            <path d="M88 61c-9-12-5-20 4-23 7 8 7 17-4 23z" />
+            <path d="M231 61c9-12 5-20-4-23-7 8-7 17 4 23z" />
+            <path d="M66 94c-12-5-15-14-11-22 10 2 15 10 11 22z" />
+            <path d="M254 94c12-5 15-14 11-22-10 2-15 10-11 22z" />
+            <path d="M91 124c-12 0-19-6-20-15 10-2 17 3 20 15z" />
+            <path d="M229 124c12 0 19-6 20-15-10-2-17 3-20 15z" />
+          </g>
+
+          <g fill={gold}>
+            <circle cx="160" cy="48" r="3.2" />
+            <circle cx="111" cy="61" r="2.3" opacity="0.85" />
+            <circle cx="209" cy="61" r="2.3" opacity="0.85" />
+            <circle cx="78" cy="83" r="1.8" opacity="0.75" />
+            <circle cx="242" cy="83" r="1.8" opacity="0.75" />
+            <circle cx="160" cy="25" r="1.5" opacity="0.65" />
+          </g>
+
+          <g stroke={line} fill="none" opacity="0.7">
+            <path d="M135 46c8-17 42-17 50 0-8 17-42 17-50 0z" />
+            <circle cx="160" cy="46" r="10" />
+          </g>
+          <path d="M160 40v12" stroke={bright} stroke-width="1.2" opacity="0.72" />
+
+          <g fill="none" stroke-linecap="round">
+            <path
+              d="M144 178c-19-13 7-24-12-36 15-10-2-20 14-29"
+              stroke={red}
+              stroke-width="1.35"
+              opacity="0.8"
+            />
+            <path
+              d="M178 173c20-11 5-22 19-34-12-13 8-21-2-35"
+              stroke={soft}
+              stroke-width="1"
+              opacity="0.5"
+            />
+          </g>
+
+          <g fill={red}>
+            <circle cx="132" cy="142" r="2.6" />
+            <circle cx="195" cy="105" r="1.7" opacity="0.72" />
+            <circle cx="146" cy="113" r="1.4" opacity="0.6" />
+          </g>
+
+          <g stroke={soft} opacity="0.55">
+            <path d="M98 182c17-6 31-5 45 1s31 6 47-1 28-7 43-1" />
+            <path d="M67 184h31M220 184h34" opacity="0.55" />
+          </g>
         </g>
       )
     }

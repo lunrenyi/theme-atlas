@@ -22,8 +22,22 @@ const gameWorld = theme.game ? getGameWorldById(theme.game, lang) : null;
 const rule = arrangementFor(theme.collection, lang);
 const palette = arrangePalette(theme);
 const map = paletteMap(theme);
+const markKind =
+  theme.plate === 'staff'
+    ? 'staff'
+    : theme.plate === 'yaoshi-bough'
+      ? 'bough'
+      : theme.plate === 'lan-reignbow'
+        ? 'arrow'
+        : null;
 const mark =
-  theme.plate === 'staff' ? { gold: map.accent?.hex, flame: map.flare?.hex } : null;
+  markKind === 'staff'
+    ? { gold: map.accent?.hex, flame: map.flare?.hex }
+    : markKind === 'bough'
+      ? { gold: theme.syntax.keyword, flame: theme.syntax.number }
+      : markKind === 'arrow'
+        ? { gold: theme.syntax.function, flame: theme.syntax.keyword }
+      : null;
 
 const statusMap = {
   verified: { label: t(lang, 'card.statusVerified'), tone: 'ok' },
@@ -45,18 +59,40 @@ const status = statusMap[theme.status];
         mark && (
           <span class="card__mark" aria-hidden="true">
             <svg viewBox="0 0 64 64" fill="none">
-              <path
-                d="M39.5 11.3A22 22 0 1 0 52.7 24.5"
-                stroke={mark.gold}
-                stroke-width="2.6"
-                stroke-linecap="round"
-              />
-              <rect x="28.6" y="5" width="6.8" height="54" rx="3.4" fill={mark.gold} />
-              <rect x="25.4" y="13" width="13.2" height="4" rx="1.4" fill={mark.gold} />
-              <rect x="25.4" y="47" width="13.2" height="4" rx="1.4" fill={mark.gold} />
-              <circle cx="56.5" cy="16.5" r="1.7" fill={mark.flame} />
-              <circle cx="60" cy="27" r="1.1" fill={mark.flame} opacity="0.85" />
-              <circle cx="54.5" cy="8.5" r="1.2" fill={mark.flame} opacity="0.7" />
+              {markKind === 'staff' ? (
+                <g>
+                  <path
+                    d="M39.5 11.3A22 22 0 1 0 52.7 24.5"
+                    stroke={mark.gold}
+                    stroke-width="2.6"
+                    stroke-linecap="round"
+                  />
+                  <rect x="28.6" y="5" width="6.8" height="54" rx="3.4" fill={mark.gold} />
+                  <rect x="25.4" y="13" width="13.2" height="4" rx="1.4" fill={mark.gold} />
+                  <rect x="25.4" y="47" width="13.2" height="4" rx="1.4" fill={mark.gold} />
+                  <circle cx="56.5" cy="16.5" r="1.7" fill={mark.flame} />
+                  <circle cx="60" cy="27" r="1.1" fill={mark.flame} opacity="0.85" />
+                  <circle cx="54.5" cy="8.5" r="1.2" fill={mark.flame} opacity="0.7" />
+                </g>
+              ) : markKind === 'bough' ? (
+                <g stroke-linecap="round">
+                  <path d="M32 7v51M32 23 17 14M32 29l16-14M32 39 14 31M32 41l19-10" stroke={mark.gold} stroke-width="1.8" />
+                  <ellipse cx="32" cy="23" rx="11" ry="7" stroke={mark.gold} opacity="0.72" />
+                  <circle cx="17" cy="14" r="2" fill={mark.gold} />
+                  <circle cx="48" cy="15" r="2" fill={mark.gold} />
+                  <circle cx="14" cy="31" r="1.6" fill={mark.gold} opacity="0.8" />
+                  <circle cx="51" cy="31" r="1.6" fill={mark.gold} opacity="0.8" />
+                  <path d="M32 30c-8-10 8-10 0 0z" fill={mark.flame} />
+                </g>
+              ) : (
+                <g stroke-linecap="round">
+                  <path d="M13 51 50 14" stroke={mark.flame} stroke-width="1.8" />
+                  <path d="M43 13h8v8M13 51l23-4-9-9z" fill={mark.gold} stroke="none" />
+                  <path d="M20 20c-9 19-2 31 13 41" stroke={mark.gold} stroke-width="1.2" opacity="0.8" />
+                  <circle cx="47" cy="17" r="8" stroke={mark.gold} stroke-width="1" opacity="0.7" />
+                  <circle cx="47" cy="17" r="2" fill={mark.gold} />
+                </g>
+              )}
             </svg>
           </span>
         )
