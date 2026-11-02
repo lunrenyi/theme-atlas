@@ -1,5 +1,6 @@
 ---
 import type { PaletteRole, Theme } from '../data/types';
+import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 import PreviewColorLegend from './PreviewColorLegend.astro';
 import TerminalShell from './TerminalShell.astro';
@@ -11,6 +12,7 @@ interface Props {
 
 const { theme, lang } = Astro.props;
 const design = theme.previewDesign.vim;
+const map = paletteMap(theme);
 const contentId = 'vim-preview-' + theme.slug;
 
 const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
@@ -128,6 +130,7 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
 
       <div class="vim__status" data-prompt-role="surface border">
         <span class="vim__mode" data-prompt-role="accent onAccent">NORMAL</span>
+        {map.flare && <span class="vim__flare" data-prompt-role="flare" aria-hidden="true">◆</span>}
         <span data-prompt-role="text">theme-preview.ts</span>
         <span data-prompt-role="muted">typescript</span>
         <span class="vim__position" data-prompt-role="muted">7:19</span>
@@ -228,36 +231,28 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
     background: color-mix(in srgb, var(--vim-current-line) 84%, transparent);
   }
 
-  .tok-keyword,
-  .tok-function,
-  .tok-string,
-  .tok-number,
-  .tok-type {
-    color: color-mix(in srgb, var(--vim-token, var(--t-accent)) 8%, var(--t-text));
-    text-decoration-line: underline;
-    text-decoration-color: var(--vim-token);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
-  }
-
   .tok-keyword {
-    --vim-token: var(--vim-keyword);
+    color: var(--vim-keyword);
+    font-weight: 650;
   }
 
   .tok-function {
-    --vim-token: var(--vim-function);
+    color: var(--vim-function);
+    font-weight: 600;
   }
 
   .tok-string {
-    --vim-token: var(--vim-string);
+    color: var(--vim-string);
   }
 
   .tok-number {
-    --vim-token: var(--vim-number);
+    color: var(--vim-number);
+    font-variant-numeric: tabular-nums;
   }
 
   .tok-type {
-    --vim-token: var(--vim-type);
+    color: var(--vim-type);
+    font-weight: 600;
   }
 
   .tok-comment {
@@ -265,8 +260,7 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
     font-style: italic;
   }
 
-  .tok-operator,
-  .tok-variable {
+  .tok-operator {
     color: var(--vim-operator);
   }
 
@@ -297,6 +291,11 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
     background: var(--vim-selection);
     color: var(--t-on-accent);
     font-weight: 700;
+  }
+
+  .vim__flare {
+    color: var(--t-flare);
+    font-size: 0.62rem;
   }
 
   .vim__position {

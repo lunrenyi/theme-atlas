@@ -7,7 +7,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { themes } from '../src/data/themes.ts';
-import { paletteMap, luminance } from '../src/lib/color.ts';
+import { contrastRatio, paletteMap, luminance } from '../src/lib/color.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const requiredModules = ['user', 'directory', 'git', 'runtime', 'command', 'status'];
@@ -102,6 +102,24 @@ for (const theme of themes) {
     if (!map.flare && Object.values(syntax).includes('flare')) {
       failures.push(`${theme.slug}: ${preview} invented a flare syntax colour`);
     }
+    const syntaxColours = new Set();
+    for (const [token, role] of Object.entries(syntax)) {
+      const foreground = map[role]?.hex;
+      if (!foreground) {
+        failures.push(`${theme.slug}: ${preview} syntax token ${token} has no colour`);
+        continue;
+      }
+      syntaxColours.add(foreground);
+      const ratio = contrastRatio(foreground, map.bg.hex);
+      if (ratio < 4.5) {
+        failures.push(
+          `${theme.slug}: ${preview} token ${token} is ${ratio.toFixed(2)}:1 on bg`,
+        );
+      }
+    }
+    if (syntaxColours.size < 2) {
+      failures.push(`${theme.slug}: ${preview} syntax has no visible colour hierarchy`);
+    }
   }
   if (!map.flare && [tools.codex.diffRemoved, tools.codex.promptAccent].includes('flare')) {
     failures.push(`${theme.slug}: Codex invented a flare diff colour`);
@@ -195,6 +213,18 @@ for (const component of ['PreviewColorLegend.astro', 'PromptPreview.astro', 'Vim
 for (const component of ['VimPreview.astro', 'CodexPreview.astro']) {
   const source = await readFile(resolve(root, 'src/components', component), 'utf8');
   if (/#[0-9a-f]{3,8}/i.test(source)) failures.push(`${component}: contains hardcoded colours`);
+  if (source.includes('text-decoration-line: underline')) {
+    failures.push(`${component}: still uses coloured underlines for syntax`);
+  }
+  const prefix = component === 'VimPreview.astro' ? 'vim' : 'codex';
+  if (source.includes(`--${prefix}-token`)) {
+    failures.push(`${component}: still blends syntax colours through a shared token variable`);
+  }
+  for (const token of syntaxTokens) {
+    if (!source.includes(`color: var(--${prefix}-${token})`)) {
+      failures.push(`${component}: ${token} does not use its assigned colour directly`);
+    }
+  }
 }
 const previewSource = await readFile(resolve(root, 'src/data/previewDesigns.ts'), 'utf8');
 if (/#[0-9a-f]{3,8}/i.test(previewSource)) {

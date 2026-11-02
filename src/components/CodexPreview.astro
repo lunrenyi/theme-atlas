@@ -75,6 +75,7 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
             </div>
             <pre><code><span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>export</span> <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>function</span> <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveTheme</span>(theme: <span class="tok-type" data-prompt-role={tokenRole('type')}>Theme</span>) {'{'}
   <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span> <span class="tok-variable" data-prompt-role={tokenRole('variable')}>roles</span> <span class="tok-operator" data-prompt-role={tokenRole('operator')}>=</span> <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>new</span> Map(theme.palette);
+  <span class="tok-comment" data-prompt-role={tokenRole('comment')}>// Preserve semantic roles across output formats.</span>
   <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>return</span> roles.get(<span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>) <span class="tok-operator" data-prompt-role={tokenRole('operator')}>??</span> theme.palette[<span class="tok-number" data-prompt-role={tokenRole('number')}>0</span>];
 {'}'}</code></pre>
           </section>
@@ -229,36 +230,28 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
     color: var(--t-text);
   }
 
-  .tok-keyword,
-  .tok-function,
-  .tok-string,
-  .tok-number,
-  .tok-type {
-    color: color-mix(in srgb, var(--codex-token, var(--t-accent)) 8%, var(--t-text));
-    text-decoration-line: underline;
-    text-decoration-color: var(--codex-token);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
-  }
-
   .tok-keyword {
-    --codex-token: var(--codex-keyword);
+    color: var(--codex-keyword);
+    font-weight: 650;
   }
 
   .tok-function {
-    --codex-token: var(--codex-function);
+    color: var(--codex-function);
+    font-weight: 600;
   }
 
   .tok-string {
-    --codex-token: var(--codex-string);
+    color: var(--codex-string);
   }
 
   .tok-number {
-    --codex-token: var(--codex-number);
+    color: var(--codex-number);
+    font-variant-numeric: tabular-nums;
   }
 
   .tok-type {
-    --codex-token: var(--codex-type);
+    color: var(--codex-type);
+    font-weight: 600;
   }
 
   .tok-variable {
@@ -267,6 +260,11 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
 
   .tok-operator {
     color: var(--codex-operator);
+  }
+
+  .tok-comment {
+    color: var(--codex-comment);
+    font-style: italic;
   }
 
   .codex__diff-line {
