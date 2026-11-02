@@ -7,6 +7,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { themes } from '../src/data/themes.ts';
+import { syntaxPalettes } from '../src/data/syntaxPalettes.ts';
 import { contrastRatio, paletteMap, luminance } from '../src/lib/color.ts';
 
 const root = resolve(import.meta.dirname, '..');
@@ -18,9 +19,21 @@ const syntaxTokens = [
   'string',
   'number',
   'type',
+  'variable',
+  'property',
   'comment',
   'operator',
+  'punctuation',
+  'constant',
+];
+const coreSyntaxTokens = [
+  'keyword',
+  'function',
+  'string',
+  'number',
+  'type',
   'variable',
+  'comment',
 ];
 const promptLayouts = new Set(['minimal', 'segmented', 'two-line']);
 const vimLayouts = new Set(['classic', 'focus', 'compact']);
@@ -30,6 +43,7 @@ const styles = new Set();
 const usedPromptLayouts = new Set();
 const usedVimLayouts = new Set();
 const usedCodexLayouts = new Set();
+const syntaxSignatures = new Set();
 
 const requiredText = {
   prompt: [
@@ -51,15 +65,21 @@ const requiredText = {
     'theme-preview.ts',
     'typescript',
     'NORMAL',
-    '7:19',
-    'resolveRole',
-    'PaletteRole',
+    '9:20',
+    'resolveTheme',
+    'ThemeConfig',
+    'interface',
   ],
   codex: [
     'codex - ~/theme-atlas',
     'Refactor the theme resolver to use semantic roles.',
     'I will update the resolver',
     'src/theme.ts',
+    'resolveTheme',
+    'Preserve semantic roles',
+    'roles',
+    'get',
+    '0.84',
     '+1',
     '-1',
     'Ask Codex to continue...',
@@ -92,34 +112,29 @@ for (const theme of themes) {
   if (Boolean(map.flare) !== emphasized.includes('flare')) {
     failures.push(`${theme.slug}: flare emphasis does not match the palette`);
   }
-  for (const [preview, syntax] of [
-    ['vim', tools.vim.syntax],
-    ['codex', tools.codex.syntax],
-  ]) {
-    if (!syntaxTokens.every((token) => token in syntax)) {
-      failures.push(`${theme.slug}: incomplete ${preview} syntax mapping`);
+  if (!syntaxTokens.every((token) => token in theme.syntax)) {
+    failures.push(`${theme.slug}: incomplete theme syntax palette`);
+  }
+  if (!syntaxPalettes[theme.slug]) {
+    failures.push(`${theme.slug}: uses the fallback syntax palette`);
+  }
+  syntaxSignatures.add(syntaxTokens.map((token) => theme.syntax[token]).join(':'));
+  for (const token of syntaxTokens) {
+    const foreground = theme.syntax[token];
+    if (!/^#[0-9A-F]{6}$/.test(foreground ?? '')) {
+      failures.push(`${theme.slug}: syntax token ${token} is not uppercase #RRGGBB`);
+      continue;
     }
-    if (!map.flare && Object.values(syntax).includes('flare')) {
-      failures.push(`${theme.slug}: ${preview} invented a flare syntax colour`);
+    const ratio = contrastRatio(foreground, map.bg.hex);
+    if (ratio < 4.5) {
+      failures.push(
+        `${theme.slug}: syntax token ${token} is ${ratio.toFixed(2)}:1 on bg`,
+      );
     }
-    const syntaxColours = new Set();
-    for (const [token, role] of Object.entries(syntax)) {
-      const foreground = map[role]?.hex;
-      if (!foreground) {
-        failures.push(`${theme.slug}: ${preview} syntax token ${token} has no colour`);
-        continue;
-      }
-      syntaxColours.add(foreground);
-      const ratio = contrastRatio(foreground, map.bg.hex);
-      if (ratio < 4.5) {
-        failures.push(
-          `${theme.slug}: ${preview} token ${token} is ${ratio.toFixed(2)}:1 on bg`,
-        );
-      }
-    }
-    if (syntaxColours.size < 2) {
-      failures.push(`${theme.slug}: ${preview} syntax has no visible colour hierarchy`);
-    }
+  }
+  const coreSyntaxColours = new Set(coreSyntaxTokens.map((token) => theme.syntax[token]));
+  if (coreSyntaxColours.size !== coreSyntaxTokens.length) {
+    failures.push(`${theme.slug}: the seven primary syntax tokens are not distinct`);
   }
   if (!map.flare && [tools.codex.diffRemoved, tools.codex.promptAccent].includes('flare')) {
     failures.push(`${theme.slug}: Codex invented a flare diff colour`);
@@ -190,6 +205,17 @@ for (const theme of themes) {
       if (!map.flare && roleMarkers.includes('flare')) {
         failures.push(`${path}: ${kind} terminal invented a flare`);
       }
+      if (kind !== 'prompt') {
+        const syntaxMarkers = [
+          ...windowHtml.matchAll(/data-syntax-role="([^"]+)"/g),
+        ].map((match) => match[1]);
+        if (!syntaxTokens.every((token) => syntaxMarkers.includes(token))) {
+          failures.push(`${path}: ${kind} terminal is missing syntax tokens`);
+        }
+        if (!syntaxTokens.every((token) => html.includes(`--syntax-${token}:${theme.syntax[token]}`))) {
+          failures.push(`${path}: ${kind} terminal does not expose all theme syntax colours`);
+        }
+      }
     }
 
     const legends = [...html.matchAll(/<section class="prompt-roles"/g)].length;
@@ -213,17 +239,23 @@ for (const component of ['PreviewColorLegend.astro', 'PromptPreview.astro', 'Vim
 for (const component of ['VimPreview.astro', 'CodexPreview.astro']) {
   const source = await readFile(resolve(root, 'src/components', component), 'utf8');
   if (/#[0-9a-f]{3,8}/i.test(source)) failures.push(`${component}: contains hardcoded colours`);
-  if (source.includes('text-decoration-line: underline')) {
-    failures.push(`${component}: still uses coloured underlines for syntax`);
+  if (!source.includes('Object.entries(theme.syntax)')) {
+    failures.push(`${component}: does not consume the shared theme syntax palette`);
   }
-  const prefix = component === 'VimPreview.astro' ? 'vim' : 'codex';
-  if (source.includes(`--${prefix}-token`)) {
-    failures.push(`${component}: still blends syntax colours through a shared token variable`);
-  }
-  for (const token of syntaxTokens) {
-    if (!source.includes(`color: var(--${prefix}-${token})`)) {
-      failures.push(`${component}: ${token} does not use its assigned colour directly`);
-    }
+}
+const syntaxComponent = await readFile(
+  resolve(root, 'src/components/SyntaxTokens.astro'),
+  'utf8',
+);
+if (syntaxComponent.includes('text-decoration-line: underline')) {
+  failures.push('SyntaxTokens.astro still uses coloured underlines for syntax');
+}
+if (/color-mix\([^)]*--syntax-/s.test(syntaxComponent)) {
+  failures.push('SyntaxTokens.astro dilutes syntax colours with color-mix');
+}
+for (const token of syntaxTokens) {
+  if (!syntaxComponent.includes(`color: var(--syntax-${token})`)) {
+    failures.push(`SyntaxTokens.astro: ${token} does not use its colour directly`);
   }
 }
 const previewSource = await readFile(resolve(root, 'src/data/previewDesigns.ts'), 'utf8');
@@ -234,6 +266,9 @@ if (styles.size !== themes.length) failures.push('Prompt visual styles are not u
 if (usedPromptLayouts.size !== promptLayouts.size) failures.push('not all Prompt layouts are used');
 if (usedVimLayouts.size !== vimLayouts.size) failures.push('not all Vim layouts are used');
 if (usedCodexLayouts.size !== codexLayouts.size) failures.push('not all Codex layouts are used');
+if (syntaxSignatures.size !== themes.length) {
+  failures.push('syntax palettes are reused across themes');
+}
 
 if (failures.length) {
   console.error(failures.slice(0, 80).join('\n'));
@@ -243,7 +278,7 @@ if (failures.length) {
 
 console.log(
   `Preview audit passed: ${themes.length} themes, ${themes.length * 3 * 2} English-only terminal windows, ` +
-  'three neutral shells per detail page, complete syntax/Diff mappings and seven-role legends.',
+  'three neutral shells per detail page, 11 direct syntax colours, syntax-aware Diff rows and seven-role legends.',
 );
 
 function toText(html) {

@@ -1,0 +1,72 @@
+---
+import type { SyntaxToken } from '../data/syntaxExamples';
+
+interface Props {
+  tokens: SyntaxToken[];
+}
+
+const { tokens } = Astro.props;
+---
+
+{tokens.map((token) =>
+  token.role ? (
+    <span
+      class={`syntax-token syntax-token--${token.role}`}
+      data-syntax-role={token.role}
+    >{token.text}</span>
+  ) : (
+    <span>{token.text}</span>
+  )
+)}
+
+<style>
+  .syntax-token--keyword {
+    color: var(--syntax-keyword);
+    font-weight: 650;
+  }
+
+  .syntax-token--function {
+    color: var(--syntax-function);
+    font-weight: 600;
+  }
+
+  .syntax-token--string {
+    color: var(--syntax-string);
+  }
+
+  .syntax-token--number {
+    color: var(--syntax-number);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .syntax-token--type {
+    color: var(--syntax-type);
+    font-weight: 600;
+  }
+
+  .syntax-token--variable {
+    color: var(--syntax-variable);
+  }
+
+  .syntax-token--property {
+    color: var(--syntax-property);
+  }
+
+  .syntax-token--comment {
+    color: var(--syntax-comment);
+    font-style: italic;
+  }
+
+  .syntax-token--operator {
+    color: var(--syntax-operator);
+  }
+
+  .syntax-token--punctuation {
+    color: var(--syntax-punctuation);
+  }
+
+  .syntax-token--constant {
+    color: var(--syntax-constant);
+    font-weight: 600;
+  }
+</style>

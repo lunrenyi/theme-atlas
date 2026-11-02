@@ -1,8 +1,10 @@
 ---
 import type { PaletteRole, Theme } from '../data/types';
+import { vimSyntaxExample } from '../data/syntaxExamples';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 import PreviewColorLegend from './PreviewColorLegend.astro';
+import SyntaxTokens from './SyntaxTokens.astro';
 import TerminalShell from './TerminalShell.astro';
 
 interface Props {
@@ -14,16 +16,16 @@ const { theme, lang } = Astro.props;
 const design = theme.previewDesign.vim;
 const map = paletteMap(theme);
 const contentId = 'vim-preview-' + theme.slug;
+const currentLine = 8;
 
 const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
-const tokenVars = Object.entries(design.syntax)
-  .map(([token, role]) => `--vim-${token}:${cssRole(role)};`)
+const tokenVars = Object.entries(theme.syntax)
+  .map(([token, hex]) => `--syntax-${token}:${hex};`)
   .join('');
 const vars = tokenVars +
   `--vim-current-line:${cssRole(design.currentLine)};` +
   `--vim-selection:${cssRole(design.selection)};` +
   `--vim-divider:${cssRole(design.divider)};`;
-const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
 ---
 
 <div
@@ -50,90 +52,35 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
 
       <div class="vim__body">
         <div class="vim__lines" aria-hidden="true">
-          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-          <span>6</span><span class="is-current" data-prompt-role="accent onAccent">7</span>
-          <span>8</span><span>9</span><span>10</span>
+          {vimSyntaxExample.map((_, index) => (
+            <span
+              class:list={{ 'is-current': index === currentLine }}
+              data-prompt-role={index === currentLine ? 'accent onAccent' : undefined}
+            >
+              {index + 1}
+            </span>
+          ))}
         </div>
 
-        <div class="vim__code">
-          <div class="vim__line">
-            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>type</span>
-            <span> </span>
-            <span class="tok-type" data-prompt-role={tokenRole('type')}>PaletteRole</span>
-            <span> = </span>
-            <span class="tok-string" data-prompt-role={tokenRole('string')}>"bg"</span>
-            <span> | </span>
-            <span class="tok-string" data-prompt-role={tokenRole('string')}>"text"</span>
-            <span> | </span>
-            <span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>
-            <span>;</span>
-          </div>
-          <div class="vim__line"><span>&nbsp;</span></div>
-          <div class="vim__line">
-            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>function</span>
-            <span> </span>
-            <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveRole</span>
-            <span>(role: </span>
-            <span class="tok-type" data-prompt-role={tokenRole('type')}>PaletteRole</span>
-            <span>): </span>
-            <span class="tok-type" data-prompt-role={tokenRole('type')}>string</span>
-            <span> {'{'}</span>
-          </div>
-          <div class="vim__line">
-            <span>&nbsp;&nbsp;</span>
-            <span class="tok-comment" data-prompt-role={tokenRole('comment')}>// Read from the active theme palette.</span>
-          </div>
-          <div class="vim__line">
-            <span>&nbsp;&nbsp;</span>
-            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span>
-            <span> </span>
-            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>token</span>
-            <span> = palette.</span>
-            <span class="tok-function" data-prompt-role={tokenRole('function')}>find</span>
-            <span>((entry) </span>
-            <span class="tok-operator" data-prompt-role={tokenRole('operator')}>=&gt;</span>
-            <span> entry.role === role);</span>
-          </div>
-          <div class="vim__line">
-            <span>&nbsp;&nbsp;</span>
-            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>return</span>
-            <span> </span>
-            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>token</span>
-            <span class="tok-operator" data-prompt-role={tokenRole('operator')}>?.</span>
-            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>hex</span>
-            <span> </span>
-            <span class="tok-operator" data-prompt-role={tokenRole('operator')}>??</span>
-            <span> palette[</span>
-            <span class="tok-number" data-prompt-role={tokenRole('number')}>0</span>
-            <span>].hex;</span>
-          </div>
-          <div class="vim__line is-current" data-prompt-role={design.currentLine}>
-            <span>{'}'}</span>
-          </div>
-          <div class="vim__line">
-            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span>
-            <span> </span>
-            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>activeRole</span>
-            <span>: </span>
-            <span class="tok-type" data-prompt-role={tokenRole('type')}>PaletteRole</span>
-            <span> = </span>
-            <span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>
-            <span>;</span>
-          </div>
-          <div class="vim__line">
-            <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveRole</span>
-            <span>(theme, activeRole);</span>
-            <span class="vim__cursor" aria-hidden="true"></span>
-          </div>
+        <div class="vim__code" role="region" aria-label="Static TypeScript syntax preview">
+          {vimSyntaxExample.map((line, index) => (
+            <div
+              class:list={['vim__line', { 'is-current': index === currentLine }]}
+              data-prompt-role={index === currentLine ? design.currentLine : undefined}
+            >
+              <SyntaxTokens tokens={line} />
+              {index === currentLine && <span class="vim__cursor" aria-hidden="true"></span>}
+            </div>
+          ))}
         </div>
       </div>
 
       <div class="vim__status" data-prompt-role="surface border">
         <span class="vim__mode" data-prompt-role="accent onAccent">NORMAL</span>
-        {map.flare && <span class="vim__flare" data-prompt-role="flare" aria-hidden="true">◆</span>}
+        {map.flare && <span class="vim__flare" data-prompt-role="flare" aria-hidden="true"></span>}
         <span data-prompt-role="text">theme-preview.ts</span>
         <span data-prompt-role="muted">typescript</span>
-        <span class="vim__position" data-prompt-role="muted">7:19</span>
+        <span class="vim__position" data-prompt-role="muted">9:20</span>
       </div>
       <div class="vim__command" data-prompt-role="surface">
         <span data-prompt-role="accent">:</span><span data-prompt-role="text">w</span><span class="vim__cursor" aria-hidden="true"></span>
@@ -227,45 +174,9 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
   }
 
   .vim__line.is-current {
-    border-left-color: var(--vim-divider);
-    background: color-mix(in srgb, var(--vim-current-line) 84%, transparent);
-  }
-
-  .tok-keyword {
-    color: var(--vim-keyword);
-    font-weight: 650;
-  }
-
-  .tok-function {
-    color: var(--vim-function);
-    font-weight: 600;
-  }
-
-  .tok-string {
-    color: var(--vim-string);
-  }
-
-  .tok-number {
-    color: var(--vim-number);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .tok-type {
-    color: var(--vim-type);
-    font-weight: 600;
-  }
-
-  .tok-comment {
-    color: var(--vim-comment);
-    font-style: italic;
-  }
-
-  .tok-operator {
-    color: var(--vim-operator);
-  }
-
-  .tok-variable {
-    color: var(--vim-variable);
+    border-left-color: var(--vim-current-line);
+    background: var(--t-bg);
+    box-shadow: inset 0 0 0 1px var(--vim-current-line);
   }
 
   .vim__cursor {
@@ -294,8 +205,9 @@ const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
   }
 
   .vim__flare {
-    color: var(--t-flare);
-    font-size: 0.62rem;
+    width: 6px;
+    height: 6px;
+    background: var(--t-flare);
   }
 
   .vim__position {

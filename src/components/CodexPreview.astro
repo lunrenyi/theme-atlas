@@ -1,8 +1,15 @@
 ---
 import type { PaletteRole, Theme } from '../data/types';
+import {
+  codexDiffAdded,
+  codexDiffContext,
+  codexDiffRemoved,
+  codexSyntaxExample,
+} from '../data/syntaxExamples';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 import PreviewColorLegend from './PreviewColorLegend.astro';
+import SyntaxTokens from './SyntaxTokens.astro';
 import TerminalShell from './TerminalShell.astro';
 
 interface Props {
@@ -16,15 +23,14 @@ const map = paletteMap(theme);
 const contentId = 'codex-preview-' + theme.slug;
 
 const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
-const tokenVars = Object.entries(design.syntax)
-  .map(([token, role]) => `--codex-${token}:${cssRole(role)};`)
+const tokenVars = Object.entries(theme.syntax)
+  .map(([token, hex]) => `--syntax-${token}:${hex};`)
   .join('');
 const vars = tokenVars +
   `--codex-added:${cssRole(design.diffAdded)};` +
   `--codex-removed:${cssRole(design.diffRemoved)};` +
   `--codex-prompt:${cssRole(design.promptAccent)};` +
   `--codex-divider:${cssRole(design.divider)};`;
-const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
 const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' : design.diffRemoved;
 ---
 
@@ -73,11 +79,9 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
               <span data-prompt-role="text">src/theme.ts</span>
               <span>typescript</span>
             </div>
-            <pre><code><span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>export</span> <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>function</span> <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveTheme</span>(theme: <span class="tok-type" data-prompt-role={tokenRole('type')}>Theme</span>) {'{'}
-  <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span> <span class="tok-variable" data-prompt-role={tokenRole('variable')}>roles</span> <span class="tok-operator" data-prompt-role={tokenRole('operator')}>=</span> <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>new</span> Map(theme.palette);
-  <span class="tok-comment" data-prompt-role={tokenRole('comment')}>// Preserve semantic roles across output formats.</span>
-  <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>return</span> roles.get(<span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>) <span class="tok-operator" data-prompt-role={tokenRole('operator')}>??</span> theme.palette[<span class="tok-number" data-prompt-role={tokenRole('number')}>0</span>];
-{'}'}</code></pre>
+            <pre><code>{codexSyntaxExample.map((line) => (
+              <span class="codex__code-line"><SyntaxTokens tokens={line} /></span>
+            ))}</code></pre>
           </section>
 
           <section class="codex__diff" aria-label="File diff" data-prompt-role="surface border">
@@ -89,15 +93,16 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
               </span>
             </div>
             <div class="codex__diff-line" data-prompt-role="muted">
-              <span>@@</span> resolveTheme
+              <span class="codex__diff-marker" aria-hidden="true"></span>
+              <span><SyntaxTokens tokens={codexDiffContext} /></span>
             </div>
             <div class="codex__diff-line codex__diff-line--remove">
-              <span data-prompt-role={map.flare ? 'flare' : 'muted'}>-</span>
-              <span data-prompt-role="text">return theme.palette[0];</span>
+              <span class="codex__diff-marker" data-prompt-role={map.flare ? 'flare' : 'muted'}>-</span>
+              <span><SyntaxTokens tokens={codexDiffRemoved} /></span>
             </div>
             <div class="codex__diff-line codex__diff-line--add">
-              <span data-prompt-role="accent">+</span>
-              <span data-prompt-role="text">return roles.get("accent") ?? theme.palette[0];</span>
+              <span class="codex__diff-marker" data-prompt-role="accent">+</span>
+              <span><SyntaxTokens tokens={codexDiffAdded} /></span>
             </div>
           </section>
         </div>
@@ -230,41 +235,9 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
     color: var(--t-text);
   }
 
-  .tok-keyword {
-    color: var(--codex-keyword);
-    font-weight: 650;
-  }
-
-  .tok-function {
-    color: var(--codex-function);
-    font-weight: 600;
-  }
-
-  .tok-string {
-    color: var(--codex-string);
-  }
-
-  .tok-number {
-    color: var(--codex-number);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .tok-type {
-    color: var(--codex-type);
-    font-weight: 600;
-  }
-
-  .tok-variable {
-    color: var(--codex-variable);
-  }
-
-  .tok-operator {
-    color: var(--codex-operator);
-  }
-
-  .tok-comment {
-    color: var(--codex-comment);
-    font-style: italic;
+  .codex__code-line {
+    display: block;
+    min-height: 1.65em;
   }
 
   .codex__diff-line {
@@ -273,18 +246,25 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
     gap: 4px;
     padding: 3px 8px;
     border-top: 1px solid color-mix(in srgb, var(--codex-divider) 66%, transparent);
+    background: var(--t-bg);
     color: var(--t-text);
     overflow-wrap: anywhere;
   }
 
+  .codex__diff-marker {
+    color: var(--codex-divider);
+    font-weight: 700;
+    text-align: center;
+  }
+
   .codex__diff-line--add {
-    background: color-mix(in srgb, var(--codex-added) 15%, var(--t-bg));
-    border-left: 2px solid var(--codex-added);
+    border-left: 3px solid var(--codex-added);
+    box-shadow: inset 18px 0 0 color-mix(in srgb, var(--codex-added) 10%, transparent);
   }
 
   .codex__diff-line--remove {
-    background: color-mix(in srgb, var(--codex-removed-effective) 15%, var(--t-bg));
-    border-left: 2px solid var(--codex-removed-effective);
+    border-left: 3px solid var(--codex-removed-effective);
+    box-shadow: inset 18px 0 0 color-mix(in srgb, var(--codex-removed-effective) 10%, transparent);
   }
 
   .codex__input {

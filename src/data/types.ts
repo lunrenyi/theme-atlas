@@ -144,22 +144,27 @@ export interface PromptDesign {
   designNoteEn: string;
 }
 
-export type SyntaxToken =
+export type SyntaxRole =
   | 'keyword'
   | 'function'
   | 'string'
   | 'number'
   | 'type'
+  | 'variable'
+  | 'property'
   | 'comment'
   | 'operator'
-  | 'variable';
+  | 'punctuation'
+  | 'constant';
+
+/** Theme-owned code colours, separate from the ordinary UI palette. */
+export type SyntaxPalette = Record<SyntaxRole, string>;
 
 export interface VimPreviewDesign {
   layout: 'classic' | 'focus' | 'compact';
   currentLine: PaletteRole;
   selection: PaletteRole;
   divider: PaletteRole;
-  syntax: Record<SyntaxToken, PaletteRole>;
 }
 
 export interface CodexPreviewDesign {
@@ -168,7 +173,6 @@ export interface CodexPreviewDesign {
   diffRemoved: PaletteRole;
   promptAccent: PaletteRole;
   divider: PaletteRole;
-  syntax: Record<SyntaxToken, PaletteRole>;
 }
 
 export interface ToolPreviewDesign {
@@ -219,6 +223,8 @@ export interface Theme {
   promptDesign: PromptDesign;
   /** Syntax and layout choices used by the Vim and Codex previews. */
   previewDesign: ToolPreviewDesign;
+  /** Independent source-code palette used by Vim and Codex previews. */
+  syntax: SyntaxPalette;
 }
 
 export interface Collection {

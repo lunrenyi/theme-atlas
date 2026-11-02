@@ -1,6 +1,7 @@
 import type { Theme } from './types';
 import { previewDesigns } from './previewDesigns.ts';
 import { promptDesigns } from './promptDesigns.ts';
+import { fallbackSyntaxPalette, syntaxPalettes } from './syntaxPalettes.ts';
 
 /**
  * The seed data set. Every theme is a plain object so it can be replaced by a
@@ -10,7 +11,7 @@ import { promptDesigns } from './promptDesigns.ts';
  * reference is listed. Where a claim could not be checked against a source,
  * the source is typed as pending and the text says so.
  */
-const themeData: Omit<Theme, 'promptDesign' | 'previewDesign'>[] = [
+const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   {
     slug: 'taotie-cinnabar',
     title: '饕餮 · 朱丹',
@@ -1024,9 +1025,10 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign'>[] = [
 export const themes: Theme[] = themeData.map((theme) => {
   const promptDesign = promptDesigns[theme.slug];
   const previewDesign = previewDesigns[theme.slug];
+  const syntax = syntaxPalettes[theme.slug] ?? fallbackSyntaxPalette(theme.palette);
   if (!promptDesign) throw new Error('Missing Prompt design for theme: ' + theme.slug);
   if (!previewDesign) throw new Error('Missing tool preview design for theme: ' + theme.slug);
-  return { ...theme, promptDesign, previewDesign };
+  return { ...theme, promptDesign, previewDesign, syntax };
 });
 
 

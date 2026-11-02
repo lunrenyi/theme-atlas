@@ -1,0 +1,258 @@
+import { contrastRatio, mix } from '../lib/color.ts';
+import type { PaletteColor, SyntaxPalette } from './types.ts';
+
+/**
+ * Theme-owned code colours. These are intentionally independent from the UI
+ * semantic roles: a theme can have a restrained interface and still need
+ * enough foreground contrast and hue separation for syntax.
+ *
+ * Values were composed from each theme's own materials and visual language,
+ * then checked at a minimum of 4.5:1 against the theme background. The seven
+ * primary code roles remain distinct within every palette.
+ */
+export const syntaxPalettes: Record<string, SyntaxPalette> = {
+  'taotie-cinnabar': {
+    keyword: '#8F2D20',
+    function: '#2F6D86',
+    string: '#75521F',
+    number: '#91421F',
+    type: '#344D6B',
+    variable: '#231D18',
+    property: '#3D614D',
+    comment: '#6B5B43',
+    operator: '#4E4B42',
+    punctuation: '#665B4A',
+    constant: '#85520B',
+  },
+  'nuwa-five-stones': {
+    keyword: '#2C6E8C',
+    function: '#775239',
+    string: '#466856',
+    number: '#75456F',
+    type: '#35586A',
+    variable: '#18201F',
+    property: '#4F6534',
+    comment: '#576C69',
+    operator: '#3E5354',
+    punctuation: '#566D6B',
+    constant: '#99472C',
+  },
+  'baize-omens': {
+    keyword: '#8A2F20',
+    function: '#536428',
+    string: '#79551A',
+    number: '#8B5013',
+    type: '#315D60',
+    variable: '#1F1B16',
+    property: '#5B4930',
+    comment: '#6B5F4A',
+    operator: '#4D493F',
+    punctuation: '#685E4C',
+    constant: '#81550A',
+  },
+  'qitian-pojie': {
+    keyword: '#E8C56A',
+    function: '#B9D9E6',
+    string: '#E1846C',
+    number: '#F0A35B',
+    type: '#8DBED0',
+    variable: '#EEF3F5',
+    property: '#B7E0C1',
+    comment: '#A8B6C6',
+    operator: '#C2CED7',
+    punctuation: '#9CB3BE',
+    constant: '#F28A70',
+  },
+  'ru-ware-sky': {
+    keyword: '#2C6E74',
+    function: '#47628F',
+    string: '#7A5731',
+    number: '#8B4337',
+    type: '#36576B',
+    variable: '#1E2422',
+    property: '#566D63',
+    comment: '#5A6A66',
+    operator: '#485B5A',
+    punctuation: '#5B6A69',
+    constant: '#76562F',
+  },
+  'jun-ware-violet': {
+    keyword: '#4E2E6B',
+    function: '#945370',
+    string: '#7B573B',
+    number: '#864B39',
+    type: '#5C426B',
+    variable: '#241B23',
+    property: '#6F4A57',
+    comment: '#68576A',
+    operator: '#5A4B50',
+    punctuation: '#766270',
+    constant: '#8A4D2D',
+  },
+  'jingdezhen-blue-white': {
+    keyword: '#2B4A7C',
+    function: '#36607A',
+    string: '#7B5525',
+    number: '#7A4038',
+    type: '#3D296B',
+    variable: '#151B23',
+    property: '#426474',
+    comment: '#4B5868',
+    operator: '#41566A',
+    punctuation: '#53657A',
+    constant: '#84502A',
+  },
+  'deep-space-orbit': {
+    keyword: '#A78BFA',
+    function: '#D8B4FE',
+    string: '#67E8F9',
+    number: '#FDE68A',
+    type: '#7DD3FC',
+    variable: '#A7F3D0',
+    property: '#C4B5FD',
+    comment: '#94A3B8',
+    operator: '#CBD5E1',
+    punctuation: '#B6C2D9',
+    constant: '#FDBA74',
+  },
+  'pathfinder-beacon': {
+    keyword: '#E5C15C',
+    function: '#F1E1C0',
+    string: '#B8D8B5',
+    number: '#F4A261',
+    type: '#A7B9CF',
+    variable: '#E6E9E1',
+    property: '#C6B18E',
+    comment: '#8C96A0',
+    operator: '#BCC7D1',
+    punctuation: '#9EAAB4',
+    constant: '#E88562',
+  },
+  'singularity-echo': {
+    keyword: '#63D6D0',
+    function: '#A7F0EC',
+    string: '#7FBFC5',
+    number: '#D6C28A',
+    type: '#7B9EB8',
+    variable: '#DFEBEA',
+    property: '#8CDED9',
+    comment: '#7E9298',
+    operator: '#A6BEC3',
+    punctuation: '#8FA9AE',
+    constant: '#E7B56B',
+  },
+  'uncharted-reach': {
+    keyword: '#A995FF',
+    function: '#C4BAFF',
+    string: '#76DDE5',
+    number: '#D8BE7E',
+    type: '#84A7FF',
+    variable: '#CDEBFF',
+    property: '#A6D7FF',
+    comment: '#A2AFD2',
+    operator: '#C2CDF0',
+    punctuation: '#9DAED4',
+    constant: '#E9CD8E',
+  },
+  'frozen-front': {
+    keyword: '#76E0F0',
+    function: '#D6ECFF',
+    string: '#A9E9D0',
+    number: '#7CCBFF',
+    type: '#6BA6DC',
+    variable: '#F0FAFD',
+    property: '#8FD6E5',
+    comment: '#97ADB8',
+    operator: '#C1DDE7',
+    punctuation: '#A5C2CD',
+    constant: '#F4CF83',
+  },
+  'crimson-iron-curtain': {
+    keyword: '#E36A5F',
+    function: '#F0B7A9',
+    string: '#D7A05F',
+    number: '#F4C67C',
+    type: '#C88C78',
+    variable: '#EEE8DE',
+    property: '#D8B4A2',
+    comment: '#B1A79C',
+    operator: '#D6CBC2',
+    punctuation: '#C0B5AB',
+    constant: '#F0A75D',
+  },
+  'koprulu-frontier': {
+    keyword: '#F29A42',
+    function: '#FFD09B',
+    string: '#A9D98F',
+    number: '#D9C173',
+    type: '#6ED7D0',
+    variable: '#EEF1E6',
+    property: '#A6C18B',
+    comment: '#A6B18F',
+    operator: '#D0D8C7',
+    punctuation: '#B9C3B4',
+    constant: '#F5B05C',
+  },
+  'echoes-of-khala': {
+    keyword: '#E3C36B',
+    function: '#F4E6B8',
+    string: '#88B5FF',
+    number: '#C8A8FF',
+    type: '#AFC8FF',
+    variable: '#F3EDE2',
+    property: '#D7B9FF',
+    comment: '#B6A8CA',
+    operator: '#D8D0E7',
+    punctuation: '#C9BEDB',
+    constant: '#F0D184',
+  },
+  'spore-tide': {
+    keyword: '#B8EB68',
+    function: '#D8F59F',
+    string: '#D58BB4',
+    number: '#C9B97D',
+    type: '#A8D276',
+    variable: '#EEE5DC',
+    property: '#C78FB7',
+    comment: '#B9A6B2',
+    operator: '#D6C7D0',
+    punctuation: '#CBB7C5',
+    constant: '#E5A76F',
+  },
+};
+
+/**
+ * A deterministic safety net for a newly added theme before its editorial
+ * syntax palette is ready. It derives restrained variants from the existing
+ * UI roles and lifts low-contrast candidates toward the theme's text colour.
+ * Every published theme should still receive an explicit palette above.
+ */
+export function fallbackSyntaxPalette(palette: PaletteColor[]): SyntaxPalette {
+  const colours = new Map(palette.map((colour) => [colour.role, colour.hex]));
+  const text = colours.get('text') ?? '#111111';
+  const bg = colours.get('bg') ?? '#FFFFFF';
+  const accent = colours.get('accent') ?? text;
+  const muted = colours.get('muted') ?? text;
+  const flare = colours.get('flare') ?? mix(accent, text, 0.35);
+  const readable = (candidate: string) => {
+    let value = candidate;
+    for (let step = 0; step < 12 && contrastRatio(value, bg) < 4.5; step += 1) {
+      value = mix(value, text, 0.12);
+    }
+    return value;
+  };
+
+  return {
+    keyword: readable(accent),
+    function: readable(mix(accent, text, 0.24)),
+    string: readable(flare),
+    number: readable(mix(accent, text, 0.62)),
+    type: readable(muted),
+    variable: text,
+    property: readable(mix(muted, text, 0.32)),
+    comment: readable(muted),
+    operator: readable(mix(text, muted, 0.22)),
+    punctuation: readable(mix(text, muted, 0.42)),
+    constant: readable(flare),
+  };
+}
