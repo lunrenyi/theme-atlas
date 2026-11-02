@@ -1,8 +1,10 @@
 ---
-import type { PaletteRole, PromptModuleId, Theme } from '../data/types';
-import { luminance, paletteMap } from '../lib/color';
-import { t, type Locale, type UiKey } from '../i18n';
+import type { PromptModuleId, Theme } from '../data/types';
+import { paletteMap } from '../lib/color';
+import { t, type Locale } from '../i18n';
+import PreviewColorLegend from './PreviewColorLegend.astro';
 import PromptMotif from './PromptMotif.astro';
+import TerminalShell from './TerminalShell.astro';
 
 interface Props {
   theme: Theme;
@@ -12,26 +14,6 @@ interface Props {
 const { theme, lang } = Astro.props;
 const design = theme.promptDesign;
 const map = paletteMap(theme);
-
-const roleKeys: Record<PaletteRole, UiKey> = {
-  bg: 'palette.role.bg',
-  surface: 'palette.role.surface',
-  text: 'palette.role.text',
-  muted: 'palette.role.muted',
-  border: 'palette.role.border',
-  accent: 'palette.role.accent',
-  onAccent: 'palette.role.onAccent',
-  flare: 'palette.role.flare',
-};
-
-const baseRoles: PaletteRole[] = ['bg', 'surface', 'text', 'muted', 'border', 'accent', 'onAccent'];
-const legendRoles = map.flare ? [...baseRoles, 'flare' as const] : baseRoles;
-const isDarkGround = luminance(map.bg?.hex ?? '#000000') < 0.32;
-const frameVars = [
-  '--prompt-frame:' + (isDarkGround ? '#FFFFFF' : '#000000'),
-  '--prompt-chrome:' + (isDarkGround ? '#111111' : '#F2F2F2'),
-  '--prompt-chrome-text:' + (isDarkGround ? '#F5F5F5' : '#111111'),
-].join(';');
 
 const contextModules = design.moduleOrder.filter(
   (module): module is Exclude<PromptModuleId, 'command' | 'status'> =>
@@ -43,35 +25,6 @@ const entryModules = design.moduleOrder.filter(
 
 const sceneId = 'prompt-scene-' + theme.slug;
 const designNote = lang === 'zh' ? design.designNote : design.designNoteEn;
-
-const emphasisFor = (role: PaletteRole) => {
-  if (design.roleEmphasis.primary.includes(role)) return 'primary';
-  if (design.roleEmphasis.secondary.includes(role)) return 'secondary';
-  if (design.roleEmphasis.restrained.includes(role)) return 'restrained';
-  return 'secondary';
-};
-
-const emphasisLabel = (level: string) => {
-  if (level === 'primary') return t(lang, 'preview.promptPrimary');
-  if (level === 'secondary') return t(lang, 'preview.promptSecondary');
-  return t(lang, 'preview.promptRestrained');
-};
-
-const legend = legendRoles.map((role) => {
-  const color = map[role];
-  const roleLabel = t(lang, roleKeys[role]);
-  return {
-    role,
-    color,
-    roleLabel,
-    emphasis: emphasisFor(role),
-    accessibleLabel: t(lang, 'preview.promptRoleButton', {
-      role: roleLabel,
-      name: color?.name ?? '',
-      hex: color?.hex ?? '',
-    }),
-  };
-});
 ---
 
 <div
@@ -80,10 +33,10 @@ const legend = legendRoles.map((role) => {
   data-theme={theme.slug}
   data-visual-style={design.visualStyle}
   data-prompt-layout={design.layout}
+  data-preview-role-root
   data-line-mode={design.defaultLineMode}
   data-role-primary={design.roleEmphasis.primary.join(' ')}
   data-git="on"
-  style={frameVars}
 >
   <div class="prompt-preview__controls">
     <div class="prompt-preview__layout" role="group" aria-label={t(lang, 'preview.terminalLayoutLabel')}>
@@ -118,17 +71,14 @@ const legend = legendRoles.map((role) => {
     </label>
   </div>
 
-  <figure
+  <TerminalShell
+    theme={theme}
+    kind="prompt"
     class="prompt-window"
-    data-prompt-layout={design.layout}
-    aria-label={`Static zsh prompt preview for ${theme.slug}`}
+    title="zsh - ~/theme-atlas"
+    subtitle="starship / oh-my-zsh inspired"
+    ariaLabel={`Static zsh prompt preview for ${theme.slug}`}
   >
-    <div class="prompt-window__bar">
-      <span class="prompt-window__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="prompt-window__title mono">zsh - ~/theme-atlas</span>
-      <span class="prompt-window__subtitle mono">starship / oh-my-zsh inspired</span>
-    </div>
-
     <div id={sceneId} class="prompt-window__screen" data-prompt-role="bg">
       <PromptMotif
         variant={design.motif}
@@ -226,45 +176,11 @@ const legend = legendRoles.map((role) => {
         </div>
       </div>
     </div>
-  </figure>
+  </TerminalShell>
 
   <p class="prompt-preview__note">{t(lang, 'preview.terminalNote')}</p>
 
-  <section class="prompt-roles" aria-labelledby={`prompt-roles-${theme.slug}`}>
-    <div class="prompt-roles__head">
-      <h3 id={`prompt-roles-${theme.slug}`} class="prompt-roles__title">
-        {t(lang, 'preview.promptLegendTitle')}
-      </h3>
-      <p>{t(lang, 'preview.promptLegendHint')}</p>
-    </div>
-
-    <div class="prompt-roles__grid" role="group" aria-label={t(lang, 'preview.promptLegendTitle')}>
-      {
-        legend.map(({ role, color, roleLabel, emphasis, accessibleLabel }) => (
-          <button
-            type="button"
-            class:list={['prompt-role', 'is-' + emphasis]}
-            style={'--role-tone:' + (color?.hex ?? 'transparent')}
-            data-prompt-role-button={role}
-            aria-controls={sceneId}
-            aria-pressed="false"
-            title={accessibleLabel}
-            aria-label={accessibleLabel}
-          >
-            <span class="prompt-role__swatch" aria-hidden="true"></span>
-            <span class="prompt-role__copy">
-              <span class="prompt-role__meta">
-                <span class="prompt-role__label">{roleLabel}</span>
-                <span class="prompt-role__emphasis">{emphasisLabel(emphasis)}</span>
-              </span>
-              <span class="prompt-role__name">{color?.name}</span>
-              <span class="prompt-role__hex mono">{color?.hex}</span>
-            </span>
-          </button>
-        ))
-      }
-    </div>
-  </section>
+  <PreviewColorLegend theme={theme} lang={lang} contentId={sceneId} />
 
   <p class="prompt-preview__design-note">
     <span class="mono">{t(lang, 'preview.promptDesignNoteLabel')}</span>
@@ -280,42 +196,6 @@ const legend = legendRoles.map((role) => {
       preview.querySelectorAll<HTMLButtonElement>('[data-prompt-line-mode]'),
     );
     const gitToggle = preview.querySelector<HTMLInputElement>('[data-prompt-git]');
-    const roleButtons = Array.from(
-      preview.querySelectorAll<HTMLButtonElement>('[data-prompt-role-button]'),
-    );
-    const roleTargets = Array.from(
-      preview.querySelectorAll<HTMLElement>('[data-prompt-role]'),
-    );
-    const roleVars: Record<string, string> = {
-      bg: '--t-bg',
-      surface: '--t-surface',
-      text: '--t-text',
-      muted: '--t-muted',
-      border: '--t-border',
-      accent: '--t-accent',
-      onAccent: '--t-on-accent',
-      flare: '--t-flare',
-    };
-
-    let pointerRole = '';
-    let focusedRole = '';
-    let pinnedRole = '';
-
-    const applyRoleHighlight = () => {
-      const activeRole = pointerRole || focusedRole || pinnedRole;
-      if (activeRole) {
-        preview.dataset.activeRole = activeRole;
-        preview.style.setProperty('--prompt-highlight', `var(${roleVars[activeRole]})`);
-      } else {
-        delete preview.dataset.activeRole;
-        preview.style.removeProperty('--prompt-highlight');
-      }
-
-      roleTargets.forEach((target) => {
-        const roles = (target.dataset.promptRole ?? '').split(/\s+/).filter(Boolean);
-        target.classList.toggle('is-role-highlighted', roles.includes(activeRole));
-      });
-    };
 
     const setLineMode = (mode: string) => {
       preview.dataset.lineMode = mode;
@@ -337,45 +217,6 @@ const legend = legendRoles.map((role) => {
     };
     gitToggle?.addEventListener('change', setGit);
     setGit();
-
-    roleButtons.forEach((button) => {
-      const role = button.dataset.promptRoleButton ?? '';
-      const setPointer = () => {
-        pointerRole = role;
-        applyRoleHighlight();
-      };
-      const clearPointer = () => {
-        if (pointerRole === role) pointerRole = '';
-        applyRoleHighlight();
-      };
-      const setFocus = () => {
-        focusedRole = role;
-        applyRoleHighlight();
-      };
-      const clearFocus = () => {
-        if (focusedRole === role) focusedRole = '';
-        applyRoleHighlight();
-      };
-
-      button.addEventListener('pointerenter', setPointer);
-      button.addEventListener('pointerleave', clearPointer);
-      button.addEventListener('focus', setFocus);
-      button.addEventListener('blur', clearFocus);
-      button.addEventListener('click', () => {
-        pinnedRole = pinnedRole === role ? '' : role;
-        roleButtons.forEach((candidate) => {
-          candidate.setAttribute(
-            'aria-pressed',
-            String(candidate.dataset.promptRoleButton === pinnedRole),
-          );
-          candidate.classList.toggle(
-            'is-pinned',
-            candidate.dataset.promptRoleButton === pinnedRole,
-          );
-        });
-        applyRoleHighlight();
-      });
-    });
   });
 </script>
 
@@ -444,67 +285,6 @@ const legend = legendRoles.map((role) => {
     height: 14px;
     margin: 0;
     accent-color: var(--gold);
-  }
-
-  .prompt-window {
-    min-width: 0;
-    margin: 0;
-    overflow: hidden;
-    border: 1px solid var(--prompt-frame);
-    border-radius: 4px;
-    background: var(--t-bg);
-    color: var(--t-text);
-  }
-
-  .prompt-window__bar {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 35px;
-    padding: 7px 11px;
-    border-bottom: 1px solid var(--prompt-frame);
-    background: var(--prompt-chrome);
-    color: var(--prompt-chrome-text);
-  }
-
-  .prompt-window__dots {
-    display: inline-flex;
-    flex: none;
-    gap: 6px;
-  }
-
-  .prompt-window__dots i {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.18);
-  }
-
-  .prompt-window__dots i:nth-child(1) {
-    background: #ff5f57;
-  }
-
-  .prompt-window__dots i:nth-child(2) {
-    background: #febc2e;
-  }
-
-  .prompt-window__dots i:nth-child(3) {
-    background: #28c840;
-  }
-
-  .prompt-window__title {
-    color: var(--prompt-chrome-text);
-    font-size: 0.62rem;
-    letter-spacing: 0.02em;
-  }
-
-  .prompt-window__subtitle {
-    margin-left: auto;
-    color: color-mix(in srgb, var(--prompt-chrome-text) 58%, transparent);
-    font-size: 0.54rem;
-    letter-spacing: 0.06em;
   }
 
   .prompt-window__screen {
@@ -690,117 +470,6 @@ const legend = legendRoles.map((role) => {
     line-height: 1.65;
   }
 
-  .prompt-preview [data-prompt-role].is-role-highlighted {
-    outline: 2px solid var(--prompt-highlight);
-    outline-offset: 3px;
-  }
-
-  .prompt-roles {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid var(--orbit-faint);
-  }
-
-  .prompt-roles__head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 6px 14px;
-    margin-bottom: 10px;
-  }
-
-  .prompt-roles__title {
-    font-size: 0.76rem;
-    color: var(--text-2);
-  }
-
-  .prompt-roles__head p {
-    color: var(--text-3);
-    font-size: 0.64rem;
-  }
-
-  .prompt-roles__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
-  }
-
-  .prompt-role {
-    display: grid;
-    grid-template-columns: 12px minmax(0, 1fr);
-    align-items: start;
-    gap: 8px;
-    min-width: 0;
-    padding: 7px;
-    border: 1px solid var(--orbit-faint);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text-2);
-    text-align: left;
-    cursor: pointer;
-  }
-
-  .prompt-role:hover,
-  .prompt-role:focus-visible,
-  .prompt-role.is-pinned {
-    border-color: var(--gold);
-    background: var(--panel-2);
-  }
-
-  .prompt-role.is-primary {
-    box-shadow: inset 2px 0 0 var(--gold);
-  }
-
-  .prompt-role__swatch {
-    width: 12px;
-    height: 12px;
-    margin-top: 2px;
-    background: var(--role-tone);
-    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
-  }
-
-  .prompt-role__copy {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .prompt-role__meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-  }
-
-  .prompt-role__label {
-    font-size: 0.62rem;
-    color: var(--text-3);
-  }
-
-  .prompt-role__emphasis {
-    font-size: 0.55rem;
-    color: var(--text-3);
-  }
-
-  .prompt-role.is-primary .prompt-role__emphasis {
-    color: var(--gold);
-  }
-
-  .prompt-role__name {
-    overflow: hidden;
-    color: var(--text);
-    font-size: 0.69rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .prompt-role__hex {
-    color: var(--text-3);
-    font-size: 0.61rem;
-    letter-spacing: 0.03em;
-  }
-
   .prompt-preview__design-note {
     margin-top: 12px;
     color: var(--text-3);
@@ -826,10 +495,6 @@ const legend = legendRoles.map((role) => {
       padding: 16px 14px;
     }
 
-    .prompt-window__subtitle {
-      display: none;
-    }
-
     .prompt-scene {
       gap: 12px;
       font-size: 0.74rem;
@@ -851,8 +516,7 @@ const legend = legendRoles.map((role) => {
 
   @media (prefers-reduced-motion: reduce) {
     .prompt-preview__button,
-    .prompt-preview [data-prompt-role],
-    .prompt-role {
+    .prompt-preview [data-prompt-role] {
       transition: none;
     }
   }

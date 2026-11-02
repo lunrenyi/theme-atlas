@@ -1,0 +1,359 @@
+---
+import type { PaletteRole, Theme } from '../data/types';
+import { paletteMap } from '../lib/color';
+import { t, type Locale } from '../i18n';
+import PreviewColorLegend from './PreviewColorLegend.astro';
+import TerminalShell from './TerminalShell.astro';
+
+interface Props {
+  theme: Theme;
+  lang: Locale;
+}
+
+const { theme, lang } = Astro.props;
+const design = theme.previewDesign.codex;
+const map = paletteMap(theme);
+const contentId = 'codex-preview-' + theme.slug;
+
+const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
+const tokenVars = Object.entries(design.syntax)
+  .map(([token, role]) => `--codex-${token}:${cssRole(role)};`)
+  .join('');
+const vars = tokenVars +
+  `--codex-added:${cssRole(design.diffAdded)};` +
+  `--codex-removed:${cssRole(design.diffRemoved)};` +
+  `--codex-prompt:${cssRole(design.promptAccent)};` +
+  `--codex-divider:${cssRole(design.divider)};`;
+const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
+const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' : design.diffRemoved;
+---
+
+<div
+  class="codex-preview"
+  data-codex-preview
+  data-codex-layout={design.layout}
+  data-preview-role-root
+  data-theme={theme.slug}
+  style={vars + '--codex-removed-effective:' + cssRole(removedFallback) + ';'}
+>
+  <TerminalShell
+    theme={theme}
+    kind="codex"
+    title="codex - ~/theme-atlas"
+    subtitle="static preview"
+    ariaLabel={`Static Codex CLI preview for ${theme.slug}`}
+  >
+    <div id={contentId} class="codex" data-prompt-role="bg">
+      <div class="codex__context" data-prompt-role="surface">
+        <span class="codex__badge" data-prompt-role="accent onAccent">Codex</span>
+        <span data-prompt-role="text">~/theme-atlas</span>
+        <span data-prompt-role="muted">workspace: theme-atlas</span>
+      </div>
+
+      <div class="codex__flow">
+        <section class="codex__turn codex__turn--user" data-prompt-role="surface border">
+          <p class="codex__label" data-prompt-role="muted">You</p>
+          <p data-prompt-role="text">Refactor the theme resolver to use semantic roles.</p>
+        </section>
+
+        <section class="codex__turn" data-prompt-role="surface border">
+          <p class="codex__label" data-prompt-role="accent">Codex</p>
+          <p data-prompt-role="text">
+            I will update the resolver and preserve the existing palette schema.
+          </p>
+          <p class="codex__status" data-prompt-role="muted">
+            <span class="codex__status-dot" data-prompt-role="accent" aria-hidden="true"></span>
+            Inspecting src/theme.ts · 42ms
+          </p>
+        </section>
+
+        <div class="codex__workbench">
+          <section class="codex__code" aria-label="Code preview" data-prompt-role="surface border">
+            <div class="codex__panel-head" data-prompt-role="muted">
+              <span data-prompt-role="text">src/theme.ts</span>
+              <span>typescript</span>
+            </div>
+            <pre><code><span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>export</span> <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>function</span> <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveTheme</span>(theme: <span class="tok-type" data-prompt-role={tokenRole('type')}>Theme</span>) {'{'}
+  <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span> <span class="tok-variable" data-prompt-role={tokenRole('variable')}>roles</span> <span class="tok-operator" data-prompt-role={tokenRole('operator')}>=</span> <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>new</span> Map(theme.palette);
+  <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>return</span> roles.get(<span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>) <span class="tok-operator" data-prompt-role={tokenRole('operator')}>??</span> theme.palette[<span class="tok-number" data-prompt-role={tokenRole('number')}>0</span>];
+{'}'}</code></pre>
+          </section>
+
+          <section class="codex__diff" aria-label="File diff" data-prompt-role="surface border">
+            <div class="codex__panel-head" data-prompt-role="muted">
+              <span data-prompt-role="text">src/theme.ts</span>
+              <span>
+                <b data-prompt-role="accent">+1</b>
+                <b data-prompt-role={map.flare ? 'flare' : 'muted'}>-1</b>
+              </span>
+            </div>
+            <div class="codex__diff-line" data-prompt-role="muted">
+              <span>@@</span> resolveTheme
+            </div>
+            <div class="codex__diff-line codex__diff-line--remove">
+              <span data-prompt-role={map.flare ? 'flare' : 'muted'}>-</span>
+              <span data-prompt-role="text">return theme.palette[0];</span>
+            </div>
+            <div class="codex__diff-line codex__diff-line--add">
+              <span data-prompt-role="accent">+</span>
+              <span data-prompt-role="text">return roles.get("accent") ?? theme.palette[0];</span>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="codex__input" data-prompt-role="surface border">
+        <span class="codex__prompt" data-prompt-role="accent">›</span>
+        <span data-prompt-role="text">Ask Codex to continue...</span>
+        <span class="codex__cursor" aria-hidden="true"></span>
+        <span class="codex__hint" data-prompt-role="muted">Enter to send · Shift+Enter for newline</span>
+      </div>
+    </div>
+  </TerminalShell>
+
+  <p class="tool-preview__note">{t(lang, 'preview.codexNote')}</p>
+  <PreviewColorLegend theme={theme} lang={lang} contentId={contentId} />
+</div>
+
+<style>
+  .codex-preview {
+    min-width: 0;
+  }
+
+  .codex {
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+    line-height: 1.65;
+  }
+
+  .codex__context {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px 12px;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--codex-divider);
+    background: var(--t-surface);
+  }
+
+  .codex__badge {
+    padding: 1px 6px;
+    background: var(--codex-prompt);
+    color: var(--t-on-accent);
+    font-weight: 700;
+  }
+
+  .codex__flow {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .codex__turn {
+    min-width: 0;
+    padding: 9px 10px;
+    border-left: 2px solid var(--codex-divider);
+  }
+
+  .codex__turn--user {
+    margin-left: clamp(0px, 4vw, 38px);
+  }
+
+  .codex__label {
+    margin-bottom: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .codex__status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 7px;
+  }
+
+  .codex__status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--t-accent);
+  }
+
+  .codex__workbench {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .codex__code,
+  .codex__diff {
+    min-width: 0;
+    border: 1px solid var(--codex-divider);
+    background: var(--t-surface);
+  }
+
+  .codex__code {
+    background: var(--t-bg);
+  }
+
+  .codex__panel-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px 12px;
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--codex-divider);
+    font-size: 0.68rem;
+    color: var(--t-text);
+    background: var(--t-surface);
+  }
+
+  .codex__panel-head b {
+    font-weight: 700;
+  }
+
+  .codex__code pre {
+    margin: 0;
+    padding: 9px 10px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .codex__code code {
+    font: inherit;
+    color: var(--t-text);
+  }
+
+  .tok-keyword,
+  .tok-function,
+  .tok-string,
+  .tok-number,
+  .tok-type {
+    color: color-mix(in srgb, var(--codex-token, var(--t-accent)) 8%, var(--t-text));
+    text-decoration-line: underline;
+    text-decoration-color: var(--codex-token);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .tok-keyword {
+    --codex-token: var(--codex-keyword);
+  }
+
+  .tok-function {
+    --codex-token: var(--codex-function);
+  }
+
+  .tok-string {
+    --codex-token: var(--codex-string);
+  }
+
+  .tok-number {
+    --codex-token: var(--codex-number);
+  }
+
+  .tok-type {
+    --codex-token: var(--codex-type);
+  }
+
+  .tok-variable {
+    color: var(--codex-variable);
+  }
+
+  .tok-operator {
+    color: var(--codex-operator);
+  }
+
+  .codex__diff-line {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 4px;
+    padding: 3px 8px;
+    border-top: 1px solid color-mix(in srgb, var(--codex-divider) 66%, transparent);
+    color: var(--t-text);
+    overflow-wrap: anywhere;
+  }
+
+  .codex__diff-line--add {
+    background: color-mix(in srgb, var(--codex-added) 15%, var(--t-bg));
+    border-left: 2px solid var(--codex-added);
+  }
+
+  .codex__diff-line--remove {
+    background: color-mix(in srgb, var(--codex-removed-effective) 15%, var(--t-bg));
+    border-left: 2px solid var(--codex-removed-effective);
+  }
+
+  .codex__input {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-width: 0;
+    margin: 0 12px 12px;
+    padding: 8px 9px;
+    border: 1px solid var(--codex-divider);
+  }
+
+  .codex__prompt {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .codex__cursor {
+    width: 0.55em;
+    height: 1.05em;
+    border-left: 1px solid var(--t-text);
+  }
+
+  .codex__hint {
+    margin-left: auto;
+    font-size: 0.6rem;
+  }
+
+  .codex-preview[data-codex-layout='split'] .codex__workbench {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tool-preview__note {
+    margin-top: 9px;
+    color: var(--text-3);
+    font-size: 0.68rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 520px) {
+    .codex {
+      font-size: 0.67rem;
+    }
+
+    .codex__flow {
+      padding: 9px;
+    }
+
+    .codex__turn--user {
+      margin-left: 0;
+    }
+
+    .codex-preview[data-codex-layout='split'] .codex__workbench {
+      grid-template-columns: 1fr;
+    }
+
+    .codex__hint {
+      flex-basis: 100%;
+      margin-left: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .codex-preview * {
+      transition: none;
+    }
+  }
+</style>

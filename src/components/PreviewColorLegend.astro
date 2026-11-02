@@ -1,0 +1,296 @@
+---
+import type { PaletteRole, Theme } from '../data/types';
+import { paletteMap } from '../lib/color';
+import { t, type Locale, type UiKey } from '../i18n';
+
+interface Props {
+  theme: Theme;
+  lang: Locale;
+  contentId: string;
+}
+
+const { theme, lang, contentId } = Astro.props;
+const map = paletteMap(theme);
+const design = theme.promptDesign;
+const roleKeys: Record<PaletteRole, UiKey> = {
+  bg: 'palette.role.bg',
+  surface: 'palette.role.surface',
+  text: 'palette.role.text',
+  muted: 'palette.role.muted',
+  border: 'palette.role.border',
+  accent: 'palette.role.accent',
+  onAccent: 'palette.role.onAccent',
+  flare: 'palette.role.flare',
+};
+const baseRoles: PaletteRole[] = ['bg', 'surface', 'text', 'muted', 'border', 'accent', 'onAccent'];
+const roles: PaletteRole[] = map.flare ? [...baseRoles, 'flare'] : baseRoles;
+
+const emphasisFor = (role: PaletteRole) => {
+  if (design.roleEmphasis.primary.includes(role)) return 'primary';
+  if (design.roleEmphasis.secondary.includes(role)) return 'secondary';
+  return 'restrained';
+};
+
+const emphasisLabel = (level: string) => {
+  if (level === 'primary') return t(lang, 'preview.promptPrimary');
+  if (level === 'secondary') return t(lang, 'preview.promptSecondary');
+  return t(lang, 'preview.promptRestrained');
+};
+
+const items = roles.map((role) => {
+  const color = map[role];
+  const roleLabel = t(lang, roleKeys[role]);
+  const emphasis = emphasisFor(role);
+  return {
+    role,
+    color,
+    roleLabel,
+    emphasis,
+    emphasisLabel: emphasisLabel(emphasis),
+    accessibleLabel: t(lang, 'preview.promptRoleButton', {
+      role: roleLabel,
+      name: color?.name ?? '',
+      hex: color?.hex ?? '',
+    }),
+  };
+});
+---
+
+<section
+  class="prompt-roles"
+  aria-labelledby={`${contentId}-legend-title`}
+  data-preview-color-legend
+>
+  <div class="prompt-roles__head">
+    <h3 id={`${contentId}-legend-title`} class="prompt-roles__title">
+      {t(lang, 'preview.promptLegendTitle')}
+    </h3>
+    <p>{t(lang, 'preview.promptLegendHint')}</p>
+  </div>
+
+  <div class="prompt-roles__grid" role="group" aria-label={t(lang, 'preview.promptLegendTitle')}>
+    {
+      items.map(({ role, color, roleLabel, emphasis, emphasisLabel: levelLabel, accessibleLabel }) => (
+        <button
+          type="button"
+          class:list={['prompt-role', 'is-' + emphasis]}
+          style={'--role-tone:' + (color?.hex ?? 'transparent')}
+          data-prompt-role-button={role}
+          aria-controls={contentId}
+          aria-pressed="false"
+          title={accessibleLabel}
+          aria-label={accessibleLabel}
+        >
+          <span class="prompt-role__swatch" aria-hidden="true"></span>
+          <span class="prompt-role__copy">
+            <span class="prompt-role__meta">
+              <span class="prompt-role__label">{roleLabel}</span>
+              <span class="prompt-role__emphasis">{levelLabel}</span>
+            </span>
+            <span class="prompt-role__name">{color?.name}</span>
+            <span class="prompt-role__hex mono">{color?.hex}</span>
+          </span>
+        </button>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const legends = Array.from(document.querySelectorAll<HTMLElement>('[data-preview-color-legend]'));
+
+  legends.forEach((legend) => {
+    const root = legend.closest<HTMLElement>('[data-preview-role-root]');
+    if (!root) return;
+
+    const buttons = Array.from(legend.querySelectorAll<HTMLButtonElement>('[data-prompt-role-button]'));
+    const targets = Array.from(root.querySelectorAll<HTMLElement>('[data-prompt-role]'));
+    const roleVars: Record<string, string> = {
+      bg: '--t-bg',
+      surface: '--t-surface',
+      text: '--t-text',
+      muted: '--t-muted',
+      border: '--t-border',
+      accent: '--t-accent',
+      onAccent: '--t-on-accent',
+      flare: '--t-flare',
+    };
+    let pointerRole = '';
+    let focusedRole = '';
+    let pinnedRole = '';
+
+    const apply = () => {
+      const activeRole = pointerRole || focusedRole || pinnedRole;
+      if (activeRole) {
+        root.dataset.activeRole = activeRole;
+        root.style.setProperty('--prompt-highlight', `var(${roleVars[activeRole]})`);
+      } else {
+        delete root.dataset.activeRole;
+        root.style.removeProperty('--prompt-highlight');
+      }
+
+      targets.forEach((target) => {
+        const roles = (target.dataset.promptRole ?? '').split(/\s+/).filter(Boolean);
+        target.classList.toggle('is-role-highlighted', roles.includes(activeRole));
+      });
+    };
+
+    buttons.forEach((button) => {
+      const role = button.dataset.promptRoleButton ?? '';
+      const setPointer = () => {
+        pointerRole = role;
+        apply();
+      };
+      const clearPointer = () => {
+        if (pointerRole === role) pointerRole = '';
+        apply();
+      };
+      const setFocus = () => {
+        focusedRole = role;
+        apply();
+      };
+      const clearFocus = () => {
+        if (focusedRole === role) focusedRole = '';
+        apply();
+      };
+
+      button.addEventListener('pointerenter', setPointer);
+      button.addEventListener('pointerleave', clearPointer);
+      button.addEventListener('focus', setFocus);
+      button.addEventListener('blur', clearFocus);
+      button.addEventListener('click', () => {
+        pinnedRole = pinnedRole === role ? '' : role;
+        buttons.forEach((candidate) => {
+          candidate.setAttribute(
+            'aria-pressed',
+            String(candidate.dataset.promptRoleButton === pinnedRole),
+          );
+          candidate.classList.toggle(
+            'is-pinned',
+            candidate.dataset.promptRoleButton === pinnedRole,
+          );
+        });
+        apply();
+      });
+    });
+  });
+</script>
+
+<style>
+  .prompt-roles {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--orbit-faint);
+  }
+
+  .prompt-roles__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 14px;
+    margin-bottom: 10px;
+  }
+
+  .prompt-roles__title {
+    font-size: 0.76rem;
+    color: var(--text-2);
+  }
+
+  .prompt-roles__head p {
+    color: var(--text-3);
+    font-size: 0.64rem;
+  }
+
+  .prompt-roles__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .prompt-role {
+    display: grid;
+    grid-template-columns: 12px minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+    min-width: 0;
+    padding: 7px;
+    border: 1px solid var(--orbit-faint);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-2);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .prompt-role:hover,
+  .prompt-role:focus-visible,
+  .prompt-role.is-pinned {
+    border-color: var(--gold);
+    background: var(--panel-2);
+  }
+
+  .prompt-role.is-primary {
+    box-shadow: inset 2px 0 0 var(--gold);
+  }
+
+  .prompt-role__swatch {
+    width: 12px;
+    height: 12px;
+    margin-top: 2px;
+    background: var(--role-tone);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+  }
+
+  .prompt-role__copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .prompt-role__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .prompt-role__label {
+    font-size: 0.62rem;
+    color: var(--text-3);
+  }
+
+  .prompt-role__emphasis {
+    font-size: 0.55rem;
+    color: var(--text-3);
+  }
+
+  .prompt-role.is-primary .prompt-role__emphasis {
+    color: var(--gold);
+  }
+
+  .prompt-role__name {
+    overflow: hidden;
+    color: var(--text);
+    font-size: 0.69rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .prompt-role__hex {
+    color: var(--text-3);
+    font-size: 0.61rem;
+    letter-spacing: 0.03em;
+  }
+
+  :global([data-preview-role-root]) :global([data-prompt-role].is-role-highlighted) {
+    outline: 2px solid var(--prompt-highlight);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-role {
+      transition: none;
+    }
+  }
+</style>

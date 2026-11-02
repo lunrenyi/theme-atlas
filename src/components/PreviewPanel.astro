@@ -2,7 +2,9 @@
 import type { Theme } from '../data/types';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
+import CodexPreview from './CodexPreview.astro';
 import PromptPreview from './PromptPreview.astro';
+import VimPreview from './VimPreview.astro';
 
 interface Props {
   theme: Theme;
@@ -89,6 +91,32 @@ const caption = t(lang, 'preview.caption', {
     >
       {t(lang, 'preview.terminalTab')}
     </button>
+    <button
+      type="button"
+      id="preview-tab-vim"
+      class="preview__mode"
+      role="tab"
+      aria-selected="false"
+      aria-controls="preview-panel-vim"
+      tabindex="-1"
+      data-preview-tab="vim"
+      title={t(lang, 'preview.vimTab')}
+    >
+      {t(lang, 'preview.vimTab')}
+    </button>
+    <button
+      type="button"
+      id="preview-tab-codex"
+      class="preview__mode"
+      role="tab"
+      aria-selected="false"
+      aria-controls="preview-panel-codex"
+      tabindex="-1"
+      data-preview-tab="codex"
+      title={t(lang, 'preview.codexTab')}
+    >
+      {t(lang, 'preview.codexTab')}
+    </button>
   </div>
 
   <div
@@ -167,6 +195,28 @@ const caption = t(lang, 'preview.caption', {
     hidden
   >
     <PromptPreview theme={theme} lang={lang} />
+  </div>
+
+  <div
+    id="preview-panel-vim"
+    class="preview__panel preview__panel--terminal"
+    role="tabpanel"
+    aria-labelledby="preview-tab-vim"
+    data-preview-panel="vim"
+    hidden
+  >
+    <VimPreview theme={theme} lang={lang} />
+  </div>
+
+  <div
+    id="preview-panel-codex"
+    class="preview__panel preview__panel--terminal"
+    role="tabpanel"
+    aria-labelledby="preview-tab-codex"
+    data-preview-panel="codex"
+    hidden
+  >
+    <CodexPreview theme={theme} lang={lang} />
   </div>
 </section>
 
@@ -248,6 +298,7 @@ const caption = t(lang, 'preview.caption', {
 
   .preview__modes {
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
     margin-bottom: 12px;
     border-bottom: 1px solid var(--orbit-faint);

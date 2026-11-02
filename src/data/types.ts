@@ -144,6 +144,38 @@ export interface PromptDesign {
   designNoteEn: string;
 }
 
+export type SyntaxToken =
+  | 'keyword'
+  | 'function'
+  | 'string'
+  | 'number'
+  | 'type'
+  | 'comment'
+  | 'operator'
+  | 'variable';
+
+export interface VimPreviewDesign {
+  layout: 'classic' | 'focus' | 'compact';
+  currentLine: PaletteRole;
+  selection: PaletteRole;
+  divider: PaletteRole;
+  syntax: Record<SyntaxToken, PaletteRole>;
+}
+
+export interface CodexPreviewDesign {
+  layout: 'stacked' | 'split';
+  diffAdded: PaletteRole;
+  diffRemoved: PaletteRole;
+  promptAccent: PaletteRole;
+  divider: PaletteRole;
+  syntax: Record<SyntaxToken, PaletteRole>;
+}
+
+export interface ToolPreviewDesign {
+  vim: VimPreviewDesign;
+  codex: CodexPreviewDesign;
+}
+
 export interface Theme {
   slug: string;
   title: string;
@@ -185,6 +217,8 @@ export interface Theme {
   status: ThemeStatus;
   /** Visual treatment used by the reusable terminal Prompt preview. */
   promptDesign: PromptDesign;
+  /** Syntax and layout choices used by the Vim and Codex previews. */
+  previewDesign: ToolPreviewDesign;
 }
 
 export interface Collection {

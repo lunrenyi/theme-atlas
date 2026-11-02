@@ -1,0 +1,365 @@
+---
+import type { PaletteRole, Theme } from '../data/types';
+import { t, type Locale } from '../i18n';
+import PreviewColorLegend from './PreviewColorLegend.astro';
+import TerminalShell from './TerminalShell.astro';
+
+interface Props {
+  theme: Theme;
+  lang: Locale;
+}
+
+const { theme, lang } = Astro.props;
+const design = theme.previewDesign.vim;
+const contentId = 'vim-preview-' + theme.slug;
+
+const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
+const tokenVars = Object.entries(design.syntax)
+  .map(([token, role]) => `--vim-${token}:${cssRole(role)};`)
+  .join('');
+const vars = tokenVars +
+  `--vim-current-line:${cssRole(design.currentLine)};` +
+  `--vim-selection:${cssRole(design.selection)};` +
+  `--vim-divider:${cssRole(design.divider)};`;
+const tokenRole = (token: keyof typeof design.syntax) => design.syntax[token];
+---
+
+<div
+  class="vim-preview"
+  data-vim-preview
+  data-vim-layout={design.layout}
+  data-preview-role-root
+  data-theme={theme.slug}
+  style={vars}
+>
+  <TerminalShell
+    theme={theme}
+    kind="vim"
+    title="vim - theme-preview.ts"
+    subtitle="typescript / NORMAL"
+    ariaLabel={`Static Vim editor preview for ${theme.slug}`}
+  >
+    <div id={contentId} class="vim" data-prompt-role="bg">
+      <div class="vim__tabs" data-prompt-role="surface">
+        <span class="vim__tab is-active" data-prompt-role="text">theme-preview.ts</span>
+        <span class="vim__tab" data-prompt-role="muted">[No Name]</span>
+        <span class="vim__filetype" data-prompt-role="muted">typescript</span>
+      </div>
+
+      <div class="vim__body">
+        <div class="vim__lines" aria-hidden="true">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span class="is-current" data-prompt-role="accent onAccent">7</span>
+          <span>8</span><span>9</span><span>10</span>
+        </div>
+
+        <div class="vim__code">
+          <div class="vim__line">
+            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>type</span>
+            <span> </span>
+            <span class="tok-type" data-prompt-role={tokenRole('type')}>PaletteRole</span>
+            <span> = </span>
+            <span class="tok-string" data-prompt-role={tokenRole('string')}>"bg"</span>
+            <span> | </span>
+            <span class="tok-string" data-prompt-role={tokenRole('string')}>"text"</span>
+            <span> | </span>
+            <span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>
+            <span>;</span>
+          </div>
+          <div class="vim__line"><span>&nbsp;</span></div>
+          <div class="vim__line">
+            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>function</span>
+            <span> </span>
+            <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveRole</span>
+            <span>(role: </span>
+            <span class="tok-type" data-prompt-role={tokenRole('type')}>PaletteRole</span>
+            <span>): </span>
+            <span class="tok-type" data-prompt-role={tokenRole('type')}>string</span>
+            <span> {'{'}</span>
+          </div>
+          <div class="vim__line">
+            <span>&nbsp;&nbsp;</span>
+            <span class="tok-comment" data-prompt-role={tokenRole('comment')}>// Read from the active theme palette.</span>
+          </div>
+          <div class="vim__line">
+            <span>&nbsp;&nbsp;</span>
+            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span>
+            <span> </span>
+            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>token</span>
+            <span> = palette.</span>
+            <span class="tok-function" data-prompt-role={tokenRole('function')}>find</span>
+            <span>((entry) </span>
+            <span class="tok-operator" data-prompt-role={tokenRole('operator')}>=&gt;</span>
+            <span> entry.role === role);</span>
+          </div>
+          <div class="vim__line">
+            <span>&nbsp;&nbsp;</span>
+            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>return</span>
+            <span> </span>
+            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>token</span>
+            <span class="tok-operator" data-prompt-role={tokenRole('operator')}>?.</span>
+            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>hex</span>
+            <span> </span>
+            <span class="tok-operator" data-prompt-role={tokenRole('operator')}>??</span>
+            <span> palette[</span>
+            <span class="tok-number" data-prompt-role={tokenRole('number')}>0</span>
+            <span>].hex;</span>
+          </div>
+          <div class="vim__line is-current" data-prompt-role={design.currentLine}>
+            <span>{'}'}</span>
+          </div>
+          <div class="vim__line">
+            <span class="tok-keyword" data-prompt-role={tokenRole('keyword')}>const</span>
+            <span> </span>
+            <span class="tok-variable" data-prompt-role={tokenRole('variable')}>activeRole</span>
+            <span>: </span>
+            <span class="tok-type" data-prompt-role={tokenRole('type')}>PaletteRole</span>
+            <span> = </span>
+            <span class="tok-string" data-prompt-role={tokenRole('string')}>"accent"</span>
+            <span>;</span>
+          </div>
+          <div class="vim__line">
+            <span class="tok-function" data-prompt-role={tokenRole('function')}>resolveRole</span>
+            <span>(theme, activeRole);</span>
+            <span class="vim__cursor" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vim__status" data-prompt-role="surface border">
+        <span class="vim__mode" data-prompt-role="accent onAccent">NORMAL</span>
+        <span data-prompt-role="text">theme-preview.ts</span>
+        <span data-prompt-role="muted">typescript</span>
+        <span class="vim__position" data-prompt-role="muted">7:19</span>
+      </div>
+      <div class="vim__command" data-prompt-role="surface">
+        <span data-prompt-role="accent">:</span><span data-prompt-role="text">w</span><span class="vim__cursor" aria-hidden="true"></span>
+      </div>
+    </div>
+  </TerminalShell>
+
+  <p class="tool-preview__note">{t(lang, 'preview.vimNote')}</p>
+  <PreviewColorLegend theme={theme} lang={lang} contentId={contentId} />
+</div>
+
+<style>
+  .vim-preview {
+    min-width: 0;
+  }
+
+  .vim {
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: clamp(0.71rem, 2vw, 0.82rem);
+    line-height: 1.72;
+  }
+
+  .vim__tabs {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+    padding: 5px 8px 0;
+    border-bottom: 1px solid var(--vim-divider);
+  }
+
+  .vim__tab {
+    padding: 4px 9px;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .vim__tab.is-active {
+    border-color: var(--vim-divider);
+    background: var(--t-bg);
+    color: var(--t-text);
+  }
+
+  .vim__filetype {
+    margin-left: auto;
+    padding-inline: 6px;
+    white-space: nowrap;
+  }
+
+  .vim__body {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    min-width: 0;
+    background: var(--t-bg);
+  }
+
+  .vim__lines {
+    display: flex;
+    flex-direction: column;
+    padding-block: 8px;
+    border-right: 1px solid var(--vim-divider);
+    color: var(--t-muted);
+    text-align: right;
+  }
+
+  .vim__lines span {
+    padding-right: 9px;
+  }
+
+  .vim__lines .is-current {
+    background: var(--vim-selection);
+    color: var(--t-on-accent);
+    font-weight: 700;
+  }
+
+  .vim__code {
+    min-width: 0;
+    padding: 8px 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .vim__line {
+    min-width: 0;
+    min-height: 1.72em;
+    padding-left: 4px;
+    border-left: 2px solid transparent;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .vim__line.is-current {
+    border-left-color: var(--vim-divider);
+    background: color-mix(in srgb, var(--vim-current-line) 84%, transparent);
+  }
+
+  .tok-keyword,
+  .tok-function,
+  .tok-string,
+  .tok-number,
+  .tok-type {
+    color: color-mix(in srgb, var(--vim-token, var(--t-accent)) 8%, var(--t-text));
+    text-decoration-line: underline;
+    text-decoration-color: var(--vim-token);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .tok-keyword {
+    --vim-token: var(--vim-keyword);
+  }
+
+  .tok-function {
+    --vim-token: var(--vim-function);
+  }
+
+  .tok-string {
+    --vim-token: var(--vim-string);
+  }
+
+  .tok-number {
+    --vim-token: var(--vim-number);
+  }
+
+  .tok-type {
+    --vim-token: var(--vim-type);
+  }
+
+  .tok-comment {
+    color: var(--vim-comment);
+    font-style: italic;
+  }
+
+  .tok-operator,
+  .tok-variable {
+    color: var(--vim-operator);
+  }
+
+  .tok-variable {
+    color: var(--vim-variable);
+  }
+
+  .vim__cursor {
+    display: inline-block;
+    width: 0.56em;
+    height: 1.05em;
+    margin-left: 1px;
+    border-left: 1px solid var(--t-text);
+    vertical-align: -0.12em;
+  }
+
+  .vim__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    padding: 4px 8px;
+    border-top: 1px solid var(--vim-divider);
+  }
+
+  .vim__mode {
+    padding: 1px 6px;
+    background: var(--vim-selection);
+    color: var(--t-on-accent);
+    font-weight: 700;
+  }
+
+  .vim__position {
+    margin-left: auto;
+  }
+
+  .vim__command {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-height: 26px;
+    padding: 2px 9px;
+    border-top: 1px solid var(--vim-divider);
+  }
+
+  .vim-preview[data-vim-layout='focus'] .vim__body {
+    grid-template-columns: 46px minmax(0, 1fr);
+  }
+
+  .vim-preview[data-vim-layout='focus'] .vim__code {
+    padding-block: 12px;
+  }
+
+  .vim-preview[data-vim-layout='focus'] .vim__line.is-current {
+    border-left-width: 3px;
+  }
+
+  .vim-preview[data-vim-layout='compact'] .vim__tabs {
+    padding-top: 3px;
+  }
+
+  .vim-preview[data-vim-layout='compact'] .vim__status {
+    gap: 6px 10px;
+  }
+
+  .tool-preview__note {
+    margin-top: 9px;
+    color: var(--text-3);
+    font-size: 0.68rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 520px) {
+    .vim {
+      font-size: 0.68rem;
+    }
+
+    .vim__body {
+      grid-template-columns: 32px minmax(0, 1fr);
+    }
+
+    .vim__code {
+      padding-inline: 7px;
+    }
+
+    .vim__lines span {
+      padding-right: 6px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vim-preview * {
+      transition: none;
+    }
+  }
+</style>

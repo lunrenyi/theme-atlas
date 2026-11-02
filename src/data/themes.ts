@@ -1,4 +1,5 @@
 import type { Theme } from './types';
+import { previewDesigns } from './previewDesigns.ts';
 import { promptDesigns } from './promptDesigns.ts';
 
 /**
@@ -9,7 +10,7 @@ import { promptDesigns } from './promptDesigns.ts';
  * reference is listed. Where a claim could not be checked against a source,
  * the source is typed as pending and the text says so.
  */
-const themeData: Omit<Theme, 'promptDesign'>[] = [
+const themeData: Omit<Theme, 'promptDesign' | 'previewDesign'>[] = [
   {
     slug: 'taotie-cinnabar',
     title: '饕餮 · 朱丹',
@@ -1022,8 +1023,10 @@ const themeData: Omit<Theme, 'promptDesign'>[] = [
 
 export const themes: Theme[] = themeData.map((theme) => {
   const promptDesign = promptDesigns[theme.slug];
+  const previewDesign = previewDesigns[theme.slug];
   if (!promptDesign) throw new Error('Missing Prompt design for theme: ' + theme.slug);
-  return { ...theme, promptDesign };
+  if (!previewDesign) throw new Error('Missing tool preview design for theme: ' + theme.slug);
+  return { ...theme, promptDesign, previewDesign };
 });
 
 
