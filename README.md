@@ -9,9 +9,10 @@
 
 一个有故事的配色主题库。每套主题先讲清楚灵感与出处，再给出可以直接复制、可以导出的颜色。
 
-当前版本收录 **10 套示范主题**，覆盖三个系列：中国神话（4 套）、中国瓷器（3 套）、
-崩坏：星穹铁道同人主题（3 套）。
-主题数据与输出格式解耦，以后接入终端、编辑器等其它工具时只需要新增一个适配器。
+当前版本收录 **20 套主题**，覆盖四个系列：中国神话（4 套）、中国瓷器（3 套）、
+崩坏：星穹铁道同人（7 套）与游戏世界（6 套，取材自 Stellaris、《命令与征服》
+与《星际争霸》）。主题数据与输出格式解耦，以后接入终端、编辑器等其它工具时
+只需要新增一个适配器。
 
 站点提供 **简体中文与 English** 两个版本：中文在根路径（`/`），英文在 `/en/`，
 两种语言都在构建时生成，没有客户端翻译，也没有运行时翻译服务。
@@ -24,8 +25,8 @@ Theme Atlas 把每个主题当成一份档案来写：先交代故事从哪儿�
 最后才是可以直接复制的色值。
 
 - **故事**——主题的出处、传说、器物与工艺背景，附可核验的参考。
-- **颜色**——7 个色值，每个都有名字、HEX 和**语义角色**。
-- **用法**——应用预览、对比度校验、一键复制与导出。
+- **颜色**——7 个色值，每个都有名字、HEX 和**语义角色**；另有一套独立的代码语法色。
+- **用法**——界面 / 终端 / Vim / Codex 四种应用预览、对比度校验、一键复制与导出。
 
 这是一份**配色作品集**，所以颜色本身是主角：卡片上的色条、详情页顶部的样带、
 应用预览里的界面，全部由同一份数据渲染。
@@ -46,9 +47,9 @@ Theme Atlas 把每个主题当成一份档案来写：先交代故事从哪儿�
 | `--text` | `#EAF0FF` | 正文 |
 
 - **首屏星图**：全站最有辨识度的视觉。中心是一颗分层发光的星体——内核、光晕、
-  四道光环与两道反向旋转的弧；五条倾角与椭圆率各不相同的轨道里，三条承载系列节点，
+  四道光环与两道反向旋转的弧；六条倾角与椭圆率各不相同的轨道里，四条承载系列节点，
   两条只用来造纵深；星尘按远近分成三层，另有两片几乎看不见的星云，
-  以及三条从核心指向节点的导线。三颗光点沿轨道滑行，鼠标经过时整张图只有几像素的视差。
+  以及从核心指向节点的导线。三颗光点沿轨道滑行，鼠标经过时整张图只有几像素的视差。
   悬停或键盘聚焦节点时，节点放大、所属轨道点亮，并显示系列名、简短介绍与代表配色；
   点击进入对应系列。图形全部为本页绘制的原创 SVG，不含任何第三方素材。
 - **详情页读数台**：右栏常驻显示关键色块与一张**明度光谱图**（每根色条的高度
@@ -57,19 +58,23 @@ Theme Atlas 把每个主题当成一份档案来写：先交代故事从哪儿�
   「齐天 · 破界」的图形是一根金色长轴穿过一圈被打断的轨道——破界的圆与逸出的火星，
   全部用这套主题自己的颜色绘制，缩到卡片上仍能认出来。
 - **系列个性保留**：中国神话仍是朱砂与石青，中国瓷器仍是天青与釉色，
-  崩坏：星穹铁道才是量子紫——三个系列不会被统一成同一种蓝紫。
+  崩坏：星穹铁道是量子紫，游戏世界是信号青与工业色——四个系列不会被统一成同一种蓝紫。
 - 没有外部字体、外部图片与运行时依赖；动画很轻，并尊重
   `prefers-reduced-motion`。
 
-## 三个系列
+## 四个系列
 
 | 系列 | 配色纪律 | 排列规则 |
 | --- | --- | --- |
 | 中国神话 | 神话的形状，是青铜器替它留下的 | **中心对称**——强调色落在轴心 |
 | 中国瓷器 | 从胎土到釉层，最后由窑火定色 | **釉层分层**——由胎体到釉彩 |
 | 崩坏：星穹铁道 同人 | 把想象中的银河，重新折算成颜色 | **明度序列**——由暗到亮的光谱 |
+| 游戏世界 | 每个世界，都有自己的色彩秩序 | **世界色序**——环境、结构、信号与强调按叙事角色排列 |
 
 排列规则定义在 `src/lib/arrangement.ts`，色条、图例与卡片上的小图都来自同一处。
+「游戏世界」在扁平的系列之下再按作品分组（`game` 字段：`stellaris` /
+`red-alert` / `starcraft`），但分组只是展示层的归类，主题数量仍只从系列与
+主题数组统计，避免未来迁移到父子结构时重复计数。
 
 ## 语义角色
 
@@ -98,6 +103,25 @@ Theme Atlas 把每个主题当成一份档案来写：先交代故事从哪儿�
 这样一来，一套主题可以正好用七个颜色填满七个位置，而每个颜色都有明确的语义，
 不需要让两种角色共用同一个 HEX。
 
+## 终端预览：Prompt、Vim 与 Codex
+
+详情页的应用预览有四个标签页：**界面**、**终端 Prompt**、**Vim** 与 **Codex CLI**。
+三套终端预览不是截图，而是按主题数据实时渲染的静态 DOM，所以每套主题都有
+自己的终端设计，且全部通过构建时校验：
+
+- **独立语法色盘**（`Theme.syntax`）——11 个语法角色（keyword、function、string、
+  number、type、variable、property、comment、operator、punctuation、constant），
+  与界面 7 色分开维护，颜色直接取自语义角色或经对比度校验的专用色值。
+  Vim 与 Codex 共用 `src/data/syntaxExamples.ts` 里的同一份代码示例。
+- **Prompt 设计**（`Theme.promptDesign`）——字形集、模块顺序（用户、目录、git、
+  运行时、命令、状态）、motif 构图与密度、单行 / 双行布局，逐主题指定。
+- **Vim / Codex 设计**（`Theme.previewDesign`）——窗口布局、当前行 / 选区 /
+  diff 增删行各自由哪个语义角色承担。
+- **终端内只有英文**——这是刻意约定：窗口周围的页面界面跟随语言切换，
+  终端 DOM 内部一律为英文拷贝。
+- **构建闸门**——`npm run verify:prompt` 在构建产物上检查三套预览的模块完整性、
+  语法角色覆盖与对比度，不达标则以非零码退出。
+
 ## 快速开始
 
 ```bash
@@ -111,7 +135,8 @@ npm run preview      # 本地预览构建产物
 | --- | --- |
 | `npm run check` | TypeScript / Astro 类型检查 |
 | `npm run contrast` | 校验所有主题的 WCAG AA 对比度，不达标则以非零码退出 |
-| `npm run verify` | 依次执行类型检查与构建 |
+| `npm run verify:prompt` | 构建后校验三套终端预览的完整性与对比度 |
+| `npm run verify` | 依次执行类型检查、构建与终端预览校验 |
 | `npm run og` | 重新生成社交预览图 `public/og-default.png` |
 
 ## 双语结构
@@ -122,6 +147,9 @@ npm run preview      # 本地预览构建产物
 | `src/data/themes.ts` | 中文主题数据：slug、HEX、语义角色、来源类型等**唯一数据源** |
 | `src/data/themes.en.ts` | 英文文案覆盖层：标题、故事、灵感、说明、颜色名与备注 |
 | `src/data/collections.ts` | 系列数据，中英字段并列（`title` / `titleEn`、`tagline` / `taglineEn`…） |
+| `src/data/gameWorlds.ts` | 「游戏世界」系列内的作品分组元数据 |
+| `src/data/syntaxPalettes.ts`、`promptDesigns.ts`、`previewDesigns.ts` | 语法色盘与终端设计（每套主题一份） |
+| `src/data/syntaxExamples.ts` | Vim / Codex 预览共用的代码 token 示例 |
 | `src/lib/content.ts` | 按语言读取主题与系列，把英文文案合并进中文数据 |
 | `src/views/` | 页面视图，接收 `lang` 参数；`src/pages/` 只是路由外壳 |
 | `src/lib/url.ts` | `localePath()`、`pathForLocale()`：语言前缀与切换链接 |
@@ -137,7 +165,7 @@ npm run preview      # 本地预览构建产物
 - 每个页面都输出正确的 `html lang`、`canonical` 与 `hreflang`（含 `x-default`）。
 - **中文页面以中文为主**：装饰性英文标签只保留必要的技术名词（CSS、JSON、HEX、SVG、
   GitHub 等）。中文界面不再重复拉丁目录代码（`MYTH` / `CELADON` / `ORBIT`），
-  区块编号改用「系列一 / 系列二 / 系列三」，标题与页脚一律使用中文。
+  区块编号改用「系列一 / 系列二 / 系列三 / 系列四」，标题与页脚一律使用中文。
 
 ## 目录结构
 
@@ -146,30 +174,36 @@ src/
 ├── i18n/index.ts       中英文案字典与语言元数据
 ├── site.config.ts      项目名、简介、导航等公共信息（集中管理）
 ├── data/
-│   ├── types.ts        主题与配色的类型定义
-│   ├── collections.ts  三个系列的元数据
-│   ├── themes.ts       主题数据（可整体替换的初始数据集）
-│   └── themes.en.ts    主题的英文文案覆盖层
+│   ├── types.ts            主题与配色的类型定义
+│   ├── collections.ts      四个系列的元数据
+│   ├── gameWorlds.ts       游戏世界内的作品分组（Stellaris / 红警 / 星际）
+│   ├── themes.ts           主题数据（可整体替换的初始数据集）
+│   ├── themes.en.ts        主题的英文文案覆盖层
+│   ├── syntaxPalettes.ts   每套主题的 11 色代码语法盘
+│   ├── syntaxExamples.ts   Vim / Codex 预览共用的 token 示例
+│   ├── promptDesigns.ts    终端 Prompt 预览的逐主题设计
+│   └── previewDesigns.ts   Vim / Codex 预览的逐主题设计
 ├── adapters/           输出格式适配器，与主题数据完全解耦
 │   ├── types.ts        ToolAdapter 接口
 │   ├── css-variables.ts
 │   └── json.ts
 ├── lib/
 │   ├── color.ts        WCAG 对比度计算
-│   ├── arrangement.ts  三个系列的配色排列规则
+│   ├── arrangement.ts  四个系列的配色排列规则
 │   ├── prose.ts        正文中的颜色名识别
 │   ├── clipboard.ts    复制与下载
 │   └── url.ts          GitHub Pages 子路径前缀
-├── components/         页面组件
+├── components/         页面组件（星图、色条、读数台、终端外壳与三套预览…）
 ├── layouts/            基础布局
-├── views/              页面视图（Home / Collections / About / ThemeDetail / NotFound）
+├── views/              页面视图（Home / Collections / Themes / About / ThemeDetail / NotFound）
 ├── pages/              路由外壳（中文在根目录，英文在 /en/）
 └── styles/global.css   设计系统（色彩、字体、栅格、基础组件）
 
 scripts/
-├── check-contrast.mjs   对比度审计（npm run contrast）
-├── generate-og.mjs      重新生成社交预览图（npm run og）
-└── postbuild.mjs        构建后写入 dist/.nojekyll
+├── check-contrast.mjs        对比度审计（npm run contrast）
+├── check-prompt-preview.mjs  构建后校验终端预览（npm run verify:prompt）
+├── generate-og.mjs           重新生成社交预览图（npm run og）
+└── postbuild.mjs             构建后写入 dist/.nojekyll
 ```
 
 ### 主题数据结构
@@ -179,18 +213,24 @@ interface Theme {
   slug: string;
   title: string;
   subtitle: string;
-  collection: 'myth' | 'porcelain' | 'rail';
-  description: string;   // 一句话介绍
-  story: string;         // 故事背景
-  inspiration: string;   // 配色灵感的具体来源
+  collection: 'myth' | 'porcelain' | 'rail' | 'game';
+  game?: 'stellaris' | 'red-alert' | 'starcraft'; // 仅 game 系列使用的作品分组
+  description: string;    // 一句话介绍
+  story: string;          // 故事背景
+  inspiration: string;    // 配色灵感的具体来源
   designRationale: string;// 色彩设计思路
   palette: Array<{ name: string; hex: string; role: PaletteRole; note?: string }>;
+  syntax: Record<SyntaxRole, string>; // 独立的 11 色代码语法盘
+  promptDesign: PromptDesign;         // 终端 Prompt 预览设计
+  previewDesign: ToolPreviewDesign;   // Vim / Codex 的布局与角色映射
   tags: string[];
-  sources: Source[];     // 可核验的出处；无法考证的标记为 pending
-  credits: Credits;      // 创作说明与授权
+  sources: Source[];      // 可核验的出处；无法考证的标记为 pending
+  credits: Credits;       // 创作说明与授权
   status: 'verified' | 'interpretation' | 'draft';
-  featured?: boolean;    // 是否出现在首页精选
-  plate?: 'staff';       // 该主题专属的原创符号画构图
+  featured?: boolean;     // 是否出现在首页精选
+  plate?: 'staff' | 'stellaris' | 'red-alert-allied' | 'red-alert-soviet'
+       | 'terran' | 'protoss' | 'zerg'
+       | 'yaoshi-bough' | 'lan-reignbow' | 'aha-farce' | 'ix-horizon';
 }
 ```
 
@@ -233,14 +273,18 @@ npx serve dist
 
 - 主题故事中的历史事实都附有出处。暂时找不到可靠依据的部分，在参考列表中标记为
   **待补充**，正文也会说明属于演绎而非史实。
-- **崩坏：星穹铁道** 系列为非官方同人演绎，与 HoYoverse 无隶属或授权关系；
-  该系列不含任何官方立绘、Logo 或界面素材，站内图形均为原创 SVG。
+- **崩坏：星穹铁道** 与 **游戏世界**（Stellaris、《命令与征服》、《星际争霸》）
+  两个系列均为非官方同人演绎，与 HoYoverse、Paradox Interactive、Electronic Arts、
+  Blizzard Entertainment 等权利方无隶属或授权关系，相关商标与设定归各自权利人所有；
+  这些主题不含任何官方立绘、Logo 或界面素材，站内图形均为原创 SVG。
 - 配色数据以 CC BY 4.0 释出，引用时请注明出处 Theme Atlas。
 
 ## 参与
 
 - 发现引用错误、出处存疑或更好的版本 → [提 issue](https://github.com/lunrenyi/theme-atlas/issues)。
-- 想加一套主题 → 在 `src/data/themes.ts` 里补一个对象即可，页面、导出与对比度校验会自动跟上。
+- 想加一套主题 → 在 `src/data/themes.ts` 里补一个对象即可，页面、导出、语法色与
+  对比度校验会自动跟上（终端预览还需在 `syntaxPalettes.ts`、`promptDesigns.ts` 与
+  `previewDesigns.ts` 中补齐对应设计）。
 - 想加一种输出格式 → 见上面「新增一个输出格式」。
 
 ## 许可
@@ -251,7 +295,7 @@ npx serve dist
 
 - **字体**——本项目只用系统字体栈，没有打包或分发任何第三方字体文件。
 - **图形**——站内所有插图与装饰图形均为本项目原创 SVG。
-- **《崩坏：星穹铁道》相关主题**——三套均为**非官方同人演绎**，与 HoYoverse 无隶属
-  或授权关系，不包含任何官方美术、Logo 或界面素材。
+- **游戏同人主题**——崩坏：星穹铁道（7 套）与游戏世界（6 套）均为**非官方同人演绎**，
+  与各自的权利方无隶属或授权关系，不包含任何官方美术、Logo 或界面素材；
+  相关商标归原权利人所有。
 - **引用的典籍与文献**——仅作为出处标注，不随本仓库分发。
-
