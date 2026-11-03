@@ -29,6 +29,10 @@ const markKind =
       ? 'bough'
       : theme.plate === 'lan-reignbow'
         ? 'arrow'
+        : theme.plate === 'aha-farce'
+          ? 'farce'
+          : theme.plate === 'ix-horizon'
+            ? 'horizon'
         : null;
 const mark =
   markKind === 'staff'
@@ -37,6 +41,10 @@ const mark =
       ? { gold: theme.syntax.keyword, flame: theme.syntax.number }
       : markKind === 'arrow'
         ? { gold: theme.syntax.function, flame: theme.syntax.keyword }
+        : markKind === 'farce'
+          ? { gold: theme.syntax.function, flame: theme.syntax.keyword }
+          : markKind === 'horizon'
+            ? { gold: theme.syntax.function, flame: theme.syntax.keyword }
       : null;
 
 const statusMap = {
@@ -84,7 +92,7 @@ const status = statusMap[theme.status];
                   <circle cx="51" cy="31" r="1.6" fill={mark.gold} opacity="0.8" />
                   <path d="M32 30c-8-10 8-10 0 0z" fill={mark.flame} />
                 </g>
-              ) : (
+              ) : markKind === 'arrow' ? (
                 <g stroke-linecap="round">
                   <path d="M13 51 50 14" stroke={mark.flame} stroke-width="1.8" />
                   <path d="M43 13h8v8M13 51l23-4-9-9z" fill={mark.gold} stroke="none" />
@@ -92,7 +100,43 @@ const status = statusMap[theme.status];
                   <circle cx="47" cy="17" r="8" stroke={mark.gold} stroke-width="1" opacity="0.7" />
                   <circle cx="47" cy="17" r="2" fill={mark.gold} />
                 </g>
-              )}
+              ) : markKind === 'farce' ? (
+                <g stroke-linecap="round">
+                  <path
+                    d="M20 14c8-7 16-7 24 0 0 14-4 26-12 32-8-6-12-18-12-32z"
+                    stroke={mark.gold}
+                    stroke-width="1.7"
+                    fill="none"
+                  />
+                  <path d="M22 20l5 5-5 5-5-5z" fill={mark.flame} />
+                  <circle cx="40" cy="23" r="2.3" fill={mark.gold} />
+                  <path d="M24 36c5 4 9 4 13 0" stroke={mark.gold} stroke-width="1.2" />
+                  <path d="M48 12h7M51.5 8.5v7" stroke={mark.flame} stroke-width="1.1" />
+                  <circle cx="48" cy="45" r="1.5" fill={mark.gold} />
+                </g>
+              ) : markKind === 'horizon' ? (
+                <g stroke-linecap="round">
+                  <ellipse
+                    cx="32"
+                    cy="32"
+                    rx="23"
+                    ry="8"
+                    transform="rotate(-16 32 32)"
+                    stroke={mark.gold}
+                    stroke-width="1.15"
+                    opacity="0.78"
+                  />
+                  <circle cx="32" cy="32" r="10" fill="#100F18" stroke={mark.flame} stroke-width="1.8" />
+                  <path
+                    d="M13 22c9-7 29-7 38 0M15 43c12 6 26 6 36-1"
+                    stroke={mark.gold}
+                    stroke-width="0.9"
+                    opacity="0.55"
+                  />
+                  <circle cx="29" cy="30" r="1.2" fill="#E7E3EF" />
+                  <circle cx="35" cy="34" r="0.9" fill="#E7E3EF" opacity="0.7" />
+                </g>
+              ) : null}
             </svg>
           </span>
         )

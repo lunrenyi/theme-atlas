@@ -857,6 +857,137 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     },
   },
 
+  'aha-cosmic-farce': {
+    title: 'Aha · Cosmic Farce',
+    subtitle: 'The universe never lacks answers; it only lacks a ridiculous enough question.',
+    description:
+      'Curtain black, elation pink, illusion cyan and spotlight gold open a never-ending cosmic theatre, where masks, dice and reversals wait in the wings.',
+    story:
+      'The cosmos is long enough that someone ought to laugh at it. When Aha climbed to the ' +
+      'highest point of the Tree of Existence, the Aeon saw the turning of stars, the edge of ' +
+      'the void, and the apparently senseless order behind all things. Then an infant fell ' +
+      'and cried aloud. So Aha laughed. That laughter tore open the silence of the universe, ' +
+      'and a performance that never ends began. This theme does not turn Elation into cheap ' +
+      'noise. It places the idea on a black stage: masks keep truth uncertain, dice are ready ' +
+      'to rewrite the ending, and every new beam of light may be the next joke.',
+    inspiration:
+      'The palette is drawn from the mask, theatre and chance reversals associated with ' +
+      'Elation. Curtain black and night violet open the dark stage, mask white carries body ' +
+      'copy, and elation pink marks the current act and primary actions. Spotlight gold is ' +
+      'reserved for key cues and reversals. Illusion cyan, trick violet and curtain red enter ' +
+      'through the independent syntax palette, acting as unexpected strings, typographical ' +
+      'sleight of hand and numeric alarms. The floating mask, broken circular stage, cards, ' +
+      'dice and asymmetric light trails are original geometric forms; no character artwork, ' +
+      'logo, interface asset or official pattern is reproduced.',
+    designRationale:
+      'The dark interface establishes the theatre’s shadow first, then lets elation pink ' +
+      'become a focus bright enough to pass AA contrast. Dusty violet secondary copy keeps ' +
+      'the noise in check so the page never becomes a neon rainbow. Spotlight gold acts as ' +
+      'the flare, limited to input cues, status reversals and a few stage nodes. Vim and ' +
+      'Codex share one independent syntax palette: pink keywords open the scene, gold ' +
+      'functions read like spotlights, cyan strings introduce the unexpected, and trick ' +
+      'violet and curtain red separate types and numbers from ordinary text.',
+    tags: ['Fan work', 'Elation', 'Mask', 'Theatre', 'Dice', 'Playing cards', 'Reversal'],
+    palette: [
+      { name: 'Curtain Black', note: 'The deepest stage before the opening act' },
+      { name: 'Night Violet', note: 'Cards, panels and layers of the stage' },
+      { name: 'Mask White', note: 'Mask highlights and primary body text' },
+      { name: 'Backstage Grey-Violet', note: 'Secondary notes and exit information' },
+      { name: 'Proscenium Violet', note: 'Stage boundaries and structural rules' },
+      { name: 'Elation Pink', note: 'The current act, links and primary actions' },
+      { name: 'Pink-Lamp Type', note: 'Dark text on elation pink' },
+      { name: 'Spotlight Gold', note: 'Key cues and reversals of fortune' },
+    ],
+    sources: [
+      {
+        title: 'Honkai: Star Rail official website',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'No character artwork, logo, interface or other imagery from that page is used on ' +
+          'this site.',
+      },
+      {
+        title: 'Elation, Aha and the masked troupe (public setting summary)',
+        note:
+          'Pending: an official setting reference with version and page details will replace ' +
+          'this entry. The current writing and colour values are original Theme Atlas work.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'ix-silent-event-horizon': {
+    title: 'IX · Silent Event Horizon',
+    subtitle: 'When the cosmos falls silent, even existence loses its echo.',
+    description:
+      'Void black, dark-bound violet and faint muted purple form a nearly motionless event horizon where tracks bend and starlight disappears.',
+    story:
+      'Beyond the reach of the stars lies a void with no visible bottom. There is no answer, ' +
+      'no direction, and no question worth pursuing. Star bodies are pulled by gravity, light ' +
+      'bends at the boundary, and every voice that approaches vanishes into the silent deep. ' +
+      'That presence is IX, the Aeon of the Nihility. This theme reduces that presence to its ' +
+      'quietest form: the broad darkness is not an empty background but a horizon with density, ' +
+      'while the few violet, blue and magenta signals appear only just before they are consumed.',
+    inspiration:
+      'The palette is drawn from the event horizon of a black hole, deep-violet nebulae and ' +
+      'distant starlight bent by gravity. Void black absorbs the composition, dark-bound keeps ' +
+      'cards and panels legible as separate layers, and gravitational grey traces the bending ' +
+      'tracks. Muted violet is the primary signal the instruments can still resolve; eclipse ' +
+      'blue enters the independent syntax palette for coordinates and functions; dark star-red ' +
+      'is kept for rare anomalies and removed states. The black hole, gravitational lens, bent ' +
+      'orbits and two almost extinguished points are original abstract SVG forms; no character ' +
+      'artwork, logo, interface asset or official pattern is reproduced.',
+    designRationale:
+      'Black, violet-grey and blue-grey build a low-saturation hierarchy so Nihility does not ' +
+      'become a generic neon cyberpunk theme. Muted violet stays bright enough for AA contrast ' +
+      'on the ground; text on the accent uses void black #100F18 because the initial white-on-' +
+      'violet pairing reached only 4.04:1. Dark star-red is lifted slightly from #A45F91 to ' +
+      '#B36A9F so small anomaly signals remain readable on both background and surface. Vim and ' +
+      'Codex share a restrained but clearly separated syntax palette of violet, blue, muted ' +
+      'magenta and pale grey-white.',
+    tags: ['Fan work', 'Nihility', 'Black hole', 'Event horizon', 'Entropy', 'Weightlessness', 'Fading', 'Silence'],
+    palette: [
+      { name: 'Void Black', note: 'The silent ground inside the event horizon' },
+      { name: 'Dark Bound', note: 'Cards, panels and layers of shadow' },
+      { name: 'Faint Light White', note: 'The last presence remaining in the dark' },
+      { name: 'Nebula Grey', note: 'Distant, attenuated secondary information' },
+      { name: 'Gravitational Grey', note: 'Bent orbits and structural boundaries' },
+      { name: 'Muted Violet', note: 'The primary signal still resolvable' },
+      { name: 'Horizon Black Type', note: 'Dark text on muted violet' },
+      { name: 'Dark Star-Red', note: 'Rare anomalies, deletions and weightless signals' },
+    ],
+    sources: [
+      {
+        title: 'Honkai: Star Rail official website',
+        detail: 'Official public page, used only to identify the work and subject',
+        note:
+          'No character artwork, logo, interface or other imagery from that page is used on ' +
+          'this site.',
+      },
+      {
+        title: 'Nihility, IX and the event horizon (public setting summary)',
+        note:
+          'Pending: an official setting reference with version and page details will replace ' +
+          'this entry. The current writing and colour values are original Theme Atlas work.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
+
   'uncharted-reach': {
     title: 'Uncharted Reach',
     subtitle: 'Light the first signal from a region the charts have not named',

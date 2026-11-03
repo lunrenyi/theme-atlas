@@ -244,6 +244,168 @@ const { variant, density, hasFlare } = Astro.props;
       </g>
     )
   }
+
+  {
+    variant === 'farce' && (
+      <g>
+        <g stroke="var(--t-border)" fill="none" opacity="0.62">
+          <path d="M74 18h212l-18 116H92z" />
+          <path d="M96 134c38-25 130-25 168 0" />
+          <circle cx="180" cy="75" r="48" stroke-dasharray="4 8" />
+          <path d="M94 18v24M266 18v24" opacity="0.7" />
+        </g>
+
+        <path
+          d="M156 61c2-13 46-13 48 0-2 23-10 39-24 47-14-8-22-24-24-47z"
+          fill="var(--t-surface)"
+          stroke="var(--t-accent)"
+          stroke-width="1.1"
+        />
+        <path d="M164 72l7 7-7 7-7-7z" fill="var(--t-flare)" opacity="0.82" />
+        <circle cx="197" cy="79" r="3.4" fill="var(--t-muted)" />
+        <path
+          d="M166 96c7 7 21 7 28-1"
+          stroke="var(--t-accent)"
+          stroke-width="1.15"
+          stroke-linecap="round"
+        />
+
+        <g fill="var(--t-bg)" stroke-width="1">
+          <rect
+            x="60"
+            y="50"
+            width="27"
+            height="37"
+            rx="3"
+            transform="rotate(-15 73.5 68.5)"
+            stroke="var(--t-muted)"
+          />
+          <path
+            d="M69 63l5 6 6-8"
+            stroke="var(--t-flare)"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <rect
+            x="247"
+            y="110"
+            width="25"
+            height="34"
+            rx="3"
+            transform="rotate(14 259.5 127)"
+            stroke="var(--t-muted)"
+          />
+          <rect
+            x="266"
+            y="45"
+            width="31"
+            height="31"
+            rx="5"
+            transform="rotate(12 281.5 60.5)"
+            stroke="var(--t-accent)"
+          />
+        </g>
+        <g fill="var(--t-flare)">
+          <circle cx="275" cy="56" r="1.7" />
+          <circle cx="288" cy="66" r="1.7" />
+          <circle cx="279" cy="68" r="1.7" />
+        </g>
+
+        <path
+          d="M30 105c50-30 86 22 138-6s92-22 162 10"
+          stroke="var(--t-accent)"
+          stroke-width="0.9"
+          opacity="0.42"
+        />
+        <path
+          d="M42 119c52-13 92 14 138-3s84-19 130 2"
+          stroke="var(--t-muted)"
+          stroke-width="0.8"
+          opacity="0.4"
+        />
+      </g>
+    )
+  }
+
+  {
+    variant === 'event-horizon' && (
+      <g>
+        <ellipse
+          cx="180"
+          cy="80"
+          rx="118"
+          ry="30"
+          transform="rotate(-13 180 80)"
+          fill="var(--t-surface)"
+          opacity="0.18"
+        />
+        <ellipse
+          cx="180"
+          cy="80"
+          rx="84"
+          ry="42"
+          transform="rotate(28 180 80)"
+          fill="var(--t-surface)"
+          opacity="0.12"
+        />
+
+        <g fill="none" stroke-linecap="round">
+          <ellipse
+            cx="180"
+            cy="80"
+            rx="124"
+            ry="34"
+            transform="rotate(-13 180 80)"
+            stroke="var(--t-border)"
+            stroke-dasharray="2 9"
+            opacity="0.7"
+          />
+          <path
+            d="M48 116C96 55 126 47 154 70c-18-9-22-27-10-45M312 45c-48 10-78 33-92 65 25-3 42 5 52 28"
+            stroke="var(--t-accent)"
+            stroke-width="0.9"
+            opacity="0.52"
+          />
+          <path
+            d="M70 36c44 20 82 22 112 8M288 124c-38 10-74 5-108-12"
+            stroke="var(--t-muted)"
+            stroke-width="0.75"
+            opacity="0.34"
+          />
+        </g>
+
+        <circle cx="180" cy="80" r="25" fill="var(--t-bg)" stroke="var(--t-accent)" stroke-width="1.2" opacity="0.92" />
+        <ellipse
+          cx="180"
+          cy="80"
+          rx="38"
+          ry="10"
+          transform="rotate(-13 180 80)"
+          fill="none"
+          stroke="var(--t-muted)"
+          stroke-width="0.7"
+          opacity="0.55"
+        />
+        <circle cx="174" cy="75" r="1.2" fill="var(--t-text)" opacity="0.72" />
+        <circle cx="187" cy="84" r="0.9" fill="var(--t-text)" opacity="0.52" />
+
+        <path
+          d="M148 48c-18 18-18 46 0 64M211 50v60"
+          fill="none"
+          stroke="var(--t-flare)"
+          stroke-width="0.7"
+          opacity="0.35"
+        />
+        <g fill="var(--t-muted)" opacity="0.7">
+          <circle cx="62" cy="66" r="1.4" />
+          <circle cx="302" cy="96" r="1.1" />
+          <circle cx="238" cy="31" r="1" />
+          <circle cx="112" cy="128" r="0.9" />
+        </g>
+      </g>
+    )
+  }
 </svg>
 
 <style>

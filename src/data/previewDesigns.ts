@@ -79,6 +79,14 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     vim: vim('classic', 'surface', 'accent'),
     codex: codex('split', 'accent', 'muted', 'accent'),
   },
+  'aha-cosmic-farce': {
+    vim: vim('focus', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'muted', 'flare'),
+  },
+  'ix-silent-event-horizon': {
+    vim: vim('compact', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'muted', 'flare'),
+  },
   'uncharted-reach': {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'flare', 'accent'),

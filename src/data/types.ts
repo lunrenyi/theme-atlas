@@ -86,7 +86,9 @@ export type PromptVisualStyle =
   | 'protoss-sanctum'
   | 'zerg-branch'
   | 'everlasting-bough'
-  | 'reignbow-arbiter';
+  | 'reignbow-arbiter'
+  | 'cosmic-farce'
+  | 'silent-horizon';
 
 export type PromptLayout =
   | 'minimal'
@@ -114,7 +116,9 @@ export type PromptMotif =
   | 'grid'
   | 'pressure'
   | 'industrial'
-  | 'organic';
+  | 'organic'
+  | 'farce'
+  | 'event-horizon';
 
 export type PromptLineMode = 'single' | 'double';
 
@@ -216,7 +220,9 @@ export interface Theme {
     | 'protoss'
     | 'zerg'
     | 'yaoshi-bough'
-    | 'lan-reignbow';
+    | 'lan-reignbow'
+    | 'aha-farce'
+    | 'ix-horizon';
   /**
    * - verified: sources are checkable references
    * - interpretation: original / fan re-interpretation of a copyrighted work

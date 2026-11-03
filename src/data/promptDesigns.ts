@@ -212,6 +212,42 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'The path becomes a locked flight line; bow gold lights only the arrowhead and verdict state while every other field stays cold and directional.',
   },
+  'aha-cosmic-farce': {
+    visualStyle: 'cosmic-farce',
+    layout: 'segmented',
+    glyphSet: { prompt: '❯', separator: '✦', connector: '~' },
+    motif: 'farce',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'runtime', 'git', 'user', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'flare', 'text'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '上下文像剧场节目单一样分段入场，粉色点亮当下的演出，金色只给反转提示，细碎错位的牌与骰子维持荒诞感。',
+    designNoteEn:
+      'Context fields enter like a theatrical programme; pink lights the current act, gold is reserved for a reversal, and tilted cards and dice keep the absurdity in check.',
+  },
+  'ix-silent-event-horizon': {
+    visualStyle: 'silent-horizon',
+    layout: 'two-line',
+    glyphSet: { prompt: '›', separator: '│', connector: '↳' },
+    motif: 'event-horizon',
+    motifDensity: 'sparse',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'runtime', 'git', 'user', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '上下文被排成两条即将坠入视界的轨道，幽紫只标记仍可辨认的坐标，暗星红作为一次几乎消失的异常信号。',
+    designNoteEn:
+      'The context sits on two tracks about to cross an event horizon; muted violet marks the only readable coordinates, while dark star-red is a nearly lost anomaly signal.',
+  },
   'uncharted-reach': {
     visualStyle: 'stellar-navigation',
     layout: 'two-line',
