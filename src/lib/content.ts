@@ -109,11 +109,18 @@ export function getThemesByGameWorld(id: GameWorldId, lang: Locale): Theme[] {
 
 /** Themes ordered for the switch-theme control on a detail page. */
 export function getThemeNeighbours(slug: string, lang: Locale): { prev?: Theme; next?: Theme } {
-  const list = getThemes(lang);
+  const allThemes = getThemes(lang);
+  const current = allThemes.find((theme) => theme.slug === slug);
+  if (!current) return {};
+
+  // Detail navigation belongs to the collection the visitor is reading.
+  // Do not wrap from the final theme into the next collection; the breadcrumb
+  // and “browse all themes” link provide those broader exits.
+  const list = allThemes.filter((theme) => theme.collection === current.collection);
   const index = list.findIndex((theme) => theme.slug === slug);
-  if (index < 0) return {};
+
   return {
-    prev: list[(index - 1 + list.length) % list.length],
-    next: list[(index + 1) % list.length],
+    prev: index > 0 ? list[index - 1] : undefined,
+    next: index >= 0 && index < list.length - 1 ? list[index + 1] : undefined,
   };
 }

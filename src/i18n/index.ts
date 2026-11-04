@@ -181,8 +181,10 @@ const zh = {
   /* palette */
   'palette.heading': '配色',
   'palette.headingSuffix': '',
-  'palette.meta': 'HEX 数据 · {count} 色 · 7 个角色',
-  'palette.metaEn': 'HEX DATA · {count} COLORS · 7 ROLES',
+  'palette.meta': 'HEX 数据 · {count} 色 · {roles} 个基础角色',
+  'palette.metaWithAuxiliary':
+    'HEX 数据 · {count} 色 · {roles} 个基础角色 · {auxiliary} 个辅助色',
+  'palette.metaEn': 'HEX DATA · {count} COLORS · {roles} BASE ROLES',
   'palette.keyRole': '关键色',
   'palette.chartLabel': '相对明度',
   'palette.chartHint': '点击色条复制色值',
@@ -530,8 +532,10 @@ const en: Record<UiKey, string> = {
 
   'palette.heading': 'Palette',
   'palette.headingSuffix': '',
-  'palette.meta': 'HEX DATA · {count} COLORS · 7 ROLES',
-  'palette.metaEn': 'HEX DATA · {count} COLORS · 7 ROLES',
+  'palette.meta': 'HEX DATA · {count} COLORS · {roles} BASE ROLES',
+  'palette.metaWithAuxiliary':
+    'HEX DATA · {count} COLORS · {roles} BASE ROLES · +{auxiliary} AUX COLOUR',
+  'palette.metaEn': 'HEX DATA · {count} COLORS · {roles} BASE ROLES',
   'palette.keyRole': 'Key colour',
   'palette.chartLabel': 'Relative luminance',
   'palette.chartHint': 'Click a bar to copy its hex value',

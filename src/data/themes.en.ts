@@ -965,17 +965,26 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     ],
     sources: [
       {
-        title: 'Honkai: Star Rail official website',
-        detail: 'Official public page, used only to identify the work and subject',
+        title: 'Honkai: Star Rail official website · World section (English)',
+        detail: 'Official public world section for the game, Aeon IX and the Nihility context.',
         note:
-          'No character artwork, logo, interface or other imagery from that page is used on ' +
-          'this site.',
+          'It is used only as the official entry point for the setting; no character artwork, ' +
+          'logo, interface or other imagery from that page is used on this site.',
       },
       {
-        title: 'Nihility, IX and the event horizon (public setting summary)',
+        title: 'Honkai: Star Rail official website · World section (Chinese)',
+        detail: 'Official Chinese world section for the game, Aeon IX and the Nihility context.',
         note:
-          'Pending: an official setting reference with version and page details will replace ' +
-          'this entry. The current writing and colour values are original Theme Atlas work.',
+          'Official source material and Theme Atlas interpretation are recorded separately; ' +
+          'the black-hole and event-horizon metaphors are not presented as official game setting.',
+      },
+      {
+        title: 'NASA Science · Black Holes',
+        detail: 'Public NASA astronomy reference for black holes and event horizons.',
+        note:
+          'The black hole, event horizon, gravitational lensing and bent orbits are only ' +
+          'Theme Atlas scientific visual metaphors. They are not official Honkai: Star Rail ' +
+          'setting details or official graphics; the SVG and colours are an original interpretation.',
       },
     ],
     credits: {

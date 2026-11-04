@@ -904,16 +904,28 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
     tags: ['同人', '虚无', '黑洞', '事件视界', '熵', '失重', '消隐', '寂静'],
     sources: [
       {
-        title: '崩坏：星穹铁道 官方网站',
+        title: '崩坏：星穹铁道 官方网站 · 世界观栏目（中文）',
         type: 'link',
-        url: 'https://hsr.hoyoverse.com/',
-        detail: '官方公开页面，仅作作品与题材背景识别',
-        note: '本站未使用该页面的角色立绘、Logo、界面或其他美术素材。',
+        url: 'https://hsr.hoyoverse.com/zh-cn/world',
+        detail: '官方公开世界观栏目，用于核对作品、星神 IX 与虚无命途的背景。',
+        note: '仅引用为作品背景入口；本站未使用该页面的角色立绘、Logo、界面或其他美术素材。',
       },
       {
-        title: '虚无、IX 与事件视界（公开设定摘要）',
-        type: 'pending',
-        note: '待补充：加入带版本与页码的官方设定资料后替换本条；当前文案与色值属于 Theme Atlas 原创演绎。',
+        title: '《崩坏：星穹铁道》官方网站 · 世界观栏目（英文）',
+        type: 'link',
+        url: 'https://hsr.hoyoverse.com/en-us/world',
+        detail: '同属官方公开世界观栏目，可对照英文表述核对作品、星神 IX 与虚无命途背景。',
+        note:
+          '官方资料与 Theme Atlas 的原创演绎分开记录；黑洞、事件视界等科学隐喻并非游戏官方设定。',
+      },
+      {
+        title: 'NASA Science · Black Holes',
+        type: 'link',
+        url: 'https://science.nasa.gov/universe/black-holes/',
+        detail: 'NASA 公开天文科普：黑洞与事件视界。',
+        note:
+          '黑洞、事件视界、引力透镜和弯折轨道只作为 Theme Atlas 的现实科学视觉隐喻；' +
+          '这些不是《崩坏：星穹铁道》的官方设定或官方图形，相关 SVG 与色值均为原创演绎。',
       },
     ],
     credits: {

@@ -45,6 +45,21 @@ export function contrastRatio(a: string, b: string): number {
   return (light + 0.05) / (dark + 0.05);
 }
 
+/**
+ * The seven roles every usable UI theme must resolve. `onAccent` can still be
+ * derived from `bg` by paletteMap when a palette does not name a colour for it.
+ * `flare` remains an optional extra palette entry, never part of this count.
+ */
+export const BASE_PALETTE_ROLES: readonly PaletteRole[] = [
+  'bg',
+  'surface',
+  'text',
+  'muted',
+  'border',
+  'accent',
+  'onAccent',
+];
+
 export function roleHex(theme: Theme, role: PaletteRole): string {
   return paletteMap(theme)[role]?.hex ?? '#000000';
 }

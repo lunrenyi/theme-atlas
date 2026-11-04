@@ -10,7 +10,8 @@
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/postbuild.mjs",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "verify": "npm run check && npm run build && npm run verify:prompt",
+    "verify": "npm run check && npm run build && npm run verify:catalog && npm run verify:prompt",
+    "verify:catalog": "node scripts/check-catalog.mjs",
     "verify:prompt": "node scripts/check-prompt-preview.mjs",
     "contrast": "node scripts/check-contrast.mjs",
     "og": "node scripts/generate-og.mjs"

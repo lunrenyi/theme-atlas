@@ -7,7 +7,7 @@
  * stays visible while the story is read — the colours never leave the screen.
  */
 import type { Theme } from '../data/types';
-import { luminance, paletteMap } from '../lib/color';
+import { BASE_PALETTE_ROLES, luminance, paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 
 interface Props {
@@ -24,6 +24,7 @@ const onAccent = paletteMap(theme).onAccent;
 
 const lums = theme.palette.map((c) => luminance(c.hex));
 const peak = Math.max(...lums, 0.0001);
+const auxiliaryRoles = theme.palette.filter((color) => !BASE_PALETTE_ROLES.includes(color.role));
 const bars = theme.palette.map((color, i) => ({
   color,
   height: 14 + (lums[i] / peak) * 86,
@@ -37,7 +38,15 @@ const bars = theme.palette.map((color, i) => ({
         <span class="mono hud__heading-en">{t(lang, 'palette.headingSuffix')}</span>
     </h2>
     <p class="hud__sub mono">
-      {t(lang, 'palette.meta', { count: String(theme.palette.length).padStart(2, '0') })}
+      {t(
+        lang,
+        auxiliaryRoles.length > 0 ? 'palette.metaWithAuxiliary' : 'palette.meta',
+        {
+          count: String(theme.palette.length).padStart(2, '0'),
+          roles: String(BASE_PALETTE_ROLES.length),
+          auxiliary: String(auxiliaryRoles.length),
+        },
+      )}
     </p>
   </div>
 

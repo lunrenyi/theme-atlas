@@ -63,6 +63,9 @@ jobs:
           # so using the pages base_url here would repeat the path segment
           SITE_URL: https://${{ github.repository_owner }}.github.io
 
+      - name: Catalogue audit
+        run: npm run verify:catalog
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
