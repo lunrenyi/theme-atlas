@@ -74,6 +74,108 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'The main axis leans left, a gold prompt cuts through a broken rail, and ember red appears only at the fracture and alert.',
   },
+  'pangu-creation': {
+    visualStyle: 'primordial-separation',
+    layout: 'two-line',
+    glyphSet: { prompt: '❯', separator: '┄', connector: '↥' },
+    motif: 'genesis',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'flare', 'text'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '一条水平开界线分出清浊，命令行沿裂隙站立，初阳金只标记新世界第一次被命名的位置。',
+    designNoteEn:
+      'A horizontal creation line separates clarity from turbidity; the command stands along the rift, with first-light gold marking only the first named point of a new world.',
+  },
+  'xingtian-war-dance': {
+    visualStyle: 'shield-dance',
+    layout: 'segmented',
+    glyphSet: { prompt: '❯', separator: '╱', connector: '✕' },
+    motif: 'battle-dance',
+    motifDensity: 'dense',
+    defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'status', 'command'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '干戚的交叉线把信息分成坚固的战术段落，赤褐色推动命令，寒铁青只在状态节点上短促闪现。',
+    designNoteEn:
+      'Crossed shield-and-axe lines divide the information into resolute tactical segments; war-ochre drives the command while cold steel-blue flashes only at the status node.',
+  },
+  'qixi-magpie-bridge': {
+    visualStyle: 'magpie-weave',
+    layout: 'minimal',
+    glyphSet: { prompt: '➤', separator: '·', connector: '～' },
+    motif: 'weave',
+    motifDensity: 'sparse',
+    defaultLineMode: 'single',
+    moduleOrder: ['directory', 'git', 'runtime', 'user', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['border', 'flare'],
+      restrained: ['bg', 'surface', 'muted', 'onAccent'],
+    },
+    designNote: '织机经纬与鹊桥弧线共享一条稀疏星路，河汉青指引路径，织梭金只落在相会的节点。',
+    designNoteEn:
+      'Loom warp and weft share a sparse stellar route with the magpie bridge; river blue guides the path, while shuttle gold lands only on the meeting node.',
+  },
+  'eight-immortals-crossing': {
+    visualStyle: 'eight-crossing',
+    layout: 'segmented',
+    glyphSet: { prompt: '❯', separator: '◇', connector: '≈' },
+    motif: 'octet',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'runtime', 'git', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '八重节点围绕云浪展开，法器不必喧宾夺主，海峤青维持秩序，渡海金标出各自的通路。',
+    designNoteEn:
+      'Eight nodes unfold around cloud waves; the treasures never outshout the text. Sea-green keeps order and crossing gold marks each distinct route.',
+  },
+  'nezha-lotus-flame': {
+    visualStyle: 'lotus-wheel',
+    layout: 'two-line',
+    glyphSet: { prompt: '❯', separator: '│', connector: '◌' },
+    motif: 'lotus-flame',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'flare', 'text'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '莲花瓣与风火轮形成同心结构，莲火赤托住当前命令，海潮青在另一侧压住速度。',
+    designNoteEn:
+      'Lotus petals and wind-fire wheels form a concentric structure; lotus-red carries the current command while sea-blue steadies its speed from the opposite side.',
+  },
+  'yangjian-celestial-eye': {
+    visualStyle: 'celestial-eye',
+    layout: 'minimal',
+    glyphSet: { prompt: '➤', separator: '│', connector: '◇' },
+    motif: 'eye-mountain',
+    motifDensity: 'sparse',
+    defaultLineMode: 'single',
+    moduleOrder: ['directory', 'git', 'user', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['border', 'flare'],
+      restrained: ['bg', 'surface', 'muted', 'onAccent'],
+    },
+    designNote: '中轴像三尖刀一样冷静，天眼只聚焦当前坐标，云气与山脊退为低对比的判读线。',
+    designNoteEn:
+      'The central axis is as calm as a double-edged spear; the celestial eye focuses only on the current coordinate, while clouds and mountain ridges recede into low-contrast reading lines.',
+  },
   'ru-ware-sky': {
     visualStyle: 'glaze-strata',
     layout: 'minimal',

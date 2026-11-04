@@ -34,6 +34,402 @@ const fanDisclaimer =
   'demonstration only. It is not affiliated with or endorsed by HoYoverse.';
 
 export const themeTranslations: Record<string, ThemeTranslation> = {
+  'pangu-creation': {
+    title: 'Pangu · Creation of the World',
+    subtitle: 'One stroke parts the cosmic egg, and clarity and turbidity gain up and down',
+    description:
+      'Egg-white and creation blue separate heaven and earth; first-light gold appears only at the first rift.',
+    story:
+      'The Pangu creation narrative is commonly traced back to Sanwu Liji, attributed to Xu Zheng ' +
+      'of the Three Kingdoms Wu period. The original work is lost, and surviving fragments were ' +
+      'preserved through quotations in encyclopedias such as Yiwen Leiju and Taiping Yulan. In the ' +
+      'story, heaven and earth begin as an undifferentiated mass like an egg, with Pangu inside. ' +
+      'After long ages, the clear and luminous rises to become heaven while the heavy and turbid ' +
+      'settles as earth, giving the world its first vertical order. This theme does not reproduce ' +
+      'any painted image of Pangu. Its core is the act of separation itself: a creation line, an ' +
+      'orb not yet fully dispersed, and first-light gold in the rift.',
+    inspiration:
+      'Moon white and jade green-blue imagine the rising clear breath and settling turbid earth. ' +
+      'Deep ink carries the ground and body text, creation blue carries primary interface actions, ' +
+      'and first-light gold is restricted to the small accent of the opening moment. Public museum ' +
+      'resources such as Henan Museum help frame early material culture; the SVG is an original ' +
+      'abstraction and does not copy a museum object as a portrait of Pangu.',
+    designRationale:
+      'The light ground keeps the warmth of an eggshell, while a slightly jade surface separates ' +
+      'the two primordial layers without heavy shadows. Body text is a low-saturation dark ink, the ' +
+      'primary accent is a grounded blue-green, and gold remains a small signal. The code palette ' +
+      'derives deeper blue, antique gold, mineral green and clay red from the same materials, giving ' +
+      'syntax clear hierarchy without turning the theme neon.',
+    tags: ['Pangu', 'Creation', 'Cosmic egg', 'Clear and turbid', 'Genesis'],
+    palette: [
+      { name: 'Primordial Egg White', note: 'Warm white before heaven and earth are separated' },
+      { name: 'Clear-Turbid Jade', note: 'Pale jade panel between the rising and settling layers' },
+      { name: 'Mysterious Ink', note: 'Deep body ink from the primordial depth' },
+      { name: 'Rock Blue-Grey', note: 'Secondary text like stratified rock' },
+      { name: 'Creation Line', note: 'Calm boundary at the first division' },
+      { name: 'Creation Blue-Green', note: 'Primary actions, links and focus' },
+      { name: 'Clear Breath White', note: 'Text on the blue-green accent' },
+      { name: 'First Sun Gold', note: 'Small emphasis for the first light in the rift' },
+    ],
+    sources: [
+      {
+        title: 'Sanwu Liji (三五历纪)',
+        detail: 'Attributed to Xu Zheng, Three Kingdoms Wu; lost work surviving in encyclopedic quotations',
+        note: 'Key source for the Pangu creation, cosmic egg and clear/turbid division; quotations should be identified as reconstructed fragments.',
+      },
+      {
+        title: 'Chinese Mythology (中国神话)',
+        detail: 'Yuan Ke, People’s Literature Publishing House',
+        note: 'A modern scholarly survey of Pangu traditions and their variants.',
+      },
+      {
+        title: 'Henan Museum',
+        detail: 'Public museum portal',
+        note: 'A gateway to early Central Plains material culture; no specific object is claimed or reproduced as a Pangu image.',
+      },
+      {
+        title: 'Taiping Yulan (太平御览)',
+        detail: 'Compiled by Li Fang and others, Song dynasty',
+        note: 'Preserves fragments of lost works including Sanwu Liji; quotations should be checked against a reconstruction.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: originalSvg,
+    },
+  },
+
+  'xingtian-war-dance': {
+    title: 'Xingtian · Shield and Axe Unbowed',
+    subtitle: 'While shield and axe remain in hand, the war dance has not ended',
+    description:
+      'Dry earth holds the frame, war-ochre carries the relentless action, and cold steel-blue only grazes armour edges.',
+    story:
+      'The “Classic of the Great Wilderness: West” in the Classic of Mountains and Seas tells how ' +
+      'Xingtian contended with the supreme deity for divine rule. After his head was cut off and ' +
+      'buried at Mount Changyang, he continued to dance, using his nipples as eyes and navel as a ' +
+      'mouth, holding a shield (gan) and axe (qi). The myth is not designed here as gore or a body ' +
+      'spectacle. Its visual core is the crossed shield and axe, the cracked plain, and a dance that ' +
+      'refuses to stop.',
+    inspiration:
+      'Warm plain beige and leather brown come from loess earth, wooden shields and old woven ' +
+      'materials. War-ochre red evokes warrior pigment and ritual dance; cold steel-blue is reserved ' +
+      'for metal edges and status nodes. The motif draws on the textual myth and the broader visual ' +
+      'context of ancient weapons and martial dance, while the SVG itself is an original Theme Atlas ' +
+      'abstraction.',
+    designRationale:
+      'To keep resistance forceful without becoming noisy, the background is a low-chroma warm ' +
+      'earth colour and body text is dark scorched brown. The primary accent is a restrained clay ' +
+      'red, with steel blue as the secondary colour. The syntax palette adds steel, bronze and dark ' +
+      'violet on the same warm ground, preserving clear code hierarchy.',
+    tags: ['Xingtian', 'Classic of Mountains and Seas', 'Shield and axe', 'War dance', 'Resistance'],
+    palette: [
+      { name: 'Wasteland Plain', note: 'Dry pale earth beneath Mount Changyang' },
+      { name: 'Leather Brown', note: 'Panels like wood shield and old armour' },
+      { name: 'Scorched Wood Ink', note: 'Primary text and incised lines' },
+      { name: 'Dusty Weapon Grey', note: 'Secondary text in drifting sand' },
+      { name: 'Earth-Crack Rule', note: 'Dry fissures and module boundaries' },
+      { name: 'Shield-Axe Red', note: 'Axe, action and focus in clay red' },
+      { name: 'Ritual Dance White', note: 'Text on the red accent' },
+      { name: 'Cold Steel Blue', note: 'Blade edge and a small status colour' },
+    ],
+    sources: [
+      {
+        title: 'Classic of Mountains and Seas · Great Wilderness West',
+        detail: 'Chinese Text Project public text',
+        note: 'Source for Xingtian’s contest, beheading, burial at Changyang and continued shield-and-axe dance.',
+      },
+      {
+        title: 'Classic of Mountains and Seas (山海经)',
+        detail: 'Ancient text with a long transmission history and multiple modern annotated editions',
+        note: 'Specific wording and imagery should be checked against annotated editions rather than read solely through later illustrations.',
+      },
+      {
+        title: 'Chinese Mythology (中国神话)',
+        detail: 'Yuan Ke, People’s Literature Publishing House',
+        note: 'Context for modern interpretations of Xingtian and the myth’s transmission.',
+      },
+      {
+        title: 'Henan Museum',
+        detail: 'Public museum portal',
+        note: 'A resource for ancient weapons and Central Plains material culture; the graphic does not depict a specific object.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: originalSvg,
+    },
+  },
+
+  'qixi-magpie-bridge': {
+    title: 'Qixi · Magpie Bridge Across the Milky Way',
+    subtitle: 'The star river keeps its appointment, and one night each year becomes a crossing',
+    description:
+      'Deep river-blue holds the loom’s warp and weft; the bridge is linked by star points, with shuttle gold at the meeting place.',
+    story:
+      'Early imagery of the Cowherd and Weaver Girl appears in “Great East” in the Classic of ' +
+      'Poetry, though the stellar imagery there is not identical to the later complete romance. From ' +
+      'the Han and Wei periods onward, the separated lovers, the magpie bridge across the celestial ' +
+      'river, and the needle-begging customs of Qixi gradually converged in poetry, folklore and ' +
+      'festival practice. Rather than reducing Qixi to a generic heart or wedding image, this theme ' +
+      'returns to three older visual clues: the galaxy, the geometry of a loom, and a bridge made of ' +
+      'birds and star points.',
+    inspiration:
+      'Night blue and star-rock blue form the summer galaxy, moon-weave white provides starlight and ' +
+      'fabric, and river blue traces the main path. Shuttle gold is restricted to small focal points, ' +
+      'like a brief reflection as a golden shuttle crosses the threads. Qixi needle-begging customs ' +
+      'are informed by public intangible-heritage resources; modern wedding imagery is deliberately ' +
+      'avoided.',
+    designRationale:
+      'This is one of the few dark themes in Chinese Mythology, so body text uses a bright moon-weave ' +
+      'tone while muted text still clears 4.5:1. Borders remain low-contrast like stellar mist. River ' +
+      'blue is the primary action colour and shuttle gold is the secondary accent. The syntax palette ' +
+      'uses pale blue, gold, rose and wisteria light, making code read like threads in a night sky ' +
+      'rather than a generic neon-blue theme.',
+    tags: ['Qixi', 'Cowherd and Weaver Girl', 'Milky Way', 'Magpie bridge', 'Needle-begging', 'Loom'],
+    palette: [
+      { name: 'Night Sky', note: 'Near-black blue of the Qixi night' },
+      { name: 'Star Rock', note: 'Panel colour deep within the galaxy' },
+      { name: 'Moon Weave', note: 'Body text like moonlit white fabric' },
+      { name: 'Misty Star Grey', note: 'Distant star haze and supporting text' },
+      { name: 'Sky Boundary', note: 'Low-light tracks and loom structure' },
+      { name: 'River Blue', note: 'Galaxy path, links and focus' },
+      { name: 'Deep Space Blue', note: 'Dark text on the river-blue accent' },
+      { name: 'Shuttle Gold', note: 'Small glint of the golden shuttle and meeting node' },
+    ],
+    sources: [
+      {
+        title: 'Classic of Poetry · Lesser Ya · Great East',
+        detail: 'Chinese Text Project public text',
+        note: 'An early poetic source for the Cowherd and Weaver stellar imagery; later narrative details should not be projected back wholesale.',
+      },
+      {
+        title: 'China Intangible Cultural Heritage Network',
+        detail: 'Portal for Qixi customs and folk literature',
+        note: 'A public resource for Qixi needle-begging, festival transmission and folklore; a more specific project page may be added as site sections change.',
+      },
+      {
+        title: 'Chinese Mythology (中国神话)',
+        detail: 'Yuan Ke, People’s Literature Publishing House',
+        note: 'Context for how the Cowherd and Weaver Girl myth converged with folk festival traditions.',
+      },
+      {
+        title: 'Jingchu Suishi Ji (荆楚岁时记)',
+        detail: 'Zong Lin, Southern Dynasties Liang',
+        note: 'An important source for traditional seasonal customs and Qixi needle-begging; read through a modern annotated edition.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: originalSvg,
+    },
+  },
+
+  'eight-immortals-crossing': {
+    title: 'Eight Immortals · Each Reveals Their Power',
+    subtitle: 'They cross the same sea, but not with the same method',
+    description:
+      'Sea-green and crossing gold form eight cloud-wave paths, with the treasures kept as small surrounding signs.',
+    story:
+      'The saying “the Eight Immortals cross the sea, each revealing divine power” was shaped across ' +
+      'folklore, drama, painting and fiction. Iron-Crutch Li, Zhongli Quan, Zhang Guolao, Lü Dongbin, ' +
+      'He Xiangu, Lan Caihe, Han Xiangzi and Cao Guojiu come from different roles and traditions, and ' +
+      'each crosses with a different object: gourd, fan, fish drum, sword, lotus, flower basket, flute ' +
+      'or jade tablet. For an interface, the strongest structure is not a crowded figure scene but ' +
+      '“eight directions, one destination”: cloud waves converge toward a centre while the eight signs ' +
+      'stay restrained rather than becoming eight saturated character colours.',
+    inspiration:
+      'Warm paper white and sea-mist green come from cloud sea and tide, pine ink carries body text, ' +
+      'and crossing-gold only touches the edges of the treasures. Public museum resources such as the ' +
+      'Palace Museum offer ways to study Eight Immortals imagery in painting, textiles and decorative ' +
+      'arts. The site copies no painting or object pattern; it abstracts the eight-part orbit, waves ' +
+      'and object silhouettes.',
+    designRationale:
+      'This is a warm light theme built around structure. Sea-green is the primary colour and crossing ' +
+      'gold marks small nodes, preventing the theme from becoming a multicoloured costume set. The ' +
+      'syntax palette separates code through green, antique gold, moss, terracotta and indigo while a ' +
+      'dark ink keeps ordinary text grounded.',
+    tags: ['Eight Immortals', 'Crossing the sea', 'Treasures', 'Cloud sea', 'Folklore'],
+    palette: [
+      { name: 'Cloud Paper', note: 'Warm white above the cloud sea' },
+      { name: 'Tide White', note: 'Pale panels of surf and cloud clusters' },
+      { name: 'Pine Soot Ink', note: 'Body text and primary lines' },
+      { name: 'Moss Rock Grey', note: 'Distant cloud waves and secondary text' },
+      { name: 'Cloud-Wave Rule', note: 'Low-contrast boundaries in sea fog' },
+      { name: 'Sea Promontory Green', note: 'Crossing path, buttons and focus' },
+      { name: 'Pure White', note: 'Text on the sea-green accent' },
+      { name: 'Crossing Gold', note: 'Treasure edges and a few node highlights' },
+    ],
+    sources: [
+      {
+        title: 'Journey of the East (东游记)',
+        detail: 'Ming-dynasty supernatural novel; authorship and editions vary',
+        note: 'The crossing story was formed jointly by fiction, drama and folklore, so no single text should be treated as the sole origin.',
+      },
+      {
+        title: 'Chinese Mythology (中国神话)',
+        detail: 'Yuan Ke, People’s Literature Publishing House',
+        note: 'A survey of the Eight Immortals’ names and folk-myth transmission.',
+      },
+      {
+        title: 'Palace Museum',
+        detail: 'Public museum portal',
+        note: 'A resource for Eight Immortals imagery across traditional painting, objects and decorative arts; no specific collection item is reproduced.',
+      },
+      {
+        title: 'China Intangible Cultural Heritage Network',
+        detail: 'Portal for folk literature and customs',
+        note: 'Context for the continuation of Eight Immortals stories in regional performance and folk culture.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: 'All illustrations are original SVGs; no historical painting, museum image or film asset is used.',
+    },
+  },
+
+  'nezha-lotus-flame': {
+    title: 'Nezha · Lotus Flame Rebirth',
+    subtitle: 'The lotus reshapes the body while the wind-fire wheels keep turning forward',
+    description:
+      'Lotus white and lotus red form a rebirth structure, with sea-blue holding the speed of the wind-fire wheels in check.',
+    story:
+      'In the familiar narrative of Investiture of the Gods, Nezha passes through the return of bone ' +
+      'and flesh, then a lotus incarnation, before acting again through the Universe Ring, Armillary ' +
+      'Silk and Wind-Fire Wheels. The Nezha figure did not begin as the youthful war god familiar ' +
+      'today: the name and protective-deity elements can be traced through earlier Buddhist sources ' +
+      'and were repeatedly reshaped by religion, fiction, drama and folk belief. This theme uses the ' +
+      'most recognisable novel-based materials — lotus, wheels, silk sash and ring — without borrowing ' +
+      'the design of any film or animation.',
+    inspiration:
+      'Lotus-petal white and cloud pink come from petals and warm jade; lotus red describes the wind-fire ' +
+      'wheels and Armillary Silk, while sea-blue sets up the contrast with the Eastern Sea and water. ' +
+      'The design does not depict the character or a media-specific pose. It uses original geometry for ' +
+      'petals, wheel rings, flowing silk and the meeting of water and fire.',
+    designRationale:
+      'High-chroma lotus red is kept as an accent rather than covering the page, preserving the warmer, ' +
+      'almost floral quality of the light ground. Sea-blue creates a cold counterpoint. The syntax palette ' +
+      'separates lotus red, sea blue, bronze and rose violet so the code reflects the theme while retaining ' +
+      'mature editor hierarchy.',
+    tags: ['Nezha', 'Lotus incarnation', 'Wind-Fire Wheels', 'Armillary Silk', 'Investiture of the Gods'],
+    palette: [
+      { name: 'Lotus Petal White', note: 'Light ground of petals and warm jade' },
+      { name: 'Ribbon Cloud Pink', note: 'Pale pink panels touched by the Armillary Silk' },
+      { name: 'Dark Ink', note: 'Deep body text that stabilises the composition' },
+      { name: 'Purple-Clay Grey', note: 'Secondary text in clay and dark lotus tones' },
+      { name: 'Ribbon Edge', note: 'Soft boundaries like woven fabric' },
+      { name: 'Lotus Flame Red', note: 'Wind-fire wheels, action and primary focus' },
+      { name: 'True Flame White', note: 'Text on lotus-flame red' },
+      { name: 'Sea-Tide Blue', note: 'Water, contrast and a small cold focal point' },
+    ],
+    sources: [
+      {
+        title: 'Investiture of the Gods (封神演义)',
+        detail: 'Wikisource public-text portal',
+        note: 'Used to check the familiar novel system of the lotus incarnation, Universe Ring, Armillary Silk and Wind-Fire Wheels.',
+      },
+      {
+        title: 'Sanjiao Yuanliu Soushen Daquan (三教源流搜神大全)',
+        detail: 'Ming compilation of religious and folk deity imagery; multiple editions survive',
+        note: 'Helps distinguish pre-novel religious and folk sources from the later fictional Nezha image.',
+      },
+      {
+        title: 'Chinese Mythology (中国神话)',
+        detail: 'Yuan Ke, People’s Literature Publishing House',
+        note: 'Context for Nezha’s evolution from Buddhist protective elements to a fictional character.',
+      },
+      {
+        title: 'Palace Museum',
+        detail: 'Public museum portal',
+        note: 'A resource for traditional lotus, cloud and water motifs in objects and textiles; no collection item is reproduced.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: 'All illustrations are original SVGs; no film, animation, game or museum asset is used.',
+    },
+  },
+
+  'yangjian-celestial-eye': {
+    title: 'Yang Jian · All-Seeing Celestial Eye',
+    subtitle: 'When the celestial eye opens, neither clouds nor mountain ridges can hide',
+    description:
+      'Cold metal lines and celestial-eye blue form a precise composition, with armour gold reserved for the focused instant.',
+    story:
+      'Belief in Erlang Shen has complex variants across texts, drama and religious worship. In Journey ' +
+      'to the West, the Illustrious Sage Erlang fights Sun Wukong; in Investiture of the Gods, Yang Jian ' +
+      'is widely known through his nine-and-eight transformations, three-pointed double-edged spear and ' +
+      'the Howling Celestial Dog. Other materials, including the Precious Scroll of Erlang, preserve a folk ' +
+      'religious lineage. These traditions should not be flattened into one identical version. This theme ' +
+      'selects the stable visual cues of later popular storytelling: the celestial eye, mountain clouds, ' +
+      'the central axis of the spear, and the calm precision of an all-seeing gaze.',
+    inspiration:
+      'Cloud-ridge white and cold-jade blue come from mountain mist and polished metal, while deep blue ink ' +
+      'carries text. Celestial-eye blue is the only clear beam, and armour gold is used for rings, plates ' +
+      'and a small verdict point. The graphic is an original abstraction; it does not use a film, game or ' +
+      'temple-sculpture image of Yang Jian.',
+    designRationale:
+      'The high-key light palette stays cool, with muted blue-grey lifted enough for small AA text. Borders ' +
+      'behave like clouds and measurement lines and remain quiet. Eye-blue handles actions and focus, while ' +
+      'gold marks a small judgement signal. The code palette separates cool blue, antique gold, sea-green ' +
+      'and dark red for precision without monotony.',
+    tags: ['Yang Jian', 'Erlang Shen', 'Celestial eye', 'Three-pointed spear', 'Mountains'],
+    palette: [
+      { name: 'Cloud Ridge White', note: 'Cool white ground above high mountain clouds' },
+      { name: 'Cold Jade Blue', note: 'Panels like cold jade and reflected metal' },
+      { name: 'Mystic Blue Ink', note: 'Deep blue-black body text and ridges' },
+      { name: 'Distant Peak Grey', note: 'Far mountains, clouds and secondary text' },
+      { name: 'Cloud Realm Silver Rule', note: 'Calm measurement and outline lines' },
+      { name: 'Celestial Eye Blue', note: 'The eye, actions and primary focus' },
+      { name: 'Sky Light White', note: 'Text on celestial-eye blue' },
+      { name: 'Armour Gold', note: 'Armour plates, spear rings and verdict nodes' },
+    ],
+    sources: [
+      {
+        title: 'Journey to the West (西游记)',
+        detail: 'Wikisource public-text portal',
+        note: 'One source for the popular Erlang narrative and his contest with Sun Wukong; it should be read separately from the Yang Jian tradition in Investiture of the Gods.',
+      },
+      {
+        title: 'Investiture of the Gods (封神演义)',
+        detail: 'Wikisource public-text portal',
+        note: 'A major popular-fiction source for Yang Jian and the three-pointed double-edged spear.',
+      },
+      {
+        title: 'Precious Scroll of Erlang (二郎宝卷)',
+        detail: 'Ming folk-religious precious scroll; surviving and modern editions require separate collation',
+        note: 'Shows that Erlang belief also includes a folk-religious lineage not fully explained by the novels.',
+      },
+      {
+        title: 'Palace Museum',
+        detail: 'Public museum portal',
+        note: 'A resource for traditional armour, mountain and cloud motifs; no specific statue or collection object is reproduced.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: 'All illustrations are original SVGs; no film, game, statue or museum asset is used.',
+    },
+  },
+
   'taotie-cinnabar': {
     title: 'Taotie · Cinnabar',
     subtitle: 'The beast mask on a bronze ritual vessel, and the touch of cinnabar below it',

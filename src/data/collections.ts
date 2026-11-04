@@ -9,20 +9,22 @@ export const collections: Collection[] = [
     shortEn: 'Myth',
     code: 'MYTH',
     codeZh: '',
-    tagline: '神话的形状，是青铜器替它留下的',
-    taglineEn: 'Myth left its shape on bronze and stone',
-    starNote: '青铜器替神话留下了形状',
-    starNoteEn: 'Bronze gave myth its shape',
+    tagline: '典籍、器物与民间传说留下的颜色',
+    taglineEn: 'Colours left by texts, artefacts and folk legend',
+    starNote: '从开天裂隙到银河鹊桥留下的颜色',
+    starNoteEn: 'Colours from the first rift to the magpie bridge',
     description:
-      '神话本身没有画面，是青铜器、纹样与壁画替它留下了痕迹：饕餮的巨目、汉画像石上的祥云、' +
-      '敦煌壁画剥落后露出的土红。这个系列沿这些痕迹取色，再用矿物颜料的质感——朱砂、石青、' +
-      '赭石、铅白——把它们重写成能上手的界面配色。',
+      '从开天辟地到星河鹊桥，从青铜兽面到八仙过海。我们沿着古籍、青铜器、画像石、壁画、绢本与' +
+      '民间节俗寻找颜色，再将这些文化意象重新推导成适合数字界面的配色。每套主题都有自己的故事、' +
+      '材料线索与色彩逻辑；我们不复刻影视和游戏中的既有形象，而是从传统文化中寻找能够独立成立的' +
+      '视觉语言。',
     descriptionEn:
-      'Myth kept no pictures of its own; bronzes, ornament and murals did. The staring eyes ' +
-      'of a taotie mask, auspicious clouds on Han pictorial stones, the earth red under ' +
-      'flaking Dunhuang walls. This collection takes its colour from those traces, then ' +
-      'rewrites them as interface palettes with the weight of ground mineral — cinnabar, ' +
-      'azurite, ochre, lead white.',
+      'From the separation of heaven and earth to the magpie bridge across the galaxy, from bronze ' +
+      'beast masks to the Eight Immortals crossing the sea. We follow classical texts, ritual bronzes, ' +
+      'pictorial stones, murals, silk paintings and folk customs, then derive those cultural images ' +
+      'into palettes for digital interfaces. Each theme has its own story, material trail and colour ' +
+      'logic. Rather than reproducing imagery from film, television or games, the series seeks an ' +
+      'independent visual language within traditional culture.',
     accent: '#C0513C',
     accentAlt: '#4A8CA8',
     motif: 'ruyi',

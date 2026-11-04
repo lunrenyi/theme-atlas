@@ -47,6 +47,30 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'flare', 'accent'),
   },
+  'pangu-creation': {
+    vim: vim('focus', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'flare', 'accent'),
+  },
+  'xingtian-war-dance': {
+    vim: vim('classic', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'flare', 'accent'),
+  },
+  'qixi-magpie-bridge': {
+    vim: vim('compact', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'flare', 'accent'),
+  },
+  'eight-immortals-crossing': {
+    vim: vim('classic', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'muted', 'flare'),
+  },
+  'nezha-lotus-flame': {
+    vim: vim('focus', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'flare', 'accent'),
+  },
+  'yangjian-celestial-eye': {
+    vim: vim('compact', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'flare', 'accent'),
+  },
   'ru-ware-sky': {
     vim: vim('compact', 'surface', 'accent'),
     codex: codex('stacked', 'accent', 'muted', 'accent'),

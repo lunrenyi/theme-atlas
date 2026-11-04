@@ -12,11 +12,32 @@ import { fileURLToPath } from 'node:url';
 import { collections } from '../src/data/collections.ts';
 import { themeTranslations } from '../src/data/themes.en.ts';
 import { themes } from '../src/data/themes.ts';
+import { syntaxPalettes } from '../src/data/syntaxPalettes.ts';
 import { BASE_PALETTE_ROLES } from '../src/lib/color.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = resolve(root, 'dist');
 const failures = [];
+const mythOrder = [
+  'pangu-creation',
+  'nuwa-five-stones',
+  'xingtian-war-dance',
+  'taotie-cinnabar',
+  'baize-omens',
+  'eight-immortals-crossing',
+  'qixi-magpie-bridge',
+  'nezha-lotus-flame',
+  'yangjian-celestial-eye',
+  'qitian-pojie',
+];
+const addedMythThemes = [
+  'pangu-creation',
+  'xingtian-war-dance',
+  'qixi-magpie-bridge',
+  'eight-immortals-crossing',
+  'nezha-lotus-flame',
+  'yangjian-celestial-eye',
+];
 
 const readDist = async (path) => readFile(resolve(dist, path), 'utf8');
 
@@ -47,6 +68,13 @@ function detailLinks(html) {
     if (!slug) throw new Error(`Cannot read theme slug from detail link: ${match[1]}`);
     return slug;
   });
+}
+
+function exportPayload(html) {
+  const match = html.match(
+    /<script type="application\/json" data-export-payload>([\s\S]*?)<\/script>/,
+  );
+  return match ? JSON.parse(match[1]) : null;
 }
 
 const expectedCounts = new Map(
@@ -187,6 +215,69 @@ for (const [collectionId, count] of expectedCounts) {
   }
 }
 
+const mythThemes = themes.filter((theme) => theme.collection === 'myth');
+assert(
+  mythThemes.map((theme) => theme.slug).join(',') === mythOrder.join(','),
+  'Chinese Mythology must use the editorially specified theme order',
+);
+
+for (const slug of addedMythThemes) {
+  const theme = mythThemes.find((candidate) => candidate.slug === slug);
+  const translation = themeTranslations[slug];
+  assert(Boolean(theme), `${slug} is missing from the Chinese Mythology collection`);
+  assert(Boolean(theme?.plate), `${slug} is missing its original plate artwork`);
+  assert(Boolean(translation?.title && translation?.subtitle), `${slug} is missing an English title`);
+  assert(
+    Boolean(theme?.story && theme?.inspiration && theme?.designRationale),
+    `${slug} is missing story, inspiration or colour rationale`,
+  );
+  assert(
+    theme?.sources.length >= 3 && theme.sources.every((source) => source.type !== 'pending'),
+    `${slug} needs at least three verifiable references`,
+  );
+  assert(Boolean(syntaxPalettes[slug]), `${slug} needs an independent syntax palette`);
+
+  if (!theme) continue;
+  assert(
+    theme.palette.length === 8 &&
+      BASE_PALETTE_ROLES.every((role) => theme.palette.some((color) => color.role === role)) &&
+      theme.palette.some((color) => color.role === 'flare'),
+    `${slug} needs seven base UI roles plus one auxiliary colour`,
+  );
+
+  for (const lang of ['zh', 'en']) {
+    const path =
+      lang === 'zh'
+        ? `theme/${theme.slug}/index.html`
+        : `en/theme/${theme.slug}/index.html`;
+    const html = await readDist(path);
+    const payload = exportPayload(html);
+    const expectedTitle = lang === 'zh' ? theme.title : translation.title;
+
+    assert(html.includes(expectedTitle), `${lang}/${theme.slug}: localised title is not rendered`);
+    assert(
+      (html.match(/<figure class="plate"/g) ?? []).length === 1,
+      `${lang}/${theme.slug}: original plate is missing`,
+    );
+    assert(Boolean(payload?.css?.text && payload?.json?.text), `${lang}/${theme.slug}: export payload is incomplete`);
+
+    if (payload) {
+      for (const color of theme.palette) {
+        assert(
+          payload.css.text.includes(color.hex),
+          `${lang}/${theme.slug}: CSS export misses ${color.role} ${color.hex}`,
+        );
+      }
+      const exported = JSON.parse(payload.json.text);
+      assert(exported.slug === theme.slug, `${lang}/${theme.slug}: JSON export has the wrong slug`);
+      assert(
+        exported.palette?.length === theme.palette.length,
+        `${lang}/${theme.slug}: JSON export has the wrong palette length`,
+      );
+    }
+  }
+}
+
 const ix = themes.find((theme) => theme.slug === 'ix-silent-event-horizon');
 assert(Boolean(ix), 'IX theme is missing from the shared theme data');
 if (ix) {
@@ -253,5 +344,6 @@ if (failures.length) {
 
 console.log(
   `Catalog audit passed: ${themes.length} themes, ${collections.length} collections, ` +
-    'dynamic filters, collection-scoped navigation and IX references are consistent in the built HTML.',
+    `${mythThemes.length} Chinese Mythology themes in editorial order, export payloads, ` +
+    'collection-scoped navigation and IX references are consistent in the built HTML.',
 );

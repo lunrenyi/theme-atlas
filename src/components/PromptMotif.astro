@@ -406,6 +406,111 @@ const { variant, density, hasFlare } = Astro.props;
       </g>
     )
   }
+
+  {
+    variant === 'genesis' && (
+      <g>
+        <path d="M0 56h360M0 104h360" stroke="var(--t-border)" stroke-width="0.8" opacity="0.65" />
+        <path d="M180 0v58M176 102l8 22-10 36" stroke="var(--t-flare)" stroke-width="1.2" opacity="0.75" />
+        <ellipse cx="180" cy="80" rx="92" ry="48" stroke="var(--t-border)" opacity="0.55" />
+        <path d="M70 62c38-18 84-14 112 4M188 98c32 12 66 8 104-10" stroke="var(--t-accent)" stroke-width="0.9" opacity="0.55" />
+        <circle cx="180" cy="80" r="4" fill="var(--t-flare)" />
+        <g fill="var(--t-muted)" opacity="0.62">
+          <circle cx="72" cy="44" r="1.2" />
+          <circle cx="286" cy="120" r="1.2" />
+          <circle cx="252" cy="50" r="1" />
+        </g>
+      </g>
+    )
+  }
+
+  {
+    variant === 'battle-dance' && (
+      <g>
+        <path d="M54 8l252 144M306 8L54 152" stroke="var(--t-border)" stroke-width="1" opacity="0.72" />
+        <path d="M82 24l-34-6 20 28M278 136l34 6-20-28" stroke="var(--t-accent)" stroke-width="1.2" opacity="0.75" />
+        <path d="M132 40h96v80h-96z" fill="var(--t-surface)" stroke="var(--t-border)" opacity="0.72" />
+        <circle cx="180" cy="80" r="21" stroke="var(--t-accent)" stroke-width="1.1" />
+        <path d="M180 56v48M156 80h48" stroke="var(--t-flare)" stroke-width="1" opacity="0.8" />
+        <path d="M28 132l36-18 28 14 36-22M214 144l44-20 38 16 38-20" stroke="var(--t-muted)" stroke-width="0.8" fill="none" opacity="0.55" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'weave' && (
+      <g>
+        <g stroke="var(--t-border)" stroke-width="0.7" opacity="0.68">
+          <path d="M42 0v160M94 0v160M146 0v160M198 0v160M250 0v160M302 0v160" />
+          <path d="M0 36h360M0 72h360M0 108h360M0 144h360" />
+        </g>
+        <path d="M34 112c34-42 76-58 146-58s112 16 146 58" fill="none" stroke="var(--t-accent)" stroke-width="1.1" opacity="0.75" />
+        <g fill="var(--t-text)" opacity="0.82">
+          <circle cx="72" cy="98" r="2" />
+          <circle cx="112" cy="82" r="1.8" />
+          <circle cx="154" cy="74" r="2" />
+          <circle cx="206" cy="74" r="2" />
+          <circle cx="248" cy="84" r="1.8" />
+          <circle cx="288" cy="100" r="2" />
+        </g>
+        <ellipse cx="180" cy="76" rx="10" ry="4" transform="rotate(-18 180 76)" stroke="var(--t-flare)" stroke-width="1.2" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'octet' && (
+      <g>
+        <circle cx="180" cy="80" r="62" stroke="var(--t-border)" stroke-dasharray="3 8" opacity="0.72" />
+        <circle cx="180" cy="80" r="32" stroke="var(--t-accent)" opacity="0.48" />
+        <g stroke="var(--t-border)" stroke-width="0.8" opacity="0.75">
+          <path d="M180 10v24M180 126v24M110 80h24M226 80h24M131 31l17 17M212 112l17 17M229 31l-17 17M148 112l-17 17" />
+        </g>
+        <g fill="var(--t-flare)">
+          <circle cx="180" cy="18" r="2.4" />
+          <circle cx="242" cy="80" r="2.4" />
+          <circle cx="180" cy="142" r="2.4" />
+          <circle cx="118" cy="80" r="2.4" />
+          <circle cx="224" cy="36" r="1.8" />
+          <circle cx="224" cy="124" r="1.8" />
+          <circle cx="136" cy="124" r="1.8" />
+          <circle cx="136" cy="36" r="1.8" />
+        </g>
+        <path d="M30 130c46-20 74 14 116 0s86-16 130 6" fill="none" stroke="var(--t-muted)" stroke-width="0.8" opacity="0.52" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'lotus-flame' && (
+      <g>
+        <circle cx="180" cy="80" r="60" stroke="var(--t-accent)" stroke-width="1.1" opacity="0.62" />
+        <circle cx="180" cy="80" r="38" stroke="var(--t-flare)" stroke-dasharray="6 7" opacity="0.7" />
+        <g fill="none" stroke-linecap="round">
+          <path d="M180 28c16 12 18 31 0 48-18-17-16-36 0-48z" stroke="var(--t-accent)" />
+          <path d="M225 54c8 18-6 35-28 34 3-22 14-34 28-34z" stroke="var(--t-flare)" />
+          <path d="M214 126c-15 12-36 5-44-14 19-8 37 0 44 14z" stroke="var(--t-accent)" opacity="0.75" />
+          <path d="M135 54c-8 18 6 35 28 34-3-22-14-34-28-34z" stroke="var(--t-muted)" opacity="0.8" />
+        </g>
+        <path d="M42 68c56 24 74-26 120 2s90 24 156-12" fill="none" stroke="var(--t-flare)" stroke-width="0.9" opacity="0.62" />
+        <path d="M36 126c50-18 84 18 136 0s92-16 152 6" fill="none" stroke="var(--t-muted)" stroke-width="0.8" opacity="0.48" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'eye-mountain' && (
+      <g>
+        <path d="M180 6v148" stroke="var(--t-border)" stroke-width="0.9" opacity="0.72" />
+        <path d="M180 6l-9 18h18z" fill="var(--t-flare)" opacity="0.82" />
+        <path d="M96 96c24-32 144-32 168 0-24 32-144 32-168 0z" fill="var(--t-surface)" stroke="var(--t-accent)" stroke-width="1.1" />
+        <circle cx="180" cy="96" r="18" stroke="var(--t-border)" />
+        <circle cx="180" cy="96" r="6" fill="var(--t-accent)" />
+        <path d="M28 142l54-42 34 26 64-54 50 38 102-18" fill="none" stroke="var(--t-muted)" stroke-width="0.8" opacity="0.52" />
+        <path d="M62 48c30-14 54 10 82 0s52-10 82 4" fill="none" stroke="var(--t-border)" stroke-width="0.8" opacity="0.5" />
+      </g>
+    )
+  }
 </svg>
 
 <style>

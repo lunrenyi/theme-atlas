@@ -88,7 +88,13 @@ export type PromptVisualStyle =
   | 'everlasting-bough'
   | 'reignbow-arbiter'
   | 'cosmic-farce'
-  | 'silent-horizon';
+  | 'silent-horizon'
+  | 'primordial-separation'
+  | 'shield-dance'
+  | 'magpie-weave'
+  | 'eight-crossing'
+  | 'lotus-wheel'
+  | 'celestial-eye';
 
 export type PromptLayout =
   | 'minimal'
@@ -118,7 +124,13 @@ export type PromptMotif =
   | 'industrial'
   | 'organic'
   | 'farce'
-  | 'event-horizon';
+  | 'event-horizon'
+  | 'genesis'
+  | 'battle-dance'
+  | 'weave'
+  | 'octet'
+  | 'lotus-flame'
+  | 'eye-mountain';
 
 export type PromptLineMode = 'single' | 'double';
 
@@ -222,7 +234,13 @@ export interface Theme {
     | 'yaoshi-bough'
     | 'lan-reignbow'
     | 'aha-farce'
-    | 'ix-horizon';
+    | 'ix-horizon'
+    | 'pangu-genesis'
+    | 'xingtian-shield-dance'
+    | 'qixi-bridge'
+    | 'eight-treasures'
+    | 'nezha-lotus-wheel'
+    | 'yangjian-eye';
   /**
    * - verified: sources are checkable references
    * - interpretation: original / fan re-interpretation of a copyrighted work

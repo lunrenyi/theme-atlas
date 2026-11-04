@@ -13,65 +13,63 @@ import { fallbackSyntaxPalette, syntaxPalettes } from './syntaxPalettes.ts';
  */
 const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   {
-    slug: 'taotie-cinnabar',
-    title: '饕餮 · 朱丹',
-    subtitle: '青铜礼器上的兽面，与它颈下那一点朱红',
+    slug: 'pangu-creation',
+    title: '盘古 · 开天辟地',
+    subtitle: '一斧劈开混沌，清浊从此有了上下',
     collection: 'myth',
-    description: '青铜的沉静撑住整幅画面，朱砂只用一笔，锋芒就露了出来。',
+    description: '混沌素白与造化天青分开天地，初阳金只落在第一道裂隙上。',
     story:
-      '饕餮之名见于先秦文献，商代晚期到西周早期的青铜礼器上大量出现这种兽面纹，' +
-      '巨目、阔口、身躯向两端展开，纹样沿着器壁的曲率铺开，几乎不留下空白。' +
-      '它并不温和——那时的纹饰承担的是镇慑与礼仪，是把不可见的秩序钉在可见的器物上。' +
-      '本主题把这种“满而有序”的结构翻译成界面：底色是经过岁月氧化的纸，' +
-      '图形是克制的线，唯一用力的一笔留给朱砂。',
+      '盘古开天的叙事常被追溯到题为三国吴人徐整所作的《三五历纪》。' +
+      '原书已佚，今天能够读到的片段赖《艺文类聚》《太平御览》等类书引录而存。' +
+      '故事里，天地最初像禽卵一样浑然未分，盘古生于其中；经过漫长岁月，' +
+      '阳清上升为天，阴浊下沉为地，世界第一次有了上下、方位与秩序。' +
+      '本主题不复刻某幅盘古画像，而是把“分离”本身作为图形核心：一条开界线、' +
+      '一团尚未完全散开的混沌，以及裂隙中透出的初阳金。',
     inspiration:
-      '颜色来自三处可考的实物线索：朱砂（硫化汞 HgS）在汉代画像石与漆器中常见的纯红色；' +
-      '石青（蓝铜矿）在青铜器错金银与彩绘中带来的冷蓝；以及器壁缝隙里氧化后残留的土褐。' +
-      '纹样本身不直接复刻任何一件具体器物，只保留“兽面 + 回折”的结构逻辑。',
+      '月白与青玉色来自清气上升、阴浊沉积的想象，厚土灰与玄冥墨承担大地和正文，' +
+      '造化天青用于界面中的主要行动，初阳金作为次强调，只标记开辟瞬间的光。' +
+      '河南博物院等公共博物馆资料用于理解早期器物、葬俗与创世图像的材料环境；' +
+      '本站图形为原创抽象 SVG，不把博物馆藏品纹样直接搬用为盘古形象。',
     designRationale:
-      '底色刻意压低饱和度（宣纸），让朱砂成为唯一的高彩度锚点；文字色取偏暖的玄墨而非纯黑，' +
-      '避免在纸色上显得生硬。石青作为次强调色，主要用于链接与焦点态。' +
-      '正文与次要文字的对比度按 WCAG AA 校验，色卡同时标注了每一色的语义角色。',
+      '浅色底保持蛋壳般的温润，surface 略偏青玉色，使天地两层不靠重阴影也能分开。' +
+      '正文使用低饱和深墨，主要强调取沉着天青，初阳金只用于节点与提示。' +
+      '语法高亮从同一材料中另取深青、古金、岩绿与陶红色，保证代码层级清楚，却不变成霓虹色板。',
     palette: [
-      { name: '宣纸', hex: '#F2ECDF', role: 'bg', note: '氧化后的纸白，带一点暖灰' },
-      { name: '素绢', hex: '#E6DAC3', role: 'surface', note: '面板底色，比背景深一档' },
-      { name: '玄墨', hex: '#231D18', role: 'text', note: '正文墨色，暖调而非纯黑' },
-      { name: '赭褐', hex: '#6F5D49', role: 'muted', note: '次要说明文字' },
-      { name: '灰线', hex: '#CFC1A7', role: 'border', note: '分割线与描边' },
-      { name: '朱砂', hex: '#AE3726', role: 'accent', note: '主强调：按钮、链接、焦点' },
-      { name: '米白', hex: '#FCF6EA', role: 'onAccent', note: '强调色之上的文字' },
+      { name: '混沌素白', hex: '#E9E7DD', role: 'bg', note: '像未分天地的卵白，温润而不刺眼' },
+      { name: '清浊青玉', hex: '#D9E1DB', role: 'surface', note: '清气与地层之间的浅青玉面板' },
+      { name: '玄冥墨', hex: '#202B2D', role: 'text', note: '混沌深处的正文墨色' },
+      { name: '岩青灰', hex: '#536563', role: 'muted', note: '岩层与注释般的次要文字' },
+      { name: '开界线', hex: '#BBC7C0', role: 'border', note: '清浊初分时的冷静边界' },
+      { name: '造化天青', hex: '#356B78', role: 'accent', note: '主要行动、链接与焦点' },
+      { name: '清气白', hex: '#F5F1E7', role: 'onAccent', note: '天青强调色上的文字' },
+      { name: '初阳金', hex: '#C69B52', role: 'flare', note: '开天裂隙中第一束光，只作小面积强调' },
     ],
-    tags: ['商周', '青铜器', '纹样', '矿物颜料', '暖色'],
+    tags: ['盘古', '开天辟地', '混沌', '清气浊气', '创世'],
     sources: [
       {
-        title: '吕氏春秋',
+        title: '三五历纪',
         type: 'book',
-        detail: '秦·吕不韦门客编纂，今本二十六卷',
-        note: '《先识》等篇是“饕餮”一词见于先秦文献的重要出处之一，具体引句待逐字校订。',
-      },
-      {
-        title: '说文解字',
-        type: 'book',
-        detail: '汉·许慎',
-        note: '可参照“餮”“飧”等字条理解“贪食”的语义来源。',
+        detail: '题三国吴·徐整；原书已佚，佚文见《艺文类聚》《太平御览》等引录',
+        note: '盘古开天、天地混沌及清浊分离叙事的重要文献来源；引用时应说明其为古佚书辑录材料。',
       },
       {
         title: '中国神话',
         type: 'book',
         detail: '袁珂著，人民文学出版社',
-        note: '梳理古籍中的神怪名号与出处，便于核对形象流传。',
+        note: '用于理解盘古神话在现代神话学整理中的脉络与不同说法。',
       },
       {
-        title: '中国美术五千年',
-        type: 'book',
-        detail: '杨琪主编',
-        note: '青铜器纹样与漆器、帛画的材料与色彩章节。',
+        title: '河南博物院',
+        type: 'link',
+        url: 'https://www.chnmus.net/',
+        detail: '公共博物馆资料入口',
+        note: '作为早期中原物质文化与器物语境的公开资料入口；本站未指认或复刻某一件盘古文物。',
       },
       {
-        title: '天工开物 · 五金',
+        title: '太平御览',
         type: 'book',
-        detail: '明·宋应星',
-        note: '朱砂（硫化汞）的采制与用途记载。',
+        detail: '宋·李昉等编',
+        note: '类书保存了《三五历纪》等已佚古籍的片段，需结合辑本核对具体引文。',
       },
     ],
     credits: {
@@ -79,10 +77,11 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
       story: 'Theme Atlas 编辑部',
       graphics: 'Theme Atlas（原创 SVG）',
       license: '配色数据以 CC BY 4.0 释出',
-      imageLicence: '站内插图为原创 SVG，未使用任何第三方图片。',
+      imageLicence: '站内插图为原创 SVG，未使用第三方画像、馆藏图片或影视游戏素材。',
     },
     status: 'verified',
     featured: true,
+    plate: 'pangu-genesis',
   },
 
   {
@@ -152,6 +151,148 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   },
 
   {
+    slug: 'xingtian-war-dance',
+    title: '刑天 · 干戚不息',
+    subtitle: '干戚仍在手中，战舞便没有结束',
+    collection: 'myth',
+    description: '荒原土色撑住画面，干戚赤是不停止的动作，寒铁青色只落在甲片边缘。',
+    story:
+      '《山海经·海外西经》记载，刑天与天帝争神，首级被断后葬于常羊之山；' +
+      '他仍以乳为目、以脐为口，手持干与戚继续舞蹈。干是盾，戚是斧，' +
+      '“操干戚以舞”让这则神话的重点不再停留在战败，而转向一种近乎固执的不息。' +
+      '本主题不表现血腥与肢体奇观，也不复刻后世战神画像，只取交叉的盾斧、' +
+      '干裂土地和持续旋转的舞势作为视觉结构。',
+    inspiration:
+      '荒原米色与皮甲褐来自黄土、木质盾牌和旧织物；干戚赤来自战士颜料与祭舞中的赭红；' +
+      '寒铁青色用于金属边缘和状态灯般的冷静节点。色彩参考神话文本与古代兵器、' +
+      '画像石中的武舞语境，具体 SVG 图形由 Theme Atlas 原创抽象完成。',
+    designRationale:
+      '为了让抗争主题保持力量而不显得喧哗，背景使用低彩度暖土色，正文取接近焦木的深褐。' +
+      '主强调为克制的赤陶红，寒铁青只作辅助色。语法色板在同一暖色底上加入铁青、铜棕和暗紫，' +
+      '使代码在战场气质中仍有清楚层级。',
+    palette: [
+      { name: '荒原素', hex: '#EEE6D7', role: 'bg', note: '常羊山下干燥的浅土色' },
+      { name: '皮甲褐', hex: '#DED3BF', role: 'surface', note: '木盾与旧甲片的面板色' },
+      { name: '焦木墨', hex: '#292721', role: 'text', note: '正文与主要刻线' },
+      { name: '尘戈灰', hex: '#62594E', role: 'muted', note: '尘沙中的次要文字' },
+      { name: '裂地线', hex: '#BEB09A', role: 'border', note: '荒原裂纹与模块边界' },
+      { name: '干戚赤', hex: '#943F32', role: 'accent', note: '盾斧、行动与焦点的赤陶红' },
+      { name: '祭舞白', hex: '#FFF6E9', role: 'onAccent', note: '赤红色上的文字' },
+      { name: '寒铁青', hex: '#4E6065', role: 'flare', note: '金属刃缘与少量状态色' },
+    ],
+    tags: ['刑天', '山海经', '干戚', '战舞', '抗争'],
+    sources: [
+      {
+        title: '山海经 · 海外西经',
+        type: 'link',
+        url: 'https://ctext.org/shan-hai-jing/hai-wai-xi-jing/zh',
+        detail: '中国哲学书电子化计划公开文本',
+        note: '刑天与帝争神、断首、葬于常羊之山及“操干戚以舞”等核心叙事的文献依据。',
+      },
+      {
+        title: '山海经',
+        type: 'book',
+        detail: '古本成书历经长期流传，今有多家校注本',
+        note: '具体字词与图像宜结合袁珂等校注本核对，避免把后世画像直接等同于先秦文本。',
+      },
+      {
+        title: '中国神话',
+        type: 'book',
+        detail: '袁珂著，人民文学出版社',
+        note: '用于理解刑天神话在现代中国神话整理中的解释和形象流传。',
+      },
+      {
+        title: '河南博物院',
+        type: 'link',
+        url: 'https://www.chnmus.net/',
+        detail: '公共博物馆资料入口',
+        note: '用于查阅古代兵器、器物与中原物质文化语境；本站图形不指向某一件具体藏品。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未使用第三方画像、馆藏图片或影视游戏素材。',
+    },
+    status: 'verified',
+    plate: 'xingtian-shield-dance',
+  },
+
+  {
+    slug: 'taotie-cinnabar',
+    title: '饕餮 · 朱丹',
+    subtitle: '青铜礼器上的兽面，与它颈下那一点朱红',
+    collection: 'myth',
+    description: '青铜的沉静撑住整幅画面，朱砂只用一笔，锋芒就露了出来。',
+    story:
+      '饕餮之名见于先秦文献，商代晚期到西周早期的青铜礼器上大量出现这种兽面纹，' +
+      '巨目、阔口、身躯向两端展开，纹样沿着器壁的曲率铺开，几乎不留下空白。' +
+      '它并不温和——那时的纹饰承担的是镇慑与礼仪，是把不可见的秩序钉在可见的器物上。' +
+      '本主题把这种“满而有序”的结构翻译成界面：底色是经过岁月氧化的纸，' +
+      '图形是克制的线，唯一用力的一笔留给朱砂。',
+    inspiration:
+      '颜色来自三处可考的实物线索：朱砂（硫化汞 HgS）在汉代画像石与漆器中常见的纯红色；' +
+      '石青（蓝铜矿）在青铜器错金银与彩绘中带来的冷蓝；以及器壁缝隙里氧化后残留的土褐。' +
+      '纹样本身不直接复刻任何一件具体器物，只保留“兽面 + 回折”的结构逻辑。',
+    designRationale:
+      '底色刻意压低饱和度（宣纸），让朱砂成为唯一的高彩度锚点；文字色取偏暖的玄墨而非纯黑，' +
+      '避免在纸色上显得生硬。石青作为次强调色，主要用于链接与焦点态。' +
+      '正文与次要文字的对比度按 WCAG AA 校验，色卡同时标注了每一色的语义角色。',
+    palette: [
+      { name: '宣纸', hex: '#F2ECDF', role: 'bg', note: '氧化后的纸白，带一点暖灰' },
+      { name: '素绢', hex: '#E6DAC3', role: 'surface', note: '面板底色，比背景深一档' },
+      { name: '玄墨', hex: '#231D18', role: 'text', note: '正文墨色，暖调而非纯黑' },
+      { name: '赭褐', hex: '#6F5D49', role: 'muted', note: '次要说明文字' },
+      { name: '灰线', hex: '#CFC1A7', role: 'border', note: '分割线与描边' },
+      { name: '朱砂', hex: '#AE3726', role: 'accent', note: '主强调：按钮、链接、焦点' },
+      { name: '米白', hex: '#FCF6EA', role: 'onAccent', note: '强调色之上的文字' },
+    ],
+    tags: ['商周', '青铜器', '纹样', '矿物颜料', '暖色'],
+    sources: [
+      {
+        title: '吕氏春秋',
+        type: 'book',
+        detail: '秦·吕不韦门客编纂，今本二十六卷',
+        note: '《先识》等篇是“饕餮”一词见于先秦文献的重要出处之一，具体引句待逐字校订。',
+      },
+      {
+        title: '说文解字',
+        type: 'book',
+        detail: '汉·许慎',
+        note: '可参照“餮”“飧”等字条理解“贪食”的语义来源。',
+      },
+      {
+        title: '中国神话',
+        type: 'book',
+        detail: '袁珂著，人民文学出版社',
+        note: '梳理古籍中的神怪名号与出处，便于核对形象流传。',
+      },
+      {
+        title: '中国美术五千年',
+        type: 'book',
+        detail: '杨琪主编',
+        note: '青铜器纹样与漆器、帛画的材料与色彩章节。',
+      },
+      {
+        title: '天工开物 · 五金',
+        type: 'book',
+        detail: '明·宋应星',
+        note: '朱砂（硫化汞）的采制与用途记载。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未使用任何第三方图片。',
+    },
+    status: 'verified',
+  },
+
+  {
     slug: 'baize-omens',
     title: '白泽 · 瑞兽图',
     subtitle: '懂得万物名字的那只兽，画在旧绢上',
@@ -177,7 +318,7 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
       { name: '墨', hex: '#1F1B16', role: 'text', note: '墨线般的正文色' },
       { name: '檀褐', hex: '#6B5F4A', role: 'muted', note: '题跋、注释文字' },
       { name: '帛线', hex: '#C7B99E', role: 'border', note: '绢上界栏的细线' },
-      { name: '铜金', hex: '#95682C', role: 'accent', note: '点睛：链接、标签、焦点' },
+      { name: '铜金', hex: '#8A5D27', role: 'accent', note: '点睛：链接、小字号标签与焦点；微调至更可读的古铜色' },
       { name: '素白', hex: '#FBF6EA', role: 'onAccent', note: '强调色之上的文字' },
     ],
     tags: ['瑞兽图', '绢本', '宋画', '低彩度', '金褐'],
@@ -220,6 +361,286 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
       imageLicence: '站内插图为原创 SVG，未使用任何第三方图片。',
     },
     status: 'verified',
+  },
+
+  {
+    slug: 'eight-immortals-crossing',
+    title: '八仙 · 各显神通',
+    subtitle: '越过同一片海，却不必使用同一种方法',
+    collection: 'myth',
+    description: '海峤青与渡海金组成八重云浪，法器成为环绕中心的小型符号。',
+    story:
+      '“八仙过海，各显神通”是在民间传说、戏曲、绘画与小说中逐渐定型的故事群。' +
+      '铁拐李、汉钟离、张果老、吕洞宾、何仙姑、蓝采和、韩湘子与曹国舅身份各异，' +
+      '渡海时也分别借助葫芦、扇、渔鼓、宝剑、荷花、花篮、笛子与玉板等法器。' +
+      '这组故事最适合界面表达的不是热闹人物群像，而是“八个方向、同一目标”的秩序：' +
+      '云浪向中心汇合，八种符号保持克制，颜色不按人物拆成八种高饱和色。',
+    inspiration:
+      '宣纸般的暖白与海雾青绿色来自云海和海潮，松墨承担正文，渡海金只作为法器边缘的微光。' +
+      '故宫博物院等公共馆藏资料可用于研究八仙题材在绘画、织物和器物中的造型传统；' +
+      '本站不复制具体画作或法器图样，只提炼八重环绕、云浪和器物剪影。',
+    designRationale:
+      '这是一套浅色、温润但强调结构的主题。海峤青作为主色，渡海金承担小型节点，' +
+      '避免八仙主题被处理成八种颜色的拼盘。语法色板以青绿、古金、苔绿、陶赤和靛蓝区分代码，' +
+      '同时把正文墨色压稳。',
+    palette: [
+      { name: '云宣纸', hex: '#F0EBDD', role: 'bg', note: '云海之上的暖白纸色' },
+      { name: '海潮白', hex: '#E2E4D8', role: 'surface', note: '浪花与云团的浅面板' },
+      { name: '松烟墨', hex: '#24312D', role: 'text', note: '正文与主要线条' },
+      { name: '苔岩灰', hex: '#596960', role: 'muted', note: '远处云浪与次要文字' },
+      { name: '云浪线', hex: '#C2CABE', role: 'border', note: '低对比海雾边界' },
+      { name: '海峤青', hex: '#316B62', role: 'accent', note: '渡海路径、按钮与焦点' },
+      { name: '真白', hex: '#FFFFFF', role: 'onAccent', note: '海峤青上的文字' },
+      { name: '渡海金', hex: '#B48348', role: 'flare', note: '法器边缘与少量节点光' },
+    ],
+    tags: ['八仙', '八仙过海', '法器', '云海', '民间传说'],
+    sources: [
+      {
+        title: '东游记',
+        type: 'book',
+        detail: '明代神魔小说，作者与版本归属有不同说法',
+        note: '八仙过海故事在小说、戏曲和民间传说中共同成型；不应把单一文本当作唯一来源。',
+      },
+      {
+        title: '中国神话',
+        type: 'book',
+        detail: '袁珂著，人民文学出版社',
+        note: '用于梳理八仙人物名号及民间神话流传的基本脉络。',
+      },
+      {
+        title: '故宫博物院',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/',
+        detail: '公共博物馆资料入口',
+        note: '用于查阅八仙题材在传统绘画、器物与工艺美术中的语境；本站未复刻具体藏品。',
+      },
+      {
+        title: '中国非物质文化遗产网',
+        type: 'link',
+        url: 'https://www.ihchina.cn/',
+        detail: '民间文学与民俗资料入口',
+        note: '用于理解八仙传说在地方曲艺、民俗和民间文学中的延续。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未使用第三方古画、馆藏图片或影视素材。',
+    },
+    status: 'verified',
+    plate: 'eight-treasures',
+  },
+
+  {
+    slug: 'qixi-magpie-bridge',
+    title: '七夕 · 银河鹊桥',
+    subtitle: '星河有信，一年一度得以相会',
+    collection: 'myth',
+    description: '深夜河汉蓝托起织机经纬，鹊桥以星点相连，织梭金落在相会处。',
+    story:
+      '牵牛、织女的早期意象可见于《诗经·小雅·大东》，但诗中的星象与后世完整爱情故事并不完全相同。' +
+      '汉魏以后，牛郎织女相会、鹊桥渡银河、七夕乞巧等元素在诗文、民俗与民间传说中逐渐合流。' +
+      '本主题不把七夕简化成普通爱心或婚礼图像，而是回到三个更古老的视觉线索：' +
+      '银河、织机的经纬，以及由鸟与星点构成的桥。',
+    inspiration:
+      '夜空蓝与星岩色来自夏末夜空中的河汉带，月纱色写星光与织物，河汉青承担主要路径。' +
+      '织梭金只用于少量焦点，模拟金梭穿过经纬时的短促反光。七夕乞巧习俗参考中国非物质文化遗产网等' +
+      '公共资料，图形中不出现现代婚庆符号。',
+    designRationale:
+      '这是中国神话系列中少见的深色主题，因此正文使用高亮月纱色，muted 仍保持 4.5:1 以上。' +
+      '边框保持低对比，模拟星雾；主要行动使用河汉青，织梭金作为辅助色。' +
+      '语法色板使用浅蓝、淡金、粉白、紫藤等冷色光点，让代码像夜空中的经纬，而不是普通荧光蓝主题。',
+    palette: [
+      { name: '夜霄', hex: '#151B2B', role: 'bg', note: '七夕深夜的近黑蓝背景' },
+      { name: '星岩', hex: '#222D43', role: 'surface', note: '银河深处的面板色' },
+      { name: '月纱', hex: '#F0E7DC', role: 'text', note: '月白织物般的正文色' },
+      { name: '雾星灰', hex: '#B9B9BD', role: 'muted', note: '远处星雾与说明文字' },
+      { name: '天界线', hex: '#435067', role: 'border', note: '星轨和织机的低亮结构线' },
+      { name: '河汉青', hex: '#83A9C9', role: 'accent', note: '银河路径、链接与焦点' },
+      { name: '深空蓝', hex: '#132033', role: 'onAccent', note: '河汉青上的深色文字' },
+      { name: '织梭金', hex: '#D6B879', role: 'flare', note: '金梭与相会节点的微光' },
+    ],
+    tags: ['七夕', '牛郎织女', '银河', '鹊桥', '乞巧', '织机'],
+    sources: [
+      {
+        title: '诗经 · 小雅 · 大东',
+        type: 'link',
+        url: 'https://ctext.org/book-of-poetry/da-dong/zh',
+        detail: '中国哲学书电子化计划公开文本',
+        note: '牵牛、织女星象的早期诗歌来源；不应将后世完整故事情节直接回填到这一阶段。',
+      },
+      {
+        title: '中国非物质文化遗产网',
+        type: 'link',
+        url: 'https://www.ihchina.cn/',
+        detail: '七夕节俗与民间文学资料入口',
+        note: '用于查阅七夕乞巧、节庆传承与民间传说资料；具体项目页可随网站栏目更新继续补充。',
+      },
+      {
+        title: '中国神话',
+        type: 'book',
+        detail: '袁珂著，人民文学出版社',
+        note: '用于梳理牵牛织女神话与民间节日合流的大致脉络。',
+      },
+      {
+        title: '荆楚岁时记',
+        type: 'book',
+        detail: '南朝梁·宗懔',
+        note: '传统岁时与七夕乞巧风俗的重要文献之一，具体条目应结合现代校注本阅读。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未使用第三方古画、摄影或节庆图片。',
+    },
+    status: 'verified',
+    plate: 'qixi-bridge',
+  },
+
+  {
+    slug: 'nezha-lotus-flame',
+    title: '哪吒 · 莲火重生',
+    subtitle: '莲花重塑身形，风火轮仍向前旋转',
+    collection: 'myth',
+    description: '莲瓣白与莲火赤构成重生结构，海潮青压住风火轮的速度。',
+    story:
+      '在《封神演义》的常见叙事中，哪吒经历剔骨还父、莲花化身等情节，' +
+      '之后又以乾坤圈、混天绫与风火轮等鲜明物件重新行动。' +
+      '哪吒形象并非从一开始就是今天熟悉的少年战神：其名号和护法元素可追溯到佛教文献中的那吒，' +
+      '后经历代宗教、小说、戏曲与民间信仰不断重塑。本主题以明代以来小说中最有辨识度的' +
+      '莲花、火轮、绫带与圈环为视觉依据，不借用任何影视或动画造型。',
+    inspiration:
+      '莲瓣白与绯云粉来自花瓣和供果的暖色，莲火赤表现风火轮与混天绫，海潮青对照传统叙事中的' +
+      '东海与水浪。本站不绘制角色，不使用火尖枪等影视化 pose，只以原创几何线条呈现花瓣、' +
+      '轮环、绫带和水火相济的结构。',
+    designRationale:
+      '高饱和莲火红被限制为强调色，避免整页只剩火焰感；浅色暖底让莲花气质更温润。' +
+      '海潮青作为辅助色形成冷暖张力。语法色板把莲火红、海蓝、陶金和紫玫分开，' +
+      '使代码示例既能呼应主题，也保持成熟编辑器所需的层级。',
+    palette: [
+      { name: '莲瓣白', hex: '#F4E8E2', role: 'bg', note: '莲瓣与暖玉般的浅底色' },
+      { name: '绯云粉', hex: '#E8D5CE', role: 'surface', note: '混天绫扫过的浅粉面板' },
+      { name: '玄墨', hex: '#2E2224', role: 'text', note: '稳定画面的深色正文' },
+      { name: '紫砂灰', hex: '#6D5354', role: 'muted', note: '陶土与暗莲色的次要文字' },
+      { name: '绫边线', hex: '#CFB4AA', role: 'border', note: '柔软织物般的边界线' },
+      { name: '莲火赤', hex: '#B63B2F', role: 'accent', note: '风火轮、行动与主要焦点' },
+      { name: '真火白', hex: '#FFF5EC', role: 'onAccent', note: '莲火赤上的文字' },
+      { name: '海潮青', hex: '#2E6A80', role: 'flare', note: '海水、对照与少量冷色焦点' },
+    ],
+    tags: ['哪吒', '莲花化身', '风火轮', '混天绫', '封神演义'],
+    sources: [
+      {
+        title: '封神演义',
+        type: 'link',
+        url: 'https://zh.wikisource.org/zh-hans/%E5%B0%81%E7%A5%9E%E6%BC%94%E7%BE%A9',
+        detail: '维基文库公开文本入口',
+        note: '用于核对莲花化身、乾坤圈、混天绫和风火轮等小说叙事中的常见形象体系。',
+      },
+      {
+        title: '三教源流搜神大全',
+        type: 'book',
+        detail: '明代宗教与民间神祗图像文献汇编，版本较多',
+        note: '有助于理解哪吒形象在小说定型前后的宗教与民间信仰来源。',
+      },
+      {
+        title: '中国神话',
+        type: 'book',
+        detail: '袁珂著，人民文学出版社',
+        note: '用于梳理哪吒形象从佛教护法因素到小说人物的历史演变。',
+      },
+      {
+        title: '故宫博物院',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/',
+        detail: '公共博物馆资料入口',
+        note: '用于参考传统器物、织物和绘画中的莲花、云纹、水浪等视觉语汇；未复刻任何藏品。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未使用影视、动画、游戏或馆藏图片素材。',
+    },
+    status: 'verified',
+    plate: 'nezha-lotus-wheel',
+  },
+
+  {
+    slug: 'yangjian-celestial-eye',
+    title: '杨戬 · 天眼照彻',
+    subtitle: '天眼睁开，云气与山脊都无所遁形',
+    collection: 'myth',
+    description: '冷色金属线与天眼蓝构成精准构图，金甲金只落在聚焦的一瞬。',
+    story:
+      '二郎神信仰在不同文献、戏曲和民间崇拜中有复杂流变。' +
+      '《西游记》中的二郎显圣真君曾与孙悟空斗法，《封神演义》中的杨戬则以八九玄功、' +
+      '三尖两刃刀和哮天犬等元素广为人知；此外还有《二郎宝卷》等民间宗教文本。' +
+      '这些传统不能被简单压缩成一个统一版本。本主题选取后世通俗叙事中最稳定的视觉线索：' +
+      '天眼、山岳云气、三尖两刃刀的中轴，以及冷静照察的目光。',
+    inspiration:
+      '云岭白与寒玉蓝来自山间雾气和冷金属，玄蓝墨作正文，天眼青蓝是唯一明确光束。' +
+      '金甲金用于刀环、甲片和聚焦点，避免整套主题变成普通蓝白配色。图形为本站原创抽象 SVG，' +
+      '不使用影视、游戏或寺观塑像中的杨戬造型。',
+    designRationale:
+      '整体采用高 KEY 浅色冷调，muted 调到足以通过小字 AA 的蓝灰。' +
+      '边框像云气和测量线，保持低干扰；天眼蓝承担按钮、链接和焦点，金色只作少量裁决提示。' +
+      '语法色板在冷蓝、古金、海绿和暗红之间分区，使代码精准而不单调。',
+    palette: [
+      { name: '云岭白', hex: '#E8EDF1', role: 'bg', note: '高山云气后的冷白背景' },
+      { name: '寒玉蓝', hex: '#D7E0E7', role: 'surface', note: '冷玉与金属反光的面板' },
+      { name: '玄蓝墨', hex: '#1D2934', role: 'text', note: '山脊和正文的深蓝墨' },
+      { name: '远岫灰', hex: '#536472', role: 'muted', note: '远山、云气与次要文字' },
+      { name: '云界银线', hex: '#B9C7D1', role: 'border', note: '冷静的测量线和轮廓线' },
+      { name: '天眼青蓝', hex: '#426887', role: 'accent', note: '天眼、行动与主要焦点' },
+      { name: '天光白', hex: '#F8FBFD', role: 'onAccent', note: '天眼蓝上的文字' },
+      { name: '金甲金', hex: '#9E8958', role: 'flare', note: '甲片、刀环与裁决节点' },
+    ],
+    tags: ['杨戬', '二郎神', '天眼', '三尖两刃刀', '山岳'],
+    sources: [
+      {
+        title: '西游记',
+        type: 'link',
+        url: 'https://zh.wikisource.org/zh-hans/%E8%A5%BF%E9%81%8A%E8%A8%98',
+        detail: '维基文库公开文本入口',
+        note: '二郎显圣真君与孙悟空斗法等通俗叙事来源之一；与《封神演义》中的杨戬形象需分开阅读。',
+      },
+      {
+        title: '封神演义',
+        type: 'link',
+        url: 'https://zh.wikisource.org/zh-hans/%E5%B0%81%E7%A5%9E%E6%BC%94%E7%BE%A9',
+        detail: '维基文库公开文本入口',
+        note: '杨戬、三尖两刃刀及相关神魔叙事的重要通俗文学来源。',
+      },
+      {
+        title: '二郎宝卷',
+        type: 'book',
+        detail: '明代民间宗教文本，存世版本与整理本需另行核对',
+        note: '用于提示二郎信仰还包含民间宗教脉络，不能只依据小说版本解释全部形象。',
+      },
+      {
+        title: '故宫博物院',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/',
+        detail: '公共博物馆资料入口',
+        note: '用于参考传统甲胄、山纹、云纹和金属器物语汇；本站未复刻任何具体藏品或造像。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未使用影视、游戏、造像或馆藏图片素材。',
+    },
+    status: 'verified',
+    plate: 'yangjian-eye',
   },
 
   {
