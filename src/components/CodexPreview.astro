@@ -5,6 +5,10 @@ import {
   codexDiffContext,
   codexDiffRemoved,
   codexSyntaxExample,
+  fuliCodexDiffAdded,
+  fuliCodexDiffContext,
+  fuliCodexDiffRemoved,
+  fuliCodexSyntaxExample,
   nousCodexDiffAdded,
   nousCodexDiffContext,
   nousCodexDiffRemoved,
@@ -37,6 +41,12 @@ const examples = {
     context: nousCodexDiffContext,
     removed: nousCodexDiffRemoved,
     added: nousCodexDiffAdded,
+  },
+  'fuli-memory': {
+    code: fuliCodexSyntaxExample,
+    context: fuliCodexDiffContext,
+    removed: fuliCodexDiffRemoved,
+    added: fuliCodexDiffAdded,
   },
 };
 const example = examples[design.example ?? 'default'];

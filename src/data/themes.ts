@@ -1717,6 +1717,78 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   },
 
   {
+    slug: 'fuli-crystal-river',
+    title: '浮黎 · 晶忆长河',
+    subtitle: '每一段存在，都值得留下痕迹。',
+    collection: 'rail',
+    description: '雾晶白、叠影蓝白与忆痕蓝紫组成通透的记忆晶庭，少量虹彩只在晶面和光带中出现。',
+    story:
+      '时间不断带走当下，却没有让发生过的一切彻底消失。' +
+      '一次相遇、一颗熄灭的星球、一段无人记得的旅程，都曾经真实地存在过。' +
+      '它们留下的痕迹汇入记忆的长河，化为无数晶体碎片。每一片都映照着不同的世界，也保存着曾经发生的一切。' +
+      '祂是浮黎，记忆的星神。' +
+      '本主题从浮黎的晶体形象、记忆碎片与虹彩折射中寻找颜色，' +
+      '以原创的“记忆晶庭”表现留存、重现与索引；它不是游戏中的正式地点，也不描绘浮黎的人形或面部。',
+    inspiration:
+      '雾晶白构成记忆的空间，叠影蓝白表现晶体的层次，忆痕蓝紫标记被保存的片段，' +
+      '珍珠粉与折射紫记录光线经过晶面时的细微变化。' +
+      '冰晶蓝、折射紫、珍珠粉与流光金只用于 SVG 与少量装饰，不承担 UI 或代码语义。' +
+      '官方资料明确浮黎与记忆星神的关联，并提及记录被遗忘的一切；' +
+      '记忆晶庭、晶体切面、虹彩光带与索引节点均为 Theme Atlas 原创抽象视觉。',
+    designRationale:
+      '界面使用冷静、接近自然光的雾晶白与叠影蓝白，避免普通冰雪主题的纯白高反差。' +
+      '深忆墨和冷雾灰保证正文与小字的可读性，忆痕蓝紫作为唯一主强调，' +
+      '辅助冰川蓝灰只用于结构和次级信号。' +
+      '语法色盘独立使用紫、蓝、松绿、莓红、旧金与蓝灰，确保关键字、类型、字符串和注释在实际代码中清楚分开。',
+    palette: [
+      { name: '雾晶白', hex: '#EFF2F5', role: 'bg', note: '记忆空间般通透而克制的浅色背景' },
+      { name: '叠影蓝白', hex: '#DFE7EE', role: 'surface', note: '晶体层次形成的信息面板' },
+      { name: '深忆墨', hex: '#27333D', role: 'text', note: '正文与被保存的索引记录' },
+      { name: '冷雾灰', hex: '#526575', role: 'muted', note: '时间坐标与次要文字' },
+      { name: '晶棱银', hex: '#BAC8D2', role: 'border', note: '晶面边缘与索引分隔线' },
+      { name: '忆痕蓝紫', hex: '#58658C', role: 'accent', note: '被保存的片段、链接与主要操作' },
+      { name: '珍珠光', hex: '#F8FAFF', role: 'onAccent', note: '忆痕蓝紫上的文字' },
+      { name: '冰川蓝灰', hex: '#7B91A8', role: 'flare', note: '辅助索引与少量结构信号' },
+    ],
+    tags: ['同人', '记忆', '浮黎', '晶忆长河', '晶体', '记忆碎片', '珠帘', '折射', '虹彩', '留存', '重现'],
+    sources: [
+      {
+        title: 'HoYoLAB 官方 HSR Wiki · 记忆相关条目',
+        type: 'link',
+        url: 'https://wiki.hoyolab.com/pc/hsr/entry/888',
+        detail: 'HoYoLAB 官方星神与命途资料入口',
+        note:
+          '用于核对浮黎作为记忆星神的身份，以及官方介绍中关于记录被遗忘之物和为宇宙重生作准备的描述。' +
+          '本页不把 Theme Atlas 的晶庭、虹彩与索引图像称为游戏官方地点或物件。',
+      },
+      {
+        title: '崩坏：星穹铁道 官方网站 · 世界观栏目',
+        type: 'link',
+        url: 'https://hsr.hoyoverse.com/zh-cn/world',
+        detail: '官方公开世界观栏目',
+        note: '作为作品、星神与命途设定的官方入口；本站未使用官方立绘、Logo、截图、UI 或纹样。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人演绎）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据遵循 Theme Atlas 现有 CC BY 4.0 数据许可约定',
+      disclaimer:
+        '本主题为非官方同人作品，仅用于配色研究与界面演示，与 HoYoverse 无隶属或授权关系。',
+      imageLicence: '站内插图为原创抽象 SVG，未使用官方人形、面部、立绘、Logo、截图、UI 或纹样。',
+    },
+    status: 'interpretation',
+    plate: 'fuli-crystal',
+    artworkPalette: [
+      { name: '冰晶蓝', hex: '#A9D0E0', note: '晶体侧面与冷色折射，仅用于插画' },
+      { name: '折射紫', hex: '#BEB2D8', note: '记忆碎片与紫色折光，仅用于插画' },
+      { name: '珍珠粉', hex: '#DAB7C4', note: '虹彩光带与少量晶体高光，仅用于插画' },
+      { name: '流光金', hex: '#C9B98A', note: '光带经过晶棱时的短暂余辉，仅用于插画' },
+    ],
+  },
+
+  {
     slug: 'uncharted-reach',
     title: '未知疆域',
     subtitle: '在星图尚未命名的地方，点亮第一束文明信号',

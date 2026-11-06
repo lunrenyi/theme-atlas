@@ -1,6 +1,10 @@
 ---
 import type { PaletteRole, Theme } from '../data/types';
-import { nousVimSyntaxExample, vimSyntaxExample } from '../data/syntaxExamples';
+import {
+  fuliVimSyntaxExample,
+  nousVimSyntaxExample,
+  vimSyntaxExample,
+} from '../data/syntaxExamples';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 import PreviewColorLegend from './PreviewColorLegend.astro';
@@ -20,6 +24,7 @@ const currentLine = 8;
 const examples = {
   default: vimSyntaxExample,
   'nous-deduction': nousVimSyntaxExample,
+  'fuli-memory': fuliVimSyntaxExample,
 };
 const example = examples[design.example ?? 'default'];
 

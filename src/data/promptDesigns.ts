@@ -437,6 +437,24 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'Fields align along a calculation axis, coordinates and ticks surround the current command, crimson marks only the conclusion node, and logic blue-grey quietly links every derivation path.',
   },
+  'fuli-crystal-river': {
+    visualStyle: 'memory-refraction',
+    layout: 'two-line',
+    glyphSet: { prompt: '◇', separator: '·', connector: '〜' },
+    motif: 'memory-river',
+    motifDensity: 'sparse',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'git', 'runtime', 'user', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '上下两行像一条缓慢展开的记忆索引，晶体碎片只轻触路径边缘，忆痕蓝紫标记被恢复的记录。',
+    designNoteEn:
+      'Two lines unfold like a quiet memory index; crystal fragments only graze the path, and recollection blue-violet marks the records being restored.',
+  },
   'uncharted-reach': {
     visualStyle: 'stellar-navigation',
     layout: 'two-line',

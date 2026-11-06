@@ -101,6 +101,20 @@ function requiredTerminalText(kind, theme) {
       'commit',
     ];
   }
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'fuli-memory') {
+    return [
+      'vim - theme-preview.ts',
+      'theme-preview.ts',
+      'typescript',
+      'NORMAL',
+      '9:20',
+      'MemoryFragment',
+      'collectMemories',
+      'preserve',
+      'restoreIndex',
+      '248',
+    ];
+  }
   if (kind === 'codex' && theme.previewDesign.codex.example === 'nous-deduction') {
     return [
       'codex - ~/theme-atlas',
@@ -116,6 +130,23 @@ function requiredTerminalText(kind, theme) {
       '+1',
       '-1',
       'Request another derivation...',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'fuli-memory') {
+    return [
+      'codex - ~/theme-atlas',
+      'Inspect this batch of memory-crystal fragments',
+      'Read 248 memory fragments',
+      'Restoring memory index',
+      'All fragments are preserved',
+      'src/memory-archive.ts',
+      'collectMemories',
+      'preserve',
+      'restoreIndex',
+      '248',
+      '+1',
+      '-1',
+      'Request another memory audit...',
     ];
   }
   return requiredText[kind];

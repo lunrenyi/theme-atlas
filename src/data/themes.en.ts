@@ -1713,6 +1713,68 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     ],
   },
 
+  'fuli-crystal-river': {
+    title: 'Fuli · River of Recollection',
+    subtitle: 'Every existence deserves to leave a trace.',
+    description:
+      'Mist crystal white, doubled blue-white and recollection blue-violet form a translucent memory court; a small amount of iridescence appears only in crystal facets and light trails.',
+    story:
+      'Time carries the present away, but it does not erase everything that has happened. An encounter, an extinguished planet, a journey no one remembers — each existed. ' +
+      'Their traces gather in the river of memory and become countless crystal fragments. Every fragment reflects a different world and preserves something that once occurred. ' +
+      'Fuli is the Aeon of Remembrance. This theme draws on the imagery of crystal, memory fragments and iridescent refraction, using an original “memory crystal court” to express preservation, recollection and indexing. ' +
+      'It is not a real location in the game, and it does not depict the human form or face of Fuli.',
+    inspiration:
+      'Mist crystal white forms the memory space; layered blue-white describes the crystal depths; recollection blue-violet marks preserved fragments; pearl pink and refractive violet record fine changes as light passes through a facet. ' +
+      'Ice-crystal blue, refractive violet, pearl pink and flowing gold remain in SVG and small decorative marks only, outside UI and syntax semantics. ' +
+      'Official material establishes Fuli’s association with the Aeon of Remembrance and describes the recording of forgotten things. The memory court, facet arrangement, iridescent path and index nodes are original Theme Atlas abstractions.',
+    designRationale:
+      'The interface uses cool mist white and layered blue-white close to natural light, avoiding the hard contrast of an ordinary ice-and-snow theme. Deep memory ink and cold mist grey keep body and small text readable. ' +
+      'Recollection blue-violet is the only primary accent, while glacial blue-grey remains structural and secondary. ' +
+      'The syntax palette is independent, using violet, blue, pine green, berry red, antique gold and blue-grey so keywords, types, strings and comments remain distinct in real code.',
+    tags: ['Fan work', 'Remembrance', 'Fuli', 'River of recollection', 'Crystal', 'Memory fragments', 'Bead curtain', 'Refraction', 'Iridescence', 'Preservation', 'Recollection'],
+    palette: [
+      { name: 'Mist Crystal White', note: 'A translucent, restrained ground like a memory space' },
+      { name: 'Layered Blue-White', note: 'Information panels formed by crystal layers' },
+      { name: 'Deep Memory Ink', note: 'Body text and preserved index records' },
+      { name: 'Cold Mist Grey', note: 'Time coordinates and secondary copy' },
+      { name: 'Crystal Edge Silver', note: 'Facet edges and index dividers' },
+      { name: 'Recollection Blue-Violet', note: 'Preserved fragments, links and primary actions' },
+      { name: 'Pearl Light', note: 'Text on recollection blue-violet' },
+      { name: 'Glacial Blue-Grey', note: 'Supporting index and structural signals' },
+    ],
+    sources: [
+      {
+        title: 'Official HoYoLAB HSR Wiki · Remembrance entry',
+        detail: 'Official Aeon and Path reference',
+        note:
+          'Used to check Fuli’s identity as the Aeon of Remembrance and official descriptions of recording forgotten things and preparing for the universe’s rebirth. ' +
+          'The Theme Atlas memory court, iridescence and index imagery are not presented as an official location or object.',
+      },
+      {
+        title: 'Honkai: Star Rail official website · World section',
+        detail: 'Official public setting entry',
+        note:
+          'Used only as an official entry point for the work, Aeons and Paths. No official character art, logo, screenshot, UI or pattern is used.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: 'Theme Atlas editorial team (unofficial fan interpretation)',
+      graphics: 'Theme Atlas (original SVG)',
+      license: 'Palette data follows the current Theme Atlas CC BY 4.0 data-licensing convention',
+      disclaimer:
+        'This theme is an unofficial fan work made for colour research and interface demonstration only. It is not affiliated with or authorised by HoYoverse.',
+      imageLicence:
+        'The plate is an original abstract SVG; no official human form, face, character art, logo, screenshot, UI or pattern is used.',
+    },
+    artworkPalette: [
+      { name: 'Ice-Crystal Blue', note: 'Crystal sides and cool refraction; illustration only' },
+      { name: 'Refractive Violet', note: 'Memory fragments and violet refracted light; illustration only' },
+      { name: 'Pearl Pink', note: 'Iridescent band and a few crystal highlights; illustration only' },
+      { name: 'Flowing Gold', note: 'Brief afterglow where the band crosses a crystal edge; illustration only' },
+    ],
+  },
+
   'uncharted-reach': {
     title: 'Uncharted Reach',
     subtitle: 'Light the first signal from a region the charts have not named',

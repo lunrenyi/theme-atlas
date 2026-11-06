@@ -106,7 +106,8 @@ export type PromptVisualStyle =
   | 'blanc-sculpture'
   | 'famille-bloom'
   | 'amber-rampart'
-  | 'cosmic-computation';
+  | 'cosmic-computation'
+  | 'memory-refraction';
 
 export type PromptLayout =
   | 'minimal'
@@ -147,7 +148,8 @@ export type PromptMotif =
   | 'blanc-form'
   | 'rose-branch'
   | 'rampart'
-  | 'cosmic-array';
+  | 'cosmic-array'
+  | 'memory-river';
 
 export type PromptLineMode = 'single' | 'double';
 
@@ -195,7 +197,7 @@ export type SyntaxRole =
 /** Theme-owned code colours, separate from the ordinary UI palette. */
 export type SyntaxPalette = Record<SyntaxRole, string>;
 
-export type PreviewExample = 'default' | 'nous-deduction';
+export type PreviewExample = 'default' | 'nous-deduction' | 'fuli-memory';
 
 export interface VimPreviewDesign {
   layout: 'classic' | 'focus' | 'compact';
@@ -277,7 +279,8 @@ export interface Theme {
     | 'dehua-blanc'
     | 'famille-rose'
     | 'qlipoth-rampart'
-    | 'nous-computer';
+    | 'nous-computer'
+    | 'fuli-crystal';
   /** Decorative colours used only by the plate, never by the UI palette. */
   artworkPalette?: ArtworkColor[];
   /**

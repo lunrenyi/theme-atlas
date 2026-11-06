@@ -612,6 +612,31 @@ const { variant, density, hasFlare } = Astro.props;
       </g>
     )
   }
+
+  {
+    variant === 'memory-river' && (
+      <g>
+        <path d="M-10 66c58 23 104-20 162 0s104 23 162 0 46-12 56-8" stroke="var(--t-accent)" stroke-width="1" opacity="0.52" />
+        <path d="M-10 94c58-23 104 20 162 0s104-23 162 0 46 12 56 8" stroke="var(--t-flare)" stroke-width="0.8" opacity="0.46" />
+        <g stroke="var(--t-border)" stroke-width="0.75" opacity="0.55">
+          <ellipse cx="180" cy="80" rx="112" ry="46" transform="rotate(-12 180 80)" />
+          <path d="M68 80h56M236 80h56M180 28v33M180 99v33" stroke-dasharray="2 6" />
+        </g>
+        <path d="M180 45 199 63 188 86 180 102 172 86 161 63z" fill="var(--t-surface)" stroke="var(--t-accent)" stroke-width="1" />
+        <path d="M180 45v57M161 63l19 17 19-17" stroke="var(--t-text)" stroke-width="0.7" opacity="0.48" />
+        <g fill="var(--t-accent)" opacity="0.78">
+          <path d="M112 53l9 9-9 14-9-14z" />
+          <path d="M245 83l7 8-7 11-7-11z" opacity="0.76" />
+          <circle cx="180" cy="80" r="2.2" />
+        </g>
+        <g fill="var(--t-flare)" opacity="0.58">
+          <path d="M87 97l6 7-6 9-6-9z" />
+          <path d="M267 58l5 6-5 8-5-8z" />
+          <path d="M153 80l3 4-3 5-3-5z" />
+        </g>
+      </g>
+    )
+  }
 </svg>
 
 <style>

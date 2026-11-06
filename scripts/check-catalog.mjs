@@ -61,8 +61,13 @@ const railOrder = [
   'ix-silent-event-horizon',
   'qlipoth-amber-rampart',
   'nous-cosmic-computation',
+  'fuli-crystal-river',
 ];
-const addedRailThemes = ['qlipoth-amber-rampart', 'nous-cosmic-computation'];
+const addedRailThemes = [
+  'qlipoth-amber-rampart',
+  'nous-cosmic-computation',
+  'fuli-crystal-river',
+];
 
 const readDist = async (path) => readFile(resolve(dist, path), 'utf8');
 
@@ -397,6 +402,36 @@ if (nous) {
     assert(
       contrastRatio(hex, nousMap.surface.hex) >= 4.5,
       `Nous syntax ${role} must pass AA on the surface`,
+    );
+  }
+}
+
+const fuli = themes.find((theme) => theme.slug === 'fuli-crystal-river');
+assert(Boolean(fuli), 'Fuli theme is missing from the shared theme data');
+if (fuli) {
+  assert(
+    fuli.sources.some((source) => source.url === 'https://wiki.hoyolab.com/pc/hsr/entry/888'),
+    'Fuli is missing the supplied official HoYoLAB reference',
+  );
+  assert(
+    ['#A9D0E0', '#BEB2D8', '#DAB7C4', '#C9B98A'].every((hex) =>
+      fuli.artworkPalette?.some((color) => color.hex === hex),
+    ),
+    'Fuli is missing one of its illustration-only refraction colours',
+  );
+  const fuliMap = paletteMap(fuli);
+  assert(
+    new Set(Object.values(fuli.syntax)).size === 11,
+    'Fuli syntax roles must all use distinct colours',
+  );
+  for (const [role, hex] of Object.entries(fuli.syntax)) {
+    assert(
+      contrastRatio(hex, fuliMap.bg.hex) >= 4.5,
+      `Fuli syntax ${role} must pass AA on the background`,
+    );
+    assert(
+      contrastRatio(hex, fuliMap.surface.hex) >= 4.5,
+      `Fuli syntax ${role} must pass AA on the surface`,
     );
   }
 }

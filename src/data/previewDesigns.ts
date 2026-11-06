@@ -145,6 +145,23 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
       },
     },
   },
+  'fuli-crystal-river': {
+    vim: { ...vim('compact', 'surface', 'accent'), example: 'fuli-memory' },
+    codex: {
+      ...codex('stacked', 'accent', 'muted', 'flare'),
+      example: 'fuli-memory',
+      fileName: 'src/memory-archive.ts',
+      dialogue: {
+        user:
+          'Inspect this batch of memory-crystal fragments, order them chronologically, and identify missing records.',
+        assistant:
+          'Read 248 memory fragments. Found 3 missing time indices. Rebuilding associations...',
+        status: 'Restoring memory index · 248 fragments',
+        conclusion: 'Index restored. All fragments are preserved.',
+        input: 'Request another memory audit...',
+      },
+    },
+  },
   'uncharted-reach': {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'flare', 'accent'),
