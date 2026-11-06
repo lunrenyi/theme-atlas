@@ -39,6 +39,13 @@ export interface PaletteColor {
   note?: string;
 }
 
+/** A non-semantic colour reserved for a theme's original illustration. */
+export interface ArtworkColor {
+  name: string;
+  hex: string;
+  note?: string;
+}
+
 export type SourceType = 'book' | 'article' | 'link' | 'pending';
 
 export interface Source {
@@ -94,7 +101,10 @@ export type PromptVisualStyle =
   | 'magpie-weave'
   | 'eight-crossing'
   | 'lotus-wheel'
-  | 'celestial-eye';
+  | 'celestial-eye'
+  | 'celadon-depth'
+  | 'blanc-sculpture'
+  | 'famille-bloom';
 
 export type PromptLayout =
   | 'minimal'
@@ -130,7 +140,10 @@ export type PromptMotif =
   | 'weave'
   | 'octet'
   | 'lotus-flame'
-  | 'eye-mountain';
+  | 'eye-mountain'
+  | 'celadon-layer'
+  | 'blanc-form'
+  | 'rose-branch';
 
 export type PromptLineMode = 'single' | 'double';
 
@@ -240,7 +253,12 @@ export interface Theme {
     | 'qixi-bridge'
     | 'eight-treasures'
     | 'nezha-lotus-wheel'
-    | 'yangjian-eye';
+    | 'yangjian-eye'
+    | 'longquan-meizi'
+    | 'dehua-blanc'
+    | 'famille-rose';
+  /** Decorative colours used only by the plate, never by the UI palette. */
+  artworkPalette?: ArtworkColor[];
   /**
    * - verified: sources are checkable references
    * - interpretation: original / fan re-interpretation of a copyrighted work

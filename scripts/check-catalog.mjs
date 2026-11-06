@@ -38,6 +38,19 @@ const addedMythThemes = [
   'nezha-lotus-flame',
   'yangjian-celestial-eye',
 ];
+const porcelainOrder = [
+  'ru-ware-sky',
+  'jun-ware-violet',
+  'longquan-meizi-green',
+  'jingdezhen-blue-white',
+  'dehua-china-white',
+  'famille-rose-bloom',
+];
+const addedPorcelainThemes = [
+  'longquan-meizi-green',
+  'dehua-china-white',
+  'famille-rose-bloom',
+];
 
 const readDist = async (path) => readFile(resolve(dist, path), 'utf8');
 
@@ -75,6 +88,70 @@ function exportPayload(html) {
     /<script type="application\/json" data-export-payload>([\s\S]*?)<\/script>/,
   );
   return match ? JSON.parse(match[1]) : null;
+}
+
+async function auditAddedTheme(slug, collection, paletteLength, requiresFlare = false) {
+  const theme = themes.find((candidate) => candidate.slug === slug);
+  const translation = themeTranslations[slug];
+  assert(Boolean(theme), `${slug} is missing from the ${collection} collection`);
+  assert(Boolean(theme?.plate), `${slug} is missing its original plate artwork`);
+  assert(Boolean(translation?.title && translation?.subtitle), `${slug} is missing an English title`);
+  assert(
+    Boolean(theme?.story && theme?.inspiration && theme?.designRationale),
+    `${slug} is missing story, inspiration or colour rationale`,
+  );
+  assert(
+    theme?.sources.length >= 3 && theme.sources.every((source) => source.type !== 'pending'),
+    `${slug} needs at least three verifiable references`,
+  );
+  assert(Boolean(syntaxPalettes[slug]), `${slug} needs an independent syntax palette`);
+  if (!theme) return;
+
+  assert(
+    theme.palette.length === paletteLength &&
+      BASE_PALETTE_ROLES.every((role) => theme.palette.some((color) => color.role === role)) &&
+      (!requiresFlare || theme.palette.some((color) => color.role === 'flare')),
+    `${slug} has an incomplete ${paletteLength}-colour UI palette`,
+  );
+
+  for (const lang of ['zh', 'en']) {
+    const path =
+      lang === 'zh'
+        ? `theme/${theme.slug}/index.html`
+        : `en/theme/${theme.slug}/index.html`;
+    const html = await readDist(path);
+    const payload = exportPayload(html);
+    const expectedTitle = lang === 'zh' ? theme.title : translation.title;
+
+    assert(html.includes(expectedTitle), `${lang}/${theme.slug}: localised title is not rendered`);
+    assert(
+      (html.match(/<figure class="plate"/g) ?? []).length === 1,
+      `${lang}/${theme.slug}: original plate is missing`,
+    );
+    assert(
+      Boolean(payload?.css?.text && payload?.json?.text),
+      `${lang}/${theme.slug}: export payload is incomplete`,
+    );
+
+    if (payload) {
+      for (const color of theme.palette) {
+        assert(
+          payload.css.text.includes(color.hex),
+          `${lang}/${theme.slug}: CSS export misses ${color.role} ${color.hex}`,
+        );
+      }
+      const exported = JSON.parse(payload.json.text);
+      assert(exported.slug === theme.slug, `${lang}/${theme.slug}: JSON export has the wrong slug`);
+      assert(
+        exported.palette?.length === theme.palette.length,
+        `${lang}/${theme.slug}: JSON export has the wrong palette length`,
+      );
+      assert(
+        (exported.artworkPalette?.length ?? 0) === (theme.artworkPalette?.length ?? 0),
+        `${lang}/${theme.slug}: JSON export has the wrong artwork-palette length`,
+      );
+    }
+  }
 }
 
 const expectedCounts = new Map(
@@ -222,60 +299,17 @@ assert(
 );
 
 for (const slug of addedMythThemes) {
-  const theme = mythThemes.find((candidate) => candidate.slug === slug);
-  const translation = themeTranslations[slug];
-  assert(Boolean(theme), `${slug} is missing from the Chinese Mythology collection`);
-  assert(Boolean(theme?.plate), `${slug} is missing its original plate artwork`);
-  assert(Boolean(translation?.title && translation?.subtitle), `${slug} is missing an English title`);
-  assert(
-    Boolean(theme?.story && theme?.inspiration && theme?.designRationale),
-    `${slug} is missing story, inspiration or colour rationale`,
-  );
-  assert(
-    theme?.sources.length >= 3 && theme.sources.every((source) => source.type !== 'pending'),
-    `${slug} needs at least three verifiable references`,
-  );
-  assert(Boolean(syntaxPalettes[slug]), `${slug} needs an independent syntax palette`);
+  await auditAddedTheme(slug, 'Chinese Mythology', 8, true);
+}
 
-  if (!theme) continue;
-  assert(
-    theme.palette.length === 8 &&
-      BASE_PALETTE_ROLES.every((role) => theme.palette.some((color) => color.role === role)) &&
-      theme.palette.some((color) => color.role === 'flare'),
-    `${slug} needs seven base UI roles plus one auxiliary colour`,
-  );
+const porcelainThemes = themes.filter((theme) => theme.collection === 'porcelain');
+assert(
+  porcelainThemes.map((theme) => theme.slug).join(',') === porcelainOrder.join(','),
+  'Chinese Porcelain must use the editorially specified theme order',
+);
 
-  for (const lang of ['zh', 'en']) {
-    const path =
-      lang === 'zh'
-        ? `theme/${theme.slug}/index.html`
-        : `en/theme/${theme.slug}/index.html`;
-    const html = await readDist(path);
-    const payload = exportPayload(html);
-    const expectedTitle = lang === 'zh' ? theme.title : translation.title;
-
-    assert(html.includes(expectedTitle), `${lang}/${theme.slug}: localised title is not rendered`);
-    assert(
-      (html.match(/<figure class="plate"/g) ?? []).length === 1,
-      `${lang}/${theme.slug}: original plate is missing`,
-    );
-    assert(Boolean(payload?.css?.text && payload?.json?.text), `${lang}/${theme.slug}: export payload is incomplete`);
-
-    if (payload) {
-      for (const color of theme.palette) {
-        assert(
-          payload.css.text.includes(color.hex),
-          `${lang}/${theme.slug}: CSS export misses ${color.role} ${color.hex}`,
-        );
-      }
-      const exported = JSON.parse(payload.json.text);
-      assert(exported.slug === theme.slug, `${lang}/${theme.slug}: JSON export has the wrong slug`);
-      assert(
-        exported.palette?.length === theme.palette.length,
-        `${lang}/${theme.slug}: JSON export has the wrong palette length`,
-      );
-    }
-  }
+for (const slug of addedPorcelainThemes) {
+  await auditAddedTheme(slug, 'Chinese Porcelain', 7);
 }
 
 const ix = themes.find((theme) => theme.slug === 'ix-silent-event-horizon');
@@ -344,6 +378,7 @@ if (failures.length) {
 
 console.log(
   `Catalog audit passed: ${themes.length} themes, ${collections.length} collections, ` +
-    `${mythThemes.length} Chinese Mythology themes in editorial order, export payloads, ` +
+    `${mythThemes.length} Chinese Mythology themes and ${porcelainThemes.length} Chinese Porcelain ` +
+    'themes in editorial order, export payloads, ' +
     'collection-scoped navigation and IX references are consistent in the built HTML.',
 );

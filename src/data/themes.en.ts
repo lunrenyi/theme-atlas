@@ -19,6 +19,7 @@ export interface ThemeTranslation {
   designRationale: string;
   tags: string[];
   palette: Array<{ name: string; note?: string }>;
+  artworkPalette?: Array<{ name: string; note?: string }>;
   sources: Array<{ title?: string; detail?: string; note?: string }>;
   credits: Partial<Credits>;
 }
@@ -765,35 +766,47 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     description:
       'Glaze laid down in quiet layers — warm, restrained, never competing.',
     story:
-      'Ru ware was an imperial kiln of the Northern Song; fewer than a hundred pieces ' +
-      'survive, and it is famous for a glaze in which agate was ground and mixed into the ' +
-      'body. Song writers described the blue that appears when the sky breaks after rain, ' +
-      'and that became the name this porcelain is most often quoted by. The glaze layer is ' +
-      'thin, the body shows through, and the hue drifts between sky blue and moon white; a ' +
-      'different kiln position or a slightly different temperature produces a completely ' +
-      'different colour. This theme keeps that uncertainty: all the neutrals sit inside a ' +
-      'very narrow band of lightness, chasing softness rather than contrast.',
+      'In the late Northern Song, the Ru kiln area produced tribute porcelain for the court ' +
+      'for a limited period. Its wares are especially known for sky-blue, pale-blue and ' +
+      'blue-green glazes. Song writers described the blue that appears when rain breaks and ' +
+      'the sky opens, and that image became one of the most frequently quoted ways of naming ' +
+      'the colour. The idea that agate was added to the glaze is a traditional explanation ' +
+      'and appears in later discussion; body and glaze recipes and firing techniques remain ' +
+      'a subject of research, so it should not be presented as the sole confirmed technical ' +
+      'account. Glaze, body colour and kiln conditions all affect the final tone. This theme ' +
+      'keeps those fine, uncertain shifts as restrained layers.',
     inspiration:
       'The four levels map straight onto the object: moon white (where the glaze is ' +
       'thinnest), powder blue (where the glaze pools), sky blue (the main glaze colour) and ' +
-      'incense ash (where the body is left bare). The accent is a deeper shade of the same ' +
-      'sky blue, because the main glaze would otherwise lose its presence on a pale ground.',
+      'incense ash (where the body is left bare). The accent is one step deeper than the main ' +
+      'sky blue, preserving the glaze character while keeping links and focus visible on the ' +
+      'pale ground.',
     designRationale:
-      'This is the lowest-contrast theme in the archive: body text is pushed down to just ' +
-      'past the WCAG AA threshold, trading a little sharpness for an overall warmth. ' +
-      'Dividers use a slightly deeper blue-grey so that edges do not disappear in the ' +
-      'low-contrast scheme.',
-    tags: ['Northern Song', 'Imperial kiln', 'Glaze', 'Sky blue', 'Low contrast'],
+      'The palette keeps the series-wide low saturation and narrow value range, while body ' +
+      'text, secondary text and the accent retain comfortable contrast. Dividers use a ' +
+      'slightly deeper blue-grey so edges remain visible. Text on primary buttons is checked ' +
+      'against the final accent value.',
+    tags: ['Northern Song', 'Tribute porcelain', 'Glaze', 'Sky blue', 'Ru ware'],
     palette: [
       { name: 'Moon White', note: 'The white where the glaze is thinnest' },
       { name: 'Powder Blue', note: 'Where the glaze pools, a soft green cast' },
       { name: 'Ink Jade', note: 'A deep ink with a blue-green cast' },
       { name: 'Pale Blue-Grey', note: 'Secondary text' },
       { name: 'Blue-Grey Rule', note: 'Fine dividers' },
-      { name: 'Sky Blue', note: 'The main glaze colour: links and focus' },
+      { name: 'Sky Blue', note: 'A deeper value of the main glaze: links and focus' },
       { name: 'Sky Blue White', note: 'Text on the accent colour' },
     ],
     sources: [
+      {
+        title: 'Ru Ware (汝窑)',
+        detail: 'Palace Museum ceramic reference',
+        note: 'Used to check the period in which Ru ware supplied the court, its forms and principal glaze colours.',
+      },
+      {
+        title: 'A Comparative Study of the Body and Glaze Recipes and Techniques of Ru Official and Folk Celadons from the Qingliangsi Kiln',
+        detail: 'Palace Museum journal article',
+        note: 'Used to frame the evidence around body/glaze recipes and firing; the agate glaze explanation is treated as a tradition, not a settled sole explanation.',
+      },
       {
         title: 'A History of Chinese Ceramics (中国陶瓷史)',
         detail: 'Feng Xianming',
@@ -812,12 +825,6 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
         note:
           'A catalogue of famous wares by form and glaze colour, useful for tracing how ' +
           'phrases such as “sky blue after rain” travelled.',
-      },
-      {
-        title: 'Archaeological material from the Ru kiln site (Qingliangsi kiln, Baofeng, Henan)',
-        note:
-          'Pending: the publication details and page numbers of the excavation report still ' +
-          'have to be added.',
       },
     ],
     credits: {
@@ -889,6 +896,68 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     },
   },
 
+  'longquan-meizi-green': {
+    title: 'Longquan · Plum Green Celadon',
+    subtitle: 'Layer upon layer of celadon, warmed by the kiln into the look of green jade',
+    description:
+      'Plum-green and powder-blue celadons settle into layered glaze, with pale exposed ridges tracing the vessel’s turns.',
+    story:
+      'In the Southern Song period, powder-blue and plum-green wares made at Longquan became major expressions of celadon. ' +
+      'Plum green generally reads deeper and greener, while powder blue is softer and paler. Neither is a flat, ' +
+      'uniform colour: the glaze gathers, thins over raised ridges and changes in appearance as the vessel turns. ' +
+      'Rather than treating celadon as a generic plant green, this theme abstracts the structure of a tripod censer: ' +
+      'deep green carries primary actions, pale green forms the surface, and white appears only in carved lines and highlights.',
+    inspiration:
+      'The ground and panels come from the thinner layers of powder-blue glaze; the accent is a deeper plum green, ' +
+      'while secondary text and rules correspond to pooled shadow and exposed body. The Palace Museum’s celadon ' +
+      'tripod censer documents how raised ridges show pale where the glaze thins; Shanghai Museum collection material ' +
+      'adds context for Longquan forms and glazes. The illustration reproduces no specific object.',
+    designRationale:
+      'The palette keeps chroma low and builds hierarchy through values of green rather than loud saturation. ' +
+      'Body text remains a deep celadon ink, links use a darker plum green, and glaze highlights stay on fine lines ' +
+      'and small nodes. The syntax palette uses deep teal, pine green, antique bronze and blue-grey so code does not ' +
+      'collapse into one shade of green.',
+    tags: ['Longquan', 'Southern Song', 'Plum green', 'Powder blue', 'Celadon', 'Pooled glaze', 'Carved decoration'],
+    palette: [
+      { name: 'Powder-Blue Glaze', note: 'Pale colour where the celadon layer is thin' },
+      { name: 'Plum-Green Pool', note: 'Pale green panel where glaze gathers' },
+      { name: 'Celadon Ink', note: 'Deep blue-green body text' },
+      { name: 'Longquan Blue-Grey', note: 'Secondary text in pooled glaze shadow' },
+      { name: 'Exposed Ridge', note: 'Calm boundary at a thin glaze ridge' },
+      { name: 'Plum Green', note: 'Deep celadon accent for links, buttons and focus' },
+      { name: 'Glaze White', note: 'Text on the plum-green accent' },
+    ],
+    sources: [
+      {
+        title: 'Longquan Celadon Tripod Censer (龙泉窑青釉鬲式三足炉)',
+        detail: 'Palace Museum collection record',
+        note: 'Documents the plum-green glaze, tripod form and pale exposed ridges caused by thinner glaze.',
+      },
+      {
+        title: 'Shanghai Museum collection material',
+        detail: 'Public collection entry',
+        note: 'Context for Longquan celadon forms and glazes; the site illustration is an original abstraction.',
+      },
+      {
+        title: 'A History of Chinese Ceramics (中国陶瓷史)',
+        detail: 'Feng Xianming',
+        note: 'General chronology and craft background for Southern Song Longquan celadon.',
+      },
+      {
+        title: 'Yinliuzhai Shuoci (饮流斋说瓷)',
+        detail: 'Ji Yuansou (Chen Liu), Qing dynasty',
+        note: 'Later critical vocabulary for Longquan glazes and the name plum green.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: 'All illustrations are original SVGs; no collection object or museum image is reproduced.',
+    },
+  },
+
   'jingdezhen-blue-white': {
     title: 'Jingdezhen · Blue and White',
     subtitle: 'Cobalt painted on white porcelain — the whiter the body, the bluer the line',
@@ -914,7 +983,8 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
       'This set has the highest contrast of the porcelain collection — the lightness ' +
       'difference between body text and background approaches 90%, so long reading stays ' +
       'easy. Dividers use a blue-cast grey so that they do not look grubby on a cold white ' +
-      'ground.',
+      'ground. The syntax palette separates cobalt, ochre, violet-grey and blue-grey; ' +
+      'blue-and-white ornament stays in the plate and never enters the code-reading area.',
     tags: ['Yuan blue and white', 'Cobalt', 'Jingdezhen', 'Cool', 'Tool-like'],
     palette: [
       { name: 'Yingqing White', note: 'The white of shadowy-green porcelain, faintly blue' },
@@ -956,6 +1026,131 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
       license: licence,
       imageLicence: originalSvg,
     },
+  },
+
+  'dehua-china-white': {
+    title: 'Dehua · Blanc de Chine',
+    subtitle: 'White is never just one colour; light gives the glaze its temperature',
+    description:
+      'Ivory, milk white and cool grey shadows form a soft hierarchy, allowing form and shallow relief to lead.',
+    story:
+      'Dehua is known for white porcelain. It produced blue-and-white and shadow-blue wares in the Song and Yuan periods, ' +
+      'then became especially associated with white porcelain in the Ming. The body and glaze read almost as one, with a ' +
+      'smooth, luminous finish; figures, censers, zuns and ewers preserve a rich modelling tradition. Traditional names ' +
+      'include ivory white and lard white, while European collecting and research contexts also use “Blanc de Chine”. ' +
+      'This theme treats white not as a single pure value, but as three warm and cool layers created by direct light, ' +
+      'glaze reflection and shadow.',
+    inspiration:
+      'The ground is the warm ivory of porcelain body, the panel a milk-white turn in the glaze, and body text a warm deep ink. ' +
+      'Instead of a saturated gold, the accent is an old brown-gold drawn from glaze shadow, preserving the quiet whole. ' +
+      'Public Palace Museum and National Museum resources establish Dehua’s forms, traditional names and exhibition context. ' +
+      'The original vessel and relief in the plate correspond to no specific collection object.',
+    designRationale:
+      'The composition avoids placing a pure-white object against a pure-white ground; warm off-whites are separated by value ' +
+      'and a slight temperature shift. Links and buttons use the warmer body brown and keep a clear outline on the pale ground. ' +
+      'The syntax palette combines warm ink, body brown, limestone blue and old gold, preserving the white-porcelain mood while ' +
+      'keeping keywords, strings and comments distinct.',
+    tags: ['Dehua', 'Blanc de Chine', 'Ivory white', 'Lard white', 'Porcelain sculpture', 'White glaze', 'Translucency'],
+    palette: [
+      { name: 'Ivory White', note: 'Warm porcelain-body ground' },
+      { name: 'Milk-Glaze White', note: 'Soft panel at a lit turn of the glaze' },
+      { name: 'Warm Body Ink', note: 'Deep warm body text' },
+      { name: 'Shadow Grey-Brown', note: 'Secondary text in backlight and shallow relief' },
+      { name: 'Body Rule', note: 'Low-light boundary between body and glaze' },
+      { name: 'Body Brown', note: 'Warm brown from glaze shadow: links and focus' },
+      { name: 'Glaze White', note: 'Warm white text on the accent' },
+    ],
+    sources: [
+      {
+        title: 'Dehua Kiln (德化窑)',
+        detail: 'Palace Museum ceramic reference',
+        note: 'Used to check Dehua’s white-porcelain periods, vessel types and traditional ivory/lard-white names.',
+      },
+      {
+        title: 'Dehua White-Glazed Zun with Carved Magnolia Design (德化窑白釉刻花玉兰纹尊)',
+        detail: 'Palace Museum collection record',
+        note: 'Context for glaze finish, carving and shallow relief; the site does not reproduce the object.',
+      },
+      {
+        title: 'Blanc de Chine: Dehua Porcelain from the National Museum of China',
+        detail: 'National Museum of China exhibition resource',
+        note: 'Public exhibition context for the “Blanc de Chine” name and the breadth of Dehua forms.',
+      },
+      {
+        title: 'A History of Chinese Ceramics (中国陶瓷史)',
+        detail: 'Feng Xianming',
+        note: 'General craft chronology for Dehua white porcelain from the Song and Yuan through the Ming and Qing.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: 'All illustrations are original SVGs; no museum object, sculpture or photograph is reproduced.',
+    },
+  },
+
+  'famille-rose-bloom': {
+    title: 'Famille Rose · Blossoms After Rain',
+    subtitle: 'Fine brushwork layers colour until petals soften on white porcelain',
+    description:
+      'Rouge carries the primary accent while pea green, pale yellow and lake blue stay inside the original floral artwork.',
+    story:
+      'Famille rose is an overglaze enamel technique, conventionally dated to the late Kangxi period and more fully developed ' +
+      'under Yongzheng and Qianlong. Materials including opaque white enamel and rendering techniques create gradual light and ' +
+      'shadow across petals and leaves, moving overglaze colour from flat fills toward delicate tonal layers. This theme takes ' +
+      'its visual cue from the common structure of famille-rose floral decoration: porcelain white as the ground, rouge at the ' +
+      'flower centres, and pea green, pale yellow and lake blue crossing in small areas. The vessel, branches and blossom ' +
+      'composition are original Theme Atlas drawings rather than copies of a particular object.',
+    inspiration:
+      'The interface uses only porcelain white, pale pink, rouge and deep ink in restrained roles. Decorative pea green, pale ' +
+      'yellow and lake blue remain outside the semantic UI palette. The Palace Museum’s peach-blossom vase offers a clue to ' +
+      'white-ground enamelling and petals deepening toward the centre; Palace Museum material on famille-rose techniques ' +
+      'provides the period and process context.',
+    designRationale:
+      'Famille rose can easily become a generic pink interface, so the ground stays a warm porcelain white and the panel only ' +
+      'a pale pink-grey. Rouge is concentrated in links, buttons and small focal marks. The syntax palette separates rouge, ' +
+      'pea green, lake blue, pale gold and deep ink; illustration colours never take over the responsibilities of code or body text.',
+    tags: ['Famille rose', 'Qing dynasty', 'Overglaze enamel', 'Rouge', 'Opaque white enamel', 'Floral', 'Rendering'],
+    palette: [
+      { name: 'Clear-Sky Porcelain White', note: 'Soft warm porcelain white after rain' },
+      { name: 'Famille-Rose Wash', note: 'Pale pink-grey glaze panel' },
+      { name: 'Dark Plum Ink', note: 'Deep plum-brown body text' },
+      { name: 'Rouge Grey', note: 'Secondary text in floral shadow' },
+      { name: 'Enamel Rule', note: 'Soft boundary between brushwork and white porcelain' },
+      { name: 'Rouge', note: 'Flower heart, primary actions and focus' },
+      { name: 'Stamen White', note: 'Text on the rouge accent' },
+    ],
+    sources: [
+      {
+        title: 'Famille-Rose Vase with Peach-Blossom Design (粉彩桃花纹直颈瓶)',
+        detail: 'Palace Museum collection record',
+        note: 'Used to check white-ground enamelling, floral rendering and layered colour; the site does not copy its design.',
+      },
+      {
+        title: 'A History of Chinese Ceramics (中国陶瓷史)',
+        detail: 'Feng Xianming',
+        note: 'General chronology for overglaze famille-rose enamelling in the Kangxi, Yongzheng and Qianlong periods.',
+      },
+      {
+        title: 'Yinliuzhai Shuoci (饮流斋说瓷)',
+        detail: 'Ji Yuansou (Chen Liu), Qing dynasty',
+        note: 'Later critical vocabulary for famille rose, foreign colour and related painted porcelains.',
+      },
+    ],
+    credits: {
+      palette: editorial,
+      story: editorial,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      imageLicence: 'All illustrations are original SVGs; no specific museum pattern or photograph is reproduced.',
+    },
+    artworkPalette: [
+      { name: 'Pea Green', note: 'Leaves and small calyxes' },
+      { name: 'Pale Yellow', note: 'Stamens and warm local accents' },
+      { name: 'Lake Blue', note: 'Bird plumage and a small cool accent' },
+    ],
   },
 
   'deep-space-orbit': {

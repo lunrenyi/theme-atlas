@@ -82,7 +82,9 @@ const motifAccents = (group: { game: GameWorld; themes: Theme[] }) =>
             </header>
 
             <div class="game-group__grid">
-              {gameThemes.map((theme) => <ThemeCard theme={theme} lang={lang} />)}
+              {gameThemes.map((theme) => (
+                <ThemeCard theme={theme} variant="collection" lang={lang} />
+              ))}
             </div>
           </article>
         ))
@@ -204,7 +206,9 @@ const motifAccents = (group: { game: GameWorld; themes: Theme[] }) =>
   .game-group__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 26px 24px;
+    column-gap: 24px;
+    row-gap: 26px;
+    align-items: stretch;
   }
 
   @media (max-width: 980px) {

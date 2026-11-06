@@ -227,6 +227,57 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'The blue-white relationship stays strictly symmetrical; fine cobalt rules echo blue-and-white ornament while the accent marks only entry and current state.',
   },
+  'longquan-meizi-green': {
+    visualStyle: 'celadon-depth',
+    layout: 'minimal',
+    glyphSet: { prompt: '›', separator: '·', connector: '◡' },
+    motif: 'celadon-layer',
+    motifDensity: 'sparse',
+    defaultLineMode: 'single',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '几道青釉弧线在横向积起，细白刻线只提示当前路径，命令区保持像器物表面一样安静。',
+    designNoteEn:
+      'A few celadon arcs pool horizontally; a fine pale incised line marks only the current path, while the command area remains as quiet as a glazed surface.',
+  },
+  'dehua-china-white': {
+    visualStyle: 'blanc-sculpture',
+    layout: 'segmented',
+    glyphSet: { prompt: '◇', separator: '│', connector: '╱' },
+    motif: 'blanc-form',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'runtime', 'user', 'git', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['text', 'accent'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '用一条对称曲线勾出白瓷器的转折，受光边与阴影边分居两侧，入口只用一小块胎骨褐标定。',
+    designNoteEn:
+      'A symmetrical curve traces the turn of a white vessel, with lit and shadowed edges on opposite sides; a small body-brown mark anchors the entry.',
+  },
+  'famille-rose-bloom': {
+    visualStyle: 'famille-bloom',
+    layout: 'two-line',
+    glyphSet: { prompt: '❯', separator: '◇', connector: '✿' },
+    motif: 'rose-branch',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '极细花枝从侧边进入画面，胭脂红只点花心，命令和上下文仍沿清晰的水平线阅读。',
+    designNoteEn:
+      'A hair-fine branch enters from the side; rouge marks only the flower centres, while commands and context continue along a clear horizontal reading line.',
+  },
   'deep-space-orbit': {
     visualStyle: 'stellar-orbit',
     layout: 'minimal',

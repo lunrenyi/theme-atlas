@@ -83,6 +83,18 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     vim: vim('classic', 'surface', 'accent'),
     codex: codex('stacked', 'accent', 'muted', 'accent'),
   },
+  'longquan-meizi-green': {
+    vim: vim('classic', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'muted', 'accent'),
+  },
+  'dehua-china-white': {
+    vim: vim('focus', 'surface', 'accent'),
+    codex: codex('split', 'accent', 'muted', 'accent'),
+  },
+  'famille-rose-bloom': {
+    vim: vim('compact', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'muted', 'accent'),
+  },
   'deep-space-orbit': {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'muted', 'accent'),

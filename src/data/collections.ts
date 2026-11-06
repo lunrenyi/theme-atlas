@@ -42,16 +42,18 @@ export const collections: Collection[] = [
     starNote: '泥、釉与窑火定下的颜色',
     starNoteEn: 'Clay, glaze and fire decide the colour',
     description:
-      '一种颜色要经过泥、釉与窑火才会出现：胎体吸釉，釉层有厚有薄，烧成的温度与火痕又各不相同，' +
-      '同一层釉于是分出深浅。汝窑的天青、钧窑的玫瑰紫、景德镇的青花都从这里开始。' +
-      '这个系列因此格外克制：低饱和，留得住呼吸，层次靠明度差而不是彩度差撑起来。',
+      '颜色从胎土、釉层与窑火中来。汝窑的天青、龙泉的梅子青、钧窑的窑变紫，' +
+      '呈现单色釉在厚薄与火候中的变化；景德镇青花以钴蓝落在瓷白上，德化白瓷让器形与光泽成为主角，' +
+      '粉彩则把柔和的花色叠加在釉面。我们从不同窑口和装饰工艺中寻找颜色，再把釉面的层次转译成数字界面。' +
+      '界面保持安静，色彩负责表达主题，最终仍然要保证清晰、耐看和实用。',
     descriptionEn:
-      'A colour has to pass through clay, glaze and fire before it exists: the body takes up ' +
-      'the glaze, the layer thickens and thins, the kiln leaves its own trace, and a single ' +
-      'glaze breaks into layers of light and dark. The sky blue of Ru ware, the rose purple ' +
-      'of Jun ware and the blue and white of Jingdezhen all begin here. This collection is ' +
-      'therefore restrained — low chroma, room to breathe, hierarchy held by differences in ' +
-      'lightness rather than saturation.',
+      'Colour begins in clay, glaze and kiln fire. The sky blue of Ru ware, the plum green of ' +
+      'Longquan and the transmuted violet of Jun ware reveal how a monochrome glaze changes ' +
+      'with thickness and firing. Jingdezhen lays cobalt blue on porcelain white, Dehua lets ' +
+      'form and lustre lead, and famille rose layers soft floral colour over the glazed surface. ' +
+      'We look for colour across kilns and decorative traditions, then translate glazed layers ' +
+      'into digital interfaces. The UI stays quiet, colour carries the theme, and clarity, ' +
+      'durability and usability remain essential.',
     accent: '#6FA3A6',
     accentAlt: '#A4739B',
     motif: 'glaze',

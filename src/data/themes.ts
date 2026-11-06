@@ -737,29 +737,42 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
     collection: 'porcelain',
     description: '釉色一层层积起来，温润、克制，彼此不争。',
     story:
-      '汝窑是北宋官窑，传世器物不足百件，以玛瑙入釉的釉色著称。' +
-      '宋人形容雨后天色云破处的那种青，此后成了这块瓷最常被引用的名字。' +
-      '釉层薄，胎骨透，色相在天青与月白之间浮动，' +
-      '窑位差一点、温度差一点，颜色就完全不一样。' +
-      '本主题想保留这种不确定：所有中性色都落在很窄的明度区间里，' +
-      '不追求对比，只追求柔和。',
+      '汝窑窑场在北宋晚期为宫廷烧造贡瓷，烧造时间不长，器物以天青、天蓝、淡青等釉色见长。' +
+      '宋人形容雨后天色云破处的那种青，此后成了这类瓷器最常被引用的颜色意象。' +
+      '关于玛瑙入釉，旧有文献与后世研究常把它作为汝窑釉色的一种说法；' +
+      '胎釉配方和烧成工艺仍有讨论空间，因此不宜把单一解释当成已经证实的唯一结论。' +
+      '釉层、胎色与窑火共同影响最终呈色，本主题把这种细微而不确定的变化保留为柔和的层次。',
     inspiration:
       '四个层级直接对应器物：月白（底釉最薄处）、粉青（积釉处）、天青（主釉色）、香灰（胎骨露胎处）。' +
-      '强调色取比主釉更深的天青，否则在浅色底上会失去存在感。',
+      '强调色取比主釉更深一档的天青，在保留釉色气质的同时，让链接和焦点在浅色底上清楚可见。',
     designRationale:
-      '这是全套主题里对比度最低的一套，正文色被压到刚好越过 WCAG AA 的位置，' +
-      '以牺牲一点锐度换取整体的温润。分割线用略深的青灰，避免在低对比下边界消失。',
+      '系列整体保持低饱和与窄明度层次，但正文、次要文字和强调色都留有足够对比。' +
+      '分割线使用略深的青灰，让柔和的版面仍有清楚边界；主按钮上的文字与强调色同步校验。',
     palette: [
       { name: '月白', hex: '#EDF1EE', role: 'bg', note: '釉最薄处的白' },
       { name: '粉青', hex: '#DCE7E3', role: 'surface', note: '积釉处，粉调偏绿' },
       { name: '墨玉', hex: '#1E2422', role: 'text', note: '带青的深墨' },
       { name: '苍青灰', hex: '#5A6A66', role: 'muted', note: '次要文字' },
       { name: '青灰线', hex: '#BECAC6', role: 'border', note: '细分割线' },
-      { name: '天青', hex: '#4A7B81', role: 'accent', note: '主釉色，链接与焦点' },
+      { name: '天青', hex: '#426D72', role: 'accent', note: '主釉色的加深值，链接与焦点' },
       { name: '天青白', hex: '#F6FBFB', role: 'onAccent', note: '强调色之上的文字' },
     ],
-    tags: ['北宋', '官窑', '釉色', '天青', '低对比'],
+    tags: ['北宋', '贡瓷', '釉色', '天青', '汝窑'],
     sources: [
+      {
+        title: '汝窑',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/lemmas/239400.html',
+        detail: '故宫博物院陶瓷资料',
+        note: '用于核对汝窑为宫廷烧造贡瓷的年代、器形与主要釉色描述。',
+      },
+      {
+        title: '清凉寺窑出土汝官瓷与民汝青瓷胎釉配方及工艺的对比研究',
+        type: 'article',
+        url: 'https://www.dpm.org.cn/journal/247133.html',
+        detail: '故宫博物院期刊文章',
+        note: '用于理解胎釉配方和工艺研究中的证据边界；主题中的玛瑙入釉明确作为流传说法处理。',
+      },
       {
         title: '中国陶瓷史',
         type: 'book',
@@ -777,11 +790,6 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
         type: 'book',
         detail: '清·陈介祺',
         note: '以器物形制与釉色著录名窑，可比对雨过天青一类描述的流传。',
-      },
-      {
-        title: '汝窑窑址考古资料（河南宝丰清凉寺窑）',
-        type: 'article',
-        note: '待补充：需补充具体考古简报或发掘报告的出版信息与页码。',
       },
     ],
     credits: {
@@ -857,6 +865,76 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   },
 
   {
+    slug: 'longquan-meizi-green',
+    title: '龙泉窑 · 梅子青',
+    subtitle: '青釉层层积起，像一块被窑火温养的青玉。',
+    collection: 'porcelain',
+    description: '梅子青与粉青在厚釉中层层过渡，浅色出筋只勾出器物的转折。',
+    story:
+      '南宋时期，龙泉窑烧制的粉青与梅子青成为青瓷的重要代表。' +
+      '梅子青通常呈现更深、更绿的釉色，粉青则更偏柔和浅淡；' +
+      '两者都不是一块均匀的平面，而会在器物转折、积釉和出筋处显出不同的厚度与光泽。' +
+      '本主题不把青瓷理解成一片植物绿，而是从三足炉这类器形中提取“厚釉、积层、露胎白线”的结构：' +
+      '深青承担主要行动，浅青作为面板，白色只出现在刻线与高光上。',
+    inspiration:
+      '背景和面板取自粉青釉的薄层，强调色取梅子青较深的一档，' +
+      '次要文字与边框对应积釉阴影和露胎处的青灰。' +
+      '故宫博物院所藏青釉鬲式三足炉提供了“凸起棱线因釉薄而显出浅白”的材料线索；' +
+      '上海博物馆的藏品资料用于补充龙泉青瓷的器形与釉色语境。本站图形不复制任何具体器物。',
+    designRationale:
+      '整组颜色压低彩度，靠青绿深浅而不是高饱和色制造层次。' +
+      '正文保持深青色，链接和按钮使用更深的梅子青，釉面高光留给细线与小节点。' +
+      '语法色盘另取深青、松绿、古铜与青灰，避免所有代码 token 都落进同一片绿色。',
+    palette: [
+      { name: '粉青薄釉', hex: '#EEF1E8', role: 'bg', note: '粉青釉较薄处的浅色' },
+      { name: '梅子青积釉', hex: '#DCE5D7', role: 'surface', note: '釉层积聚后的浅青绿面板' },
+      { name: '青瓷深墨', hex: '#202B25', role: 'text', note: '带青绿的正文深色' },
+      { name: '龙泉青灰', hex: '#5C6B60', role: 'muted', note: '积釉阴影中的次要文字' },
+      { name: '出筋线', hex: '#BAC8BA', role: 'border', note: '釉薄处与器物轮廓的冷静边界' },
+      { name: '梅子青', hex: '#3F705B', role: 'accent', note: '深青釉色，用于链接、按钮与焦点' },
+      { name: '釉光白', hex: '#F8FAF4', role: 'onAccent', note: '梅子青强调色上的文字' },
+    ],
+    tags: ['龙泉窑', '南宋', '梅子青', '粉青', '青瓷', '积釉', '刻花'],
+    sources: [
+      {
+        title: '龙泉窑青釉鬲式三足炉',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/collection/ceramic/226877.html',
+        detail: '故宫博物院藏品资料',
+        note: '记录梅子青釉色、三足炉器形及凸起棱线因釉薄而呈浅白色的出筋效果。',
+      },
+      {
+        title: '上海博物馆藏品资料',
+        type: 'link',
+        url: 'https://www.shanghaimuseum.net/mu/frontend/pg/m/article/id/CI00004028',
+        detail: '上海博物馆公共藏品入口',
+        note: '用于补充龙泉青瓷的公共馆藏与器形语境；本站主视觉为原创抽象图形。',
+      },
+      {
+        title: '中国陶瓷史',
+        type: 'book',
+        detail: '冯先铭著',
+        note: '用于理解南宋龙泉窑分期、粉青与梅子青的工艺背景。',
+      },
+      {
+        title: '饮流斋说瓷',
+        type: 'book',
+        detail: '清·寂园叟（陈浏）',
+        note: '用于查阅后世对龙泉青釉与梅子青名目的品评语汇。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未复刻任何具体藏品或馆藏图片。',
+    },
+    status: 'verified',
+    plate: 'longquan-meizi',
+  },
+
+  {
     slug: 'jingdezhen-blue-white',
     title: '景德镇 · 青花',
     subtitle: '钴料在白瓷上画出来的蓝，越白越蓝',
@@ -875,7 +953,8 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
       '这样整块屏幕读起来更像一张瓷片而不是一块屏幕。',
     designRationale:
       '这套的对比度是瓷器系列里最高的，正文与背景的明度差接近 90%，' +
-      '长时间阅读不费力。分割线用了偏蓝的灰，避免在冷白底上显脏。',
+      '长时间阅读不费力。分割线用了偏蓝的灰，避免在冷白底上显脏。' +
+      '语法色盘把钴蓝、赭红、紫灰与灰青分开，青花纹样只留在主视觉，不进入代码阅读区。',
     palette: [
       { name: '影青白', hex: '#ECF0F2', role: 'bg', note: '影青瓷的白，带一点青' },
       { name: '青釉', hex: '#DAE2E8', role: 'surface', note: '面板底色' },
@@ -920,6 +999,143 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
       imageLicence: '站内插图为原创 SVG，未使用任何第三方图片。',
     },
     status: 'verified',
+  },
+
+  {
+    slug: 'dehua-china-white',
+    title: '德化 · 中国白',
+    subtitle: '白不止一种颜色，光落在釉面上便有了温度。',
+    collection: 'porcelain',
+    description: '象牙白、乳白与背光处的灰白组成柔和的白色层次，让器形和浮雕接过视觉重心。',
+    story:
+      '德化窑以烧制白瓷著称。宋元时期已烧青白瓷，明代以白瓷为主，' +
+      '釉色温润莹亮，胎与釉的观感接近一体；人物塑像、炉、尊、壶等器形都留下了丰富的工艺传统。' +
+      '传统上有象牙白、猪油白等称呼，欧洲收藏与研究语境中也以“中国白”指称这类德化白瓷。' +
+      '本主题不把白理解成一个纯白值，而是把迎光处、釉面反射与背光阴影拆成有温度的三层。',
+    inspiration:
+      '底色取略暖的瓷胎象牙白，面板取釉层转折处的乳白，正文使用偏暖的深墨。' +
+      '强调色不是高饱和金，而是釉面阴影里略带褐调的旧金，避免破坏白瓷安静的整体感。' +
+      '故宫博物院与国家博物馆的公开资料用于确认德化白瓷的器类、白色称谓与展陈语境；' +
+      '本站器物轮廓与浮雕均为原创抽象图形，不对应某一馆藏件。',
+    designRationale:
+      '整页避免纯白背景与纯白器物的直接叠加，浅暖色之间靠明度和轻微色温差区分。' +
+      '链接和按钮使用比正文更暖的胎骨褐，强调色在浅底上仍有清楚轮廓。' +
+      '语法色盘采用暖墨、胎骨褐、石灰蓝与旧金，既延续白瓷温度，也让关键字、字符串和注释容易分辨。',
+    palette: [
+      { name: '象牙白', hex: '#F2EFE7', role: 'bg', note: '温润的瓷胎底色' },
+      { name: '乳白釉', hex: '#E7E1D6', role: 'surface', note: '釉面受光后的柔和面板' },
+      { name: '暖胎墨', hex: '#2D2925', role: 'text', note: '带暖调的正文深色' },
+      { name: '阴影灰褐', hex: '#665F56', role: 'muted', note: '背光与浅浮雕中的次要文字' },
+      { name: '胎骨线', hex: '#CEC5B8', role: 'border', note: '胎骨与釉面转折的低亮边界' },
+      { name: '胎骨褐', hex: '#78664F', role: 'accent', note: '釉面阴影中的暖褐，用于链接与焦点' },
+      { name: '釉面白', hex: '#FFF9F0', role: 'onAccent', note: '强调色之上的暖白文字' },
+    ],
+    tags: ['德化窑', '中国白', '象牙白', '猪油白', '瓷塑', '白釉', '透光'],
+    sources: [
+      {
+        title: '德化窑',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/lemmas/241924.html',
+        detail: '故宫博物院陶瓷资料',
+        note: '用于核对德化窑白瓷分期、器类、象牙白与猪油白等传统称谓。',
+      },
+      {
+        title: '德化窑白釉刻花玉兰纹尊',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/collection/ceramic/226711.html',
+        detail: '故宫博物院藏品资料',
+        note: '用于理解德化白瓷的釉面质感、刻花与浅浮雕表现；本站不复制该器物。',
+      },
+      {
+        title: '中国白——中国国家博物馆藏德化白瓷展',
+        type: 'link',
+        url: 'https://www.chnmuseum.cn/zl/gbxz/202508/t20250819_272467.shtml',
+        detail: '中国国家博物馆展览资料',
+        note: '用于补充“中国白”称谓与德化白瓷造型传统的公共展览语境。',
+      },
+      {
+        title: '中国陶瓷史',
+        type: 'book',
+        detail: '冯先铭著',
+        note: '用于查阅德化窑宋元至明清白瓷发展的一般工艺背景。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未复刻任何馆藏器物、塑像或摄影。',
+    },
+    status: 'verified',
+    plate: 'dehua-blanc',
+  },
+
+  {
+    slug: 'famille-rose-bloom',
+    title: '粉彩 · 霁色繁花',
+    subtitle: '细笔叠彩，花色在白瓷上轻轻晕开。',
+    collection: 'porcelain',
+    description: '胭脂红承担主强调，豆绿、淡黄与湖蓝只进入原创花卉插画，保持瓷白底色安静。',
+    story:
+      '粉彩属于釉上彩，通常认为创烧于康熙晚期，至雍正、乾隆时期趋于成熟。' +
+      '它借助玻璃白等材料与渲染技法表现花瓣、枝叶的明暗过渡，使釉上彩从平涂走向更细腻的层次。' +
+      '本主题以粉彩花卉纹样的常见构图作为视觉依据：白瓷为底，胭脂红收住花心，' +
+      '豆绿、淡黄与湖蓝在局部交错。具体器形、花枝与鸟雀构图由 Theme Atlas 原创绘制，' +
+      '不复制某一件藏品。',
+    inspiration:
+      '界面只使用瓷白、浅粉、胭脂红和深墨这组克制颜色，装饰性的豆绿、淡黄与湖蓝不进入 UI 语义角色。' +
+      '故宫博物院所藏粉彩桃花纹直颈瓶提供了“白地彩绘、花心色料较厚、向花瓣外缘渐淡”的观察线索；' +
+      '故宫粉彩与工艺资料用于核对釉上彩的时期和技法背景。',
+    designRationale:
+      '粉彩主题容易变成普通粉色界面，因此背景保留暖瓷白，面板只用很浅的粉灰，' +
+      '胭脂红集中在链接、按钮和小面积焦点。语法色盘另取胭脂红、豆绿、湖蓝、淡金与深墨；' +
+      '插画装饰色只在主视觉中出现，不挤占代码与正文的颜色职责。',
+    palette: [
+      { name: '霁色瓷白', hex: '#F4EEE8', role: 'bg', note: '雨后般柔和的暖瓷白' },
+      { name: '粉彩薄层', hex: '#EBDDD7', role: 'surface', note: '浅粉灰釉面面板' },
+      { name: '乌梅墨', hex: '#30242A', role: 'text', note: '带紫褐调的正文深墨' },
+      { name: '胭脂灰', hex: '#76616A', role: 'muted', note: '花纹阴影中的次要文字' },
+      { name: '彩瓷界线', hex: '#D5C3BC', role: 'border', note: '细笔与白瓷之间的柔和边界' },
+      { name: '胭脂红', hex: '#98536B', role: 'accent', note: '花心与主要行动色' },
+      { name: '花蕊白', hex: '#FFF8F5', role: 'onAccent', note: '胭脂红上的文字' },
+    ],
+    tags: ['粉彩', '清代', '釉上彩', '胭脂红', '玻璃白', '花卉', '渲染'],
+    sources: [
+      {
+        title: '粉彩桃花纹直颈瓶',
+        type: 'link',
+        url: 'https://www.dpm.org.cn/collection/ceramic/226714.html',
+        detail: '故宫博物院藏品资料',
+        note: '用于核对雍正粉彩的白地彩绘、渲染层次与花卉表现；本站不复制该瓶纹样。',
+      },
+      {
+        title: '中国陶瓷史',
+        type: 'book',
+        detail: '冯先铭著',
+        note: '用于理解粉彩的釉上彩属性及康熙、雍正、乾隆时期的一般发展脉络。',
+      },
+      {
+        title: '饮流斋说瓷',
+        type: 'book',
+        detail: '清·寂园叟（陈浏）',
+        note: '用于查阅后世文献对粉彩、洋彩及相关彩瓷名目的品评。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部',
+      story: 'Theme Atlas 编辑部',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      imageLicence: '站内插图为原创 SVG，未复刻任何具体藏品、纹样或摄影。',
+    },
+    status: 'verified',
+    plate: 'famille-rose',
+    artworkPalette: [
+      { name: '豆绿', hex: '#79927C', note: '枝叶与局部花托' },
+      { name: '淡黄', hex: '#C5A66A', note: '花蕊与局部暖色' },
+      { name: '湖蓝', hex: '#7396A2', note: '鸟羽与局部冷色' },
+    ],
   },
 
   {

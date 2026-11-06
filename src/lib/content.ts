@@ -77,6 +77,11 @@ function localizeTheme(theme: Theme, lang: Locale): Theme {
       name: translation.palette[index]?.name ?? color.name,
       note: translation.palette[index]?.note ?? color.note,
     })),
+    artworkPalette: theme.artworkPalette?.map((color, index) => ({
+      ...color,
+      name: translation.artworkPalette?.[index]?.name ?? color.name,
+      note: translation.artworkPalette?.[index]?.note ?? color.note,
+    })),
     sources: theme.sources.map((source, index) => ({
       ...source,
       title: translation.sources[index]?.title ?? source.title,

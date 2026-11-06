@@ -9,7 +9,7 @@ import PaletteStrip from './PaletteStrip.astro';
 
 interface Props {
   theme: Theme;
-  variant?: 'grid' | 'featured';
+  variant?: 'grid' | 'collection' | 'featured';
   /** Show the long description instead of the short subtitle. */
   showDescription?: boolean;
   lang: Locale;
@@ -322,6 +322,63 @@ const status = statusMap[theme.status];
     color: var(--gold);
   }
 
+  /* --- collection grid variant ------------------------------- */
+  /*
+   * The five direct children form shared rows across every card in the same
+   * visual row. CSS subgrid lets the longest title or description determine
+   * one common row height, so colour strips and footers stay aligned without
+   * absolute positioning or per-card offsets.
+   */
+  .card--collection {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: 34px minmax(2.4em, auto) minmax(3em, auto) 76px auto;
+    row-gap: 10px;
+    height: 100%;
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    .card--collection {
+      grid-template-rows: subgrid;
+    }
+  }
+
+  .card--collection .card__meta,
+  .card--collection .card__title,
+  .card--collection .card__caption,
+  .card--collection :global(.strip-wrap),
+  .card--collection .card__foot {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .card--collection .card__meta {
+    grid-row: 1;
+    align-items: center;
+    min-height: 34px;
+  }
+
+  .card--collection .card__title {
+    grid-row: 2;
+    min-height: 2.4em;
+  }
+
+  .card--collection .card__caption {
+    grid-row: 3;
+    min-height: 3em;
+  }
+
+  .card--collection :global(.strip-wrap) {
+    grid-row: 4;
+    min-height: 76px;
+  }
+
+  .card--collection .card__foot {
+    grid-row: 5;
+    align-self: end;
+    margin-top: 0;
+  }
+
   /* --- featured row variant ---------------------------------- */
   .card--featured {
     display: grid;
@@ -372,6 +429,26 @@ const status = statusMap[theme.status];
         'desc'
         'strip'
         'foot';
+    }
+  }
+
+  @media (max-width: 640px) {
+    .card--collection {
+      grid-row: auto;
+      grid-template-rows: none;
+    }
+
+    .card--collection .card__meta,
+    .card--collection .card__title,
+    .card--collection .card__caption,
+    .card--collection :global(.strip-wrap),
+    .card--collection .card__foot {
+      grid-row: auto;
+    }
+
+    .card--collection .card__title,
+    .card--collection .card__caption {
+      min-height: 0;
     }
   }
 </style>

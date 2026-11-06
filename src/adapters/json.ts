@@ -24,6 +24,12 @@ export const jsonAdapter: ToolAdapter = {
         role: c.role,
         note: c.note ?? null,
       })),
+      artworkPalette:
+        theme.artworkPalette?.map((c) => ({
+          name: c.name,
+          hex: c.hex,
+          note: c.note ?? null,
+        })) ?? [],
       sources: theme.sources.map((s) => ({
         title: s.title,
         type: s.type,
