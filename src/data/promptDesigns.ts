@@ -401,6 +401,42 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'The context sits on two tracks about to cross an event horizon; muted violet marks the only readable coordinates, while dark star-red is a nearly lost anomaly signal.',
   },
+  'qlipoth-amber-rampart': {
+    visualStyle: 'amber-rampart',
+    layout: 'segmented',
+    glyphSet: { prompt: '▣', separator: '│', connector: '⌁' },
+    motif: 'rampart',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text', 'flare'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '分段像逐层咬合的岩板，琥珀棕只把命令、路径和当前状态钉在同一道中轴上，远墙青灰保持低语。',
+    designNoteEn:
+      'Segments interlock like courses of stone; amber fixes the command, path and current state to one axis while the distant-wall blue-grey stays quiet.',
+  },
+  'nous-cosmic-computation': {
+    visualStyle: 'cosmic-computation',
+    layout: 'segmented',
+    glyphSet: { prompt: '∵', separator: '│', connector: '⌁' },
+    motif: 'cosmic-array',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'runtime', 'git', 'user', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '字段沿一条计算轴排开，坐标和刻度围绕当前命令，机核绯只标记结论节点，逻辑蓝灰保持所有推导路径安静相连。',
+    designNoteEn:
+      'Fields align along a calculation axis, coordinates and ticks surround the current command, crimson marks only the conclusion node, and logic blue-grey quietly links every derivation path.',
+  },
   'uncharted-reach': {
     visualStyle: 'stellar-navigation',
     layout: 'two-line',

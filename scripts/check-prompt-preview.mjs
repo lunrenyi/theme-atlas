@@ -86,6 +86,41 @@ const requiredText = {
   ],
 };
 
+function requiredTerminalText(kind, theme) {
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'nous-deduction') {
+    return [
+      'vim - theme-preview.ts',
+      'theme-preview.ts',
+      'typescript',
+      'NORMAL',
+      '9:20',
+      'Hypothesis',
+      'confidence',
+      'solveUniverse',
+      'verify',
+      'commit',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'nous-deduction') {
+    return [
+      'codex - ~/theme-atlas',
+      'Inspect these star-map observations',
+      'Identified 128 observation variables',
+      'Tracing derivation path',
+      'observation model requires correction',
+      'src/observation.ts',
+      'solveUniverse',
+      'confidence',
+      '0.98',
+      'true',
+      '+1',
+      '-1',
+      'Request another derivation...',
+    ];
+  }
+  return requiredText[kind];
+}
+
 for (const theme of themes) {
   const prompt = theme.promptDesign;
   const tools = theme.previewDesign;
@@ -174,7 +209,8 @@ for (const theme of themes) {
       if (/\{[a-zA-Z][a-zA-Z0-9_-]*\}/.test(text)) {
         failures.push(`${path}: ${kind} terminal contains an unresolved placeholder`);
       }
-      if (requiredText[kind].some((token) => !text.includes(token) && !windowHtml.includes(token))) {
+      const expectedText = requiredTerminalText(kind, theme);
+      if (expectedText.some((token) => !text.includes(token) && !windowHtml.includes(token))) {
         failures.push(`${path}: ${kind} terminal is missing required English content`);
       }
       const dots = windowHtml.match(

@@ -13,7 +13,7 @@ import { collections } from '../src/data/collections.ts';
 import { themeTranslations } from '../src/data/themes.en.ts';
 import { themes } from '../src/data/themes.ts';
 import { syntaxPalettes } from '../src/data/syntaxPalettes.ts';
-import { BASE_PALETTE_ROLES } from '../src/lib/color.ts';
+import { BASE_PALETTE_ROLES, contrastRatio, paletteMap } from '../src/lib/color.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = resolve(root, 'dist');
@@ -51,6 +51,18 @@ const addedPorcelainThemes = [
   'dehua-china-white',
   'famille-rose-bloom',
 ];
+const railOrder = [
+  'deep-space-orbit',
+  'pathfinder-beacon',
+  'singularity-echo',
+  'yaoshi-everlasting-bough',
+  'lan-reignbow-arbiter',
+  'aha-cosmic-farce',
+  'ix-silent-event-horizon',
+  'qlipoth-amber-rampart',
+  'nous-cosmic-computation',
+];
+const addedRailThemes = ['qlipoth-amber-rampart', 'nous-cosmic-computation'];
 
 const readDist = async (path) => readFile(resolve(dist, path), 'utf8');
 
@@ -90,7 +102,13 @@ function exportPayload(html) {
   return match ? JSON.parse(match[1]) : null;
 }
 
-async function auditAddedTheme(slug, collection, paletteLength, requiresFlare = false) {
+async function auditAddedTheme(
+  slug,
+  collection,
+  paletteLength,
+  requiresFlare = false,
+  minimumSources = 3,
+) {
   const theme = themes.find((candidate) => candidate.slug === slug);
   const translation = themeTranslations[slug];
   assert(Boolean(theme), `${slug} is missing from the ${collection} collection`);
@@ -101,8 +119,9 @@ async function auditAddedTheme(slug, collection, paletteLength, requiresFlare = 
     `${slug} is missing story, inspiration or colour rationale`,
   );
   assert(
-    theme?.sources.length >= 3 && theme.sources.every((source) => source.type !== 'pending'),
-    `${slug} needs at least three verifiable references`,
+    theme?.sources.length >= minimumSources &&
+      theme.sources.every((source) => source.type !== 'pending'),
+    `${slug} needs at least ${minimumSources} verifiable references`,
   );
   assert(Boolean(syntaxPalettes[slug]), `${slug} needs an independent syntax palette`);
   if (!theme) return;
@@ -312,6 +331,76 @@ for (const slug of addedPorcelainThemes) {
   await auditAddedTheme(slug, 'Chinese Porcelain', 7);
 }
 
+const railThemes = themes.filter((theme) => theme.collection === 'rail');
+assert(
+  railThemes.map((theme) => theme.slug).join(',') === railOrder.join(','),
+  'Honkai: Star Rail fan themes must keep Qlipoth after IX',
+);
+
+for (const slug of addedRailThemes) {
+  await auditAddedTheme(slug, 'Honkai: Star Rail fan themes', 8, true, 2);
+}
+
+const qlipoth = themes.find((theme) => theme.slug === 'qlipoth-amber-rampart');
+assert(Boolean(qlipoth), 'Qlipoth theme is missing from the shared theme data');
+if (qlipoth) {
+  assert(
+    qlipoth.sources.some(
+      (source) => source.url === 'https://wiki.hoyolab.com/pc/hsr/entry/889?lang=zh-cn',
+    ),
+    'Qlipoth is missing the supplied official HoYoLAB reference',
+  );
+  assert(
+    qlipoth.artworkPalette?.some((color) => color.hex === '#C58B3F'),
+    'Qlipoth is missing the illustration-only forge-gold colour',
+  );
+  const qlipothMap = paletteMap(qlipoth);
+  assert(
+    new Set(Object.values(qlipoth.syntax)).size === 11,
+    'Qlipoth syntax roles must all use distinct colours',
+  );
+  for (const [role, hex] of Object.entries(qlipoth.syntax)) {
+    assert(
+      contrastRatio(hex, qlipothMap.bg.hex) >= 4.5,
+      `Qlipoth syntax ${role} must pass AA on the background`,
+    );
+    assert(
+      contrastRatio(hex, qlipothMap.surface.hex) >= 4.5,
+      `Qlipoth syntax ${role} must pass AA on the surface`,
+    );
+  }
+}
+
+const nous = themes.find((theme) => theme.slug === 'nous-cosmic-computation');
+assert(Boolean(nous), 'Nous theme is missing from the shared theme data');
+if (nous) {
+  assert(
+    nous.sources.some(
+      (source) => source.url === 'https://wiki.hoyolab.com/pc/hsr/entry/3184?lang=zh-cn',
+    ),
+    'Nous is missing the supplied official HoYoLAB reference',
+  );
+  assert(
+    nous.artworkPalette?.some((color) => color.hex === '#A7BEC7'),
+    'Nous is missing the illustration-only silver-blue colour',
+  );
+  const nousMap = paletteMap(nous);
+  assert(
+    new Set(Object.values(nous.syntax)).size === 11,
+    'Nous syntax roles must all use distinct colours',
+  );
+  for (const [role, hex] of Object.entries(nous.syntax)) {
+    assert(
+      contrastRatio(hex, nousMap.bg.hex) >= 4.5,
+      `Nous syntax ${role} must pass AA on the background`,
+    );
+    assert(
+      contrastRatio(hex, nousMap.surface.hex) >= 4.5,
+      `Nous syntax ${role} must pass AA on the surface`,
+    );
+  }
+}
+
 const ix = themes.find((theme) => theme.slug === 'ix-silent-event-horizon');
 assert(Boolean(ix), 'IX theme is missing from the shared theme data');
 if (ix) {
@@ -379,6 +468,6 @@ if (failures.length) {
 console.log(
   `Catalog audit passed: ${themes.length} themes, ${collections.length} collections, ` +
     `${mythThemes.length} Chinese Mythology themes and ${porcelainThemes.length} Chinese Porcelain ` +
-    'themes in editorial order, export payloads, ' +
+    `themes in editorial order, ${railThemes.length} Star Rail fan themes, export payloads, ` +
     'collection-scoped navigation and IX references are consistent in the built HTML.',
 );

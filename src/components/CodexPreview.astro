@@ -5,6 +5,10 @@ import {
   codexDiffContext,
   codexDiffRemoved,
   codexSyntaxExample,
+  nousCodexDiffAdded,
+  nousCodexDiffContext,
+  nousCodexDiffRemoved,
+  nousCodexSyntaxExample,
 } from '../data/syntaxExamples';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
@@ -21,6 +25,28 @@ const { theme, lang } = Astro.props;
 const design = theme.previewDesign.codex;
 const map = paletteMap(theme);
 const contentId = 'codex-preview-' + theme.slug;
+const examples = {
+  default: {
+    code: codexSyntaxExample,
+    context: codexDiffContext,
+    removed: codexDiffRemoved,
+    added: codexDiffAdded,
+  },
+  'nous-deduction': {
+    code: nousCodexSyntaxExample,
+    context: nousCodexDiffContext,
+    removed: nousCodexDiffRemoved,
+    added: nousCodexDiffAdded,
+  },
+};
+const example = examples[design.example ?? 'default'];
+const fileName = design.fileName ?? 'src/theme.ts';
+const dialogue = design.dialogue ?? {
+  user: 'Refactor the theme resolver to use semantic roles.',
+  assistant: 'I will update the resolver and preserve the existing palette schema.',
+  status: 'Inspecting src/theme.ts · 42ms',
+  input: 'Ask Codex to continue...',
+};
 
 const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
 const tokenVars = Object.entries(theme.syntax)
@@ -59,34 +85,33 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
       <div class="codex__flow">
         <section class="codex__turn codex__turn--user" data-prompt-role="surface border">
           <p class="codex__label" data-prompt-role="muted">You</p>
-          <p data-prompt-role="text">Refactor the theme resolver to use semantic roles.</p>
+          <p data-prompt-role="text">{dialogue.user}</p>
         </section>
 
         <section class="codex__turn" data-prompt-role="surface border">
           <p class="codex__label" data-prompt-role="accent">Codex</p>
-          <p data-prompt-role="text">
-            I will update the resolver and preserve the existing palette schema.
-          </p>
+          <p data-prompt-role="text">{dialogue.assistant}</p>
           <p class="codex__status" data-prompt-role="muted">
             <span class="codex__status-dot" data-prompt-role="accent" aria-hidden="true"></span>
-            Inspecting src/theme.ts · 42ms
+            {dialogue.status}
           </p>
+          {dialogue.conclusion && <p class="codex__conclusion" data-prompt-role="text">{dialogue.conclusion}</p>}
         </section>
 
         <div class="codex__workbench">
           <section class="codex__code" aria-label="Code preview" data-prompt-role="surface border">
             <div class="codex__panel-head" data-prompt-role="muted">
-              <span data-prompt-role="text">src/theme.ts</span>
+              <span data-prompt-role="text">{fileName}</span>
               <span>typescript</span>
             </div>
-            <pre><code>{codexSyntaxExample.map((line) => (
+            <pre><code>{example.code.map((line) => (
               <span class="codex__code-line"><SyntaxTokens tokens={line} /></span>
             ))}</code></pre>
           </section>
 
           <section class="codex__diff" aria-label="File diff" data-prompt-role="surface border">
             <div class="codex__panel-head" data-prompt-role="muted">
-              <span data-prompt-role="text">src/theme.ts</span>
+              <span data-prompt-role="text">{fileName}</span>
               <span>
                 <b data-prompt-role="accent">+1</b>
                 <b data-prompt-role={map.flare ? 'flare' : 'muted'}>-1</b>
@@ -94,15 +119,15 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
             </div>
             <div class="codex__diff-line" data-prompt-role="muted">
               <span class="codex__diff-marker" aria-hidden="true"></span>
-              <span><SyntaxTokens tokens={codexDiffContext} /></span>
+              <span><SyntaxTokens tokens={example.context} /></span>
             </div>
             <div class="codex__diff-line codex__diff-line--remove">
               <span class="codex__diff-marker" data-prompt-role={map.flare ? 'flare' : 'muted'}>-</span>
-              <span><SyntaxTokens tokens={codexDiffRemoved} /></span>
+              <span><SyntaxTokens tokens={example.removed} /></span>
             </div>
             <div class="codex__diff-line codex__diff-line--add">
               <span class="codex__diff-marker" data-prompt-role="accent">+</span>
-              <span><SyntaxTokens tokens={codexDiffAdded} /></span>
+              <span><SyntaxTokens tokens={example.added} /></span>
             </div>
           </section>
         </div>
@@ -110,7 +135,7 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
 
       <div class="codex__input" data-prompt-role="surface border">
         <span class="codex__prompt" data-prompt-role="accent">›</span>
-        <span data-prompt-role="text">Ask Codex to continue...</span>
+        <span data-prompt-role="text">{dialogue.input ?? 'Ask Codex to continue...'}</span>
         <span class="codex__cursor" aria-hidden="true"></span>
         <span class="codex__hint" data-prompt-role="muted">Enter to send · Shift+Enter for newline</span>
       </div>
@@ -187,6 +212,11 @@ const removedFallback = !map.flare && design.diffRemoved === 'flare' ? 'muted' :
     height: 6px;
     border-radius: 50%;
     background: var(--t-accent);
+  }
+
+  .codex__conclusion {
+    margin-top: 5px;
+    color: var(--t-text);
   }
 
   .codex__workbench {

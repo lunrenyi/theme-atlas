@@ -1,6 +1,6 @@
 ---
 import type { PaletteRole, Theme } from '../data/types';
-import { vimSyntaxExample } from '../data/syntaxExamples';
+import { nousVimSyntaxExample, vimSyntaxExample } from '../data/syntaxExamples';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
 import PreviewColorLegend from './PreviewColorLegend.astro';
@@ -17,6 +17,11 @@ const design = theme.previewDesign.vim;
 const map = paletteMap(theme);
 const contentId = 'vim-preview-' + theme.slug;
 const currentLine = 8;
+const examples = {
+  default: vimSyntaxExample,
+  'nous-deduction': nousVimSyntaxExample,
+};
+const example = examples[design.example ?? 'default'];
 
 const cssRole = (role: PaletteRole) => 'var(--t-' + (role === 'onAccent' ? 'on-accent' : role) + ')';
 const tokenVars = Object.entries(theme.syntax)
@@ -52,7 +57,7 @@ const vars = tokenVars +
 
       <div class="vim__body">
         <div class="vim__lines" aria-hidden="true">
-          {vimSyntaxExample.map((_, index) => (
+          {example.map((_, index) => (
             <span
               class:list={{ 'is-current': index === currentLine }}
               data-prompt-role={index === currentLine ? 'accent onAccent' : undefined}
@@ -63,7 +68,7 @@ const vars = tokenVars +
         </div>
 
         <div class="vim__code" role="region" aria-label="Static TypeScript syntax preview">
-          {vimSyntaxExample.map((line, index) => (
+          {example.map((line, index) => (
             <div
               class:list={['vim__line', { 'is-current': index === currentLine }]}
               data-prompt-role={index === currentLine ? design.currentLine : undefined}

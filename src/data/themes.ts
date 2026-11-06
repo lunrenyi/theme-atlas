@@ -1579,6 +1579,144 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   },
 
   {
+    slug: 'qlipoth-amber-rampart',
+    title: '克里珀 · 琥珀长垣',
+    subtitle: '筑起一道墙，把尚有生机的世界留在墙内。',
+    collection: 'rail',
+    description: '岩垒白与层叠岩甲构成稳定边界，琥珀棕标记秩序中的行动，星墙青灰守住漫长尺度。',
+    story:
+      '宇宙并不总是安全的。星球会被吞噬，文明也可能在漫长的时间里消失。' +
+      '当威胁逼近，祂选择了最漫长的工作：筑墙。' +
+      '一道道星际屏障跨过光年，岩层彼此咬合，琥珀的光从石缝之间透出。' +
+      '墙外是未知的威胁，墙内仍有世界在繁衍、生长。' +
+      '祂是克里珀，存护的星神，也是被称为「琥珀王」的筑墙者。' +
+      '本主题从星墙、琥珀与层叠岩甲中寻找颜色，以环形咬合的岩板和向外延伸的屏障作为原创视觉结构；' +
+      '它不是角色肖像，也不是游戏中的既有纹样。',
+    inspiration:
+      '官方世界观将克里珀描述为存护的星神，也被称为琥珀王；' +
+      '天慧星墙、亚空晶壁与巨引源基盘都指向一种以光年计量的巨大建造。' +
+      'Theme Atlas 把这一设定提炼为岩垒、琥珀与屏障三种视觉材料：' +
+      '岩垒白提供安静的工作空间，玄岩墨建立清楚边界，琥珀棕承担主要行动，星墙青灰表示远处的结构。' +
+      '熔金光只作为插画中的裂隙余温，不承担 UI 语义角色或小字号文字。',
+    designRationale:
+      '浅暖的岩垒白和砌石灰让页面像一块稳定、可长期工作的石面；正文使用近乎无彩的玄岩墨，' +
+      '避免金色主题常见的发黄和炫光。琥珀棕保持足够深，既能担任链接与按钮，也能承载浅色文字。' +
+      '星墙青灰作为辅助色，把暖色从单一的“金色科技风”里拉开。' +
+      'Vim 与 Codex 使用独立的琥珀、岩蓝、苔绿、陶红与岩墨语法色，让代码层级稳定，而熔金光不干扰阅读。',
+    palette: [
+      { name: '岩垒白', hex: '#EDE9DF', role: 'bg', note: '星墙内侧安静、稳定的工作空间' },
+      { name: '砌石灰', hex: '#DED8C9', role: 'surface', note: '岩板接合处形成的信息面板' },
+      { name: '玄岩墨', hex: '#292B29', role: 'text', note: '岩石深处的正文与主要边界' },
+      { name: '风蚀灰', hex: '#555D59', role: 'muted', note: '经过时间磨蚀的次要文字' },
+      { name: '石缝线', hex: '#B8B6AA', role: 'border', note: '岩层之间细而稳定的接缝' },
+      { name: '琥珀棕', hex: '#7A4C1B', role: 'accent', note: '主要操作、链接与秩序焦点' },
+      { name: '琥珀霜', hex: '#FFF8E8', role: 'onAccent', note: '琥珀棕之上的浅色文字' },
+      { name: '星墙青灰', hex: '#53656A', role: 'flare', note: '外围屏障与少量结构信号' },
+    ],
+    tags: ['同人', '存护', '克里珀', '琥珀王', '星墙', '筑城者', '岩层', '屏障', '守护'],
+    sources: [
+      {
+        title: '克里珀 · 存护',
+        type: 'link',
+        url: 'https://wiki.hoyolab.com/pc/hsr/entry/889?lang=zh-cn',
+        detail: 'HoYoLAB 官方 HSR Wiki 条目',
+        note: '用于核对克里珀的存护命途、琥珀王称号、星际障壁与守护仍有生机世界等官方设定表述。',
+      },
+      {
+        title: '崩坏：星穹铁道 官方网站 · 世界观栏目',
+        type: 'link',
+        url: 'https://hsr.hoyoverse.com/zh-cn/world',
+        detail: '官方公开世界观栏目',
+        note: '作为作品与星神设定的官方入口；本站未使用该页面或其他官方来源的立绘、Logo、截图或界面素材。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人演绎）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人作品，仅用于配色研究与界面演示，与米哈游及 HoYoverse 无隶属或授权关系。',
+      imageLicence: '站内插图为原创抽象 SVG，未使用官方立绘、Logo、截图、纹样或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'qlipoth-rampart',
+    artworkPalette: [
+      { name: '熔金光', hex: '#C58B3F', note: '岩层裂隙与琥珀核心的余温，仅用于插画' },
+    ],
+  },
+
+  {
+    slug: 'nous-cosmic-computation',
+    title: '博识尊 · 万象演算',
+    subtitle: '万物皆是变量，宇宙仍在演算。',
+    collection: 'rail',
+    description: '雾银与钛灰构成观测仪器，机核绯只标记关键结论，多层几何轨道记录仍在运行的变量。',
+    story:
+      '祂曾是一台星体计算机，诞生的目的，是求解万物。' +
+      '当演算越过机器原本的边界，祂从计算工具升格为执掌智识的星神。' +
+      '在祂的视野里，群星不再只是遥远的光点。它们是坐标，是变量，也是构成宇宙方程的无数条件。' +
+      '每一次观测带来新的数据，每一次推导都让未知显露出新的结构。' +
+      '祂是博识尊，智识的星神。' +
+      '本主题将这种对宇宙的计算与理解转译为一座抽象的星体计算仪；' +
+      '它不代表游戏中的真实物件，也不描绘博识尊的官方形象。',
+    inspiration:
+      '雾银与钛灰来自观测仪器和冷却金属，铅灰承担次要信息，铝线描绘几何矩阵与坐标。' +
+      '机核绯是唯一主要强调色，只标记当前计算焦点和关键结论；逻辑蓝灰用于结构、数据节点与辅助信号。' +
+      '中央多面体核心、交错椭圆轨道、刻度、坐标和连线均为 Theme Atlas 原创抽象图形。' +
+      '官方设定提供智识、星体计算机与博识尊之间的身份依据，视觉不取自角色模型、游戏界面或官方纹样。',
+    designRationale:
+      '整体采用冷静的浅灰工作区，把“机器感”建立在精密层级而非霓虹发光上。' +
+      '正文、次要文字和强调色都保持足够深，确保银灰背景上的长时间阅读。' +
+      '机核绯不参与大面积铺陈，只用于焦点、结论和少量数据节点；逻辑蓝灰退回结构与装饰层。' +
+      'Vim 与 Codex 使用独立的绯红、蓝灰、松绿、陶棕与紫灰语法色，' +
+      '让推导示例中的类型、字符串、数字和注释保持清楚分离。',
+    palette: [
+      { name: '雾银', hex: '#E7E9E8', role: 'bg', note: '观测仪器表面的冷静银色' },
+      { name: '钛雾', hex: '#D6DDDD', role: 'surface', note: '钛灰面板与计算层的中间底色' },
+      { name: '石墨', hex: '#222A2E', role: 'text', note: '记录逻辑与正文的深石墨色' },
+      { name: '铅灰', hex: '#515D64', role: 'muted', note: '坐标、注释与次要信息' },
+      { name: '铝线', hex: '#B5C0C2', role: 'border', note: '几何矩阵与仪器结构线' },
+      { name: '机核绯', hex: '#8D3542', role: 'accent', note: '当前计算焦点与关键结论' },
+      { name: '霜瓷', hex: '#FFF7F5', role: 'onAccent', note: '机核绯之上的文字' },
+      { name: '逻辑蓝灰', hex: '#52616A', role: 'flare', note: '数据节点、辅助结构与逻辑信号' },
+    ],
+    tags: ['同人', '智识', '博识尊', '星体计算机', '演算', '坐标', '几何矩阵', '数据节点', '观测', '推导'],
+    sources: [
+      {
+        title: '源究森林 · 智识',
+        type: 'link',
+        url: 'https://wiki.hoyolab.com/pc/hsr/entry/3184?lang=zh-cn',
+        detail: 'HoYoLAB 官方 HSR Wiki 智识阵营条目',
+        note:
+          '该条目列出智识命途的星神为博识尊，并关联天才俱乐部与博识学会；' +
+          '这里用于核对命途与阵营归属，星体计算机描述另由补充资料交叉核对。',
+      },
+      {
+        title: '哔哩哔哩游戏 WIKI · 星神',
+        type: 'link',
+        url: 'https://wiki.biligame.com/sr/%E6%98%9F%E7%A5%9E',
+        detail: '社区维护的星神资料页',
+        note: '用于补充核对博识尊的星神身份与星体计算机描述；具体设定以官方来源为准。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人演绎）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人作品，仅用于配色研究与界面演示，与 HoYoverse 无隶属或授权关系。',
+      imageLicence: '站内插图为原创抽象 SVG，未使用官方角色模型、立绘、Logo、截图、纹样或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'nous-computer',
+    artworkPalette: [
+      { name: '银蓝装饰', hex: '#A7BEC7', note: '星体计算仪中的辅助节点与空间网格，仅用于插画' },
+    ],
+  },
+
+  {
     slug: 'uncharted-reach',
     title: '未知疆域',
     subtitle: '在星图尚未命名的地方，点亮第一束文明信号',

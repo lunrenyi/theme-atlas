@@ -562,6 +562,56 @@ const { variant, density, hasFlare } = Astro.props;
       </g>
     )
   }
+
+  {
+    variant === 'rampart' && (
+      <g>
+        <g stroke="var(--t-border)" stroke-width="0.8" opacity="0.62">
+          <path d="M0 34h48v20h42V34h56v20h42V34h56v20h42V34h74" />
+          <path d="M0 92h34V74h54v18h46V74h62v18h46V74h58v18h60" />
+          <path d="M0 148h58v-18h46v18h54v-18h56v18h46v-18h100" />
+        </g>
+        <g fill="var(--t-surface)" stroke="var(--t-border)" stroke-width="0.9">
+          <path d="M80 44h72v28H80zM176 44h72v28h-72zM272 44h48v28h-48z" />
+          <path d="M42 102h70v29H42zM136 102h70v29h-70zM230 102h70v29h-70z" />
+        </g>
+        <path d="M0 80h360M0 138h360" stroke="var(--t-flare)" stroke-width="0.9" opacity="0.5" />
+        <g stroke="var(--t-accent)" fill="none">
+          <circle cx="180" cy="80" r="14" opacity="0.72" />
+          <circle cx="180" cy="80" r="25" opacity="0.3" />
+          <path d="M180 55v50M155 80h50" opacity="0.52" />
+        </g>
+        <path d="M180 80l-10 18h20z" fill="var(--t-accent)" />
+        <circle cx="180" cy="80" r="3" fill="var(--t-text)" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'cosmic-array' && (
+      <g>
+        <g stroke="var(--t-border)" stroke-width="0.75" opacity="0.62">
+          <ellipse cx="180" cy="80" rx="146" ry="49" transform="rotate(-13 180 80)" />
+          <ellipse cx="180" cy="80" rx="112" ry="64" transform="rotate(31 180 80)" opacity="0.72" />
+          <ellipse cx="180" cy="80" rx="74" ry="27" transform="rotate(-13 180 80)" opacity="0.62" />
+        </g>
+        <g stroke="var(--t-flare)" stroke-width="0.8" opacity="0.56">
+          <path d="M18 80h84M258 80h84M180 10v36M180 114v36" stroke-dasharray="2 6" />
+          <circle cx="82" cy="61" r="2.2" fill="var(--t-flare)" />
+          <circle cx="282" cy="100" r="2" fill="var(--t-flare)" />
+          <circle cx="228" cy="32" r="1.7" fill="var(--t-flare)" />
+        </g>
+        <path d="M180 45 214 63v34l-34 18-34-18V63z" stroke="var(--t-accent)" stroke-width="1.2" opacity="0.86" />
+        <path d="M180 45v70M146 63l68 34M214 63l-68 34" stroke="var(--t-border)" stroke-width="0.8" opacity="0.72" />
+        <circle cx="180" cy="80" r="8" stroke="var(--t-accent)" opacity="0.74" />
+        <circle cx="180" cy="80" r="3" fill="var(--t-accent)" />
+        <path d="M92 80h34l16-18h38l16 18h36M96 92h36l14 16h68l14-16h36" stroke="var(--t-text)" stroke-width="0.8" opacity="0.42" />
+        <g fill="var(--t-accent)">
+          <circle cx="214" cy="63" r="2.2" />
+        </g>
+      </g>
+    )
+  }
 </svg>
 
 <style>

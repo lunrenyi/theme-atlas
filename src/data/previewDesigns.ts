@@ -123,6 +123,28 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     vim: vim('compact', 'surface', 'accent'),
     codex: codex('split', 'accent', 'muted', 'flare'),
   },
+  'qlipoth-amber-rampart': {
+    vim: vim('classic', 'surface', 'accent'),
+    codex: codex('stacked', 'accent', 'muted', 'accent'),
+  },
+  'nous-cosmic-computation': {
+    vim: { ...vim('focus', 'surface', 'accent'), example: 'nous-deduction' },
+    codex: {
+      ...codex('stacked', 'accent', 'muted', 'accent'),
+      example: 'nous-deduction',
+      fileName: 'src/observation.ts',
+      dialogue: {
+        user:
+          'Inspect these star-map observations, identify anomalous variables, and provide a reproducible derivation.',
+        assistant:
+          'Identified 128 observation variables. Found 3 anomalous correlations. Validating constraints...',
+        status: 'Tracing derivation path · 128 nodes',
+        conclusion:
+          'Conclusion: the observation model requires correction. Derivation record generated.',
+        input: 'Request another derivation...',
+      },
+    },
+  },
   'uncharted-reach': {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'flare', 'accent'),

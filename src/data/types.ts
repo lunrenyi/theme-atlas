@@ -104,7 +104,9 @@ export type PromptVisualStyle =
   | 'celestial-eye'
   | 'celadon-depth'
   | 'blanc-sculpture'
-  | 'famille-bloom';
+  | 'famille-bloom'
+  | 'amber-rampart'
+  | 'cosmic-computation';
 
 export type PromptLayout =
   | 'minimal'
@@ -143,7 +145,9 @@ export type PromptMotif =
   | 'eye-mountain'
   | 'celadon-layer'
   | 'blanc-form'
-  | 'rose-branch';
+  | 'rose-branch'
+  | 'rampart'
+  | 'cosmic-array';
 
 export type PromptLineMode = 'single' | 'double';
 
@@ -191,11 +195,15 @@ export type SyntaxRole =
 /** Theme-owned code colours, separate from the ordinary UI palette. */
 export type SyntaxPalette = Record<SyntaxRole, string>;
 
+export type PreviewExample = 'default' | 'nous-deduction';
+
 export interface VimPreviewDesign {
   layout: 'classic' | 'focus' | 'compact';
   currentLine: PaletteRole;
   selection: PaletteRole;
   divider: PaletteRole;
+  /** Optional static code example; defaults to the shared theme-config sample. */
+  example?: PreviewExample;
 }
 
 export interface CodexPreviewDesign {
@@ -204,6 +212,17 @@ export interface CodexPreviewDesign {
   diffRemoved: PaletteRole;
   promptAccent: PaletteRole;
   divider: PaletteRole;
+  /** Optional static code/diff example; defaults to the shared theme-config sample. */
+  example?: PreviewExample;
+  /** Optional static conversation copy displayed around the code workbench. */
+  dialogue?: {
+    user: string;
+    assistant: string;
+    status: string;
+    conclusion?: string;
+    input?: string;
+  };
+  fileName?: string;
 }
 
 export interface ToolPreviewDesign {
@@ -256,7 +275,9 @@ export interface Theme {
     | 'yangjian-eye'
     | 'longquan-meizi'
     | 'dehua-blanc'
-    | 'famille-rose';
+    | 'famille-rose'
+    | 'qlipoth-rampart'
+    | 'nous-computer';
   /** Decorative colours used only by the plate, never by the UI palette. */
   artworkPalette?: ArtworkColor[];
   /**

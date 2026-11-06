@@ -1588,6 +1588,131 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     },
   },
 
+  'qlipoth-amber-rampart': {
+    title: 'Qlipoth · Amber Rampart',
+    subtitle: 'Build a wall, and keep the worlds still holding life within it.',
+    description:
+      'Rampart white and layered stone establish a stable boundary; amber marks purposeful action, while wall blue-grey holds the scale of ages.',
+    story:
+      'The universe is not always safe. Planets can be consumed, and civilisations can vanish across the long reach of time. ' +
+      'When threat approaches, Qlipoth chooses the longest work: building walls. Barrier after barrier crosses light-years, ' +
+      'stone layers lock into one another, and amber light escapes through the seams. Beyond the wall lies the unknown; ' +
+      'within it, worlds continue to grow and live. Qlipoth is the Aeon of Preservation, the wall-builder also called the ' +
+      'Amber Lord. This theme derives its colours from that star-wall, its amber and its layered rock armour. The open ring ' +
+      'of interlocking plates and the barrier extending into the distance are original abstract forms, not a portrait of the ' +
+      'Aeon and not a pattern taken from the game.',
+    inspiration:
+      'Official setting material identifies Qlipoth as the Aeon of Preservation, also called the Amber Lord, and describes ' +
+      'barriers measured in light-years. Theme Atlas distils that setting into three visual materials: rampart stone, amber ' +
+      'and a far wall. Rampart white creates a quiet working space, deep rock ink fixes clear boundaries, amber carries ' +
+      'primary actions, and star-wall blue-grey represents distant structure. Forge gold appears only in the illustration as ' +
+      'heat caught between rock layers; it never carries UI roles or small text.',
+    designRationale:
+      'Warm rampart white and masonry grey make the page feel like a stable surface made for long work. Body text is a nearly ' +
+      'neutral rock ink, avoiding the yellow cast and glow common to gold technology themes. Amber is dark enough for links ' +
+      'and buttons as well as pale action text. Star-wall blue-grey keeps the palette from collapsing into a single amber ' +
+      'family. Vim and Codex use an independent syntax hierarchy of amber, rock blue, moss green, ceramic red and stone ink, ' +
+      'while forge gold stays out of the reading surface.',
+    tags: ['Fan work', 'Preservation', 'Qlipoth', 'Amber Lord', 'Star wall', 'Wall-builders', 'Rock strata', 'Barrier', 'Guardianship'],
+    palette: [
+      { name: 'Rampart White', note: 'A quiet, stable workspace inside the star wall' },
+      { name: 'Masonry Grey', note: 'Information panels formed by fitted stone courses' },
+      { name: 'Deep Rock Ink', note: 'Body text and primary boundaries from deep stone' },
+      { name: 'Weathered Grey', note: 'Secondary text worn by time' },
+      { name: 'Stone-Seam Rule', note: 'Fine, stable joints between rock layers' },
+      { name: 'Amber', note: 'Primary actions, links and focus in the ordered structure' },
+      { name: 'Amber Frost', note: 'Pale text on the amber accent' },
+      { name: 'Star-Wall Blue-Grey', note: 'Outer barriers and a few structural signals' },
+    ],
+    sources: [
+      {
+        title: 'Qlipoth · Preservation (克里珀 · 存护)',
+        detail: 'Official HoYoLAB HSR Wiki entry',
+        note:
+          'Used to check the official descriptions of Qlipoth as the Aeon of Preservation, the Amber Lord, the light-year ' +
+          'barriers and the protection of worlds that still hold life.',
+      },
+      {
+        title: 'Honkai: Star Rail official website · World section',
+        detail: 'Official public setting entry',
+        note:
+          'Used only as an official entry point for the work and Aeon setting. No character artwork, logo, screenshot or ' +
+          'interface asset from that site is used in this theme.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: 'Theme Atlas editorial team (unofficial fan interpretation)',
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This theme is an unofficial fan work made for colour research and interface demonstration only. It is not ' +
+        'affiliated with or authorised by miHoYo or HoYoverse.',
+      imageLicence:
+        'The plate is an original abstract SVG; no official character art, logo, screenshot, pattern or interface asset is used.',
+    },
+    artworkPalette: [
+      { name: 'Forge Gold', note: 'Heat in rock seams and the amber core; illustration only' },
+    ],
+  },
+
+  'nous-cosmic-computation': {
+    title: 'Nous · Cosmic Computation',
+    subtitle: 'Everything is a variable; the universe is still calculating.',
+    description:
+      'Mist silver and titanium grey form an observatory instrument, rouge marks only the decisive result, and layered geometric tracks record variables still in motion.',
+    story:
+      'Nous was once a celestial computer, built to solve all things. When its calculations crossed the boundaries of the machine, it rose from a computational tool to become the Aeon of Erudition. ' +
+      'Within its view, stars are no longer only distant points of light. They are coordinates, variables and the countless conditions of a cosmic equation. Every observation introduces new data, and every derivation reveals a new structure within the unknown. ' +
+      'Nous is the Aeon of Erudition. This theme turns that drive to calculate and understand the universe into an abstract celestial computation instrument. The instrument does not represent a real object in the game, and it does not depict the official image of Nous.',
+    inspiration:
+      'Mist silver and titanium grey come from observatory instruments and cooled metal; lead grey carries secondary information, while aluminium rules describe the geometric matrix and coordinates. ' +
+      'Crimson is the only primary accent and marks the current computational focus or decisive result. Logic blue-grey belongs to structure, data nodes and supporting signals. ' +
+      'The polyhedral core, intersecting elliptical orbits, ticks, coordinates and connecting relations are original Theme Atlas abstractions. Official setting material establishes the connection between Erudition, the celestial computer and Nous; the visual does not use character models, game interfaces or official patterns.',
+    designRationale:
+      'The calm light-grey workspace builds its machine character through precise hierarchy rather than neon glow. Body, secondary text and the accent remain dark enough for sustained reading on silver surfaces. ' +
+      'Crimson is never spread over large areas: it identifies focus, conclusions and a few data nodes, while logic blue-grey recedes into structure and decoration. ' +
+      'Vim and Codex use an independent syntax hierarchy of crimson, blue-grey, pine green, ceramic brown and violet-grey so types, strings, numbers and comments remain clearly separated in the deduction sample.',
+    tags: ['Fan work', 'Erudition', 'Nous', 'Celestial computer', 'Calculation', 'Coordinates', 'Geometric matrix', 'Data nodes', 'Observation', 'Derivation'],
+    palette: [
+      { name: 'Mist Silver', note: 'The cool silver surface of an observatory instrument' },
+      { name: 'Titanium Mist', note: 'Titanium panel and middle layer of the computation' },
+      { name: 'Graphite', note: 'Deep graphite for logic and body text' },
+      { name: 'Lead Grey', note: 'Coordinates, notes and secondary information' },
+      { name: 'Aluminium Rule', note: 'Geometric matrix and instrument structure lines' },
+      { name: 'Core Crimson', note: 'Current computational focus and decisive result' },
+      { name: 'Frost Porcelain', note: 'Text on the crimson accent' },
+      { name: 'Logic Blue-Grey', note: 'Data nodes, supporting structure and logical signals' },
+    ],
+    sources: [
+      {
+        title: 'Origin Forest · Erudition (源究森林 · 智识)',
+        detail: 'Official HoYoLAB HSR Wiki entry for the Erudition faction',
+        note:
+          'The entry identifies Nous as the Aeon of Erudition and links the faction to the Genius Society and Intelligentsia Guild. It is used here to check Path and faction attribution; the celestial-computer description is cross-checked with the supplementary source.',
+      },
+      {
+        title: 'Biligame Wiki · Aeons (星神)',
+        detail: 'Community-maintained Aeon reference',
+        note:
+          'Used only to cross-check the identity of Nous as an Aeon and the celestial-computer description; official material remains the primary reference.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: 'Theme Atlas editorial team (unofficial fan interpretation)',
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer:
+        'This theme is an unofficial fan work made for colour research and interface demonstration only. It is not affiliated with or authorised by HoYoverse.',
+      imageLicence:
+        'The plate is an original abstract SVG; no official character model, character art, logo, screenshot, pattern or interface asset is used.',
+    },
+    artworkPalette: [
+      { name: 'Silver-Blue Decoration', note: 'Supporting nodes and spatial grid in the celestial computation instrument; illustration only' },
+    ],
+  },
+
   'uncharted-reach': {
     title: 'Uncharted Reach',
     subtitle: 'Light the first signal from a region the charts have not named',
