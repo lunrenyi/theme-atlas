@@ -51,6 +51,12 @@ const artIce = artworkHex(0, theme.syntax.function);
 const artViolet = artworkHex(1, theme.syntax.type);
 const artPink = artworkHex(2, theme.syntax.number);
 const artGold = artworkHex(3, theme.syntax.constant);
+const chorusCoral = artworkHex(0, theme.syntax.number);
+const chorusGold = artworkHex(1, theme.syntax.constant);
+const chorusGreen = artworkHex(2, theme.syntax.property);
+const chorusCyan = artworkHex(3, theme.syntax.function);
+const chorusBlue = artworkHex(4, theme.syntax.type);
+const chorusViolet = artworkHex(5, theme.syntax.type);
 ---
 
 <figure class:list={['plate', className]}>
@@ -810,6 +816,127 @@ const artGold = artworkHex(3, theme.syntax.constant);
     }
 
     {
+      /* An original Harmony study: the "thousand-voice ring". Coloured sound
+         waves enter a shared resonant core, antique-gold threads weave the
+         voice nodes into one network, and a restrained iridescent halo
+         records their different worlds. Abstract geometry only — no figure,
+         face, logo, screenshot or official pattern is depicted. */
+      variant === 'xipe-chorus' && (
+        <g>
+          <defs>
+            <linearGradient id={`xipe-halo-${theme.slug}`} x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color={chorusCoral} />
+              <stop offset="20%" stop-color={chorusGold} />
+              <stop offset="40%" stop-color={chorusGreen} />
+              <stop offset="60%" stop-color={chorusCyan} />
+              <stop offset="80%" stop-color={chorusBlue} />
+              <stop offset="100%" stop-color={chorusViolet} />
+            </linearGradient>
+            <radialGradient id={`xipe-core-${theme.slug}`} cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color={bright} stop-opacity="0.96" />
+              <stop offset="55%" stop-color={accent} stop-opacity="0.2" />
+              <stop offset="100%" stop-color={accent} stop-opacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* warm space layers and a quiet star sea */}
+          <ellipse cx="160" cy="104" rx="150" ry="90" fill={surface} opacity="0.55" />
+          <ellipse cx="160" cy="96" rx="118" ry="70" fill={chorusViolet} opacity="0.07" />
+          <g fill={soft}>
+            <circle cx="30" cy="30" r="1.1" opacity="0.55" />
+            <circle cx="58" cy="168" r="0.9" opacity="0.5" />
+            <circle cx="288" cy="26" r="1.2" opacity="0.55" />
+            <circle cx="296" cy="150" r="0.9" opacity="0.5" />
+            <circle cx="240" cy="17" r="0.8" opacity="0.45" />
+            <circle cx="72" cy="24" r="0.8" opacity="0.45" />
+            <circle cx="262" cy="176" r="1" opacity="0.5" />
+            <circle cx="18" cy="96" r="0.9" opacity="0.45" />
+            <circle cx="304" cy="92" r="1" opacity="0.5" />
+          </g>
+
+          {/* the outer iridescent halo, kept to one thin ring */}
+          <g class="chorus-plate__halo">
+            <ellipse cx="160" cy="100" rx="130" ry="84" fill="none" stroke={stone} stroke-width="0.9" stroke-dasharray="1 7" opacity="0.7" />
+            <ellipse
+              cx="160"
+              cy="100"
+              rx="122"
+              ry="78"
+              fill="none"
+              stroke={`url(#xipe-halo-${theme.slug})`}
+              stroke-width="3.2"
+              opacity="0.55"
+            />
+            <ellipse cx="160" cy="100" rx="112" ry="70" fill="none" stroke={chorusGold} stroke-width="0.6" stroke-dasharray="2 10" opacity="0.45" />
+          </g>
+
+          {/* multi-layer elliptical sound-wave rings */}
+          <g class="chorus-plate__ring" fill="none">
+            <ellipse cx="160" cy="100" rx="96" ry="60" stroke={stone} stroke-width="1" opacity="0.6" />
+            <ellipse cx="160" cy="100" rx="76" ry="47" stroke={accent} stroke-width="0.9" stroke-dasharray="4 6" opacity="0.55" />
+            <ellipse cx="160" cy="100" rx="54" ry="33" stroke={soft} stroke-width="0.8" opacity="0.5" />
+          </g>
+
+          {/* sound waves travelling in from different worlds */}
+          <g fill="none" stroke-linecap="round" stroke-width="1.4">
+            <path class="chorus-plate__wave" d="M8 58C46 62 82 76 112 89" stroke={chorusCoral} opacity="0.72" />
+            <path class="chorus-plate__wave" style="animation-delay:-4s" d="M12 142C50 130 86 119 114 109" stroke={chorusGreen} opacity="0.72" />
+            <path class="chorus-plate__wave" style="animation-delay:-8s" d="M312 56C272 64 238 79 209 90" stroke={chorusBlue} opacity="0.72" />
+            <path class="chorus-plate__wave" style="animation-delay:-12s" d="M308 144C270 131 233 119 206 110" stroke={chorusCyan} opacity="0.72" />
+            <path class="chorus-plate__wave" style="animation-delay:-16s" d="M160 6C157 34 158 60 160 76" stroke={chorusViolet} opacity="0.68" />
+            <path class="chorus-plate__wave" style="animation-delay:-6s" d="M160 196c1-26 1-56 0-72" stroke={chorusGold} opacity="0.66" />
+          </g>
+
+          {/* gold threads weaving the six voice nodes into one network */}
+          <g class="chorus-plate__threads" fill="none" stroke={chorusGold} stroke-linecap="round">
+            <path d="M160 52 227.5 76 227.5 124 160 148 92.5 124 92.5 76Z" stroke-width="0.9" opacity="0.7" />
+            <g stroke-width="0.75" opacity="0.6" stroke-dasharray="3 7">
+              <path d="M160 52 160 100" />
+              <path d="M227.5 76 160 100" />
+              <path d="M227.5 124 160 100" />
+              <path d="M160 148 160 100" />
+              <path d="M92.5 124 160 100" />
+              <path d="M92.5 76 160 100" />
+            </g>
+          </g>
+
+          {/* small geometric tessellation marks beside the ring */}
+          <g fill={surface}>
+            <path d="M246 54l5 5-5 5-5-5z" stroke={chorusBlue} stroke-width="0.9" />
+            <path d="M74 134l5 5-5 5-5-5z" stroke={chorusCoral} stroke-width="0.9" />
+            <rect x="173" y="36" width="6" height="6" stroke={chorusViolet} stroke-width="0.9" />
+          </g>
+
+          {/* six voice nodes, each a different part of the chorus */}
+          <g>
+            <circle cx="160" cy="52" r="6" fill="none" stroke={chorusViolet} stroke-width="0.7" opacity="0.4" />
+            <circle cx="227.5" cy="76" r="6" fill="none" stroke={chorusBlue} stroke-width="0.7" opacity="0.4" />
+            <circle cx="227.5" cy="124" r="6" fill="none" stroke={chorusCyan} stroke-width="0.7" opacity="0.4" />
+            <circle cx="160" cy="148" r="6" fill="none" stroke={chorusGreen} stroke-width="0.7" opacity="0.4" />
+            <circle cx="92.5" cy="124" r="6" fill="none" stroke={chorusCoral} stroke-width="0.7" opacity="0.4" />
+            <circle cx="92.5" cy="76" r="6" fill="none" stroke={chorusGold} stroke-width="0.7" opacity="0.4" />
+            <circle cx="160" cy="52" r="3.4" fill={chorusViolet} />
+            <circle cx="227.5" cy="76" r="3.4" fill={chorusBlue} />
+            <circle cx="227.5" cy="124" r="3.4" fill={chorusCyan} />
+            <circle cx="160" cy="148" r="3.4" fill={chorusGreen} />
+            <circle cx="92.5" cy="124" r="3.4" fill={chorusCoral} />
+            <circle cx="92.5" cy="76" r="3.4" fill={chorusGold} />
+          </g>
+
+          {/* the soft, bright resonance core where every voice meets */}
+          <g class="chorus-plate__core">
+            <circle cx="160" cy="100" r="34" fill={`url(#xipe-core-${theme.slug})`} />
+            <circle cx="160" cy="100" r="23" fill={surface} stroke={line} stroke-width="1.1" />
+            <circle cx="160" cy="100" r="15" fill="none" stroke={accent} stroke-width="1.3" opacity="0.85" />
+            <path d="M148 106c8-7 16-7 24 0M150 94c7-5 13-5 20 0" fill="none" stroke={line} stroke-width="0.65" opacity="0.4" />
+            <circle cx="160" cy="100" r="6" fill={accent} />
+            <circle cx="160" cy="100" r="2.2" fill={chorusGold} />
+          </g>
+        </g>
+      )
+    }
+
+    {
       /* An original Elation study: a floating two-faced mask on an incomplete
          stage, surrounded by tilted cards, dice and chance light trails. It
          uses theatre geometry rather than any official character or emblem. */
@@ -1389,5 +1516,72 @@ const artGold = artworkHex(3, theme.syntax.constant);
   @keyframes fuli-core-breathe {
     from { transform: scale(1); }
     to { transform: scale(1.008); }
+  }
+
+  .chorus-plate__wave,
+  .chorus-plate__ring,
+  .chorus-plate__threads,
+  .chorus-plate__halo,
+  .chorus-plate__core {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .chorus-plate__wave {
+      animation: chorus-wave 21s ease-in-out infinite alternate;
+    }
+
+    .chorus-plate__ring {
+      animation: chorus-ring-turn 28s ease-in-out infinite alternate;
+    }
+
+    .chorus-plate__threads {
+      animation: chorus-threads-weave 26s linear infinite;
+    }
+
+    .chorus-plate__halo {
+      animation: chorus-halo-pulse 24s ease-in-out infinite alternate;
+    }
+
+    .chorus-plate__core {
+      animation: chorus-core-breathe 20s ease-in-out infinite alternate;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chorus-plate__wave,
+    .chorus-plate__ring,
+    .chorus-plate__threads,
+    .chorus-plate__halo,
+    .chorus-plate__core {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  @keyframes chorus-wave {
+    from { transform: translate(-2px, 0); opacity: 0.55; }
+    to { transform: translate(3px, -1px); opacity: 0.85; }
+  }
+
+  @keyframes chorus-ring-turn {
+    from { transform: rotate(-1.4deg); }
+    to { transform: rotate(1.4deg); }
+  }
+
+  @keyframes chorus-threads-weave {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -40; }
+  }
+
+  @keyframes chorus-halo-pulse {
+    from { transform: scale(0.995); opacity: 0.85; }
+    to { transform: scale(1.012); opacity: 1; }
+  }
+
+  @keyframes chorus-core-breathe {
+    from { transform: scale(1); }
+    to { transform: scale(1.025); }
   }
 </style>

@@ -162,6 +162,23 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
       },
     },
   },
+  'xipe-thousandfold-chorus': {
+    vim: { ...vim('compact', 'surface', 'accent'), example: 'xipe-chorus' },
+    codex: {
+      ...codex('stacked', 'accent', 'muted', 'accent'),
+      example: 'xipe-chorus',
+      fileName: 'src/chorus-harmony.ts',
+      dialogue: {
+        user:
+          'Analyse three signals from different planets, identify the rhythm differences, and generate a coordination plan.',
+        assistant:
+          'Identified 3 independent voice parts. Found 2 rhythmic deviations. Calibrating phase alignment...',
+        status: 'Aligning chorus phases · 3 signals',
+        conclusion: 'Harmony plan generated. All signals are synchronised.',
+        input: 'Request another harmony plan...',
+      },
+    },
+  },
   'uncharted-reach': {
     vim: vim('focus', 'surface', 'accent'),
     codex: codex('split', 'accent', 'flare', 'accent'),

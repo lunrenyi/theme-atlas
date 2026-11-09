@@ -13,6 +13,10 @@ import {
   nousCodexDiffContext,
   nousCodexDiffRemoved,
   nousCodexSyntaxExample,
+  xipeCodexDiffAdded,
+  xipeCodexDiffContext,
+  xipeCodexDiffRemoved,
+  xipeCodexSyntaxExample,
 } from '../data/syntaxExamples';
 import { paletteMap } from '../lib/color';
 import { t, type Locale } from '../i18n';
@@ -47,6 +51,12 @@ const examples = {
     context: fuliCodexDiffContext,
     removed: fuliCodexDiffRemoved,
     added: fuliCodexDiffAdded,
+  },
+  'xipe-chorus': {
+    code: xipeCodexSyntaxExample,
+    context: xipeCodexDiffContext,
+    removed: xipeCodexDiffRemoved,
+    added: xipeCodexDiffAdded,
   },
 };
 const example = examples[design.example ?? 'default'];

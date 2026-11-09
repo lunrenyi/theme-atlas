@@ -62,11 +62,13 @@ const railOrder = [
   'qlipoth-amber-rampart',
   'nous-cosmic-computation',
   'fuli-crystal-river',
+  'xipe-thousandfold-chorus',
 ];
 const addedRailThemes = [
   'qlipoth-amber-rampart',
   'nous-cosmic-computation',
   'fuli-crystal-river',
+  'xipe-thousandfold-chorus',
 ];
 
 const readDist = async (path) => readFile(resolve(dist, path), 'utf8');
@@ -432,6 +434,48 @@ if (fuli) {
     assert(
       contrastRatio(hex, fuliMap.surface.hex) >= 4.5,
       `Fuli syntax ${role} must pass AA on the surface`,
+    );
+  }
+}
+
+const xipe = themes.find((theme) => theme.slug === 'xipe-thousandfold-chorus');
+assert(Boolean(xipe), 'Xipe theme is missing from the shared theme data');
+if (xipe) {
+  assert(
+    xipe.sources.some(
+      (source) => source.url === 'https://wiki.hoyolab.com/pc/hsr/entry/83?lang=en-us',
+    ),
+    'Xipe is missing the supplied official HoYoLAB Harmony Path reference',
+  );
+  assert(
+    xipe.sources.some(
+      (source) => source.url === 'https://wiki.hoyolab.com/pc/hsr/entry/894?lang=en-us',
+    ),
+    'Xipe is missing the supplied official HoYoLAB Xipe reference',
+  );
+  assert(
+    ['#C98591', '#D6AE76', '#9EB99D', '#80B1B2', '#829FC4', '#A18BB6'].every((hex) =>
+      xipe.artworkPalette?.some((color) => color.hex === hex),
+    ),
+    'Xipe is missing one of its six illustration-only chorus colours',
+  );
+  assert(
+    xipe.credits.disclaimer?.includes('非官方同人') === true,
+    'Xipe must carry the unofficial fan-work disclaimer',
+  );
+  const xipeMap = paletteMap(xipe);
+  assert(
+    new Set(Object.values(xipe.syntax)).size === 11,
+    'Xipe syntax roles must all use distinct colours',
+  );
+  for (const [role, hex] of Object.entries(xipe.syntax)) {
+    assert(
+      contrastRatio(hex, xipeMap.bg.hex) >= 4.5,
+      `Xipe syntax ${role} must pass AA on the background`,
+    );
+    assert(
+      contrastRatio(hex, xipeMap.surface.hex) >= 4.5,
+      `Xipe syntax ${role} must pass AA on the surface`,
     );
   }
 }

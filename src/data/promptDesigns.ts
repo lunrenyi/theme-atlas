@@ -455,6 +455,24 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'Two lines unfold like a quiet memory index; crystal fragments only graze the path, and recollection blue-violet marks the records being restored.',
   },
+  'xipe-thousandfold-chorus': {
+    visualStyle: 'thousandfold-chorus',
+    layout: 'segmented',
+    glyphSet: { prompt: '◎', separator: '·', connector: '〜' },
+    motif: 'chorus-ring',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote:
+      '字段像不同声部一样分段进入同一行乐谱，协奏紫钉住当前命令，和声青只标记辅助节拍，圣环与金线在背景低声共鸣。',
+    designNoteEn:
+      'Fields enter like separate voice parts joining one score; concerto violet anchors the current command, harmony teal only marks supporting beats, while the ring and gold threads resonate quietly behind.',
+  },
   'uncharted-reach': {
     visualStyle: 'stellar-navigation',
     layout: 'two-line',

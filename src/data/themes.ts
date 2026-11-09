@@ -1789,6 +1789,100 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
   },
 
   {
+    slug: 'xipe-thousandfold-chorus',
+    title: '希佩 · 万籁同奏',
+    subtitle: '万千声部交汇，群星共成一曲。',
+    collection: 'rail',
+    description: '珍珠白与柔缎灰铺开合唱的空间，协奏紫钉住旋律核心，古金织线与虹彩光环只在原创圣环插画中共鸣。',
+    story:
+      '群星各自运行，文明各有语言。' +
+      '不同的世界有不同的歌声，不同的生命也有自己的旋律。' +
+      '当这些声音在宇宙中交汇，一场横跨万界的合唱便开始了。' +
+      '有人承担低沉的和弦，有人唱出明亮的高音；每一种声部都有自己的位置。' +
+      '万千旋律彼此交织，最终汇入同一支宏大的乐曲。' +
+      '祂是希佩，同谐的星神。' +
+      '本主题从希佩的集群星神设定与虹彩形象中寻找灵感，' +
+      '以原创的“千声圣环”表现多声部的汇聚与共鸣；它不是游戏中的正式物件，也不描绘希佩的人形或面孔。',
+    inspiration:
+      '官方资料将希佩描述为来自多个谐乐天体世界的集群星神，并以“千面一体”概括这种多而同一的存在方式，' +
+      '同谐的理念包含众生融入共同旋律、强者扶助弱者。' +
+      'Theme Atlas 据此提炼出合唱、织网与光环三种视觉材料：' +
+      '珍珠白构成合唱的空间，协奏紫代表共同的旋律核心，古金色线条把不同声部连接成网。' +
+      '和声珊瑚、晨曦金、弦音绿、流光青、星弦蓝与合唱紫六种虹彩只记录来自不同世界的声音，' +
+      '仅用于原创 SVG 主视觉，不承担 UI 语义，也不用于小字号文字。',
+    designRationale:
+      '界面以温润的珍珠白和柔缎灰建立浅色工作区，让“合唱”首先是一种协调的空间秩序，而不是铺满画面的彩虹。' +
+      '合奏墨与暮歌灰保证正文和小字的可读性，协奏紫是唯一主强调，和声青只承担少量结构与信息提示。' +
+      '虹彩被严格限制在主视觉的光环与声波中，彼此保持低饱和并由金线统一，避免变成普通彩虹或演唱会灯光。' +
+      'Vim 与 Codex 使用独立的语法色盘：莓紫关键字、深蓝函数、松绿字符串、陶棕数字与靛紫类型在同一暖色纸面上清楚分离，' +
+      '所有代码颜色均不使用透明度稀释，直接通过背景与面板两种代码区域的 AA 对比。',
+    palette: [
+      { name: '珍珠白', hex: '#F1EEE9', role: 'bg', note: '合唱空间般温润、安静的浅色背景' },
+      { name: '柔缎灰', hex: '#E5DED8', role: 'surface', note: '声部层次叠合形成的信息面板' },
+      { name: '合奏墨', hex: '#302B36', role: 'text', note: '共同乐谱上的正文与主要记录' },
+      { name: '暮歌灰', hex: '#645E6B', role: 'muted', note: '低声部与次要说明文字' },
+      { name: '织金线', hex: '#C9C0C1', role: 'border', note: '连接各声部的细弱结构线' },
+      { name: '协奏紫', hex: '#6A4F82', role: 'accent', note: '共同旋律核心、链接与主要操作' },
+      { name: '乐章白', hex: '#FFF9F3', role: 'onAccent', note: '协奏紫之上的浅色文字' },
+      { name: '和声青', hex: '#3E6370', role: 'flare', note: '少量结构提示与辅助信息' },
+    ],
+    tags: ['同人', '同谐', '希佩', '万籁同奏', '合唱', '多声部', '共鸣', '织网', '虹彩光环', '协奏'],
+    sources: [
+      {
+        title: 'HoYoLAB 官方 HSR Wiki · 同谐命途条目',
+        type: 'link',
+        url: 'https://wiki.hoyolab.com/pc/hsr/entry/83?lang=en-us',
+        detail: 'HoYoLAB 官方命途资料条目',
+        note:
+          '用于核对同谐命途的官方表述，包括众生融入共同旋律、强者扶助弱者等理念；' +
+          '本页不把 Theme Atlas 的千声圣环、织网与光环称为游戏官方地点或物件。',
+      },
+      {
+        title: 'HoYoLAB 官方 HSR Wiki · 希佩条目',
+        type: 'link',
+        url: 'https://wiki.hoyolab.com/pc/hsr/entry/894?lang=en-us',
+        detail: 'HoYoLAB 官方星神资料条目',
+        note:
+          '用于核对希佩作为同谐星神、来自多个谐乐天体世界的集群星神，以及“千面一体”等官方设定；' +
+          '本站未使用该条目的立绘、截图、Logo 或界面素材。',
+      },
+      {
+        title: '哔哩哔哩游戏 WIKI · 星神',
+        type: 'link',
+        url: 'https://wiki.biligame.com/sr/%E6%98%9F%E7%A5%9E',
+        detail: '社区维护的星神资料页',
+        note: '作为中文补充资料交叉核对集群星神与同谐设定，具体表述以官方来源为准。',
+      },
+      {
+        title: '崩坏：星穹铁道 官方网站 · 世界观栏目',
+        type: 'link',
+        url: 'https://hsr.hoyoverse.com/zh-cn/world',
+        detail: '官方公开世界观栏目',
+        note: '作为作品、星神与命途设定的官方入口；本站未使用官方立绘、Logo、截图、UI 或纹样。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人演绎）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据遵循 Theme Atlas 现有 CC BY 4.0 数据许可约定',
+      disclaimer:
+        '本主题为非官方同人作品，仅用于配色研究与界面演示，与 HoYoverse 无隶属或授权关系。',
+      imageLicence: '站内插图为原创抽象 SVG，未使用官方人形、面部、立绘、Logo、截图、UI 或纹样。',
+    },
+    status: 'interpretation',
+    plate: 'xipe-chorus',
+    artworkPalette: [
+      { name: '和声珊瑚', hex: '#C98591', note: '来自温暖世界的声部声波，仅用于插画' },
+      { name: '晨曦金', hex: '#D6AE76', note: '连接声部的金色织网与光环节点，仅用于插画' },
+      { name: '弦音绿', hex: '#9EB99D', note: '低沉和声声部的柔和绿光，仅用于插画' },
+      { name: '流光青', hex: '#80B1B2', note: '外环掠过的冷色声波，仅用于插画' },
+      { name: '星弦蓝', hex: '#829FC4', note: '遥远星海传入的蓝色声部，仅用于插画' },
+      { name: '合唱紫', hex: '#A18BB6', note: '共鸣核心外圈的虹彩紫光，仅用于插画' },
+    ],
+  },
+
+  {
     slug: 'uncharted-reach',
     title: '未知疆域',
     subtitle: '在星图尚未命名的地方，点亮第一束文明信号',

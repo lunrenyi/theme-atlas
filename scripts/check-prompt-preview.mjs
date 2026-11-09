@@ -115,6 +115,26 @@ function requiredTerminalText(kind, theme) {
       '248',
     ];
   }
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'xipe-chorus') {
+    return [
+      'vim - theme-preview.ts',
+      'theme-preview.ts',
+      'typescript',
+      'NORMAL',
+      '9:20',
+      'Voice',
+      'harmonize',
+      'world-a',
+      'world-b',
+      'world-c',
+      '440',
+      '523',
+      '392',
+      'broadcast',
+      'support',
+      'threshold',
+    ];
+  }
   if (kind === 'codex' && theme.previewDesign.codex.example === 'nous-deduction') {
     return [
       'codex - ~/theme-atlas',
@@ -147,6 +167,23 @@ function requiredTerminalText(kind, theme) {
       '+1',
       '-1',
       'Request another memory audit...',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'xipe-chorus') {
+    return [
+      'codex - ~/theme-atlas',
+      'Analyse three signals from different planets',
+      'Identified 3 independent voice parts',
+      'Aligning chorus phases',
+      'Harmony plan generated. All signals are synchronised.',
+      'src/chorus-harmony.ts',
+      'harmonize',
+      'Voice',
+      '440',
+      'broadcast',
+      '+1',
+      '-1',
+      'Request another harmony plan...',
     ];
   }
   return requiredText[kind];

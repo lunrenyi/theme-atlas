@@ -637,6 +637,55 @@ const { variant, density, hasFlare } = Astro.props;
       </g>
     )
   }
+
+  {
+    variant === 'chorus-ring' && (
+      <g>
+        {/* layered elliptical halo rings around the shared melodic core */}
+        <g stroke="var(--t-border)" fill="none">
+          <ellipse cx="180" cy="80" rx="150" ry="56" transform="rotate(-12 180 80)" opacity="0.6" />
+          <ellipse cx="180" cy="80" rx="108" ry="66" transform="rotate(28 180 80)" opacity="0.42" />
+          <ellipse cx="180" cy="80" rx="64" ry="24" transform="rotate(-12 180 80)" stroke="var(--t-accent)" opacity="0.5" />
+        </g>
+
+        {/* sound waves entering the core from different worlds */}
+        <g fill="none" stroke-linecap="round">
+          <path d="M8 52c30 4 52 14 72 26" stroke="var(--t-flare)" stroke-width="0.9" opacity="0.6" />
+          <path d="M14 112c34-8 60-18 82-24" stroke="var(--t-muted)" stroke-width="0.8" opacity="0.55" />
+          <path d="M352 50c-32 6-56 18-78 30" stroke="var(--t-accent)" stroke-width="0.9" opacity="0.55" />
+          <path d="M346 116c-34-6-60-16-84-26" stroke="var(--t-border)" stroke-width="1" opacity="0.7" />
+        </g>
+
+        {/* gold-thread network linking the six voice nodes */}
+        <g stroke="var(--t-accent)" stroke-width="0.7" opacity="0.4">
+          <path d="M62 62 180 80 298 62" />
+          <path d="M76 108 180 80 284 108" />
+          <path d="M62 62 76 108M298 62 284 108" />
+        </g>
+
+        {/* voice nodes, each a different part of the chorus */}
+        <g>
+          <circle cx="62" cy="62" r="3.2" fill="var(--t-accent)" />
+          <circle cx="298" cy="62" r="3.2" fill="var(--t-flare)" />
+          <circle cx="76" cy="108" r="2.6" fill="var(--t-muted)" />
+          <circle cx="284" cy="108" r="2.6" fill="var(--t-accent)" opacity="0.8" />
+          <circle cx="180" cy="26" r="2.2" fill="var(--t-flare)" opacity="0.8" />
+          <circle cx="180" cy="134" r="2.2" fill="var(--t-muted)" opacity="0.8" />
+        </g>
+
+        {/* small geometric tessellation marks beside the nodes */}
+        <g fill="var(--t-surface)" stroke="var(--t-border)" stroke-width="0.7" opacity="0.85">
+          <path d="m44 82 6 6-6 6-6-6z" />
+          <path d="m316 82 6 6-6 6-6-6z" />
+        </g>
+
+        {/* the soft resonant core */}
+        <circle cx="180" cy="80" r="15" fill="var(--t-surface)" stroke="var(--t-border)" stroke-width="0.8" />
+        <circle cx="180" cy="80" r="9" fill="none" stroke="var(--t-accent)" stroke-width="1" opacity="0.7" />
+        <circle cx="180" cy="80" r="3.4" fill="var(--t-accent)" />
+      </g>
+    )
+  }
 </svg>
 
 <style>

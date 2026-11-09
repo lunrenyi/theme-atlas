@@ -1775,6 +1775,85 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
     ],
   },
 
+  'xipe-thousandfold-chorus': {
+    title: 'Xipe · Thousandfold Chorus',
+    subtitle: 'A thousand voice parts meet, and the stars become one song.',
+    description:
+      'Pearl white and satin grey open the chorus space, concerto violet anchors the melodic core, and gold threads with an iridescent halo resonate only inside the original ring illustration.',
+    story:
+      'The stars follow their own orbits, and civilisations keep their own languages. Different worlds hold different songs, and every living being carries its own melody. ' +
+      'When these voices meet in the cosmos, a chorus spanning ten thousand worlds begins. Some carry the low chords, others sing the bright high notes; every voice part has its own place. ' +
+      'A thousand melodies weave together and finally flow into one grand composition. Xipe is the Aeon of Harmony. ' +
+      'This theme draws on Xipe’s setting as a collective Aeon and on its iridescent imagery, using an original “thousand-voice ring” to express the gathering and resonance of many parts. ' +
+      'It is not an official object in the game, and it does not depict the human form or face of Xipe.',
+    inspiration:
+      'Official material describes Xipe as a collective Aeon born from several harmonious celestial worlds, summarised as “one body of a thousand faces”, while the Harmony Path speaks of all beings joining a shared melody and the strong supporting the weak. ' +
+      'Theme Atlas distils this into three visual materials: a chorus, a woven network and a halo. Pearl white forms the chorus space; concerto violet represents the shared melodic core; antique-gold threads connect the voice parts into a web. ' +
+      'Six iridescent colours — harmony coral, dawn gold, string green, flowing cyan, star-chord blue and chorus violet — record voices arriving from different worlds. They stay inside the original SVG artwork, carry no UI semantics and are never used for small text.',
+    designRationale:
+      'The interface builds a light workspace from warm pearl white and satin grey, so the chorus reads first as a coordinated spatial order rather than a rainbow filling the screen. ' +
+      'Chorus ink and dusk-song grey keep body and small text readable; concerto violet is the single primary accent, while harmony teal handles only a few structural and informational cues. ' +
+      'Iridescence is confined to the halo and sound waves of the key visual, kept low in saturation and unified by the gold threads, avoiding an ordinary rainbow or concert-lighting look. ' +
+      'Vim and Codex share an independent syntax palette: berry-violet keywords, deep-blue functions, pine-green strings, terracotta numbers and indigo-violet types stay clearly separated on the same warm paper. No code colour is diluted with opacity, and every one passes AA contrast on both the background and the panel.',
+    tags: ['Fan work', 'Harmony', 'Xipe', 'Thousandfold chorus', 'Chorus', 'Multiple voices', 'Resonance', 'Woven network', 'Iridescent halo', 'Concert'],
+    palette: [
+      { name: 'Pearl White', note: 'A warm, quiet light ground like a chorus space' },
+      { name: 'Satin Grey', note: 'Information panels formed by layered voice parts' },
+      { name: 'Chorus Ink', note: 'Body text and the main records of the shared score' },
+      { name: 'Dusk Song Grey', note: 'Low voice parts and secondary copy' },
+      { name: 'Woven Gold Thread', note: 'Fine structural lines connecting the voice parts' },
+      { name: 'Concerto Violet', note: 'The shared melodic core, links and primary actions' },
+      { name: 'Movement White', note: 'Light text on concerto violet' },
+      { name: 'Harmony Teal', note: 'A few structural cues and supporting signals' },
+    ],
+    sources: [
+      {
+        title: 'Official HoYoLAB HSR Wiki · Harmony Path entry',
+        detail: 'Official Path reference entry',
+        note:
+          'Used to check official descriptions of the Harmony Path, including all beings joining a shared melody and the strong supporting the weak. ' +
+          'The Theme Atlas thousand-voice ring, woven network and halo are not presented as an official in-game location or object.',
+      },
+      {
+        title: 'Official HoYoLAB HSR Wiki · Xipe entry',
+        detail: 'Official Aeon reference entry',
+        note:
+          'Used to check Xipe’s identity as the Aeon of Harmony, a collective Aeon from several harmonious celestial worlds, and the “one body of a thousand faces” wording. ' +
+          'No character art, screenshot, logo or interface asset from this entry is used.',
+      },
+      {
+        title: 'biligame Wiki · Aeons',
+        detail: 'Community-maintained Aeon reference page',
+        note:
+          'Used as a supplementary Chinese cross-check for the collective-Aeon and Harmony setting; official sources remain authoritative.',
+      },
+      {
+        title: 'Honkai: Star Rail official website · World section',
+        detail: 'Official public setting entry',
+        note:
+          'Used only as an official entry point for the work, Aeons and Paths. No official character art, logo, screenshot, UI or pattern is used.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: 'Theme Atlas editorial team (unofficial fan interpretation)',
+      graphics: 'Theme Atlas (original SVG)',
+      license: 'Palette data follows the current Theme Atlas CC BY 4.0 data-licensing convention',
+      disclaimer:
+        'This theme is an unofficial fan work made for colour research and interface demonstration only. It is not affiliated with or authorised by HoYoverse.',
+      imageLicence:
+        'The plate is an original abstract SVG; no official human form, face, character art, logo, screenshot, UI or pattern is used.',
+    },
+    artworkPalette: [
+      { name: 'Harmony Coral', note: 'A voice wave from a warm world; illustration only' },
+      { name: 'Dawn Gold', note: 'Gold woven threads and halo nodes joining the voices; illustration only' },
+      { name: 'String Green', note: 'Soft green light of the low chord voices; illustration only' },
+      { name: 'Flowing Cyan', note: 'Cool sound wave sweeping the outer ring; illustration only' },
+      { name: 'Star-Chord Blue', note: 'A blue voice arriving from the distant star sea; illustration only' },
+      { name: 'Chorus Violet', note: 'Iridescent violet glow around the resonant core; illustration only' },
+    ],
+  },
+
   'uncharted-reach': {
     title: 'Uncharted Reach',
     subtitle: 'Light the first signal from a region the charts have not named',
