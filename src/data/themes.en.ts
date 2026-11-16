@@ -15,6 +15,7 @@ export interface ThemeTranslation {
   subtitle: string;
   description: string;
   story: string;
+  acts?: Array<{ title: string; text: string }>;
   inspiration: string;
   designRationale: string;
   tags: string[];
@@ -1449,45 +1450,72 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
   },
 
   'aha-cosmic-farce': {
-    title: 'Aha · Cosmic Farce',
-    subtitle: 'The universe never lacks answers; it only lacks a ridiculous enough question.',
+    title: 'Aha · The Game of Laughter and Tears',
+    subtitle: 'Knowing life is a game, I would still choose to play it again.',
     description:
-      'Curtain black, elation pink, illusion cyan and spotlight gold open a never-ending cosmic theatre, where masks, dice and reversals wait in the wings.',
+      'A ring theatre hangs in a violet cosmos. Elation pink, illusion cyan and fateful gold circle a twin mask as laughter, tears and dice return to the stage.',
     story:
-      'The cosmos is long enough that someone ought to laugh at it. When Aha climbed to the ' +
-      'highest point of the Tree of Existence, the Aeon saw the turning of stars, the edge of ' +
-      'the void, and the apparently senseless order behind all things. Then an infant fell ' +
-      'and cried aloud. So Aha laughed. That laughter tore open the silence of the universe, ' +
-      'and a performance that never ends began. This theme does not turn Elation into cheap ' +
-      'noise. It places the idea on a black stage: masks keep truth uncertain, dice are ready ' +
-      'to rewrite the ending, and every new beam of light may be the next joke.',
+      'Desire makes us reach out again and again; fate lets the dice fall just as often. ' +
+      'Someone weeps at the curtain call while someone else laughs at the absurdity of it all. ' +
+      'Yet when the theatre lights return, someone always steps back onto the stage.',
+    acts: [
+      {
+        title: 'Act I · Desire',
+        text:
+          'When the first golden light falls, everyone believes the next pursuit will be different. ' +
+          'Applause arrives on cue; so does the emptiness after it. The curtain falls, desire takes ' +
+          'another name, and beckons from the dark once more.',
+      },
+      {
+        title: 'Act II · Absurdity',
+        text:
+          'Comedy and tragedy share a single mask. Before the laughter fades, tears have already ' +
+          'crossed the cheek. One person mourns a loss; another laughs at a coincidence too absurd ' +
+          'to bear. The stage does not decide which expression is more truthful.',
+      },
+      {
+        title: 'Act III · Reprise',
+        text:
+          'The dice are still in the air. If every meeting and parting were to return, if pain could ' +
+          'not be struck from the script, would you still catch them and walk into the light?\n\n' +
+          'Perhaps true elation is not a promise of endless happiness, but the willingness to embrace ' +
+          'the game even though suffering remains.\n\n' +
+          'The curtain call is not an ending. As long as someone is willing to roll the dice, the next ' +
+          'performance will begin.',
+      },
+    ],
     inspiration:
-      'The palette is drawn from the mask, theatre and chance reversals associated with ' +
-      'Elation. Curtain black and night violet open the dark stage, mask white carries body ' +
-      'copy, and elation pink marks the current act and primary actions. Spotlight gold is ' +
-      'reserved for key cues and reversals. Illusion cyan, trick violet and curtain red enter ' +
-      'through the independent syntax palette, acting as unexpected strings, typographical ' +
-      'sleight of hand and numeric alarms. The floating mask, broken circular stage, cards, ' +
-      'dice and asymmetric light trails are original geometric forms; no character artwork, ' +
-      'logo, interface asset or official pattern is reproduced.',
+      'The three acts enter into dialogue with cycles of desire and suffering, laughter and tears ' +
+      'within the absurd, and the affirmation of life through recurrence. These are creative ' +
+      'intertexts, not claims that Aha personifies a philosopher or that the game retells a theory. ' +
+      'Deep violet-black becomes the cosmic night; golden spotlights reveal a floating ring theatre. ' +
+      'A twin mask holds laughter and tears, pink and cyan ribbons close into loops, and the dice ' +
+      'hang at the instant before fate is decided. The original SVG uses no game artwork, ' +
+      'screenshots, logos, UI assets or official character silhouettes.',
     designRationale:
-      'The dark interface establishes the theatre’s shadow first, then lets elation pink ' +
-      'become a focus bright enough to pass AA contrast. Dusty violet secondary copy keeps ' +
-      'the noise in check so the page never becomes a neon rainbow. Spotlight gold acts as ' +
-      'the flare, limited to input cues, status reversals and a few stage nodes. Vim and ' +
-      'Codex share one independent syntax palette: pink keywords open the scene, gold ' +
-      'functions read like spotlights, cyan strings introduce the unexpected, and trick ' +
-      'violet and curtain red separate types and numbers from ordinary text.',
-    tags: ['Fan work', 'Elation', 'Mask', 'Theatre', 'Dice', 'Playing cards', 'Reversal'],
+      'Low-luminance violet layers separate the page and panels without flattening the shadows. ' +
+      'Mask white carries body copy, while dusty violet secondary text remains AA-readable at ' +
+      'small sizes. Elation pink marks the current act and primary actions; fateful gold is kept ' +
+      'for inputs, cursors and turns of fortune. Cyan, trick violet and the raised-surface violet ' +
+      'belong to the illustration rather than the UI roles. Vim and Codex use an independent ' +
+      'eleven-colour syntax palette, separating pink keywords, cyan functions, golden strings, ' +
+      'violet numbers and blue types. Selection and Diff states alter dark backgrounds and rules, ' +
+      'never the syntax foreground colours.',
+    tags: ['Fan work', 'Elation', 'Laughter and tears', 'Twin mask', 'Eternal theatre', 'Dice', 'Reprise'],
     palette: [
-      { name: 'Curtain Black', note: 'The deepest stage before the opening act' },
-      { name: 'Night Violet', note: 'Cards, panels and layers of the stage' },
-      { name: 'Mask White', note: 'Mask highlights and primary body text' },
-      { name: 'Backstage Grey-Violet', note: 'Secondary notes and exit information' },
-      { name: 'Proscenium Violet', note: 'Stage boundaries and structural rules' },
-      { name: 'Elation Pink', note: 'The current act, links and primary actions' },
+      { name: 'Night Violet-Black', note: 'The violet-black cosmos beyond the theatre' },
+      { name: 'Stage Violet', note: 'Panels, code surfaces and the theatre’s shadows' },
+      { name: 'Mask White', note: 'Mask highlights, body copy and code variables' },
+      { name: 'Backstage Grey-Violet', note: 'Readable secondary notes and small interface text' },
+      { name: 'Curtain Dark Violet', note: 'Curtain folds, stage boundaries and selection rules' },
+      { name: 'Elation Pink', note: 'Laughter, the current act, links and primary actions' },
       { name: 'Pink-Lamp Type', note: 'Dark text on elation pink' },
-      { name: 'Spotlight Gold', note: 'Key cues and reversals of fortune' },
+      { name: 'Fateful Gold', note: 'Desire, spotlights, dice and cues from fate' },
+    ],
+    artworkPalette: [
+      { name: 'Illusion Cyan', note: 'Tears, absurdity and the other side of the looping ribbon' },
+      { name: 'Trick Violet', note: 'Tragedy, nothingness and the mask’s nocturnal shadow' },
+      { name: 'Raised Violet', note: 'Theatre relief, mask planes and distant floating layers' },
     ],
     sources: [
       {
@@ -1502,6 +1530,16 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
         note:
           'Pending: an official setting reference with version and page details will replace ' +
           'this entry. The current writing and colour values are original Theme Atlas work.',
+      },
+      {
+        title: 'The World as Will and Representation',
+        detail: 'Arthur Schopenhauer, 1818',
+        note: 'A creative intertext for desire, suffering and satisfaction, not an interpretation of the game’s plot.',
+      },
+      {
+        title: 'The Gay Science',
+        detail: 'Friedrich Nietzsche, 1882; especially sections 276 and 341',
+        note: 'A creative intertext for amor fati, eternal recurrence and affirmation; Aha is not equated with Nietzsche.',
       },
     ],
     credits: {

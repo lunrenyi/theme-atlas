@@ -283,6 +283,16 @@ const bars = theme.palette.map((color, i) => ({
   }
 
   @media (max-width: 560px) {
+    .hud__head {
+      flex-wrap: wrap;
+    }
+
+    .hud__sub {
+      flex-basis: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
     .hud__body {
       grid-template-columns: 104px minmax(0, 1fr);
       gap: 12px;
@@ -295,6 +305,10 @@ const bars = theme.palette.map((color, i) => ({
 
     .hud__key-name {
       font-size: 1rem;
+    }
+
+    .hud__bar-tip {
+      display: none;
     }
   }
 

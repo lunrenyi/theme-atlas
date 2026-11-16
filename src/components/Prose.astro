@@ -9,26 +9,32 @@ interface Props {
 }
 
 const { text, palette, class: className = '' } = Astro.props;
-const segments = splitColourMentions(text, palette);
+const paragraphs = text.trim().split(/\n{2,}/).map((paragraph) => ({
+  segments: splitColourMentions(paragraph, palette),
+}));
 ---
 
-<p class={className}>
-  {
-    segments.map((segment) =>
-      segment.color ? (
-        <span
-          class="ink"
-          style={'--tone:' + segment.color.hex}
-          title={segment.color.name + ' ' + segment.color.hex}
-        >
-          {segment.text}
-        </span>
-      ) : (
-        segment.text
-      ),
-    )
-  }
-</p>
+{
+  paragraphs.map((paragraph) => (
+    <p class={className}>
+      {
+        paragraph.segments.map((segment) =>
+          segment.color ? (
+            <span
+              class="ink"
+              style={'--tone:' + segment.color.hex}
+              title={segment.color.name + ' ' + segment.color.hex}
+            >
+              {segment.text}
+            </span>
+          ) : (
+            segment.text
+          ),
+        )
+      }
+    </p>
+  ))
+}
 
 <style>
   .ink {

@@ -102,6 +102,21 @@ const sourceTypeLabel: Record<string, string> = {
                 <span class="prose-block__index mono">01</span>{t(lang, 'detail.story')}
               </h2>
               <Prose text={theme.story} palette={theme.palette} />
+              {
+                theme.acts && (
+                  <div class="acts">
+                    {theme.acts.map((act, index) => (
+                      <section class="act">
+                        <h3 class="act__title">
+                          <span class="act__number mono">0{index + 1}</span>
+                          {act.title}
+                        </h3>
+                        <Prose text={act.text} palette={theme.palette} />
+                      </section>
+                    ))}
+                  </div>
+                )
+              }
             </section>
 
             <section class="prose-block" aria-labelledby="inspiration-heading">
@@ -430,6 +445,36 @@ const sourceTypeLabel: Record<string, string> = {
     color: var(--text-2);
     line-height: 1.95;
     font-size: var(--step-0);
+  }
+
+  .acts {
+    display: grid;
+    gap: 22px;
+    margin-top: 26px;
+  }
+
+  .act {
+    padding-left: 16px;
+    border-left: 1px solid var(--orbit-dim);
+  }
+
+  .act__title {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 9px;
+    color: var(--text);
+    font-size: var(--step-0);
+  }
+
+  .act__number {
+    color: var(--gold);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .act p + p {
+    margin-top: 12px;
   }
 
   .prose-block__aside {

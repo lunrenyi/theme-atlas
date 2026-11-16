@@ -348,6 +348,82 @@ for (const slug of addedRailThemes) {
   await auditAddedTheme(slug, 'Honkai: Star Rail fan themes', 8, true, 2);
 }
 
+const aha = themes.find((theme) => theme.slug === 'aha-cosmic-farce');
+const ahaTranslation = themeTranslations['aha-cosmic-farce'];
+assert(Boolean(aha), 'Aha theme is missing from the shared theme data');
+if (aha) {
+  assert(
+    aha.title === '阿哈 · 悲欣游戏' &&
+      ahaTranslation?.title === 'Aha · The Game of Laughter and Tears',
+    'Aha must upgrade the existing theme in place without changing its slug',
+  );
+  assert(
+    aha.acts?.length === 3 && ahaTranslation?.acts?.length === 3,
+    'Aha needs three localised narrative acts',
+  );
+  assert(
+    aha.acts?.at(-1)?.text.endsWith('谢幕并不是结束。只要还有人愿意掷出骰子，下一场演出就会开始。') &&
+      ahaTranslation?.acts?.at(-1)?.text.endsWith(
+        'The curtain call is not an ending. As long as someone is willing to roll the dice, the next performance will begin.',
+      ),
+    'Aha is missing its Chinese or English closing line',
+  );
+
+  const expectedAhaUi = {
+    bg: '#17131F',
+    surface: '#211B2B',
+    text: '#F4EDF3',
+    muted: '#B9AABD',
+    border: '#41334A',
+    accent: '#F06FAE',
+    onAccent: '#17131F',
+    flare: '#F2C66D',
+  };
+  const ahaMap = paletteMap(aha);
+  for (const [role, hex] of Object.entries(expectedAhaUi)) {
+    assert(ahaMap[role]?.hex === hex, `Aha UI ${role} must remain ${hex}`);
+  }
+  assert(
+    ['#69D9D0', '#A88AE5', '#30263A'].every((hex) =>
+      aha.artworkPalette?.some((color) => color.hex === hex),
+    ),
+    'Aha is missing an illustration-only theatre colour',
+  );
+  for (const [role, hex] of Object.entries(aha.syntax)) {
+    assert(contrastRatio(hex, ahaMap.bg.hex) >= 4.5, `Aha syntax ${role} must pass AA on bg`);
+    assert(
+      contrastRatio(hex, ahaMap.surface.hex) >= 4.5,
+      `Aha syntax ${role} must pass AA on surface`,
+    );
+  }
+
+  for (const lang of ['zh', 'en']) {
+    const html = await readDist(
+      lang === 'zh' ? 'theme/aha-cosmic-farce/index.html' : 'en/theme/aha-cosmic-farce/index.html',
+    );
+    const expectedTitle = lang === 'zh' ? aha.title : ahaTranslation.title;
+    const expectedActs = lang === 'zh' ? aha.acts : ahaTranslation.acts;
+    assert(html.includes(expectedTitle), `${lang}/Aha: upgraded title is missing`);
+    assert(!html.includes('谐谑剧场') && !html.includes('Aha · Cosmic Farce'), `${lang}/Aha: old title remains`);
+    assert(
+      expectedActs.every((act) => html.includes(act.title)),
+      `${lang}/Aha: a narrative act is missing`,
+    );
+    assert(html.includes('id="aha-spotlight"'), `${lang}/Aha: original ring-theatre SVG is missing`);
+
+    const payload = exportPayload(html);
+    assert(Boolean(payload?.css?.text && payload?.json?.text), `${lang}/Aha: exports are incomplete`);
+    if (payload) {
+      const exported = JSON.parse(payload.json.text);
+      assert(exported.title === expectedTitle, `${lang}/Aha: JSON export has the wrong title`);
+      assert(exported.artworkPalette?.length === 3, `${lang}/Aha: artwork colours are not exported`);
+      for (const color of aha.palette) {
+        assert(payload.css.text.includes(color.hex), `${lang}/Aha: CSS export misses ${color.hex}`);
+      }
+    }
+  }
+}
+
 const qlipoth = themes.find((theme) => theme.slug === 'qlipoth-amber-rampart');
 assert(Boolean(qlipoth), 'Qlipoth theme is missing from the shared theme data');
 if (qlipoth) {

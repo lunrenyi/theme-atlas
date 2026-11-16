@@ -1,6 +1,10 @@
 ---
 import type { PaletteRole, Theme } from '../data/types';
 import {
+  ahaCodexDiffAdded,
+  ahaCodexDiffContext,
+  ahaCodexDiffRemoved,
+  ahaCodexSyntaxExample,
   codexDiffAdded,
   codexDiffContext,
   codexDiffRemoved,
@@ -57,6 +61,12 @@ const examples = {
     context: xipeCodexDiffContext,
     removed: xipeCodexDiffRemoved,
     added: xipeCodexDiffAdded,
+  },
+  'aha-reprise': {
+    code: ahaCodexSyntaxExample,
+    context: ahaCodexDiffContext,
+    removed: ahaCodexDiffRemoved,
+    added: ahaCodexDiffAdded,
   },
 };
 const example = examples[design.example ?? 'default'];

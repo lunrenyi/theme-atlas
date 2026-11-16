@@ -199,7 +199,12 @@ export type SyntaxRole =
 /** Theme-owned code colours, separate from the ordinary UI palette. */
 export type SyntaxPalette = Record<SyntaxRole, string>;
 
-export type PreviewExample = 'default' | 'nous-deduction' | 'fuli-memory' | 'xipe-chorus';
+export type PreviewExample =
+  | 'default'
+  | 'nous-deduction'
+  | 'fuli-memory'
+  | 'xipe-chorus'
+  | 'aha-reprise';
 
 export interface VimPreviewDesign {
   layout: 'classic' | 'focus' | 'compact';
@@ -245,6 +250,8 @@ export interface Theme {
   description: string;
   /** The narrative the theme is built from. */
   story: string;
+  /** Optional named movements within the story, kept in localisable data. */
+  acts?: Array<{ title: string; text: string }>;
   /** Where the colours specifically come from. */
   inspiration: string;
   /** How the colours were composed into a usable interface palette. */

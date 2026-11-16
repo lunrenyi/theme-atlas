@@ -135,6 +135,22 @@ function requiredTerminalText(kind, theme) {
       'threshold',
     ];
   }
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'aha-reprise') {
+    return [
+      'vim - theme-preview.ts',
+      'theme-preview.ts',
+      'typescript',
+      'NORMAL',
+      '9:20',
+      'Performance',
+      'reprise',
+      'desire',
+      'absurdity',
+      'masks',
+      'encore',
+      'choice',
+    ];
+  }
   if (kind === 'codex' && theme.previewDesign.codex.example === 'nous-deduction') {
     return [
       'codex - ~/theme-atlas',
@@ -184,6 +200,23 @@ function requiredTerminalText(kind, theme) {
       '+1',
       '-1',
       'Request another harmony plan...',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'aha-reprise') {
+    return [
+      'codex - ~/theme-atlas',
+      'Model the three acts of an endless theatre',
+      'Mapped desire, absurdity and reprise',
+      'Rehearsing eternal-theatre.ts',
+      'the next performance is a choice',
+      'src/eternal-theatre.ts',
+      'Performance',
+      'reprise',
+      'masks',
+      'choice',
+      '+1',
+      '-1',
+      'Roll the dice for another performance...',
     ];
   }
   return requiredText[kind];

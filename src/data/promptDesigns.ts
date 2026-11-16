@@ -379,9 +379,9 @@ export const promptDesigns: Record<string, PromptDesign> = {
       restrained: ['bg', 'muted', 'onAccent'],
     },
     designNote:
-      '上下文像剧场节目单一样分段入场，粉色点亮当下的演出，金色只给反转提示，细碎错位的牌与骰子维持荒诞感。',
+      '上下文像三幕节目单一样分段入场，粉色点亮笑与当下，金色只给骰子与重演提示，错位牌面留下泪与荒诞的空位。',
     designNoteEn:
-      'Context fields enter like a theatrical programme; pink lights the current act, gold is reserved for a reversal, and tilted cards and dice keep the absurdity in check.',
+      'Context fields enter like a three-act programme; pink lights laughter and the present, gold marks dice and reprise, while tilted cards leave room for tears and absurdity.',
   },
   'ix-silent-event-horizon': {
     visualStyle: 'silent-horizon',

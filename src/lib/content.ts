@@ -68,6 +68,7 @@ function localizeTheme(theme: Theme, lang: Locale): Theme {
     subtitle: translation.subtitle,
     description: translation.description,
     story: translation.story,
+    acts: translation.acts ?? theme.acts,
     inspiration: translation.inspiration,
     designRationale: translation.designRationale,
     tags: translation.tags,

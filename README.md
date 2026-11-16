@@ -217,6 +217,7 @@ interface Theme {
   game?: 'stellaris' | 'red-alert' | 'starcraft'; // 仅 game 系列使用的作品分组
   description: string;    // 一句话介绍
   story: string;          // 故事背景
+  acts?: Array<{ title: string; text: string }>; // 可选的多幕叙事
   inspiration: string;    // 配色灵感的具体来源
   designRationale: string;// 色彩设计思路
   palette: Array<{ name: string; hex: string; role: PaletteRole; note?: string }>;

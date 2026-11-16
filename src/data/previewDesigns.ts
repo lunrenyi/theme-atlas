@@ -116,8 +116,21 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     codex: codex('split', 'accent', 'muted', 'accent'),
   },
   'aha-cosmic-farce': {
-    vim: vim('focus', 'surface', 'accent'),
-    codex: codex('stacked', 'accent', 'muted', 'flare'),
+    vim: { ...vim('focus', 'accent', 'accent'), example: 'aha-reprise' },
+    codex: {
+      ...codex('stacked', 'accent', 'muted', 'flare'),
+      example: 'aha-reprise',
+      fileName: 'src/eternal-theatre.ts',
+      dialogue: {
+        user:
+          'Model the three acts of an endless theatre, preserving laughter, tears and the choice to begin again.',
+        assistant:
+          'Mapped desire, absurdity and reprise. The final act keeps both masks and asks for consent before another roll.',
+        status: 'Rehearsing eternal-theatre.ts · 3 acts',
+        conclusion: 'The stage is ready. Pain remains in the script; the next performance is a choice.',
+        input: 'Roll the dice for another performance...',
+      },
+    },
   },
   'ix-silent-event-horizon': {
     vim: vim('compact', 'surface', 'accent'),
