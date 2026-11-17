@@ -686,6 +686,68 @@ const { variant, density, hasFlare } = Astro.props;
       </g>
     )
   }
+  {
+    variant === 'ice-ember' && (
+      <g>
+        <path d="M180 0v160" stroke="var(--t-border)" stroke-width="0.75" stroke-dasharray="2 7" opacity="0.72" />
+        <path d="M180 13 207 54 200 119 180 151 160 119 153 54z" fill="var(--t-surface)" stroke="var(--t-accent)" stroke-width="1.1" />
+        <path d="M180 13v138l-20-32-7-65z" fill="var(--t-border)" opacity="0.3" />
+        <path d="M153 54l27 9 27-9M160 119l20-17 20 17M180 22l-6 35 9 19-8 25 7 25-3 17" stroke="var(--t-border)" stroke-width="0.75" fill="none" />
+        <path d="M180 22l-6 35 9 19-8 25 7 25-3 17" stroke="var(--t-flare)" stroke-width="1.25" fill="none" />
+        <path d="M46 80h78M236 80h78M78 50h42M240 112h42" stroke="var(--t-border)" stroke-width="0.7" opacity="0.62" />
+        <path d="M112 64 95 82l9 37 17 9M248 58l17 19-8 34-16 11" stroke="var(--t-accent)" stroke-width="0.8" fill="var(--t-surface)" opacity="0.72" />
+        <circle cx="180" cy="82" r="2.2" fill="var(--t-flare)" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'crystal-bloom' && (
+      <g>
+        <ellipse cx="180" cy="80" rx="148" ry="54" transform="rotate(-12 180 80)" stroke="var(--t-border)" stroke-width="0.65" opacity="0.55" />
+        <ellipse cx="180" cy="80" rx="110" ry="66" transform="rotate(24 180 80)" stroke="var(--t-flare)" stroke-width="0.65" opacity="0.4" />
+        {Array.from({ length: 8 }, (_, index) => (
+          <g transform={`rotate(${index * 45} 180 80)`}>
+            <path d="M180 80c-13-11-12-35 0-52 12 17 13 41 0 52Z" fill="var(--t-surface)" stroke="var(--t-accent)" stroke-width="0.85" />
+            <path d="M180 80V28M180 80l-7-26 7-26 7 26z" stroke="var(--t-border)" stroke-width="0.6" fill="var(--t-flare)" fill-opacity="0.18" />
+          </g>
+        ))}
+        <path d="M180 67 193 80 180 93 167 80z" fill="var(--t-surface)" stroke="var(--t-accent)" />
+        <circle cx="180" cy="80" r="3" fill="var(--t-flare)" />
+        <g fill="var(--t-surface)" stroke-linejoin="round">
+          <path d="M69 61 48 47l4 20 17 5zM71 61l19-17-3 22-16 6z" stroke="var(--t-accent)" stroke-width="0.8" />
+          <path d="M282 121 266 107l-1 18 17 6zM284 121l18-12-4 19-14 3z" stroke="var(--t-flare)" stroke-width="0.8" />
+        </g>
+        <path d="M70 52v23M283 111v25" stroke="var(--t-muted)" stroke-width="0.7" />
+      </g>
+    )
+  }
+
+  {
+    variant === 'helix-loop' && (
+      <g>
+        <g stroke="var(--t-border)" stroke-width="0.55" opacity="0.48">
+          <path d="M40 0v160M100 0v160M160 0v160M220 0v160M280 0v160M340 0v160" />
+          <path d="M0 40h360M0 80h360M0 120h360" />
+        </g>
+        <path d="M180 80c-29-43-80-44-82-3-2 42 51 46 82 3 31 43 84 39 82-3-2-41-53-40-82 3Z" stroke="var(--t-surface)" stroke-width="15" fill="none" stroke-linecap="round" />
+        <path d="M180 80c-29-43-80-44-82-3-2 42 51 46 82 3 31 43 84 39 82-3-2-41-53-40-82 3Z" stroke="var(--t-accent)" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.82" />
+        <path d="M180 80c-29-43-80-44-82-3-2 42 51 46 82 3 31 43 84 39 82-3-2-41-53-40-82 3Z" stroke="var(--t-flare)" stroke-width="0.9" stroke-dasharray="2 7" fill="none" />
+        <path d="M166 34c35 18-12 32 24 49s-12 31 12 43M194 34c-35 18 12 32-24 49s12 31-12 43" stroke="var(--t-flare)" stroke-width="1.15" fill="none" />
+        <g stroke="var(--t-text)" stroke-width="0.65" opacity="0.65">
+          <path d="M171 45h18M164 61h32M169 79h22M165 96h30M172 114h16" />
+        </g>
+        <g fill="var(--t-surface)" stroke="var(--t-accent)" stroke-width="0.7">
+          <path d="M108 57l7-5 7 5-2 8-8 1zM104 100l7-5 7 5-2 8-8 1zM244 55l7-5 7 5-2 8-8 1zM248 99l7-5 7 5-2 8-8 1z" />
+        </g>
+        <g fill="none" stroke="var(--t-accent)" stroke-width="0.75">
+          <circle cx="51" cy="126" r="8" /><circle cx="62" cy="126" r="8" />
+          <path d="M56 117v18M303 32h24M315 20v24" opacity="0.7" />
+        </g>
+        <circle cx="315" cy="32" r="2" fill="var(--t-flare)" />
+      </g>
+    )
+  }
 </svg>
 
 <style>

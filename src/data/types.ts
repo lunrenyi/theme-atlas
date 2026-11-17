@@ -5,7 +5,7 @@ export type CollectionId = 'myth' | 'porcelain' | 'rail' | 'game';
  * second collection: counts continue to come from the collection and theme
  * arrays, so a future parent/child migration cannot double-count themes.
  */
-export type GameWorldId = 'stellaris' | 'red-alert' | 'starcraft';
+export type GameWorldId = 'stellaris' | 'red-alert' | 'starcraft' | 'honkai-impact-3rd';
 
 /**
  * The seven semantic slots a theme palette must fill. Keeping them explicit
@@ -108,7 +108,10 @@ export type PromptVisualStyle =
   | 'amber-rampart'
   | 'cosmic-computation'
   | 'memory-refraction'
-  | 'thousandfold-chorus';
+  | 'thousandfold-chorus'
+  | 'deliverance-rift'
+  | 'crystal-ego'
+  | 'infinite-evolution';
 
 export type PromptLayout =
   | 'minimal'
@@ -151,7 +154,10 @@ export type PromptMotif =
   | 'rampart'
   | 'cosmic-array'
   | 'memory-river'
-  | 'chorus-ring';
+  | 'chorus-ring'
+  | 'ice-ember'
+  | 'crystal-bloom'
+  | 'helix-loop';
 
 export type PromptLineMode = 'single' | 'double';
 
@@ -204,7 +210,10 @@ export type PreviewExample =
   | 'nous-deduction'
   | 'fuli-memory'
   | 'xipe-chorus'
-  | 'aha-reprise';
+  | 'aha-reprise'
+  | 'kevin-deliverance'
+  | 'elysia-garden'
+  | 'mobius-evolution';
 
 export interface VimPreviewDesign {
   layout: 'classic' | 'focus' | 'compact';
@@ -290,7 +299,10 @@ export interface Theme {
     | 'qlipoth-rampart'
     | 'nous-computer'
     | 'fuli-crystal'
-    | 'xipe-chorus';
+    | 'xipe-chorus'
+    | 'kevin-ice-ember'
+    | 'elysia-crystal-garden'
+    | 'mobius-ouroboros';
   /** Decorative colours used only by the plate, never by the UI palette. */
   artworkPalette?: ArtworkColor[];
   /**

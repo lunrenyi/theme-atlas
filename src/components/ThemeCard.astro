@@ -33,6 +33,12 @@ const markKind =
           ? 'farce'
           : theme.plate === 'ix-horizon'
             ? 'horizon'
+            : theme.plate === 'kevin-ice-ember'
+              ? 'ice'
+              : theme.plate === 'elysia-crystal-garden'
+                ? 'garden'
+                : theme.plate === 'mobius-ouroboros'
+                  ? 'helix'
         : null;
 const mark =
   markKind === 'staff'
@@ -45,6 +51,12 @@ const mark =
           ? { gold: theme.syntax.function, flame: theme.syntax.keyword }
           : markKind === 'horizon'
             ? { gold: theme.syntax.function, flame: theme.syntax.keyword }
+            : markKind === 'ice'
+              ? { gold: theme.syntax.function, flame: map.flare?.hex }
+              : markKind === 'garden'
+                ? { gold: theme.artworkPalette?.[0]?.hex ?? map.accent?.hex, flame: theme.syntax.function }
+                : markKind === 'helix'
+                  ? { gold: map.accent?.hex, flame: map.flare?.hex }
       : null;
 
 const statusMap = {
@@ -135,6 +147,32 @@ const status = statusMap[theme.status];
                   />
                   <circle cx="29" cy="30" r="1.2" fill="#E7E3EF" />
                   <circle cx="35" cy="34" r="0.9" fill="#E7E3EF" opacity="0.7" />
+                </g>
+              ) : markKind === 'ice' ? (
+                <g stroke-linejoin="round">
+                  <path d="M32 6 45 23 42 46 32 58 22 46 19 23z" stroke={mark.gold} stroke-width="1.4" />
+                  <path d="M32 6v52L22 46 19 23z" fill={mark.gold} opacity="0.13" />
+                  <path d="M32 6v52M19 23l13 5 13-5M22 46l10-7 10 7" stroke={mark.gold} stroke-width="0.75" opacity="0.65" />
+                  <path d="M33 12 28 27 35 35 29 46 32 54" stroke={mark.flame} stroke-width="1.4" fill="none" />
+                  <path d="M9 32h7M48 32h7" stroke={mark.gold} stroke-width="0.8" opacity="0.6" />
+                </g>
+              ) : markKind === 'garden' ? (
+                <g stroke-linejoin="round">
+                  {Array.from({ length: 6 }, (_, index) => (
+                    <g transform={`rotate(${index * 60} 32 32)`}>
+                      <path d="M32 32C24 25 25 13 32 5c7 8 8 20 0 27Z" fill={index % 2 ? mark.gold : mark.flame} fill-opacity="0.2" stroke={index % 2 ? mark.gold : mark.flame} stroke-width="1" />
+                      <path d="M32 32V5" stroke={mark.gold} stroke-width="0.6" opacity="0.7" />
+                    </g>
+                  ))}
+                  <path d="M32 25 39 32 32 39 25 32z" fill={mark.gold} fill-opacity="0.45" stroke={mark.gold} />
+                  <path d="M52 45 46 39l-1 8 7 3zM53 45l7-5-2 8-5 2z" stroke={mark.flame} stroke-width="0.8" />
+                </g>
+              ) : markKind === 'helix' ? (
+                <g stroke-linecap="round">
+                  <path d="M32 32C22 14 7 15 7 31 7 48 22 50 32 32 42 50 57 48 57 31 57 15 42 14 32 32Z" stroke={mark.gold} stroke-width="4" />
+                  <path d="M32 32C22 14 7 15 7 31 7 48 22 50 32 32 42 50 57 48 57 31 57 15 42 14 32 32Z" stroke={mark.flame} stroke-width="0.8" stroke-dasharray="2 5" />
+                  <path d="M27 9c16 10-5 17 11 27s-5 16 5 20M37 9c-16 10 5 17-11 27s5 16-5 20" stroke={mark.flame} stroke-width="1" fill="none" />
+                  <path d="M29 17h6M26 28h12M28 40h8M29 50h6" stroke={mark.gold} stroke-width="0.75" />
                 </g>
               ) : null}
             </svg>

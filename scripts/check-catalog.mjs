@@ -10,6 +10,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collections } from '../src/data/collections.ts';
+import { gameWorlds } from '../src/data/gameWorlds.ts';
 import { themeTranslations } from '../src/data/themes.en.ts';
 import { themes } from '../src/data/themes.ts';
 import { syntaxPalettes } from '../src/data/syntaxPalettes.ts';
@@ -70,6 +71,11 @@ const addedRailThemes = [
   'fuli-crystal-river',
   'xipe-thousandfold-chorus',
 ];
+const honkaiImpactOrder = [
+  'kevin-ashes-deliverance',
+  'elysia-garden-ego',
+  'mobius-ouroboros-infinite',
+];
 
 const readDist = async (path) => readFile(resolve(dist, path), 'utf8');
 
@@ -115,6 +121,7 @@ async function auditAddedTheme(
   paletteLength,
   requiresFlare = false,
   minimumSources = 3,
+  allowPending = false,
 ) {
   const theme = themes.find((candidate) => candidate.slug === slug);
   const translation = themeTranslations[slug];
@@ -127,7 +134,7 @@ async function auditAddedTheme(
   );
   assert(
     theme?.sources.length >= minimumSources &&
-      theme.sources.every((source) => source.type !== 'pending'),
+      (allowPending || theme.sources.every((source) => source.type !== 'pending')),
     `${slug} needs at least ${minimumSources} verifiable references`,
   );
   assert(Boolean(syntaxPalettes[slug]), `${slug} needs an independent syntax palette`);
@@ -292,6 +299,27 @@ for (const lang of ['zh', 'en']) {
       `${lang}: ${id} collection section shows ${renderedCount}, data has ${count}`,
     );
   }
+
+  for (const game of gameWorlds) {
+    const marker = `<article class="game-group" data-game-world="${game.id}"`;
+    const start = collectionsHtml.indexOf(marker);
+    assert(start >= 0, `${lang}: game-world group ${game.id} is missing`);
+    if (start < 0) continue;
+    const nextGroup = collectionsHtml.indexOf('<article class="game-group"', start + marker.length);
+    const sectionEnd = collectionsHtml.indexOf('</section>', start);
+    const end = nextGroup >= 0 ? nextGroup : sectionEnd;
+    const groupHtml = collectionsHtml.slice(start, end);
+    const expectedCount = localisedThemes.filter((theme) => theme.game === game.id).length;
+    const renderedCount = (groupHtml.match(/<article class="card card--collection"/g) ?? []).length;
+    assert(
+      renderedCount === expectedCount,
+      `${lang}: ${game.id} rendered ${renderedCount} cards, data has ${expectedCount}`,
+    );
+    assert(
+      decode(groupHtml).includes(lang === 'zh' ? game.title : game.titleEn),
+      `${lang}: ${game.id} has the wrong localised title`,
+    );
+  }
 }
 
 for (const [collectionId, count] of expectedCounts) {
@@ -346,6 +374,61 @@ assert(
 
 for (const slug of addedRailThemes) {
   await auditAddedTheme(slug, 'Honkai: Star Rail fan themes', 8, true, 2);
+}
+
+const honkaiUi = {
+  'kevin-ashes-deliverance': {
+    bg: '#111B27', surface: '#1B2938', text: '#E8EEF3', muted: '#AAB9C7',
+    border: '#34485B', accent: '#75B6D1', onAccent: '#10202D', flare: '#E8B66F',
+  },
+  'elysia-garden-ego': {
+    bg: '#F7F0F5', surface: '#EFE1ED', text: '#332C3B', muted: '#705D74',
+    border: '#DDCADB', accent: '#C372A0', onAccent: '#301F30', flare: '#D8B4D6',
+  },
+  'mobius-ouroboros-infinite': {
+    bg: '#111A19', surface: '#1C2925', text: '#E7F0E9', muted: '#A2B6A8',
+    border: '#344B3F', accent: '#A7D66D', onAccent: '#1B2819', flare: '#B78AD9',
+  },
+};
+const honkaiPlateMarkers = {
+  'kevin-ashes-deliverance': 'kevin-ice-face',
+  'elysia-garden-ego': 'elysia-pearl-halo',
+  'mobius-ouroboros-infinite': 'mobius-organic-loop',
+};
+
+for (const slug of honkaiImpactOrder) {
+  await auditAddedTheme(slug, 'Honkai Impact 3rd', 8, true, 2, true);
+  const theme = themes.find((candidate) => candidate.slug === slug);
+  const translation = themeTranslations[slug];
+  if (!theme) continue;
+  assert(theme.game === 'honkai-impact-3rd', `${slug} is in the wrong game-world group`);
+  assert(
+    Boolean(translation?.story && translation?.inspiration && translation?.designRationale),
+    `${slug} has incomplete English editorial content`,
+  );
+  assert(
+    theme.sources[0]?.url === 'https://honkaiimpact3.hoyoverse.com/' &&
+      theme.credits.disclaimer?.includes('非官方同人') &&
+      theme.credits.imageLicence?.includes('原创 SVG'),
+    `${slug} needs its official-work reference and original fan-work credits`,
+  );
+
+  const map = paletteMap(theme);
+  for (const [role, hex] of Object.entries(honkaiUi[slug])) {
+    assert(map[role]?.hex === hex, `${slug} UI ${role} must remain ${hex}`);
+  }
+  assert(new Set(Object.values(theme.syntax)).size === 11, `${slug} syntax roles must be distinct`);
+  for (const [role, hex] of Object.entries(theme.syntax)) {
+    assert(contrastRatio(hex, map.bg.hex) >= 4.5, `${slug} syntax ${role} must pass AA on bg`);
+    assert(contrastRatio(hex, map.surface.hex) >= 4.5, `${slug} syntax ${role} must pass AA on surface`);
+  }
+
+  for (const locale of ['', 'en/']) {
+    const html = await readDist(`${locale}theme/${slug}/index.html`);
+    assert(html.includes(honkaiPlateMarkers[slug]), `${locale}${slug}: dedicated SVG is missing`);
+    assert(html.includes(theme.promptDesign.visualStyle), `${locale}${slug}: dedicated Prompt is missing`);
+    assert(html.includes(theme.previewDesign.codex.fileName), `${locale}${slug}: dedicated Codex example is missing`);
+  }
 }
 
 const aha = themes.find((theme) => theme.slug === 'aha-cosmic-farce');

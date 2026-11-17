@@ -312,6 +312,7 @@ const zh = {
   'motif.stellaris': '星系、轨道与文明节点组成的原创星图',
   'motif.redAlert': '盟军与苏维埃战术网格和机械结构组成的原创图形',
   'motif.starcraft': '泰伦工业结构、星灵对称几何与异虫有机脉络组成的原创图形',
+  'motif.honkaiImpact3rd': '冰晶裂隙、水晶花与无限蛇环组成的原创图形',
   'star.coreBrand': '色谱档案',
   'star.coreLabel': '核心星体',
 
@@ -319,7 +320,7 @@ const zh = {
   'collections.eyebrow': '系列',
   'collections.title': '主题系列',
   'collections.lede':
-    '每个系列有自己的取材范围与配色纪律。中国神话靠矿物颜料，瓷器靠釉色的明度关系，同人系列把虚构世界的光重新推导一遍，游戏世界则从不同作品的视觉规则中整理出三组原创色序。',
+    '每个系列有自己的取材范围与配色纪律。中国神话靠矿物颜料，瓷器靠釉色的明度关系，同人系列把虚构世界的光重新推导一遍，游戏世界则从不同作品的视觉规则中整理出四组原创色序。',
   'collections.index': '系列 {n}',
   'collections.browseSeries': '在主题目录中浏览该系列',
   'collections.allEyebrow': '全部',
@@ -662,13 +663,14 @@ const en: Record<UiKey, string> = {
   'motif.stellaris': 'An original chart of galaxies, orbits and civilisation nodes',
   'motif.redAlert': 'An original motif of Allied-Soviet tactical grids and mechanical structures',
   'motif.starcraft': 'An original motif joining Terran industry, Protoss symmetry and Zerg organic growth',
+  'motif.honkaiImpact3rd': 'An original motif joining an ice rift, a crystal blossom and an infinite ouroboros',
   'star.coreBrand': 'THEME ATLAS',
   'star.coreLabel': 'Core body',
 
   'collections.eyebrow': 'Collections',
   'collections.title': 'Theme collections',
   'collections.lede':
-    'Each collection has its own material range and colour discipline. Chinese myth draws on mineral pigments, porcelain on the lightness of glaze, the fan collection re-derives imagined light, and Game Worlds turns the visual rules of three different games into original colour orders.',
+    'Each collection has its own material range and colour discipline. Chinese myth draws on mineral pigments, porcelain on the lightness of glaze, the fan collection re-derives imagined light, and Game Worlds turns the visual rules of four different games into original colour orders.',
   'collections.index': 'COLLECTION {n}',
   'collections.browseSeries': 'Browse this collection',
   'collections.allEyebrow': 'All',

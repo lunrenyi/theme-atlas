@@ -1,7 +1,7 @@
 import type { GameWorld } from './types';
 
 /**
- * Three visual groups inside the flat "game" collection. These are metadata,
+ * Visual groups inside the flat "game" collection. These are metadata,
  * not nested collections, so every theme is still counted exactly once.
  */
 export const gameWorlds: GameWorld[] = [
@@ -65,5 +65,30 @@ export const gameWorlds: GameWorld[] = [
     referenceTitle: 'Blizzard Entertainment · StarCraft',
     referenceTitleEn: 'Blizzard Entertainment · StarCraft',
     referenceUrl: 'https://starcraft.blizzard.com/',
+  },
+  {
+    id: 'honkai-impact-3rd',
+    title: '《崩坏3》',
+    titleEn: 'Honkai Impact 3rd',
+    short: '崩坏3',
+    shortEn: 'Honkai 3rd',
+    code: 'HONKAI IMPACT 3RD',
+    tagline: '终焉、真我与无限，在文明尽头留下三种色彩秩序',
+    taglineEn: 'Deliverance, ego and infinity leave three colour orders at civilisation’s end',
+    description:
+      '在漫长的文明终焉中，十三位逐火者留下了各自的印记。有人背负寒冬走向黎明，' +
+      '有人让美好在告别前绽放，也有人不断追问生命进化的边界。我们从这些故事中提取三种截然不同的色彩秩序，' +
+      '并将它们重新演绎成数字主题。',
+    descriptionEn:
+      'Across civilisation’s long final winter, the thirteen Flame-Chasers left different marks. ' +
+      'One carried the cold toward dawn, one let beauty bloom before farewell, and one kept ' +
+      'questioning the limits of evolution. Their stories become three distinct colour orders, ' +
+      'reinterpreted here as digital themes.',
+    accent: '#D987B8',
+    accentAlt: '#75B6D1',
+    motif: 'honkai-impact-3rd',
+    referenceTitle: 'HoYoverse · Honkai Impact 3rd',
+    referenceTitleEn: 'HoYoverse · Honkai Impact 3rd',
+    referenceUrl: 'https://honkaiimpact3.hoyoverse.com/',
   },
 ];

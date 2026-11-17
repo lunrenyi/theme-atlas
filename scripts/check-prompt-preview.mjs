@@ -151,6 +151,15 @@ function requiredTerminalText(kind, theme) {
       'choice',
     ];
   }
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'kevin-deliverance') {
+    return ['vim - theme-preview.ts', 'NORMAL', 'WinterRecord', 'carryEmber', '50000', 'ember', 'unreached'];
+  }
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'elysia-garden') {
+    return ['vim - theme-preview.ts', 'NORMAL', 'Petal', 'bloom', 'rose', 'violet', 'cyan', 'memory'];
+  }
+  if (kind === 'vim' && theme.previewDesign.vim.example === 'mobius-evolution') {
+    return ['vim - theme-preview.ts', 'NORMAL', 'Cell', 'evolve', 'generation', 'boundary', 'culture'];
+  }
   if (kind === 'codex' && theme.previewDesign.codex.example === 'nous-deduction') {
     return [
       'codex - ~/theme-atlas',
@@ -217,6 +226,42 @@ function requiredTerminalText(kind, theme) {
       '+1',
       '-1',
       'Roll the dice for another performance...',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'kevin-deliverance') {
+    return [
+      'Model a path through the long winter',
+      '1 ember preserved',
+      'src/deliverance.ts',
+      'carryEmber',
+      '50000',
+      'Continue toward the next dawn...',
+      '+1',
+      '-1',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'elysia-garden') {
+    return [
+      'Compose a crystal flower',
+      '6 crystal petals',
+      'src/crystal-garden.ts',
+      'bloom',
+      'refract',
+      'Let the garden bloom once more...',
+      '+1',
+      '-1',
+    ];
+  }
+  if (kind === 'codex' && theme.previewDesign.codex.example === 'mobius-evolution') {
+    return [
+      'Model cellular evolution',
+      'generation 6',
+      'src/evolution-loop.ts',
+      'evolve',
+      'boundary',
+      'Observe another generation...',
+      '+1',
+      '-1',
     ];
   }
   return requiredText[kind];

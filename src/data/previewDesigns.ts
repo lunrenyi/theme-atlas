@@ -216,4 +216,49 @@ export const previewDesigns: Record<string, ToolPreviewDesign> = {
     vim: vim('compact', 'surface', 'accent'),
     codex: codex('stacked', 'accent', 'flare', 'accent'),
   },
+  'kevin-ashes-deliverance': {
+    vim: { ...vim('focus', 'accent', 'accent'), example: 'kevin-deliverance' },
+    codex: {
+      ...codex('split', 'accent', 'muted', 'flare'),
+      example: 'kevin-deliverance',
+      fileName: 'src/deliverance.ts',
+      dialogue: {
+        user: 'Model a path through the long winter while preserving the final ember beneath the ice.',
+        assistant: 'Mapped the frozen record, the forward path and one guarded ember. Checking the next dawn checkpoint...',
+        status: 'Tracing deliverance path · 1 ember preserved',
+        conclusion: 'The past remains sealed. The ember is carried forward; the path to dawn stays open.',
+        input: 'Continue toward the next dawn...',
+      },
+    },
+  },
+  'elysia-garden-ego': {
+    vim: { ...vim('classic', 'accent', 'accent'), example: 'elysia-garden' },
+    codex: {
+      ...codex('split', 'accent', 'muted', 'accent'),
+      example: 'elysia-garden',
+      fileName: 'src/crystal-garden.ts',
+      dialogue: {
+        user: 'Compose a crystal flower with layered refractions and preserve each drifting memory shard.',
+        assistant: 'Arranged 6 crystal petals, 3 light paths and a flock of geometric butterflies. Balancing the farewell scene...',
+        status: 'Refracting garden light · 6 petals',
+        conclusion: 'The bloom is complete. Every shard remains unique; none needs to become permanent to be beautiful.',
+        input: 'Let the garden bloom once more...',
+      },
+    },
+  },
+  'mobius-ouroboros-infinite': {
+    vim: { ...vim('compact', 'accent', 'accent'), example: 'mobius-evolution' },
+    codex: {
+      ...codex('stacked', 'accent', 'muted', 'flare'),
+      example: 'mobius-evolution',
+      fileName: 'src/evolution-loop.ts',
+      dialogue: {
+        user: 'Model cellular evolution across successive generations and expose each new boundary for inspection.',
+        assistant: 'Linked the helix, cell division and generational states. Adding a bounded observer for the infinite cycle...',
+        status: 'Observing evolution loop · generation 6',
+        conclusion: 'The cycle continues, but every generation remains inspectable. The next boundary is ready.',
+        input: 'Observe another generation...',
+      },
+    },
+  },
 };

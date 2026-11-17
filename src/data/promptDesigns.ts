@@ -575,4 +575,55 @@ export const promptDesigns: Record<string, PromptDesign> = {
     designNoteEn:
       'Asymmetric veins grow from the left; acid green marks active nodes only, while body text keeps a straight and readable line.',
   },
+  'kevin-ashes-deliverance': {
+    visualStyle: 'deliverance-rift',
+    layout: 'two-line',
+    glyphSet: { prompt: '▸', separator: '│', connector: '╱' },
+    motif: 'ice-ember',
+    motifDensity: 'sparse',
+    defaultLineMode: 'double',
+    moduleOrder: ['directory', 'user', 'git', 'runtime', 'command', 'status'],
+    roleEmphasis: {
+      primary: ['accent', 'text', 'flare'],
+      secondary: ['surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '上下文沿一条冷峻纵轴排布，冰晶切面把路径与分支分开，余烬金只守住命令入口的一点光。',
+    designNoteEn:
+      'Context follows a severe vertical axis; crystal facets separate path and branch while ember gold guards one point of light at the command entry.',
+  },
+  'elysia-garden-ego': {
+    visualStyle: 'crystal-ego',
+    layout: 'segmented',
+    glyphSet: { prompt: '❯', separator: '✦', connector: '✧' },
+    motif: 'crystal-bloom',
+    motifDensity: 'structured',
+    defaultLineMode: 'double',
+    moduleOrder: ['user', 'directory', 'runtime', 'git', 'status', 'command'],
+    roleEmphasis: {
+      primary: ['accent', 'text'],
+      secondary: ['surface', 'border', 'flare'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '字段像花瓣一样围绕中心展开，浅色面板保留镜面间隙，晶透边线与细小蝶片让信息轻盈但不失序。',
+    designNoteEn:
+      'Fields open like petals around a centre; pale panels preserve mirror-like gaps while crystalline rules and tiny butterflies keep the composition light but ordered.',
+  },
+  'mobius-ouroboros-infinite': {
+    visualStyle: 'infinite-evolution',
+    layout: 'two-line',
+    glyphSet: { prompt: '›', separator: '∿', connector: '∞' },
+    motif: 'helix-loop',
+    motifDensity: 'dense',
+    defaultLineMode: 'double',
+    moduleOrder: ['runtime', 'directory', 'git', 'user', 'status', 'command'],
+    roleEmphasis: {
+      primary: ['accent', 'flare'],
+      secondary: ['text', 'surface', 'border'],
+      restrained: ['bg', 'muted', 'onAccent'],
+    },
+    designNote: '双螺旋把运行环境、路径和分支连接成闭环，嫩绿标记当前生命节点，禁忌紫只在递归状态处闪现。',
+    designNoteEn:
+      'A double helix joins runtime, path and branch into a closed loop; tender green marks the living node and forbidden violet flashes only at recursive states.',
+  },
 };

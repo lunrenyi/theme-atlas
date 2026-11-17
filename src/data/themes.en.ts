@@ -2247,4 +2247,191 @@ export const themeTranslations: Record<string, ThemeTranslation> = {
       imageLicence: noOfficialArt,
     },
   },
+
+  'kevin-ashes-deliverance': {
+    title: 'Kevin · Ashes of Deliverance',
+    subtitle: 'For a tomorrow still far away, someone is willing to walk through the long winter alone.',
+    description:
+      'A frozen blue-black sky, a vertical ice crystal and a trace of ember gold turn an enduring mission into a restrained development theme.',
+    story:
+      'The long winter swallowed the old world.\n\n' +
+      'Someone sealed the past in ice and carried the future on his shoulders.\n\n' +
+      'He no longer waited for spring. He simply kept walking toward a dawn that had not yet arrived.\n\n' +
+      'Beneath the ice, one final ember refused to fade.',
+    inspiration:
+      'Ice speaks of power, distance and the long winter; the ember carries the mission and hope ' +
+      'that have not yet ended. A central crystal rises like an abstract blade still sheathed, ' +
+      'its facets and fractures revealing only a narrow warmth. This is not a portrait of Kevin ' +
+      'or a reproduction of a weapon. The piercing lines, shards and energy graduations are ' +
+      'original geometric forms.',
+    designRationale:
+      'Blue-black and blue-grey panels provide a low-glare ground for long coding sessions, ' +
+      'while silver-white copy and grey-blue notes retain a clear hierarchy. Ice blue handles ' +
+      'links, focus and primary actions; ember gold is a flare reserved for crucial states and ' +
+      'the fissure. The independent syntax palette separates cold-violet keywords, icy-cyan ' +
+      'functions, ember strings and silver-blue types. Current lines and Diffs use rules and ' +
+      'dark grounds without covering token colours.',
+    tags: ['Honkai Impact 3rd', 'Kevin', 'Flame-Chasers', 'Ice', 'Ember', 'Dawn', 'Original interpretation'],
+    palette: [
+      { name: 'Endless Night Blue-Black', note: 'A frozen starfield and the long winter night' },
+      { name: 'Ice-Layer Blue-Grey', note: 'Panels, code surfaces and the crystal’s shaded planes' },
+      { name: 'Frost-Line Silver', note: 'Ice highlights and primary body text' },
+      { name: 'Distant Winter Grey-Blue', note: 'Secondary notes, coordinates and readable comments' },
+      { name: 'Fracture Steel Blue', note: 'Crystal edges and interface structure' },
+      { name: 'Dawn Ice Blue', note: 'Piercing lines, focus and primary actions' },
+      { name: 'Ice-Blue Type', note: 'Dark text on the ice-blue accent' },
+      { name: 'Deliverance Ember', note: 'Hope inside the fissure and crucial states' },
+    ],
+    artworkPalette: [
+      { name: 'Crystal Shadow', note: 'Cold, dark facets of the vertical crystal' },
+      { name: 'Cold-Violet Fracture', note: 'Violet refraction from frozen starlight' },
+      { name: 'Deep-Ice Graduation', note: 'Energy scales and shards within the ice' },
+    ],
+    sources: [
+      {
+        title: 'HoYoverse · Honkai Impact 3rd official site',
+        detail: 'Official public page, used only to identify the work and subject',
+        note: 'No official character, logo, weapon, screenshot, texture or interface asset is used.',
+      },
+      {
+        title: 'Kevin and the Flame-Chasers: visual analysis (to be added)',
+        note:
+          'Pending: verifiable story and setting references will replace this entry. The current ' +
+          'writing, colours and graphics are original unofficial interpretations.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'elysia-garden-ego': {
+    title: 'Elysia · Garden of Ego',
+    subtitle: 'Beauty is not made by eternity, but by having truly bloomed.',
+    description:
+      'Pearl light holds a many-layered crystal flower as rose, berry violet and clear cyan refract through its petals and geometric butterflies drift away like memories.',
+    story:
+      'She called herself the most special one of all.\n\n' +
+      'She loved beautiful things: flowers, butterflies, and every person whose path crossed hers.\n\n' +
+      'Even if the story must one day end, this moment could still bloom with its brightest light.\n\n' +
+      'The true self has never needed to prove itself to anyone.',
+    inspiration:
+      'The theme centres on the true self, beauty, memory and farewell rather than conventional ' +
+      'pink ornament. Layered crystal petals open around a shared light, while rose, violet and ' +
+      'cyan refract through their cut planes. Butterflies become drifting geometric shards and ' +
+      'curved traces preserve the lightness of a final goodbye. Every form is an original ' +
+      'abstraction; Elysia, her clothing and official weapons are not depicted.',
+    designRationale:
+      'Pearl white and pale pink create a bright, paper-like ground, with deep berry copy for ' +
+      'extended reading. The initial muted and accent values lacked contrast on this light ' +
+      'ground, so they were deepened into readable grey-berry and rose; the original pale pink ' +
+      'remains in the illustration. The syntax palette independently balances rose, crystal ' +
+      'teal, berry violet, champagne and crystal blue instead of turning every token pink. ' +
+      'Selections and Diffs retain pale grounds, rules and local markers.',
+    tags: ['Honkai Impact 3rd', 'Elysia', 'Flame-Chasers', 'Ego', 'Crystal flower', 'Butterflies', 'Original interpretation'],
+    palette: [
+      { name: 'Pearl Garden', note: 'A pearl-white and pale-pink luminous ground' },
+      { name: 'Mirror Pink', note: 'Crystal-petal panels and code surfaces' },
+      { name: 'Ego Deep Berry', note: 'Stable, readable body copy and variables' },
+      { name: 'Memory Grey-Berry', note: 'AA-adjusted secondary text and comments' },
+      { name: 'Petal Rule', note: 'Petal divisions and light-ground structure' },
+      { name: 'Blooming Rose', note: 'Links and primary actions with light-ground definition' },
+      { name: 'Rose-Ground Type', note: 'Deep berry text on the rose accent' },
+      { name: 'Mirror Violet', note: 'Refracted highlights and a few precious states' },
+    ],
+    artworkPalette: [
+      { name: 'Crystal Pale Pink', note: 'The original pale pink retained in petals and halos' },
+      { name: 'Berry Crystal Violet', note: 'Violet refraction between the petals' },
+      { name: 'Clear Crystal Cyan', note: 'Cool light passing through the mirrors' },
+      { name: 'Pearl Highlight', note: 'Bright crystal edges and the heart of the flower' },
+    ],
+    sources: [
+      {
+        title: 'HoYoverse · Honkai Impact 3rd official site',
+        detail: 'Official public page, used only to identify the work and subject',
+        note: 'No official character, logo, weapon, screenshot, texture or interface asset is used.',
+      },
+      {
+        title: 'Elysia and the imagery of ego: visual analysis (to be added)',
+        note:
+          'Pending: verifiable story and setting references will replace this entry. The current ' +
+          'writing, colours and graphics are original unofficial interpretations.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
+
+  'mobius-ouroboros-infinite': {
+    title: 'Mobius · Ouroboros Infinite',
+    subtitle: 'Life is never content with what it is; it always seeks to cross the next boundary.',
+    description:
+      'An organic ouroboros closes around a DNA helix in a deep-green laboratory, where cell division and forbidden violet signals turn evolution into an infinite system.',
+    story:
+      'Life has never been a finished answer.\n\n' +
+      'It changes, divides and perishes, only to continue in another form.\n\n' +
+      'She watched this endless evolution, searching for the boundary of life itself.\n\n' +
+      'But when she finally touched it, she found only another road leading toward infinity.',
+    inspiration:
+      'Precise laboratory structures and primal organic life share one composition. An abstract ' +
+      'ouroboros closes through continuous curves, cellular chambers and crystalline scales; ' +
+      'a DNA helix folds inward inside the ring. Dividing cells, experimental graduations and ' +
+      'data nodes impose order beyond it, while forbidden violet appears only in a few lights. ' +
+      'No realistic serpent head, portrait of Mobius or official emblem is drawn.',
+    designRationale:
+      'Deep green-black and grey-green panels form a stable instrument ground. Tender green ' +
+      'marks activity, links and current actions; forbidden violet is a flare for anomalies and ' +
+      'recursion. The independent syntax palette distinguishes violet keywords, life-cyan ' +
+      'functions, fluorescent strings and cool-violet numbers while grey-green comments remain ' +
+      'AA-readable. Organic geometry stays in the artwork and Prompt background, leaving code, ' +
+      'Diffs and selected lines straight and clear.',
+    tags: ['Honkai Impact 3rd', 'Mobius', 'Flame-Chasers', 'Infinity', 'Evolution', 'DNA', 'Original interpretation'],
+    palette: [
+      { name: 'Laboratory Deep Green', note: 'The dark field of a deep-green experimental space' },
+      { name: 'Culture-Chamber Grey-Green', note: 'Panels, code surfaces and organic shadow' },
+      { name: 'Living Silver-Green', note: 'Bright body copy like an experimental readout' },
+      { name: 'Observation Grey-Green', note: 'Secondary notes and readable grey-green comments' },
+      { name: 'Instrument Boundary', note: 'Laboratory grids and structural graduations' },
+      { name: 'Evolution Tender Green', note: 'Active nodes, links and primary actions' },
+      { name: 'Green-Ground Type', note: 'Deep green text on the tender-green accent' },
+      { name: 'Forbidden Violet', note: 'Anomalies, recursion and a few laboratory lights' },
+    ],
+    artworkPalette: [
+      { name: 'Living Teal', note: 'Active refraction through serpent cells and DNA' },
+      { name: 'Fluorescent Scale Green', note: 'Crystalline scales and dividing edges' },
+      { name: 'Forbidden Dark Violet', note: 'Shadow and anomalous nodes inside the organic ring' },
+    ],
+    sources: [
+      {
+        title: 'HoYoverse · Honkai Impact 3rd official site',
+        detail: 'Official public page, used only to identify the work and subject',
+        note: 'No official character, logo, weapon, screenshot, texture or interface asset is used.',
+      },
+      {
+        title: 'Mobius and infinite evolution: visual analysis (to be added)',
+        note:
+          'Pending: verifiable story and setting references will replace this entry. The current ' +
+          'writing, colours and graphics are original unofficial interpretations.',
+      },
+    ],
+    credits: {
+      palette: derived,
+      story: fanText,
+      graphics: 'Theme Atlas (original SVG)',
+      license: licence,
+      disclaimer: fanDisclaimer,
+      imageLicence: noOfficialArt,
+    },
+  },
 };

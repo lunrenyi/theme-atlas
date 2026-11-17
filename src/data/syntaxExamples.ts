@@ -1063,3 +1063,231 @@ export const xipeCodexDiffAdded: SyntaxToken[] = [
   token('variable', 'chorus'),
   token('punctuation', ');'),
 ];
+
+/** Static theme-specific examples for the Honkai Impact 3rd studies. */
+export const kevinVimSyntaxExample: SyntaxToken[][] = [
+  [
+    token('keyword', 'interface'), text(' '), token('type', 'WinterRecord'), text(' '), token('punctuation', '{'),
+  ],
+  [
+    text('  '), token('property', 'sealedYears'), token('punctuation', ':'), text(' '),
+    token('type', 'number'), token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('property', 'ember'), token('punctuation', ':'), text(' '),
+    token('type', 'number'), token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('property', 'dawn'), token('punctuation', ':'), text(' '),
+    token('type', 'string'), token('punctuation', ';'),
+  ],
+  [token('punctuation', '}')],
+  [],
+  [
+    token('keyword', 'export'), text(' '), token('keyword', 'function'), text(' '),
+    token('function', 'carryEmber'), token('punctuation', '('), token('variable', 'record'),
+    token('punctuation', ':'), text(' '), token('type', 'WinterRecord'), token('punctuation', '):'),
+    text(' '), token('type', 'WinterRecord'), text(' '), token('punctuation', '{'),
+  ],
+  [
+    text('  '), token('keyword', 'const'), text(' '), token('variable', 'preserve'), text(' '),
+    token('operator', '='), text(' '), token('constant', 'true'), token('punctuation', ';'),
+  ],
+  [text('  '), token('comment', '// The past remains sealed; hope travels forward.')],
+  [
+    text('  '), token('keyword', 'const'), text(' '), token('variable', 'alive'), text(' '),
+    token('operator', '='), text(' '), token('variable', 'record'), token('punctuation', '.'),
+    token('property', 'ember'), text(' '), token('operator', '>'), text(' '), token('number', '0'),
+    text(' '), token('operator', '&&'), text(' '), token('variable', 'preserve'), token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('keyword', 'return'), text(' '), token('punctuation', '{'), text(' '),
+    token('operator', '...'), token('variable', 'record'), token('punctuation', ','), text(' '),
+    token('property', 'ember'), token('punctuation', ':'), text(' '), token('variable', 'alive'),
+    text(' '), token('operator', '?'), text(' '), token('variable', 'record'), token('punctuation', '.'),
+    token('property', 'ember'), text(' '), token('operator', ':'), text(' '), token('number', '1'),
+    token('punctuation', ','),
+  ],
+  [
+    text('    '), token('property', 'dawn'), token('punctuation', ':'), text(' '),
+    token('string', '"unreached"'), text(' '), token('punctuation', '};'),
+  ],
+  [token('punctuation', '}')],
+  [],
+  [
+    token('keyword', 'const'), text(' '), token('variable', 'journey'), text(' '), token('operator', '='),
+    text(' '), token('function', 'carryEmber'), token('punctuation', '({'), text(' '),
+    token('property', 'sealedYears'), token('punctuation', ':'), text(' '), token('number', '50000'),
+    token('punctuation', ','), text(' '), token('property', 'ember'), token('punctuation', ':'), text(' '),
+    token('number', '1'), token('punctuation', ','), text(' '), token('property', 'dawn'),
+    token('punctuation', ':'), text(' '), token('string', '"distant"'), token('punctuation', '});'),
+  ],
+];
+
+export const kevinCodexSyntaxExample = kevinVimSyntaxExample;
+export const kevinCodexDiffContext: SyntaxToken[] = [
+  token('punctuation', '@@'), text(' '), token('function', 'carryEmber'),
+  text(' '), token('comment', 'preserve the final ember'),
+];
+export const kevinCodexDiffRemoved: SyntaxToken[] = [
+  token('keyword', 'return'), text(' '), token('variable', 'record'), token('punctuation', '.'),
+  token('property', 'ember'), token('punctuation', ';'),
+];
+export const kevinCodexDiffAdded: SyntaxToken[] = [
+  token('keyword', 'return'), text(' '), token('variable', 'alive'), text(' '), token('operator', '?'),
+  text(' '), token('variable', 'record'), token('punctuation', '.'), token('property', 'ember'),
+  text(' '), token('operator', ':'), text(' '), token('number', '1'), token('punctuation', ';'),
+];
+
+export const elysiaVimSyntaxExample: SyntaxToken[][] = [
+  [
+    token('keyword', 'type'), text(' '), token('type', 'Light'), text(' '), token('operator', '='),
+    text(' '), token('string', '"rose"'), text(' '), token('operator', '|'), text(' '),
+    token('string', '"violet"'), text(' '), token('operator', '|'), text(' '), token('string', '"cyan"'),
+    token('punctuation', ';'),
+  ],
+  [],
+  [
+    token('keyword', 'interface'), text(' '), token('type', 'Petal'), text(' '), token('punctuation', '{'),
+  ],
+  [
+    text('  '), token('property', 'angle'), token('punctuation', ':'), text(' '), token('type', 'number'),
+    token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('property', 'light'), token('punctuation', ':'), text(' '), token('type', 'Light'),
+    token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('property', 'memory'), token('punctuation', ':'), text(' '), token('type', 'boolean'),
+    token('punctuation', ';'),
+  ],
+  [token('punctuation', '}')],
+  [],
+  [
+    token('keyword', 'export'), text(' '), token('keyword', 'function'), text(' '), token('function', 'bloom'),
+    token('punctuation', '('), token('variable', 'petals'), token('punctuation', ':'), text(' '),
+    token('type', 'Petal'), token('punctuation', '[]):'), text(' '), token('type', 'Petal'),
+    token('punctuation', '[]'), text(' '), token('punctuation', '{'),
+  ],
+  [text('  '), token('comment', '// Each shard keeps its own way of catching light.')],
+  [
+    text('  '), token('keyword', 'return'), text(' '), token('variable', 'petals'), token('punctuation', '.'),
+    token('function', 'map'), token('punctuation', '(('), token('variable', 'petal'), token('punctuation', ','),
+    text(' '), token('variable', 'index'), token('punctuation', ')'), text(' '), token('operator', '=>'),
+    text(' '), token('punctuation', '({'),
+  ],
+  [
+    text('    '), token('operator', '...'), token('variable', 'petal'), token('punctuation', ','),
+    text(' '), token('property', 'angle'), token('punctuation', ':'), text(' '), token('variable', 'index'),
+    text(' '), token('operator', '*'), text(' '), token('number', '60'), token('punctuation', ','),
+  ],
+  [
+    text('    '), token('property', 'memory'), token('punctuation', ':'), text(' '), token('constant', 'true'),
+    token('punctuation', ','), text(' '), token('property', 'light'), token('punctuation', ':'), text(' '),
+    token('variable', 'petal'), token('punctuation', '.'), token('property', 'light'),
+    token('punctuation', '}));'),
+  ],
+  [token('punctuation', '}')],
+  [],
+  [
+    token('keyword', 'const'), text(' '), token('variable', 'garden'), text(' '), token('operator', '='),
+    text(' '), token('function', 'bloom'), token('punctuation', '([{'), text(' '), token('property', 'angle'),
+    token('punctuation', ':'), text(' '), token('number', '0'), token('punctuation', ','), text(' '),
+    token('property', 'light'), token('punctuation', ':'), text(' '), token('string', '"rose"'),
+    token('punctuation', ','), text(' '), token('property', 'memory'), token('punctuation', ':'), text(' '),
+    token('constant', 'true'), token('punctuation', '}]);'),
+  ],
+];
+
+export const elysiaCodexSyntaxExample = elysiaVimSyntaxExample;
+export const elysiaCodexDiffContext: SyntaxToken[] = [
+  token('punctuation', '@@'), text(' '), token('function', 'bloom'),
+  text(' '), token('comment', 'preserve every memory'),
+];
+export const elysiaCodexDiffRemoved: SyntaxToken[] = [
+  token('keyword', 'return'), text(' '), token('variable', 'petals'), token('punctuation', '.'),
+  token('property', 'length'), token('punctuation', ';'),
+];
+export const elysiaCodexDiffAdded: SyntaxToken[] = [
+  token('keyword', 'return'), text(' '), token('variable', 'petals'), token('punctuation', '.'),
+  token('function', 'map'), token('punctuation', '('), token('variable', 'refract'),
+  token('punctuation', ');'),
+];
+
+export const mobiusVimSyntaxExample: SyntaxToken[][] = [
+  [
+    token('keyword', 'interface'), text(' '), token('type', 'Cell'), text(' '), token('punctuation', '{'),
+  ],
+  [
+    text('  '), token('property', 'generation'), token('punctuation', ':'), text(' '),
+    token('type', 'number'), token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('property', 'stable'), token('punctuation', ':'), text(' '),
+    token('type', 'boolean'), token('punctuation', ';'),
+  ],
+  [token('punctuation', '}')],
+  [],
+  [
+    token('keyword', 'export'), text(' '), token('keyword', 'function'), text(' '), token('function', 'evolve'),
+    token('punctuation', '('), token('variable', 'cell'), token('punctuation', ':'), text(' '),
+    token('type', 'Cell'), token('punctuation', ','), text(' '), token('variable', 'boundary'),
+    token('punctuation', ':'), text(' '), token('type', 'number'), token('punctuation', '):'),
+    text(' '), token('type', 'Cell'), text(' '), token('punctuation', '{'),
+  ],
+  [
+    text('  '), token('keyword', 'const'), text(' '), token('variable', 'next'), text(' '),
+    token('operator', '='), text(' '), token('variable', 'cell'), token('punctuation', '.'),
+    token('property', 'generation'), text(' '), token('operator', '+'), text(' '), token('number', '1'),
+    token('punctuation', ';'),
+  ],
+  [
+    text('  '), token('keyword', 'const'), text(' '), token('variable', 'medium'), text(' '),
+    token('operator', '='), text(' '), token('string', '"lucent"'), token('punctuation', ';'),
+  ],
+  [text('  '), token('comment', '// The observer bounds the experiment, not life itself.')],
+  [
+    text('  '), token('keyword', 'return'), text(' '), token('punctuation', '{'), text(' '),
+    token('property', 'generation'), token('punctuation', ':'), text(' '), token('variable', 'next'),
+    token('punctuation', ','),
+  ],
+  [
+    text('    '), token('property', 'stable'), token('punctuation', ':'), text(' '), token('variable', 'next'),
+    text(' '), token('operator', '<'), text(' '), token('variable', 'boundary'), text(' '),
+    token('operator', '&&'), text(' '), token('constant', 'true'), text(' '), token('punctuation', '};'),
+  ],
+  [token('punctuation', '}')],
+  [],
+  [
+    token('keyword', 'const'), text(' '), token('variable', 'culture'), text(' '), token('operator', '='),
+    text(' '), token('variable', 'Array'), token('punctuation', '.'), token('function', 'from'),
+    token('punctuation', '({'), text(' '), token('property', 'length'), token('punctuation', ':'),
+    text(' '), token('number', '6'), token('punctuation', '},'), text(' '),
+  ],
+  [
+    text('  '), token('punctuation', '('), token('variable', '_'), token('punctuation', ','),
+    text(' '), token('variable', 'index'), token('punctuation', ')'), text(' '), token('operator', '=>'),
+    text(' '), token('function', 'evolve'), token('punctuation', '({'), text(' '),
+    token('property', 'generation'), token('punctuation', ':'), text(' '), token('variable', 'index'),
+    token('punctuation', ','), text(' '), token('property', 'stable'), token('punctuation', ':'),
+    text(' '), token('constant', 'true'), token('punctuation', '}),'), text(' '), token('number', '6'),
+    token('punctuation', '));'),
+  ],
+];
+
+export const mobiusCodexSyntaxExample = mobiusVimSyntaxExample;
+export const mobiusCodexDiffContext: SyntaxToken[] = [
+  token('punctuation', '@@'), text(' '), token('function', 'evolve'),
+  text(' '), token('comment', 'observe the next boundary'),
+];
+export const mobiusCodexDiffRemoved: SyntaxToken[] = [
+  token('keyword', 'return'), text(' '), token('variable', 'cell'), token('punctuation', '.'),
+  token('property', 'generation'), token('punctuation', ';'),
+];
+export const mobiusCodexDiffAdded: SyntaxToken[] = [
+  token('keyword', 'return'), text(' '), token('variable', 'next'), text(' '), token('operator', '<'),
+  text(' '), token('variable', 'boundary'), text(' '), token('operator', '?'), text(' '),
+  token('variable', 'next'), text(' '), token('operator', ':'), text(' '), token('number', '0'),
+  token('punctuation', ';'),
+];

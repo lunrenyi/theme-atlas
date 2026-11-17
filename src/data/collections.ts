@@ -95,15 +95,17 @@ export const collections: Collection[] = [
     codeZh: '',
     tagline: '每个世界，都有自己的色彩秩序。',
     taglineEn: 'Every world has its own language of color.',
-    starNote: '从星海到钢铁战场的三种视觉秩序',
-    starNoteEn: 'Three visual orders, from stellar seas to iron fronts',
+    starNote: '从星海、钢铁战场到文明终焉的色彩秩序',
+    starNoteEn: 'Colour orders from stellar seas and iron fronts to civilization’s end',
     description:
       '从遥远星系的文明，到平行历史中的钢铁战场，再到异星种族之间的战争。' +
+      '也在文明终焉里寻找寒冬、真我与生命进化的印记。' +
       '我们循着游戏世界的视觉线索，寻找那些值得带进现实的颜色，并将它们重新演绎为' +
       '能用于数字创作的主题。所有配色与图形均为 Theme Atlas 原创的非官方演绎。',
     descriptionEn:
       'From civilisations in distant galaxies to the steel battlefields of alternate histories, ' +
-      'and wars between alien species, we follow the visual cues of game worlds, find colours ' +
+      'wars between alien species, and the marks left at civilisation’s end, we follow the visual ' +
+      'cues of game worlds, find colours ' +
       'worth bringing back into reality, and reinterpret them as palettes for digital work. ' +
       'Every colour and graphic is an original, unofficial Theme Atlas interpretation.',
     accent: '#76DDE5',

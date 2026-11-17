@@ -2261,6 +2261,202 @@ const themeData: Omit<Theme, 'promptDesign' | 'previewDesign' | 'syntax'>[] = [
     status: 'interpretation',
     plate: 'zerg',
   },
+
+  {
+    slug: 'kevin-ashes-deliverance',
+    title: '凯文 · 终焉余烬',
+    subtitle: '为了一个遥远的明天，有人愿意独自走过漫长的寒冬。',
+    collection: 'game',
+    game: 'honkai-impact-3rd',
+    description: '深蓝黑冻结星空，纵向冰晶贯穿画面，余烬金只从裂缝深处透出，把漫长使命写成冷峻而克制的开发主题。',
+    story:
+      '漫长的寒冬吞没了旧世界。\n\n' +
+      '有人将过去封存在冰中，将未来扛在肩上。\n\n' +
+      '他不再期待春天，只是朝着那个尚未抵达的黎明，继续前行。\n\n' +
+      '冰层之下，最后一点余烬仍未熄灭。',
+    inspiration:
+      '冰代表力量、外在气质与漫长寒冬，余烬则代表仍未终结的使命与希望。' +
+      '主视觉以纵向冰晶的中心轴线、几何切面与裂隙构成一柄尚未出鞘的抽象轮廓，' +
+      '暖金光只存在于断面之间。它既不描绘凯文，也不复刻任何武器外观；' +
+      '贯穿线、冰晶碎片和能量刻度均为原创几何语言。',
+    designRationale:
+      '深蓝黑与蓝灰面板维持长时间编码所需的低刺激背景，银白正文和灰蓝注释保持清晰层级。' +
+      '冰蓝负责链接、焦点与主要操作，余烬金作为 flare 只标记关键状态和裂缝。' +
+      '独立语法盘使用冷紫关键字、冰青函数、余烬金字符串与银蓝类型，' +
+      '让余烬暖意只成为少量语义信号；当前行和 Diff 通过边线与暗色底呈现，不覆盖 token。',
+    palette: [
+      { name: '永夜蓝黑', hex: '#111B27', role: 'bg', note: '被冻结的星空与漫长冬夜' },
+      { name: '冰层蓝灰', hex: '#1B2938', role: 'surface', note: '面板、代码区与冰晶阴面' },
+      { name: '霜线银白', hex: '#E8EEF3', role: 'text', note: '冰面高光与主要正文' },
+      { name: '远冬灰蓝', hex: '#AAB9C7', role: 'muted', note: '次要说明、坐标与清晰注释' },
+      { name: '断面钢蓝', hex: '#34485B', role: 'border', note: '冰晶边界与界面结构线' },
+      { name: '黎明冰蓝', hex: '#75B6D1', role: 'accent', note: '贯穿线、焦点与主要操作' },
+      { name: '冰蓝底字', hex: '#10202D', role: 'onAccent', note: '冰蓝强调色上的深色文字' },
+      { name: '终焉余烬', hex: '#E8B66F', role: 'flare', note: '裂缝中的希望与关键状态' },
+    ],
+    artworkPalette: [
+      { name: '冰晶阴面', hex: '#52738F', note: '纵向晶体的冷暗切面' },
+      { name: '冷紫断面', hex: '#B7C7E8', note: '冻结星光的紫色折射' },
+      { name: '深冰刻度', hex: '#6F91A6', note: '冰层中的能量尺度与碎片' },
+    ],
+    tags: ['崩坏3', '凯文', '逐火者', '寒冰', '余烬', '黎明', '原创演绎'],
+    sources: [
+      {
+        title: 'HoYoverse ·《崩坏3》官方网站',
+        type: 'link',
+        url: 'https://honkaiimpact3.hoyoverse.com/',
+        detail: '官方公开页面，仅用于确认作品与题材背景',
+        note: '本站未使用官方角色、Logo、武器、截图、纹理或界面素材。',
+      },
+      {
+        title: '凯文与逐火者故事视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的剧情与设定资料后替换本条；当前故事、色值和图形均为原创非官方演绎。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与米哈游及 HoYoverse 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏角色、Logo、武器、截图、纹理或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'kevin-ice-ember',
+  },
+
+  {
+    slug: 'elysia-garden-ego',
+    title: '爱莉希雅 · 真我花园',
+    subtitle: '美丽并非因为永恒，而是因为曾经真实地绽放。',
+    collection: 'game',
+    game: 'honkai-impact-3rd',
+    description: '珍珠白与浅粉光晕托起多层晶体花，蔷薇、莓紫与晶透青在花瓣间折射，几何蝴蝶像记忆一样轻盈飞散。',
+    story:
+      '她说，自己是最特别的那一个。\n\n' +
+      '她喜欢美丽的事物，喜欢花，喜欢蝴蝶，也喜欢每一个与她相遇的人。\n\n' +
+      '即使故事终将迎来结尾，也要让这一刻绽放出最耀眼的光。\n\n' +
+      '因为真我，从来不需要向任何人证明。',
+    inspiration:
+      '主题围绕真我、美好、记忆与告别，而不是普通的粉色少女风。' +
+      '多层晶体花瓣构成开放的花形，切面让粉、紫、青三色在同一束光里折射；' +
+      '周围的蝴蝶是正在飞散的几何晶片，弧形轨迹则保留告别前的轻盈。' +
+      '所有图形均为原创抽象构成，不描绘爱莉希雅、服装或官方武器。',
+    designRationale:
+      '珍珠白背景和淡粉面板形成明亮但不刺眼的纸张感，深莓正文保证长段落阅读。' +
+      '初始灰紫次要文字与浅粉强调色在浅底上对比不足，因此分别加深为可读的灰莓紫与蔷薇色；' +
+      '最初的浅粉保留给插画光晕。语法盘独立使用蔷薇、晶透青、莓紫、香槟金与晶蓝，' +
+      '避免所有 token 都落入粉色；选中态和 Diff 只使用浅底、边线和局部标记。',
+    palette: [
+      { name: '珍珠花园', hex: '#F7F0F5', role: 'bg', note: '珍珠白与淡粉光晕的页面底色' },
+      { name: '镜光浅粉', hex: '#EFE1ED', role: 'surface', note: '晶体花瓣般的面板与代码底' },
+      { name: '真我深莓', hex: '#332C3B', role: 'text', note: '清晰稳定的正文与变量' },
+      { name: '记忆灰莓', hex: '#705D74', role: 'muted', note: '经 AA 校正的次要文字与注释' },
+      { name: '花瓣边线', hex: '#DDCADB', role: 'border', note: '花瓣分界与浅底结构线' },
+      { name: '绽放蔷薇', hex: '#C372A0', role: 'accent', note: '兼顾浅底辨识度的链接与主要操作' },
+      { name: '蔷薇底字', hex: '#301F30', role: 'onAccent', note: '蔷薇强调色上的深莓文字' },
+      { name: '镜面紫辉', hex: '#D8B4D6', role: 'flare', note: '折射高光与少量珍贵状态' },
+    ],
+    artworkPalette: [
+      { name: '水晶浅粉', hex: '#D987B8', note: '保留初始浅粉的花瓣与光晕' },
+      { name: '莓紫晶面', hex: '#BFA7E6', note: '花瓣之间的紫色折射' },
+      { name: '晶透青', hex: '#87C9C6', note: '穿过镜面的冷色光' },
+      { name: '珍珠高光', hex: '#FFF9FC', note: '晶体边缘与花朵中心高光' },
+    ],
+    tags: ['崩坏3', '爱莉希雅', '逐火者', '真我', '水晶花', '蝴蝶', '原创演绎'],
+    sources: [
+      {
+        title: 'HoYoverse ·《崩坏3》官方网站',
+        type: 'link',
+        url: 'https://honkaiimpact3.hoyoverse.com/',
+        detail: '官方公开页面，仅用于确认作品与题材背景',
+        note: '本站未使用官方角色、Logo、武器、截图、纹理或界面素材。',
+      },
+      {
+        title: '爱莉希雅与真我意象视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的剧情与设定资料后替换本条；当前故事、色值和图形均为原创非官方演绎。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与米哈游及 HoYoverse 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏角色、Logo、武器、截图、纹理或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'elysia-crystal-garden',
+  },
+
+  {
+    slug: 'mobius-ouroboros-infinite',
+    title: '梅比乌斯 · 无限蛇环',
+    subtitle: '生命从不满足于现状，它总想越过下一道边界。',
+    collection: 'game',
+    game: 'honkai-impact-3rd',
+    description: '深绿实验空间中，有机蛇身闭合成无限环，DNA 双螺旋、细胞分裂与禁忌紫数据光在环内持续收束。',
+    story:
+      '生命从来不是一个完成的答案。\n\n' +
+      '它会变化、分裂、衰亡，然后以另一种形式继续存在。\n\n' +
+      '她凝视着这场无尽的演化，试图找到生命的边界。\n\n' +
+      '可当她终于触碰到边界时，却只看见另一条通往无限的道路。',
+    inspiration:
+      '主题把精密实验结构与原始有机生命放在同一构图里。' +
+      '抽象衔尾蛇由连续曲线、细胞腔隙与晶体鳞片闭合为无限环，环内的 DNA 双螺旋向中心收束；' +
+      '外围细胞分裂、实验刻度和数据节点提供冷峻秩序，禁忌紫只从少量实验光源出现。' +
+      '图形不绘制写实蛇头，也不复刻梅比乌斯的外形或任何官方标识。',
+    designRationale:
+      '深绿黑与灰绿面板提供稳定的实验仪器底色，嫩绿强调活性、链接与当前操作，' +
+      '禁忌紫作为 flare 只提示异常与递归状态。独立语法盘以紫色关键字、生命青函数、' +
+      '荧光绿字符串和冷紫数字区分代码语义，灰绿注释仍保持 AA 可读性。' +
+      '有机图形只留在主视觉和 Prompt 背景，代码正文、Diff 与选中行始终保持平直清晰。',
+    palette: [
+      { name: '实验深绿', hex: '#111A19', role: 'bg', note: '深绿色实验空间与观测暗场' },
+      { name: '培养舱灰绿', hex: '#1C2925', role: 'surface', note: '面板、代码区与有机暗层' },
+      { name: '生命银绿', hex: '#E7F0E9', role: 'text', note: '实验读数般的明亮正文' },
+      { name: '观测灰绿', hex: '#A2B6A8', role: 'muted', note: '次要说明与清晰灰绿注释' },
+      { name: '仪器边界', hex: '#344B3F', role: 'border', note: '实验网格与结构刻度' },
+      { name: '进化嫩绿', hex: '#A7D66D', role: 'accent', note: '活性节点、链接与主要操作' },
+      { name: '嫩绿底字', hex: '#1B2819', role: 'onAccent', note: '嫩绿强调色上的深绿文字' },
+      { name: '禁忌紫', hex: '#B78AD9', role: 'flare', note: '异常、递归与少量实验光源' },
+    ],
+    artworkPalette: [
+      { name: '生命青绿', hex: '#6EBB9D', note: '蛇身细胞与 DNA 的活性折射' },
+      { name: '荧光鳞绿', hex: '#D2E7A5', note: '晶体鳞片与分裂边缘' },
+      { name: '禁实验暗紫', hex: '#7B608E', note: '有机环内部的阴影与异常节点' },
+    ],
+    tags: ['崩坏3', '梅比乌斯', '逐火者', '无限', '进化', 'DNA', '原创演绎'],
+    sources: [
+      {
+        title: 'HoYoverse ·《崩坏3》官方网站',
+        type: 'link',
+        url: 'https://honkaiimpact3.hoyoverse.com/',
+        detail: '官方公开页面，仅用于确认作品与题材背景',
+        note: '本站未使用官方角色、Logo、武器、截图、纹理或界面素材。',
+      },
+      {
+        title: '梅比乌斯与无限演化视觉分析（待补充）',
+        type: 'pending',
+        note: '待补充：加入可核验的剧情与设定资料后替换本条；当前故事、色值和图形均为原创非官方演绎。',
+      },
+    ],
+    credits: {
+      palette: 'Theme Atlas 编辑部（原创配色演绎）',
+      story: 'Theme Atlas 编辑部（非官方同人创作）',
+      graphics: 'Theme Atlas（原创 SVG）',
+      license: '配色数据以 CC BY 4.0 释出',
+      disclaimer:
+        '本主题为非官方同人创作，仅用于配色研究与界面演示，与米哈游及 HoYoverse 无隶属、授权或合作关系。',
+      imageLicence: '站内图形为原创 SVG，未使用任何游戏角色、Logo、武器、截图、纹理或界面素材。',
+    },
+    status: 'interpretation',
+    plate: 'mobius-ouroboros',
+  },
 ];
 
 export const themes: Theme[] = themeData.map((theme) => {
