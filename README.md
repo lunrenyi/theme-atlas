@@ -3,7 +3,6 @@
 > Every color has a story.
 
 [![Deploy to GitHub Pages](https://github.com/lunrenyi/theme-atlas/actions/workflows/deploy.yml/badge.svg)](https://github.com/lunrenyi/theme-atlas/actions/workflows/deploy.yml)
-[![Pages](https://github.com/lunrenyi/theme-atlas/actions/workflows/deploy.yml?query=branch%3Amain&badge=pages-deploy)](https://lunrenyi.github.io/theme-atlas/)
 
 **在线站点 / Live site → <https://lunrenyi.github.io/theme-atlas/>**
 
